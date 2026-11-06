@@ -155,7 +155,7 @@ function applyLarge() {
   if (typeof document !== "undefined") document.documentElement.classList.toggle("large", state.large);
 }
 function applyTheme() {
-  if (typeof document !== "undefined") document.documentElement.dataset.theme = state.theme;
+  if (typeof document !== "undefined") document.documentElement.dataset["theme"] = state.theme;
 }
 function set(p: Partial<State>) {
   state = { ...state, ...p };
