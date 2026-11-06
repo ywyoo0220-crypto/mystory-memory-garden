@@ -40,7 +40,15 @@ function Home() {
   return (
     <main className="px-3 pt-4">
       <header className="flex items-center justify-between px-3 py-3">
-        <h1 className="font-serif text-[1.75rem] tracking-tight">myStory</h1>
+        <h1 className="flex items-center">
+          <img
+            src={wordmark.url}
+            alt="myStory"
+            width={1979}
+            height={483}
+            className="h-[1.5rem] w-auto"
+          />
+        </h1>
         <ViewToggle value={view} onChange={(v) => { actions.setView(v); setOpen(null); }} />
       </header>
 
