@@ -14,7 +14,7 @@ export type StoryRecord = {
 export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
-const SEEDED = "mystory.seeded.v4";
+const SEEDED = "mystory.seeded.v5";
 const THEME = "mystory.theme";
 const HIDE_CHIPS = "mystory.hideThemeChips";
 const LARGE = "mystory.large.v1";
@@ -38,12 +38,12 @@ function write(k: string, v: unknown) {
 }
 
 const seeds: Records = {
-  "T1-Q1": {
+  "T10-Q1": {
     answers: [
-      "젊었을 때 다니던 직장을 그만두고 작은 가게를 시작했을 때. 처음에는 두려움이 컸지만 그 일을 계기로 제 힘으로 삶을 꾸려나간다는 책임감을 배우게 되었지.",
-      "서른다섯 살 봄이었어요. 아이들이 아직 어렸지요.",
-      "남편이 제일 반대했는데, 결국 가게 간판은 남편이 직접 달아 주었어요.",
-      "새벽 다섯 시에 일어나는 사람이 되었어요. 힘들었지만 내 이름으로 된 무언가가 생겼다는 게 좋았어요.",
+      "열아홉에 학교를 마치고 서울로 올라갈 때요. 매일 같이 다니던 친구와 헤어진 게 첫 이별이었어요.",
+      "기차 역에서 손만 흔들고 돌아섰는데, 그 뒤로 연락이 자연히 끊겼어요.",
+      "서운함보다 내가 먼저 떠났다는 마음이 더 컸어요.",
+      "그래서 인연은 붙잡는 게 아니라 자주 안부 묻는 거라고 배웠어요.",
     ],
     photo: notebook,
     updatedAt: 1,
