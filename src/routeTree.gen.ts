@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as MyRouteImport } from './routes/my'
+import { Route as RecordRouteImport } from './routes/record'
+import { Route as AnswerQidRouteImport } from './routes/answer.$qid'
+import { Route as CatCatIdRouteImport } from './routes/cat.$catId'
+import { Route as KindKindRouteImport } from './routes/kind.$kind'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyRoute = MyRouteImport.update({
+  id: '/my',
+  path: '/my',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecordRoute = RecordRouteImport.update({
+  id: '/record',
+  path: '/record',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnswerQidRoute = AnswerQidRouteImport.update({
+  id: '/answer/$qid',
+  path: '/answer/$qid',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatCatIdRoute = CatCatIdRouteImport.update({
+  id: '/cat/$catId',
+  path: '/cat/$catId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KindKindRoute = KindKindRouteImport.update({
+  id: '/kind/$kind',
+  path: '/kind/$kind',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/help': typeof HelpRoute
+  '/my': typeof MyRoute
+  '/record': typeof RecordRoute
+  '/answer/$qid': typeof AnswerQidRoute
+  '/cat/$catId': typeof CatCatIdRoute
+  '/kind/$kind': typeof KindKindRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/help': typeof HelpRoute
+  '/my': typeof MyRoute
+  '/record': typeof RecordRoute
+  '/answer/$qid': typeof AnswerQidRoute
+  '/cat/$catId': typeof CatCatIdRoute
+  '/kind/$kind': typeof KindKindRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/help': typeof HelpRoute
+  '/my': typeof MyRoute
+  '/record': typeof RecordRoute
+  '/answer/$qid': typeof AnswerQidRoute
+  '/cat/$catId': typeof CatCatIdRoute
+  '/kind/$kind': typeof KindKindRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/help'
+    | '/my'
+    | '/record'
+    | '/answer/$qid'
+    | '/cat/$catId'
+    | '/kind/$kind'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/help'
+    | '/my'
+    | '/record'
+    | '/answer/$qid'
+    | '/cat/$catId'
+    | '/kind/$kind'
+  id:
+    | '__root__'
+    | '/'
+    | '/help'
+    | '/my'
+    | '/record'
+    | '/answer/$qid'
+    | '/cat/$catId'
+    | '/kind/$kind'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HelpRoute: typeof HelpRoute
+  MyRoute: typeof MyRoute
+  RecordRoute: typeof RecordRoute
+  AnswerQidRoute: typeof AnswerQidRoute
+  CatCatIdRoute: typeof CatCatIdRoute
+  KindKindRoute: typeof KindKindRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my': {
+      id: '/my'
+      path: '/my'
+      fullPath: '/my'
+      preLoaderRoute: typeof MyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/record': {
+      id: '/record'
+      path: '/record'
+      fullPath: '/record'
+      preLoaderRoute: typeof RecordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/answer/$qid': {
+      id: '/answer/$qid'
+      path: '/answer/$qid'
+      fullPath: '/answer/$qid'
+      preLoaderRoute: typeof AnswerQidRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cat/$catId': {
+      id: '/cat/$catId'
+      path: '/cat/$catId'
+      fullPath: '/cat/$catId'
+      preLoaderRoute: typeof CatCatIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kind/$kind': {
+      id: '/kind/$kind'
+      path: '/kind/$kind'
+      fullPath: '/kind/$kind'
+      preLoaderRoute: typeof KindKindRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HelpRoute: HelpRoute,
+  MyRoute: MyRoute,
+  RecordRoute: RecordRoute,
+  AnswerQidRoute: AnswerQidRoute,
+  CatCatIdRoute: CatCatIdRoute,
+  KindKindRoute: KindKindRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
