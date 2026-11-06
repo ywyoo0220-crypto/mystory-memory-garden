@@ -14,7 +14,7 @@ export type StoryRecord = {
 export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
-const SEEDED = "mystory.seeded.v2";
+const SEEDED = "mystory.seeded.v3";
 const THEME = "mystory.theme";
 const HIDE_CHIPS = "mystory.hideThemeChips";
 const LARGE = "mystory.large.v1";
@@ -60,23 +60,18 @@ const seeds: Records = {
     updatedAt: 2,
     example: true,
   },
-  "T7-Q1": {
+  "T9-Q1": {
+    answers: ["정직이요. 손해를 보더라도 떳떳하게 사는 게 결국 남는 거라고 배웠어요.", "", "", ""],
+    updatedAt: 3,
+    example: true,
+  },
+  "T6-Q1": {
     answers: ["", "", "", ""],
     voice: {
       step: 0,
       durationSec: 18,
-      text: "고등학교 때 짝꿍이었던 영숙이. 힘든 시절마다 먼저 전화를 걸어 준 사람이에요.",
+      text: "외환위기 때요. 가게 문을 닫을까 매일 고민했지만, 식구들 덕분에 버텼어요.",
     },
-    updatedAt: 3,
-    example: true,
-  },
-  "T10-Q1": {
-    answers: [
-      "아버지와의 이별이요. 마지막으로 손을 잡았던 감촉이 아직도 기억나요.",
-      "",
-      "",
-      "",
-    ],
     updatedAt: 4,
     example: true,
   },
@@ -115,16 +110,6 @@ const seeds: Records = {
     updatedAt: 9,
     example: true,
   },
-  "A5-Q1": {
-    answers: ["마흔셋에 가게를 넓혀 이사했어요. 빚도 졌지만 해 볼 만하다고 생각했지요.", "", "", ""],
-    updatedAt: 10,
-    example: true,
-  },
-  "A7-Q1": {
-    answers: ["손주가 생긴 일이요. 하루가 다시 바빠지고, 웃을 일이 많아졌어요.", "", "", ""],
-    updatedAt: 11,
-    example: true,
-  },
   "A6-Q1": {
     answers: ["쉰이 넘어 서예를 배우기 시작했어요. 먹을 갈 때 마음이 차분해져요.", "", "", ""],
     updatedAt: 7,
@@ -142,6 +127,7 @@ function load() {
   loaded = true;
   let records = read<Records>(KEY, {});
   if (!read<boolean>(SEEDED, false)) {
+    records = Object.fromEntries(Object.entries(records).filter(([, r]) => !r.example));
     records = { ...seeds, ...records };
     write(KEY, records);
     write(SEEDED, true);
