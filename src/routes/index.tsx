@@ -5,6 +5,7 @@ import { categoriesOf, type Kind } from "@/lib/data";
 import { actions, hasContent, useStore, type Records, type StoryRecord } from "@/lib/store";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ViewToggle } from "@/components/ViewToggle";
+import { ThemeChips } from "@/components/ThemeChips";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,7 +31,7 @@ function group(records: Records, kind: Kind) {
 }
 
 function Home() {
-  const { records, view } = useStore();
+  const { records, view, hideChips } = useStore();
   const [open, setOpen] = useState<string | null>(null);
   const groups = group(records, view);
   const other: Kind = view === "topic" ? "period" : "topic";
@@ -51,6 +52,7 @@ function Home() {
         </h1>
         <ViewToggle value={view} onChange={(v) => { actions.setView(v); setOpen(null); }} />
       </header>
+      {!hideChips && <ThemeChips className="-mx-3 px-6 py-1" />}
 
       {groups.length === 0 ? (
         <div className="mx-3 mt-10 rounded-[32px] bg-card px-6 py-12 text-center">
