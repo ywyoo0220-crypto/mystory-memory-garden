@@ -81,8 +81,6 @@ function AnswerFlow() {
       setAnswers([0, 1, 2, 3].map((i) => r.answers[i] ?? ""));
       setPhoto(r.photo);
       setVoice(r.voice);
-    } else if (Object.keys(records).length || typeof window !== "undefined") {
-      init.current = Object.keys(records).length > 0;
     }
   }, [records, qid]);
 
