@@ -3,6 +3,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { cardColors, getQuestion, type Category } from "@/lib/data";
 import { actions, type StoryRecord } from "@/lib/store";
 import { Glyph } from "./Glyph";
+import { catVars } from "@/lib/theme";
 import { VoicePlayer } from "./VoicePlayer";
 
 export function CategoryPill({ cat }: { cat: Category }) {
@@ -81,7 +82,7 @@ export function CategoryCard({
   return (
     <section
       className={`relative -mt-8 rounded-t-[32px] px-6 pt-6 first:mt-0 ${last ? "rounded-b-[32px] pb-8" : "pb-14"}`}
-      style={{ background: c.bg, color: c.fg, zIndex: z }}
+      style={{ ...catVars(cat.id), background: c.bg, color: c.fg, zIndex: z }}
     >
       <button
         type="button"
