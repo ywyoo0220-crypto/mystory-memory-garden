@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Records live in localStorage via src/lib/store.ts (useSyncExternalStore); no backend yet — keeps the app login-free.
+- Large-text mode scales the root font-size, so sizes must use rem, not px.
