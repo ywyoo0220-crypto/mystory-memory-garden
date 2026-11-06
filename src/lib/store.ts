@@ -5,10 +5,10 @@ import type { Kind } from "./data";
 
 export type StoryRecord = {
   answers: string[];
-  photo?: string;
-  voice?: { step: number; durationSec: number; text: string };
+  photo?: string | undefined;
+  voice?: { step: number; durationSec: number; text: string } | undefined;
   updatedAt: number;
-  example?: boolean;
+  example?: boolean | undefined;
 };
 export type Records = Record<string, StoryRecord>;
 
