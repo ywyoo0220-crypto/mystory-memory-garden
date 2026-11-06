@@ -2,6 +2,7 @@ import { useSyncExternalStore } from "react";
 import notebook from "@/assets/seed-notebook.jpg";
 import house from "@/assets/seed-house.jpg";
 import type { Kind } from "./data";
+import { DEFAULT_THEME, isThemeId, type ThemeId } from "./theme";
 
 export type StoryRecord = {
   answers: string[];
@@ -13,7 +14,9 @@ export type StoryRecord = {
 export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
-const SEEDED = "mystory.seeded.v1";
+const SEEDED = "mystory.seeded.v2";
+const THEME = "mystory.theme";
+const HIDE_CHIPS = "mystory.hideThemeChips";
 const LARGE = "mystory.large.v1";
 const VIEW = "mystory.view.v1";
 
@@ -102,6 +105,26 @@ const seeds: Records = {
     updatedAt: 6,
     example: true,
   },
+  "T5-Q1": {
+    answers: ["대체로 건강한 편이었어요. 감기 한 번 걸리면 오래가긴 했지만요.", "", "", ""],
+    updatedAt: 8,
+    example: true,
+  },
+  "A4-Q1": {
+    answers: ["첫아이가 태어난 해요. 모든 게 처음이라 서툴렀지만 가장 단단해진 시기였어요.", "", "", ""],
+    updatedAt: 9,
+    example: true,
+  },
+  "A5-Q1": {
+    answers: ["마흔셋에 가게를 넓혀 이사했어요. 빚도 졌지만 해 볼 만하다고 생각했지요.", "", "", ""],
+    updatedAt: 10,
+    example: true,
+  },
+  "A7-Q1": {
+    answers: ["손주가 생긴 일이요. 하루가 다시 바빠지고, 웃을 일이 많아졌어요.", "", "", ""],
+    updatedAt: 11,
+    example: true,
+  },
   "A6-Q1": {
     answers: ["쉰이 넘어 서예를 배우기 시작했어요. 먹을 갈 때 마음이 차분해져요.", "", "", ""],
     updatedAt: 7,
@@ -109,8 +132,8 @@ const seeds: Records = {
   },
 };
 
-type State = { records: Records; large: boolean; view: Kind };
-let state: State = { records: {}, large: false, view: "topic" };
+type State = { records: Records; large: boolean; view: Kind; theme: ThemeId; hideChips: boolean };
+let state: State = { records: {}, large: false, view: "topic", theme: DEFAULT_THEME, hideChips: false };
 let loaded = false;
 const listeners = new Set<() => void>();
 
@@ -123,18 +146,23 @@ function load() {
     write(KEY, records);
     write(SEEDED, true);
   }
-  state = { records, large: read(LARGE, false), view: read<Kind>(VIEW, "topic") };
+  const t = read<unknown>(THEME, DEFAULT_THEME);
+  state = { records, large: read(LARGE, false), view: read<Kind>(VIEW, "topic"), theme: isThemeId(t) ? t : DEFAULT_THEME, hideChips: read(HIDE_CHIPS, false) };
   applyLarge();
+  applyTheme();
 }
 function applyLarge() {
   if (typeof document !== "undefined") document.documentElement.classList.toggle("large", state.large);
+}
+function applyTheme() {
+  if (typeof document !== "undefined") document.documentElement.dataset["theme"] = state.theme;
 }
 function set(p: Partial<State>) {
   state = { ...state, ...p };
   listeners.forEach((l) => l());
 }
 
-const serverState: State = { records: {}, large: false, view: "topic" };
+const serverState: State = { records: {}, large: false, view: "topic", theme: DEFAULT_THEME, hideChips: false };
 export function useStore() {
   return useSyncExternalStore(
     (l) => {
@@ -174,6 +202,15 @@ export const actions = {
     write(LARGE, !state.large);
     set({ large: !state.large });
     applyLarge();
+  },
+  setTheme(theme: ThemeId) {
+    write(THEME, theme);
+    set({ theme });
+    applyTheme();
+  },
+  toggleHideChips() {
+    write(HIDE_CHIPS, !state.hideChips);
+    set({ hideChips: !state.hideChips });
   },
   setView(view: Kind) {
     write(VIEW, view);

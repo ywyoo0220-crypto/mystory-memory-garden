@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppNav } from "../components/AppNav";
+import { themeCss } from "../lib/theme";
 
 function NotFoundComponent() {
   return (
@@ -114,6 +115,7 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="ko">
       <head>
         <HeadContent />
+        <style dangerouslySetInnerHTML={{ __html: themeCss() }} />
       </head>
       <body>
         {children}
