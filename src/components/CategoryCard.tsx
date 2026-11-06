@@ -67,10 +67,11 @@ export function CategoryCard({
   const c = cardColors(cat);
   const [editing, setEditing] = useState(false);
   const navigate = useNavigate();
-  const first = getQuestion(entries[0][0]);
+  const firstId = entries[0]?.[0] ?? "";
+  const first = getQuestion(firstId);
 
   const fix = () => {
-    if (entries.length === 1) navigate({ to: "/answer/$qid", params: { qid: entries[0][0] } });
+    if (entries.length === 1) navigate({ to: "/answer/$qid", params: { qid: firstId } });
     else navigate({ to: "/cat/$catId", params: { catId: cat.id } });
   };
   const del = () => {

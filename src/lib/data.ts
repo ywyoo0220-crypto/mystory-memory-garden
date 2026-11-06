@@ -26,7 +26,7 @@ export function getCategory(id: string) {
   return allCategories.find((c) => c.id === id);
 }
 export function categoryOfQuestion(qid: string) {
-  return getCategory(qid.split("-")[0]);
+  return getCategory(qid.split("-")[0] ?? "");
 }
 export function getQuestion(qid: string) {
   return categoryOfQuestion(qid)?.questions.find((q) => q.id === qid);
