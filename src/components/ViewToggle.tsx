@@ -6,7 +6,7 @@ export function ViewToggle({ value, onChange }: { value: Kind; onChange: (k: Kin
     ["period", "시간순"],
   ];
   return (
-    <div role="group" aria-label="보기 방식" className="flex rounded-full border-[1.5px] border-ink p-1">
+    <div role="group" aria-label="보기 방식" className="flex rounded-full border border-ink p-1">
       {opts.map(([k, label]) => (
         <button
           key={k}
