@@ -115,8 +115,9 @@ function AnswerFlow() {
     r.onresult = (e) => {
       let interim = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
-        const t = e.results[i][0].transcript;
-        if (e.results[i].isFinal) finalText += t;
+        const res = e.results[i]!;
+        const t = res[0].transcript;
+        if (res.isFinal) finalText += t;
         else interim += t;
       }
       heard.current = (finalText + interim).trim();
