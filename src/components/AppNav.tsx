@@ -19,7 +19,7 @@ export function AppNav() {
   return (
     <nav
       aria-label="주요 메뉴"
-      className="fixed inset-x-0 bottom-5 z-40 mx-auto flex w-full max-w-[440px] items-center justify-center gap-2 px-4"
+      className="fixed inset-x-0 bottom-5 z-40 mx-auto flex w-full max-w-[440px] items-center justify-center gap-4 px-4"
     >
       <div className="flex items-center rounded-full bg-card p-1.5 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
         {items.map((it) => {
