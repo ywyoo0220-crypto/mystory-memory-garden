@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 import { categoriesOf, type Kind } from "@/lib/data";
 import { actions, hasContent, useStore, type Records, type StoryRecord } from "@/lib/store";
 import { CategoryCard } from "@/components/CategoryCard";
