@@ -5,6 +5,7 @@ import { actions, type StoryRecord } from "@/lib/store";
 import { Glyph } from "./Glyph";
 import { catVars } from "@/lib/theme";
 import { VoicePlayer } from "./VoicePlayer";
+import { Button } from "./ui/button";
 
 export function CategoryPill({ cat }: { cat: Category }) {
   const c = cardColors(cat);
@@ -84,7 +85,7 @@ export function CategoryCard({
       className={`category-surface relative -mt-8 rounded-t-[32px] px-6 pt-6 first:mt-0 ${last ? "rounded-b-[32px] pb-8" : "pb-14"}`}
       style={{ ...catVars(cat.id), background: c.bg, color: c.fg, zIndex: z }}
     >
-      <button
+      <Button variant="palette"
         type="button"
         onClick={onToggle}
         aria-expanded={open}
@@ -114,7 +115,7 @@ export function CategoryCard({
           </span>
         </div>
         <h2 className="mt-5 font-serif text-[1.5rem] leading-[1.4]">{first?.core}</h2>
-      </button>
+      </Button>
 
       <div className="expand" data-open={open}>
         <div>
@@ -125,23 +126,23 @@ export function CategoryCard({
             <div className="grid grid-cols-2 gap-2 pb-1">
               {editing ? (
                 <div className="flex h-14 overflow-hidden rounded-full border-[1.5px]" style={{ borderColor: c.fg }}>
-                  <button type="button" onClick={fix} className="flex-1 text-[0.9375rem] font-medium">
+                  <Button variant="palette" type="button" onClick={fix} className="h-full flex-1 text-[0.9375rem] font-medium">
                     고치기
-                  </button>
+                  </Button>
                   <span className="w-px" style={{ background: c.fg, opacity: 0.3 }} />
-                  <button type="button" onClick={del} className="flex-1 text-[0.9375rem] font-medium">
+                  <Button variant="palette" type="button" onClick={del} className="h-full flex-1 text-[0.9375rem] font-medium">
                     지우기
-                  </button>
+                  </Button>
                 </div>
               ) : (
-                <button
+                <Button variant="palette"
                   type="button"
                   onClick={() => setEditing(true)}
                   className="h-14 rounded-full border-[1.5px] text-[0.9375rem] font-medium"
                   style={{ borderColor: c.fg }}
                 >
                   수정하기
-                </button>
+                </Button>
               )}
               <Link
                 to="/cat/$catId"
