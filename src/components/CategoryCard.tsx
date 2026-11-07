@@ -89,7 +89,7 @@ export function CategoryCard({
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        className="block w-full rounded-2xl text-left"
+        className="block h-auto w-full whitespace-normal rounded-2xl p-0 text-left [&_svg]:size-auto"
       >
         <div className="flex items-center justify-between gap-2">
           <CategoryPill cat={cat} />
@@ -138,7 +138,7 @@ export function CategoryCard({
                 <Button variant="palette"
                   type="button"
                   onClick={() => setEditing(true)}
-                  className="h-14 rounded-full border-[1.5px] text-[0.9375rem] font-medium"
+                  className="h-14 rounded-full border-[1.5px] p-0 text-[0.9375rem] font-medium"
                   style={{ borderColor: c.fg }}
                 >
                   수정하기

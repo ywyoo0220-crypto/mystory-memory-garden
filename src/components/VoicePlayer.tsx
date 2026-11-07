@@ -49,7 +49,7 @@ export function VoicePlayer({ text, durationSec, fg, accent }: { text: string; d
         onClick={play}
         aria-label={playing ? "음성 멈추기" : "음성 듣기"}
         aria-pressed={playing}
-        className="flex size-12 shrink-0 items-center justify-center rounded-full"
+        className="flex size-12 shrink-0 items-center justify-center rounded-full p-0"
         style={{ background: fg, color: accent }}
       >
         {playing ? (
