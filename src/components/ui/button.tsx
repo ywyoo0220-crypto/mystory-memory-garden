@@ -9,6 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        palette: "bg-transparent text-inherit shadow-none focus-visible:ring-0 focus-visible:outline-[3px] focus-visible:outline-solid focus-visible:outline-(--ring)",
         default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
