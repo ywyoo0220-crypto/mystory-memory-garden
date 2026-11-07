@@ -14,7 +14,7 @@ export type StoryRecord = {
 export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
-const SEEDED = "mystory.seeded.v5";
+const SEEDED = "mystory.seeded.v6";
 const THEME = "mystory.theme";
 const HIDE_CHIPS = "mystory.hideThemeChips";
 const LARGE = "mystory.large.v1";
@@ -103,6 +103,11 @@ const seeds: Records = {
   "T5-Q1": {
     answers: ["대체로 건강한 편이었어요. 감기 한 번 걸리면 오래가긴 했지만요.", "", "", ""],
     updatedAt: 8,
+    example: true,
+  },
+  "A5-Q1": {
+    answers: ["마흔이 되어 오래 미뤄 두었던 공부를 다시 시작했어요.", "", "", ""],
+    updatedAt: 11,
     example: true,
   },
   "A4-Q1": {

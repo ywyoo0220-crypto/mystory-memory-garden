@@ -1,7 +1,7 @@
 import raw from "@/data/questions.json";
 
 export type Kind = "topic" | "period";
-export type CatColor = { background: string; text: string; pill: string; pillText: string; tint: string };
+export type CatColor = { background: string; text: string; pill: string; pillText: string; buttonText: string; tint: string };
 export type Question = { id: string; core: string; followUps: string[] };
 export type Category = {
   id: string;
@@ -25,6 +25,7 @@ function tokenColor(id: string): CatColor {
     text: `var(--${id}-text)`,
     pill: `var(--${id}-pill)`,
     pillText: `var(--${id}-pill-text)`,
+    buttonText: `var(--${id}-button-text)`,
     tint: `var(--${id}-tint)`,
   };
 }
@@ -46,6 +47,6 @@ export function categoriesOf(kind: Kind) {
 }
 /** Card surface colors: filled button = text bg + background label. */
 export function cardColors(c: Category) {
-  const { background, text, pill, pillText, tint } = c.color;
-  return { bg: background, fg: text, pill, pillText, tint, btnBg: text, btnFg: background };
+  const { background, text, pill, pillText, buttonText, tint } = c.color;
+  return { bg: background, fg: text, pill, pillText, tint, btnBg: text, btnFg: buttonText };
 }

@@ -33,6 +33,7 @@
   --color-paper: var(--paper);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
+  --color-comparison-border: var(--comparison-border);
 }
 
 :root {
@@ -59,6 +60,7 @@
   --border: #e2dcd4;
   --input: #e2dcd4;
   --ring: #1a1918;
+  --comparison-border: #d9d4ce;
 }
 
 @layer base {
@@ -108,4 +110,17 @@
   &[data-open="true"] {
     grid-template-rows: 1fr;
   }
+}
+
+.category-surface {
+  --ring: var(--cat-text);
+  color: var(--cat-text);
+  background-color: var(--cat-bg);
+}
+.category-list {
+  --ring: var(--cat-pill-text);
+  color: var(--cat-pill-text);
+}
+.category-surface :focus-visible, .category-list :focus-visible {
+  outline-color: var(--ring);
 }

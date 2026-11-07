@@ -13,6 +13,8 @@ export const Route = createFileRoute("/cat/$catId")({
     const t = `${getCategory(params.catId)?.name ?? "질문"} — myStory`;
     return {
       meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
         { title: t },
         { name: "description", content: "답하고 싶은 질문을 고르세요." },
         { property: "og:title", content: t },

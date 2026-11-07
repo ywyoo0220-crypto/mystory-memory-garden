@@ -12,6 +12,8 @@ export const Route = createFileRoute("/kind/$kind")({
     const t = params.kind === "period" ? "시기 고르기 — myStory" : "주제 고르기 — myStory";
     return {
       meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
         { title: t },
         { name: "description", content: "기록할 범주를 고르세요." },
         { property: "og:title", content: t },

@@ -3,6 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/help")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "도움말 — myStory" },
       { name: "description", content: "기록하는 방법, 말로 입력하기, 큰 글씨, 저장 위치 안내." },
       { property: "og:title", content: "도움말 — myStory" },
