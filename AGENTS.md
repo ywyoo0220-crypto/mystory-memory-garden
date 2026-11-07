@@ -32,3 +32,4 @@ use the editor.
 ## Project rules
 - Records live in localStorage via src/lib/store.ts (useSyncExternalStore); no backend yet — keeps the app login-free.
 - Large-text mode scales the root font-size, so sizes must use rem, not px.
+- ThemeProvider exposes the store-backed active theme; generated category CSS variables supply all palette roles, with pillText for light lists and text for card surfaces so dark palettes remain legible.

@@ -1,3 +1,4 @@
+import { catVars } from "@/lib/theme";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { periods, topics } from "@/lib/data";
 import { Glyph } from "@/components/Glyph";
@@ -5,6 +6,8 @@ import { Glyph } from "@/components/Glyph";
 export const Route = createFileRoute("/record")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "기록하기 — myStory" },
       { name: "description", content: "주제나 시기를 골라 나의 이야기를 기록하세요." },
       { property: "og:title", content: "기록하기 — myStory" },
@@ -36,9 +39,9 @@ function RecordStart() {
                 <span
                   key={c.id}
                   className="flex size-9 items-center justify-center rounded-full ring-2 ring-card"
-                  style={{ background: c.color.background }}
+                  style={{ ...catVars(c.id), background: c.color.tint }}
                 >
-                  <Glyph cat={c} size={16} color={c.color.text} />
+                  <Glyph cat={c} size={16} color={c.color.pillText} />
                 </span>
               ))}
             </div>

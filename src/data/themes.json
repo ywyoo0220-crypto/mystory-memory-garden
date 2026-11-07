@@ -21,428 +21,15 @@
   "A9": "80대 이후"
  },
  "themes": {
-  "current": {
-   "label": "현재 (Material)",
-   "categories": {
-    "T1": {
-     "background": "#E6E9B4",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#F9FBE7"
-    },
-    "T2": {
-     "background": "#F6C0AD",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FBE9E7"
-    },
-    "T3": {
-     "background": "#F6E0A4",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FFF8E1"
-    },
-    "T4": {
-     "background": "#EFAEC1",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FCE4EC"
-    },
-    "T5": {
-     "background": "#B1D3EE",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E3F2FD"
-    },
-    "T6": {
-     "background": "#F6D4A3",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FFF3E0"
-    },
-    "T7": {
-     "background": "#BEDABB",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E8F5E9"
-    },
-    "T8": {
-     "background": "#CCBFB9",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#EFEBE9"
-    },
-    "T9": {
-     "background": "#A7DFE4",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E0F7FA"
-    },
-    "T10": {
-     "background": "#C6B7DB",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#EDE7F6"
-    },
-    "A1": {
-     "background": "#F6EDB5",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FFFDE7"
-    },
-    "A2": {
-     "background": "#D2E1BA",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#F1F8E9"
-    },
-    "A3": {
-     "background": "#A7D3CD",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E0F2F1"
-    },
-    "A4": {
-     "background": "#A7D9EE",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E1F5FE"
-    },
-    "A5": {
-     "background": "#BABEDA",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E8EAF6"
-    },
-    "A6": {
-     "background": "#D7B1D9",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#F3E5F5"
-    },
-    "A7": {
-     "background": "#ECB5B3",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FFEBEE"
-    },
-    "A8": {
-     "background": "#C5CBCD",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#ECEFF1"
-    },
-    "A9": {
-     "background": "#EBE9E7",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FAFAFA"
-    }
-   }
-  },
-  "B": {
-   "label": "후보 B: 맑은 저채도",
-   "categories": {
-    "T1": {
-     "background": "#D9DFB8",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#F1F5DE"
-    },
-    "T2": {
-     "background": "#FFCEBD",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FDEEE9"
-    },
-    "T3": {
-     "background": "#F3D6AF",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FEEFDC"
-    },
-    "T4": {
-     "background": "#FECBD9",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FDEDF1"
-    },
-    "T5": {
-     "background": "#C3DFF7",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E8F3FD"
-    },
-    "T6": {
-     "background": "#FFD0B1",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FEEEE4"
-    },
-    "T7": {
-     "background": "#C7E4CB",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E4F8E7"
-    },
-    "T8": {
-     "background": "#EAD6CC",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FFEEE5"
-    },
-    "T9": {
-     "background": "#B9E4E9",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#DCF8FB"
-    },
-    "T10": {
-     "background": "#DFD5F5",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#F4EFFF"
-    },
-    "A1": {
-     "background": "#E4DBBA",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#F8F2DC"
-    },
-    "A2": {
-     "background": "#CEE2C4",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#E9F7E3"
-    },
-    "A3": {
-     "background": "#BEE5D6",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#DFF9EF"
-    },
-    "A4": {
-     "background": "#BAE3ED",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#DCF7FF"
-    },
-    "A5": {
-     "background": "#C7DDF9",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#EAF3FE"
-    },
-    "A6": {
-     "background": "#DAD6F7",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#F1F0FE"
-    },
-    "A7": {
-     "background": "#EDD1E9",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FEEBFC"
-    },
-    "A8": {
-     "background": "#F7CFD1",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FEEDEE"
-    },
-    "A9": {
-     "background": "#F5D2C3",
-     "text": "#1A1918",
-     "pill": "rgba(255,255,255,0.6)",
-     "pillText": "#1A1918",
-     "tint": "#FDEEE8"
-    }
-   }
-  },
-  "E": {
-   "label": "후보 E: 포스터 3색",
-   "categories": {
-    "T1": {
-     "background": "#A7AC41",
-     "text": "#383400",
-     "pill": "#E8E4FE",
-     "pillText": "#383400",
-     "tint": "#F3F5E6"
-    },
-    "T2": {
-     "background": "#ED6536",
-     "text": "#562729",
-     "pill": "#CCE7FD",
-     "pillText": "#562729",
-     "tint": "#FEF0EB"
-    },
-    "T3": {
-     "background": "#D4B758",
-     "text": "#462D0B",
-     "pill": "#E0E7FD",
-     "pillText": "#462D0B",
-     "tint": "#F8F3E5"
-    },
-    "T4": {
-     "background": "#E16C91",
-     "text": "#522028",
-     "pill": "#C4F3EA",
-     "pillText": "#522028",
-     "tint": "#FEEFF2"
-    },
-    "T5": {
-     "background": "#5F9EF8",
-     "text": "#1D2AA0",
-     "pill": "#F3F3E2",
-     "pillText": "#1D2AA0",
-     "tint": "#EEF4FD"
-    },
-    "T6": {
-     "background": "#D5744F",
-     "text": "#5B301E",
-     "pill": "#ACECF6",
-     "pillText": "#5B301E",
-     "tint": "#FEF0EB"
-    },
-    "T7": {
-     "background": "#4FB772",
-     "text": "#013E26",
-     "pill": "#FDDCF7",
-     "pillText": "#013E26",
-     "tint": "#EAF8ED"
-    },
-    "T8": {
-     "background": "#5B301E",
-     "text": "#ACECF6",
-     "pill": "#D5744F",
-     "pillText": "#5B301E",
-     "tint": "#FBEBE4"
-    },
-    "T9": {
-     "background": "#3AB7CD",
-     "text": "#01394A",
-     "pill": "#FEE0D9",
-     "pillText": "#01394A",
-     "tint": "#E5F7FB"
-    },
-    "T10": {
-     "background": "#421C3B",
-     "text": "#D4B758",
-     "pill": "#C57043",
-     "pillText": "#421C3B",
-     "tint": "#F8EAF4"
-    },
-    "A1": {
-     "background": "#DEC358",
-     "text": "#3D3200",
-     "pill": "#E1E7FE",
-     "pillText": "#3D3200",
-     "tint": "#F7F4E5"
-    },
-    "A2": {
-     "background": "#96CD76",
-     "text": "#213B10",
-     "pill": "#F4DFFE",
-     "pillText": "#213B10",
-     "tint": "#EEF7E9"
-    },
-    "A3": {
-     "background": "#43CBA4",
-     "text": "#013D2E",
-     "pill": "#FFDDEC",
-     "pillText": "#013D2E",
-     "tint": "#E7F8F1"
-    },
-    "A4": {
-     "background": "#11BBD9",
-     "text": "#003A45",
-     "pill": "#FEE0D8",
-     "pillText": "#003A45",
-     "tint": "#E5F7FC"
-    },
-    "A5": {
-     "background": "#64A1EE",
-     "text": "#153358",
-     "pill": "#FCE4C4",
-     "pillText": "#153358",
-     "tint": "#EDF4FD"
-    },
-    "A6": {
-     "background": "#9586DF",
-     "text": "#2A2248",
-     "pill": "#E9EBC5",
-     "pillText": "#2A2248",
-     "tint": "#F3F2FF"
-    },
-    "A7": {
-     "background": "#B86DB1",
-     "text": "#3A1A37",
-     "pill": "#D1F2D7",
-     "pillText": "#3A1A37",
-     "tint": "#FCEFFA"
-    },
-    "A8": {
-     "background": "#C45F6A",
-     "text": "#3F161C",
-     "pill": "#C2F3F2",
-     "pillText": "#3F161C",
-     "tint": "#FFEFF0"
-    },
-    "A9": {
-     "background": "#1C2564",
-     "text": "#F3F3E2",
-     "pill": "#639FF4",
-     "pillText": "#1C2564",
-     "tint": "#E9EEFC"
-    }
-   }
-  },
   "G": {
-   "label": "후보 G: 의미 색상 + 하루의 빛",
+   "label": "G 기준안",
    "categories": {
     "T1": {
      "background": "#B2B54A",
      "text": "#202802",
      "pill": "#EBE8FE",
      "pillText": "#202802",
+     "buttonText": "#EBE8FE",
      "tint": "#F4F5E6"
     },
     "T2": {
@@ -450,6 +37,7 @@
      "text": "#351502",
      "pill": "#CFF2FE",
      "pillText": "#351502",
+     "buttonText": "#CFF2FE",
      "tint": "#FFF0EB"
     },
     "T3": {
@@ -457,6 +45,7 @@
      "text": "#2E1F00",
      "pill": "#DFEDFE",
      "pillText": "#2E1F00",
+     "buttonText": "#DFEDFE",
      "tint": "#FCF2E5"
     },
     "T4": {
@@ -464,6 +53,7 @@
      "text": "#361117",
      "pill": "#CFF5EE",
      "pillText": "#361117",
+     "buttonText": "#CFF5EE",
      "tint": "#FFEFF2"
     },
     "T5": {
@@ -471,6 +61,7 @@
      "text": "#002B2A",
      "pill": "#FFE3E9",
      "pillText": "#002B2A",
+     "buttonText": "#FFE3E9",
      "tint": "#E6F8F5"
     },
     "T6": {
@@ -478,6 +69,7 @@
      "text": "#271A3A",
      "pill": "#ECEED0",
      "pillText": "#271A3A",
+     "buttonText": "#ECEED0",
      "tint": "#F3F2FF"
     },
     "T7": {
@@ -485,6 +77,7 @@
      "text": "#022C18",
      "pill": "#FAE2F9",
      "pillText": "#022C18",
+     "buttonText": "#FAE2F9",
      "tint": "#EBF7EC"
     },
     "T8": {
@@ -492,6 +85,7 @@
      "text": "#152341",
      "pill": "#FBE8CE",
      "pillText": "#152341",
+     "buttonText": "#FBE8CE",
      "tint": "#ECF4FE"
     },
     "T9": {
@@ -499,6 +93,7 @@
      "text": "#002839",
      "pill": "#FEE5DD",
      "pillText": "#002839",
+     "buttonText": "#FEE5DD",
      "tint": "#E6F7FD"
     },
     "T10": {
@@ -506,6 +101,7 @@
      "text": "#301329",
      "pill": "#DAF3DC",
      "pillText": "#301329",
+     "buttonText": "#DAF3DC",
      "tint": "#FBEFFB"
     },
     "A1": {
@@ -513,6 +109,7 @@
      "text": "#3C2B02",
      "pill": "#FFFFFF",
      "pillText": "#3C2B02",
+     "buttonText": "#FFFFFF",
      "tint": "#FAF3E5"
     },
     "A2": {
@@ -520,6 +117,7 @@
      "text": "#43260A",
      "pill": "#FFFFFF",
      "pillText": "#43260A",
+     "buttonText": "#FFFFFF",
      "tint": "#FEF1E6"
     },
     "A3": {
@@ -527,6 +125,7 @@
      "text": "#472218",
      "pill": "#FFFFFF",
      "pillText": "#472218",
+     "buttonText": "#FFFFFF",
      "tint": "#FEF0EC"
     },
     "A4": {
@@ -534,6 +133,7 @@
      "text": "#472026",
      "pill": "#FFFFFF",
      "pillText": "#472026",
+     "buttonText": "#FFFFFF",
      "tint": "#FEEFF0"
     },
     "A5": {
@@ -541,6 +141,7 @@
      "text": "#3E1B2D",
      "pill": "#FFFFFF",
      "pillText": "#3E1B2D",
+     "buttonText": "#FFFFFF",
      "tint": "#FFEEF5"
     },
     "A6": {
@@ -548,6 +149,7 @@
      "text": "#E9D8E9",
      "pill": "#EED4EF",
      "pillText": "#341136",
+     "buttonText": "#642F68",
      "tint": "#FBEFFB"
     },
     "A7": {
@@ -555,6 +157,7 @@
      "text": "#E1DAF0",
      "pill": "#E2D8F8",
      "pillText": "#281641",
+     "buttonText": "#3B235D",
      "tint": "#F5F1FE"
     },
     "A8": {
@@ -562,6 +165,7 @@
      "text": "#DADCF2",
      "pill": "#D9DBFC",
      "pillText": "#1D1A46",
+     "buttonText": "#1D184B",
      "tint": "#F1F2FE"
     },
     "A9": {
@@ -569,10 +173,639 @@
      "text": "#D5DEF3",
      "pill": "#D1DEFD",
      "pillText": "#111E47",
+     "buttonText": "#060E37",
      "tint": "#EFF3FF"
+    }
+   }
+  },
+  "H": {
+   "label": "H 코스트",
+   "categories": {
+    "T1": {
+     "background": "#BCC02A",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#F4F5E6"
+    },
+    "T2": {
+     "background": "#FF9877",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#FFF0EB"
+    },
+    "T3": {
+     "background": "#F2A618",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#FCF2E5"
+    },
+    "T4": {
+     "background": "#FE90AF",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#FFEFF2"
+    },
+    "T5": {
+     "background": "#0AD3C0",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#E6F8F5"
+    },
+    "T6": {
+     "background": "#B8A9FE",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#F3F2FF"
+    },
+    "T7": {
+     "background": "#69D278",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#EBF7EC"
+    },
+    "T8": {
+     "background": "#86BAFE",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#ECF4FE"
+    },
+    "T9": {
+     "background": "#0BCCF4",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#E6F7FD"
+    },
+    "T10": {
+     "background": "#EC90EC",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#FBEFFB"
+    },
+    "A1": {
+     "background": "#F4ED8B",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#F5F4E5"
+    },
+    "A2": {
+     "background": "#D3E780",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#F2F6E7"
+    },
+    "A3": {
+     "background": "#ACE08F",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#EEF7E9"
+    },
+    "A4": {
+     "background": "#84D6A2",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#EAF8EE"
+    },
+    "A5": {
+     "background": "#67C9B1",
+     "text": "#22252B",
+     "pill": "#FBF8F2",
+     "pillText": "#22252B",
+     "buttonText": "#FBF8F2",
+     "tint": "#E6F8F3"
+    },
+    "A6": {
+     "background": "#035F61",
+     "text": "#F3FAFA",
+     "pill": "#A3DEDF",
+     "pillText": "#003031",
+     "buttonText": "#035F61",
+     "tint": "#E5F8F8"
+    },
+    "A7": {
+     "background": "#004950",
+     "text": "#D2D9DA",
+     "pill": "#A3DDE4",
+     "pillText": "#003035",
+     "buttonText": "#004950",
+     "tint": "#E5F8FA"
+    },
+    "A8": {
+     "background": "#00343E",
+     "text": "#D2D9DB",
+     "pill": "#A4DCE9",
+     "pillText": "#002F38",
+     "buttonText": "#00343E",
+     "tint": "#E5F7FC"
+    },
+    "A9": {
+     "background": "#002430",
+     "text": "#D2D9DB",
+     "pill": "#A7DAEE",
+     "pillText": "#002E3C",
+     "buttonText": "#002430",
+     "tint": "#E6F7FE"
+    }
+   }
+  },
+  "I": {
+   "label": "I 루미너스",
+   "categories": {
+    "T1": {
+     "background": "#E2E772",
+     "text": "#2F3706",
+     "pill": "#FFFFFF",
+     "pillText": "#2F3706",
+     "buttonText": "#FFFFFF",
+     "tint": "#F4F5E6"
+    },
+    "T2": {
+     "background": "#FFD3C4",
+     "text": "#4F2610",
+     "pill": "#FFFFFF",
+     "pillText": "#4F2610",
+     "buttonText": "#FFFFFF",
+     "tint": "#FFF0EB"
+    },
+    "T3": {
+     "background": "#FED7A1",
+     "text": "#432F00",
+     "pill": "#FFFFFF",
+     "pillText": "#432F00",
+     "buttonText": "#FFFFFF",
+     "tint": "#FCF2E5"
+    },
+    "T4": {
+     "background": "#FED0DA",
+     "text": "#50222A",
+     "pill": "#FFFFFF",
+     "pillText": "#50222A",
+     "buttonText": "#FFFFFF",
+     "tint": "#FFEFF2"
+    },
+    "T5": {
+     "background": "#53FCE7",
+     "text": "#003C3A",
+     "pill": "#FFFFFF",
+     "pillText": "#003C3A",
+     "buttonText": "#FFFFFF",
+     "tint": "#E6F8F5"
+    },
+    "T6": {
+     "background": "#DDD9FF",
+     "text": "#382A51",
+     "pill": "#FFFFFF",
+     "pillText": "#382A51",
+     "buttonText": "#FFFFFF",
+     "tint": "#F3F2FF"
+    },
+    "T7": {
+     "background": "#9DF7A7",
+     "text": "#0C3D22",
+     "pill": "#FFFFFF",
+     "pillText": "#0C3D22",
+     "buttonText": "#FFFFFF",
+     "tint": "#EBF7EC"
+    },
+    "T8": {
+     "background": "#C9E0FE",
+     "text": "#1F3256",
+     "pill": "#FFFFFF",
+     "pillText": "#1F3256",
+     "buttonText": "#FFFFFF",
+     "tint": "#ECF4FE"
+    },
+    "T9": {
+     "background": "#A8EAFF",
+     "text": "#00394B",
+     "pill": "#FFFFFF",
+     "pillText": "#00394B",
+     "buttonText": "#FFFFFF",
+     "tint": "#E6F7FD"
+    },
+    "T10": {
+     "background": "#FFCAFE",
+     "text": "#482441",
+     "pill": "#FFFFFF",
+     "pillText": "#482441",
+     "buttonText": "#FFFFFF",
+     "tint": "#FBEFFB"
+    },
+    "A1": {
+     "background": "#DFF2FE",
+     "text": "#1B354B",
+     "pill": "#FFFFFF",
+     "pillText": "#1B354B",
+     "buttonText": "#FFFFFF",
+     "tint": "#E9F6FE"
+    },
+    "A2": {
+     "background": "#C8E8F0",
+     "text": "#0F3845",
+     "pill": "#FFFFFF",
+     "pillText": "#0F3845",
+     "buttonText": "#FFFFFF",
+     "tint": "#E5F7FC"
+    },
+    "A3": {
+     "background": "#BDDCD5",
+     "text": "#0A3B38",
+     "pill": "#FFFFFF",
+     "pillText": "#0A3B38",
+     "buttonText": "#FFFFFF",
+     "tint": "#E6F8F4"
+    },
+    "A4": {
+     "background": "#BACEBA",
+     "text": "#1D3A26",
+     "pill": "#FFFFFF",
+     "pillText": "#1D3A26",
+     "buttonText": "#FFFFFF",
+     "tint": "#ECF7EB"
+    },
+    "A5": {
+     "background": "#B5BFA7",
+     "text": "#233319",
+     "pill": "#FFFFFF",
+     "pillText": "#233319",
+     "buttonText": "#FFFFFF",
+     "tint": "#F0F6E8"
+    },
+    "A6": {
+     "background": "#5B3D4E",
+     "text": "#F1DAE6",
+     "pill": "#EFC2DA",
+     "pillText": "#401931",
+     "buttonText": "#5B3D4E",
+     "tint": "#FEEEF6"
+    },
+    "A7": {
+     "background": "#4A2E3B",
+     "text": "#E8D0DA",
+     "pill": "#F1C2D6",
+     "pillText": "#41182E",
+     "buttonText": "#4A2E3B",
+     "tint": "#FFEEF5"
+    },
+    "A8": {
+     "background": "#3B232D",
+     "text": "#E8D0D9",
+     "pill": "#F1C1D5",
+     "pillText": "#42182C",
+     "buttonText": "#3B232D",
+     "tint": "#FFEEF5"
+    },
+    "A9": {
+     "background": "#2C1820",
+     "text": "#E9D0D8",
+     "pill": "#F2C1D3",
+     "pillText": "#42182B",
+     "buttonText": "#2C1820",
+     "tint": "#FEEFF4"
+    }
+   }
+  },
+  "J": {
+   "label": "J 어스",
+   "categories": {
+    "T1": {
+     "background": "#C5C7A6",
+     "text": "#303710",
+     "pill": "#F0EDE4",
+     "pillText": "#303710",
+     "buttonText": "#F0EDE4",
+     "tint": "#F4F5E6"
+    },
+    "T2": {
+     "background": "#DFBBAF",
+     "text": "#4B2816",
+     "pill": "#F0EDE4",
+     "pillText": "#4B2816",
+     "buttonText": "#F0EDE4",
+     "tint": "#FFF0EB"
+    },
+    "T3": {
+     "background": "#D6C1A4",
+     "text": "#423007",
+     "pill": "#F0EDE4",
+     "pillText": "#423007",
+     "buttonText": "#F0EDE4",
+     "tint": "#FCF2E5"
+    },
+    "T4": {
+     "background": "#DFB9C1",
+     "text": "#4D252B",
+     "pill": "#F0EDE4",
+     "pillText": "#4D252B",
+     "buttonText": "#F0EDE4",
+     "tint": "#FFEFF2"
+    },
+    "T5": {
+     "background": "#A5CEC7",
+     "text": "#003C3A",
+     "pill": "#F0EDE4",
+     "pillText": "#003C3A",
+     "buttonText": "#F0EDE4",
+     "tint": "#E6F8F5"
+    },
+    "T6": {
+     "background": "#C4C0E0",
+     "text": "#372B4D",
+     "pill": "#F0EDE4",
+     "pillText": "#372B4D",
+     "buttonText": "#F0EDE4",
+     "tint": "#F3F2FF"
+    },
+    "T7": {
+     "background": "#B2CDB4",
+     "text": "#153C25",
+     "pill": "#F0EDE4",
+     "pillText": "#153C25",
+     "buttonText": "#F0EDE4",
+     "tint": "#EBF7EC"
+    },
+    "T8": {
+     "background": "#B1C6E2",
+     "text": "#223251",
+     "pill": "#F0EDE4",
+     "pillText": "#223251",
+     "buttonText": "#F0EDE4",
+     "tint": "#ECF4FE"
+    },
+    "T9": {
+     "background": "#A4CCD8",
+     "text": "#03394A",
+     "pill": "#F0EDE4",
+     "pillText": "#03394A",
+     "buttonText": "#F0EDE4",
+     "tint": "#E6F7FD"
+    },
+    "T10": {
+     "background": "#D4BAD4",
+     "text": "#45263F",
+     "pill": "#F0EDE4",
+     "pillText": "#45263F",
+     "buttonText": "#F0EDE4",
+     "tint": "#FBEFFB"
+    },
+    "A1": {
+     "background": "#F1EEE6",
+     "text": "#3A3308",
+     "pill": "#F0EDE4",
+     "pillText": "#3A3308",
+     "buttonText": "#F0EDE4",
+     "tint": "#F8F3E5"
+    },
+    "A2": {
+     "background": "#E9DCCB",
+     "text": "#423007",
+     "pill": "#F0EDE4",
+     "pillText": "#423007",
+     "buttonText": "#F0EDE4",
+     "tint": "#FCF2E5"
+    },
+    "A3": {
+     "background": "#E2CDBA",
+     "text": "#452D09",
+     "pill": "#F0EDE4",
+     "pillText": "#452D09",
+     "buttonText": "#F0EDE4",
+     "tint": "#FDF1E6"
+    },
+    "A4": {
+     "background": "#DCBDA8",
+     "text": "#482C0D",
+     "pill": "#F0EDE4",
+     "pillText": "#482C0D",
+     "buttonText": "#F0EDE4",
+     "tint": "#FFF0E7"
+    },
+    "A5": {
+     "background": "#D5AE98",
+     "text": "#412308",
+     "pill": "#F0EDE4",
+     "pillText": "#412308",
+     "buttonText": "#F0EDE4",
+     "tint": "#FEF0E9"
+    },
+    "A6": {
+     "background": "#7C350E",
+     "text": "#FAE2D8",
+     "pill": "#F4C5B1",
+     "pillText": "#441B06",
+     "buttonText": "#7C350E",
+     "tint": "#FFF0EA"
+    },
+    "A7": {
+     "background": "#60270E",
+     "text": "#EAD2C8",
+     "pill": "#F4C5B3",
+     "pillText": "#441B09",
+     "buttonText": "#60270E",
+     "tint": "#FFF0EA"
+    },
+    "A8": {
+     "background": "#481D0F",
+     "text": "#EAD1C9",
+     "pill": "#F5C4B5",
+     "pillText": "#451A0C",
+     "buttonText": "#481D0F",
+     "tint": "#FEF0EC"
+    },
+    "A9": {
+     "background": "#30130C",
+     "text": "#EAD1CA",
+     "pill": "#F5C4B7",
+     "pillText": "#451A0F",
+     "buttonText": "#30130C",
+     "tint": "#FEF0EC"
+    }
+   }
+  },
+  "K": {
+   "label": "K 딥",
+   "categories": {
+    "T1": {
+     "background": "#3A3B00",
+     "text": "#D8DAC3",
+     "pill": "#D2D5A8",
+     "pillText": "#2A2B00",
+     "buttonText": "#3A3B00",
+     "tint": "#F4F5E6"
+    },
+    "T2": {
+     "background": "#612007",
+     "text": "#EAD1C9",
+     "pill": "#F5C4B4",
+     "pillText": "#451A0C",
+     "buttonText": "#612007",
+     "tint": "#FFF0EB"
+    },
+    "T3": {
+     "background": "#4E3100",
+     "text": "#E3D5C2",
+     "pill": "#E9CCA6",
+     "pillText": "#3A2300",
+     "buttonText": "#4E3100",
+     "tint": "#FCF2E5"
+    },
+    "T4": {
+     "background": "#5F1C33",
+     "text": "#EAD0D5",
+     "pill": "#F4C1CD",
+     "pillText": "#441825",
+     "buttonText": "#5F1C33",
+     "tint": "#FFEFF2"
+    },
+    "T5": {
+     "background": "#00423B",
+     "text": "#C3DED9",
+     "pill": "#A5DED5",
+     "pillText": "#00312B",
+     "buttonText": "#00423B",
+     "tint": "#E6F8F5"
+    },
+    "T6": {
+     "background": "#392B67",
+     "text": "#D7D4EA",
+     "pill": "#D0CBF6",
+     "pillText": "#2A2148",
+     "buttonText": "#392B67",
+     "tint": "#F3F2FF"
+    },
+    "T7": {
+     "background": "#014514",
+     "text": "#CBDDCC",
+     "pill": "#B8DCBB",
+     "pillText": "#0B3213",
+     "buttonText": "#014514",
+     "tint": "#EBF7EC"
+    },
+    "T8": {
+     "background": "#0B376A",
+     "text": "#CBD9EC",
+     "pill": "#B7D4F9",
+     "pillText": "#0E294A",
+     "buttonText": "#0B376A",
+     "tint": "#ECF4FE"
+    },
+    "T9": {
+     "background": "#003F4E",
+     "text": "#C3DDE5",
+     "pill": "#A5DBEC",
+     "pillText": "#002F3A",
+     "buttonText": "#003F4E",
+     "tint": "#E6F7FD"
+    },
+    "T10": {
+     "background": "#522152",
+     "text": "#E3D1E2",
+     "pill": "#E7C4E6",
+     "pillText": "#3A1B3B",
+     "buttonText": "#522152",
+     "tint": "#FBEFFB"
+    },
+    "A1": {
+     "background": "#F1E6DA",
+     "text": "#462E00",
+     "pill": "#FFFFFF",
+     "pillText": "#462E00",
+     "buttonText": "#FFFFFF",
+     "tint": "#FDF1E5"
+    },
+    "A2": {
+     "background": "#E8D3C2",
+     "text": "#492B00",
+     "pill": "#FFFFFF",
+     "pillText": "#492B00",
+     "buttonText": "#FFFFFF",
+     "tint": "#FEF1E6"
+    },
+    "A3": {
+     "background": "#E5C3AC",
+     "text": "#4B2A03",
+     "pill": "#FFFFFF",
+     "pillText": "#4B2A03",
+     "buttonText": "#FFFFFF",
+     "tint": "#FFF0E7"
+    },
+    "A4": {
+     "background": "#E1B299",
+     "text": "#4A2604",
+     "pill": "#FFFFFF",
+     "pillText": "#4A2604",
+     "buttonText": "#FFFFFF",
+     "tint": "#FEF0E9"
+    },
+    "A5": {
+     "background": "#DDA187",
+     "text": "#3D1800",
+     "pill": "#FFFFFF",
+     "pillText": "#3D1800",
+     "buttonText": "#FFFFFF",
+     "tint": "#FFF0EA"
+    },
+    "A6": {
+     "background": "#742400",
+     "text": "#EAD1C9",
+     "pill": "#F5C5B4",
+     "pillText": "#451A0B",
+     "buttonText": "#742400",
+     "tint": "#FFF0EB"
+    },
+    "A7": {
+     "background": "#590B07",
+     "text": "#EBD1CC",
+     "pill": "#F6C3BB",
+     "pillText": "#451914",
+     "buttonText": "#590B07",
+     "tint": "#FEF0ED"
+    },
+    "A8": {
+     "background": "#361534",
+     "text": "#E3D1E1",
+     "pill": "#E8C3E4",
+     "pillText": "#3B1A39",
+     "buttonText": "#361534",
+     "tint": "#FCEFFA"
+    },
+    "A9": {
+     "background": "#08203B",
+     "text": "#CAD9EB",
+     "pill": "#B6D4F8",
+     "pillText": "#0C294A",
+     "buttonText": "#08203B",
+     "tint": "#ECF4FE"
     }
    }
   }
  },
- "note": "background=카드 면, text=카드 위 모든 글자(질문·답변·보조 글자), pill=카테고리 라벨과 \"기록 n개|펼치기\" 알약 배경, pillText=알약 글자, tint=목록 화면의 옅은 배경(기록된 질문, 배지)"
+ "note": "background=카드 면, text=카드 위 모든 글자·아이콘, pill=라벨·'기록 n개|펼치기' 알약 배경, pillText=알약 글자, buttonText=카드 안 채운 버튼의 글자색(버튼 배경은 text), tint=목록 화면의 옅은 배경. 모든 글자 조합은 대비 7:1 이상."
 }

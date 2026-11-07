@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Button } from "./ui/button";
 
 const bars = Array.from({ length: 44 }, (_, i) => 0.25 + 0.75 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.6)));
 
@@ -43,12 +44,12 @@ export function VoicePlayer({ text, durationSec, fg, accent }: { text: string; d
   const s = String(Math.round(durationSec % 60)).padStart(2, "0");
   return (
     <div className="flex items-center gap-3">
-      <button
+      <Button variant="palette"
         type="button"
         onClick={play}
         aria-label={playing ? "음성 멈추기" : "음성 듣기"}
         aria-pressed={playing}
-        className="flex size-12 shrink-0 items-center justify-center rounded-full"
+        className="flex size-12 shrink-0 items-center justify-center rounded-full p-0"
         style={{ background: fg, color: accent }}
       >
         {playing ? (
@@ -61,7 +62,7 @@ export function VoicePlayer({ text, durationSec, fg, accent }: { text: string; d
             <path d="M4 2.5v11l9.5-5.5z" />
           </svg>
         )}
-      </button>
+      </Button>
       <div className="flex h-8 flex-1 items-center gap-[2px]" aria-hidden>
         {bars.map((h, i) => (
           <span

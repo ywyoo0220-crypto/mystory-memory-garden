@@ -5,13 +5,14 @@ import { actions, type StoryRecord } from "@/lib/store";
 import { Glyph } from "./Glyph";
 import { catVars } from "@/lib/theme";
 import { VoicePlayer } from "./VoicePlayer";
+import { Button } from "./ui/button";
 
 export function CategoryPill({ cat }: { cat: Category }) {
   const c = cardColors(cat);
   return (
     <span
       className="inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[0.8125rem] font-medium"
-      style={{ background: c.pill, color: c.pillText }}
+      style={{ ...catVars(cat.id), background: c.pill, color: c.pillText }}
     >
       <Glyph cat={cat} size={14} color={c.pillText} />
       {cat.name}
@@ -81,23 +82,23 @@ export function CategoryCard({
 
   return (
     <section
-      className={`relative -mt-8 rounded-t-[32px] px-6 pt-6 first:mt-0 ${last ? "rounded-b-[32px] pb-8" : "pb-14"}`}
+      className={`category-surface relative -mt-8 rounded-t-[32px] px-6 pt-6 first:mt-0 ${last ? "rounded-b-[32px] pb-8" : "pb-14"}`}
       style={{ ...catVars(cat.id), background: c.bg, color: c.fg, zIndex: z }}
     >
-      <button
+      <Button variant="palette"
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        className="block w-full rounded-2xl text-left"
+        className="block h-auto w-full whitespace-normal rounded-2xl p-0 text-left [&_svg]:size-auto"
       >
         <div className="flex items-center justify-between gap-2">
           <CategoryPill cat={cat} />
           <span
             className="inline-flex h-8 items-center gap-2 rounded-full px-3 text-[0.8125rem]"
-            style={{ background: c.pill, color: c.pillText }}
+            style={{ ...catVars(cat.id), background: c.pill, color: c.pillText }}
           >
             기록 {entries.length}개
-            <span className="h-3 w-px" style={{ background: c.pillText, opacity: 0.4 }} />
+            <span className="h-3 w-px" style={{ background: c.fg, opacity: 0.3 }} />
             <span className="font-bold">{open ? "접기" : "펼치기"}</span>
             <svg
               width="12"
@@ -114,34 +115,34 @@ export function CategoryCard({
           </span>
         </div>
         <h2 className="mt-5 font-serif text-[1.5rem] leading-[1.4]">{first?.core}</h2>
-      </button>
+      </Button>
 
       <div className="expand" data-open={open}>
         <div>
           <div className="space-y-10 pt-5">
             {entries.map(([qid, rec], i) => (
-              <RecordBody key={qid} qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={i > 0} />
+              <RecordBody key={qid} qid={qid} rec={rec} fg={c.fg} accent={c.btnFg} showCore={i > 0} />
             ))}
             <div className="grid grid-cols-2 gap-2 pb-1">
               {editing ? (
                 <div className="flex h-14 overflow-hidden rounded-full border-[1.5px]" style={{ borderColor: c.fg }}>
-                  <button type="button" onClick={fix} className="flex-1 text-[0.9375rem] font-medium">
+                  <Button variant="palette" type="button" onClick={fix} className="h-full flex-1 text-[0.9375rem] font-medium">
                     고치기
-                  </button>
-                  <span className="w-px" style={{ background: c.fg }} />
-                  <button type="button" onClick={del} className="flex-1 text-[0.9375rem] font-medium">
+                  </Button>
+                  <span className="w-px" style={{ background: c.fg, opacity: 0.3 }} />
+                  <Button variant="palette" type="button" onClick={del} className="h-full flex-1 text-[0.9375rem] font-medium">
                     지우기
-                  </button>
+                  </Button>
                 </div>
               ) : (
-                <button
+                <Button variant="palette"
                   type="button"
                   onClick={() => setEditing(true)}
-                  className="h-14 rounded-full border-[1.5px] text-[0.9375rem] font-medium"
+                  className="h-14 rounded-full border-[1.5px] p-0 text-[0.9375rem] font-medium"
                   style={{ borderColor: c.fg }}
                 >
                   수정하기
-                </button>
+                </Button>
               )}
               <Link
                 to="/cat/$catId"

@@ -10,6 +10,8 @@ import { ThemeChips } from "@/components/ThemeChips";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "myStory — 나의 기록" },
       { name: "description", content: "주제별, 시간순으로 모아 보는 나의 인생 이야기." },
       { property: "og:title", content: "myStory — 나의 기록" },
