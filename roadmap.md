@@ -1,3 +1,3 @@
-- [ ] Replace palettes with exact G–K tokens and shared theme context.
-- [ ] Apply tokens to cards, lists, answer flow and dark-card details.
-- [ ] Include required comparison examples and verify persistence and recording.
+- [x] Replace palettes with exact G–K tokens and shared theme context.
+- [x] Apply tokens to cards, lists, answer flow and dark-card details.
+- [x] Include required comparison examples and verify persistence and recording.
