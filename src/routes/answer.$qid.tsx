@@ -1,3 +1,4 @@
+import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
@@ -45,7 +46,9 @@ async function resizeImage(file: File): Promise<string> {
     const canvas = document.createElement("canvas");
     canvas.width = Math.round(img.width * scale);
     canvas.height = Math.round(img.height * scale);
-    canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Image canvas unavailable");
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     return canvas.toDataURL("image/jpeg", 0.8);
   } finally {
     URL.revokeObjectURL(url);
@@ -54,10 +57,10 @@ async function resizeImage(file: File): Promise<string> {
 
 function AnswerFlow() {
   const { qid } = Route.useParams();
-  const q = getQuestion(qid)!;
-  const cat = categoryOfQuestion(qid)!;
-  const c = cardColors(cat);
-  const steps = [q.core, ...q.followUps];
+  const q = getQuestion(qid);
+  const category = categoryOfQuestion(qid);
+  const cat = category;
+  const steps = q ? [q.core, ...q.followUps] : [];
   const { records } = useStore();
   const navigate = useNavigate();
 
@@ -117,7 +120,8 @@ function AnswerFlow() {
     r.onresult = (e) => {
       let interim = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
-        const res = e.results[i]!;
+        const res = e.results[i];
+        if (!res) continue;
         const t = res[0].transcript;
         if (res.isFinal) finalText += t;
         else interim += t;
@@ -158,7 +162,7 @@ function AnswerFlow() {
     } else if (hasContent({ answers: a, photo, voice, updatedAt: 0 })) {
       setDone(true);
     } else {
-      navigate({ to: "/cat/$catId", params: { catId: cat.id } });
+      navigate({ to: "/cat/$catId", params: { catId: cat?.id ?? "" } });
     }
   };
 
@@ -173,13 +177,16 @@ function AnswerFlow() {
     }
   };
 
+  if (!cat || !q) return null;
+  const c = cardColors(cat);
+
   if (done) {
     const first = answers.find((a) => a.trim()) ?? voice?.text ?? "";
     return (
       <main className="px-6 pt-16">
-        <p className="text-[1rem] font-medium text-muted-foreground">기록했습니다.</p>
+        <p className="text-[1rem] font-medium">기록했습니다.</p>
         <h1 className="mt-2 font-serif text-[1.75rem] leading-[1.4]">이야기 하나가 쌓였어요.</h1>
-        <article className="mt-8 rounded-[32px] p-6 pb-8" style={{ background: c.bg, color: c.fg }}>
+        <article className="category-surface mt-8 rounded-[32px] p-6 pb-8" style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}>
           <CategoryPill cat={cat} />
           <h2 className="mt-5 font-serif text-[1.5rem] leading-[1.4]">{q.core}</h2>
           {photo && <img src={photo} alt="첨부한 사진" className="mt-5 aspect-[16/10] w-full rounded-3xl object-cover" />}
@@ -209,7 +216,7 @@ function AnswerFlow() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col px-6 pb-8">
+    <main className="category-list flex min-h-screen flex-col px-6 pb-8" style={catVars(cat.id)}>
       <div className="flex h-16 items-center justify-between">
         <Link
           to="/cat/$catId"
@@ -230,15 +237,15 @@ function AnswerFlow() {
 
       <div className="flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
         {steps.map((_, i) => (
-          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.fg : "var(--border)" }} />
+          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.pillText : "color-mix(in srgb, var(--cat-pill-text) 30%, transparent)" }} />
         ))}
       </div>
 
-      <p className="mt-8 text-[0.875rem] font-medium text-muted-foreground">
+      <p className="mt-8 text-[0.875rem] font-medium">
         {step === 0 ? "핵심 질문" : `이어지는 질문 ${step}/3`}
       </p>
       <h1 className="mt-2 font-serif text-[1.625rem] leading-[1.45]">{steps[step]}</h1>
-      {step > 0 && <p className="mt-2 text-[0.9375rem] text-muted-foreground">{q.core}</p>}
+      {step > 0 && <p className="mt-2 text-[0.9375rem]">{q.core}</p>}
 
       <label className="sr-only" htmlFor="answer">답변</label>
       <textarea
@@ -247,7 +254,7 @@ function AnswerFlow() {
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="쓰거나 말로 남기세요."
         rows={6}
-        className="mt-6 w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+        className="mt-6 w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill-text)"
       />
 
       {photo && step === 0 && (
@@ -272,7 +279,7 @@ function AnswerFlow() {
           onClick={listening ? stopListening : startListening}
           aria-pressed={listening}
           className={`flex h-14 items-center justify-center gap-2 rounded-full text-[1rem] font-medium ${
-            listening ? "bg-ink text-ink-foreground" : "bg-card"
+            listening ? "bg-(--cat-pill-text) text-(--cat-pill)" : "bg-card"
           }`}
         >
           {listening && <span className="size-2.5 animate-pulse rounded-full bg-destructive" aria-hidden />}
@@ -301,15 +308,15 @@ function AnswerFlow() {
         <button
           type="button"
           onClick={() => go(false)}
-          className="h-14 w-full rounded-full bg-ink text-[1rem] font-semibold text-ink-foreground"
+          className="h-14 w-full rounded-full bg-(--cat-pill-text) text-[1rem] font-semibold text-(--cat-pill)"
         >
           {step < 3 ? "다음" : "기록 마치기"}
         </button>
-        <button type="button" onClick={() => go(true)} className="h-12 w-full rounded-full text-[1rem] text-muted-foreground">
+        <button type="button" onClick={() => go(true)} className="h-12 w-full rounded-full text-[1rem]">
           다음에 답할게요
         </button>
         {step > 0 && (
-          <button type="button" onClick={() => setStep(step - 1)} className="h-12 w-full rounded-full text-[0.9375rem] text-muted-foreground">
+          <button type="button" onClick={() => setStep(step - 1)} className="h-12 w-full rounded-full text-[0.9375rem]">
             이전 질문
           </button>
         )}

@@ -1,3 +1,4 @@
+import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { categoriesOf, type Kind } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
@@ -41,30 +42,30 @@ function KindList() {
           const pending = total === 0;
           const inner = (
             <>
-              <span className="flex size-12 shrink-0 items-center justify-center rounded-full" style={{ background: c.color.background }}>
-                <Glyph cat={c} size={22} color={c.color.text} />
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-full" style={{ background: c.color.tint }}>
+                <Glyph cat={c} size={22} color={c.color.pillText} />
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[1.0625rem] font-semibold">{c.name}</span>
-                <span className="block text-[0.875rem] text-muted-foreground">
+                <span className="block text-[0.875rem]">
                   {pending ? "질문 준비 중" : done ? `${total}개 중 ${done}개 기록함` : `질문 ${total}개`}
                 </span>
               </span>
               {!pending && (
                 <span className="h-1 w-14 overflow-hidden rounded-full bg-muted" aria-hidden>
-                  <span className="block h-full rounded-full bg-ink" style={{ width: `${(done / total) * 100}%` }} />
+                  <span className="block h-full rounded-full" style={{ background: c.color.pillText, width: `${(done / total) * 100}%` }} />
                 </span>
               )}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-muted-foreground" aria-hidden>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
                 <path d="m9 5 7 7-7 7" />
               </svg>
             </>
           );
           const cls = "flex min-h-[4.5rem] items-center gap-4 rounded-3xl px-3 py-3";
           return (
-            <li key={c.id}>
+            <li key={c.id} className="category-list" style={catVars(c.id)}>
               {pending ? (
-                <div className={`${cls} opacity-50`} aria-disabled="true">{inner}</div>
+                <div className={cls} aria-disabled="true">{inner}</div>
               ) : (
                 <Link
                   to="/cat/$catId"

@@ -1,3 +1,4 @@
+import { catVars } from "@/lib/theme";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { periods, topics } from "@/lib/data";
 import { Glyph } from "@/components/Glyph";
@@ -38,9 +39,9 @@ function RecordStart() {
                 <span
                   key={c.id}
                   className="flex size-9 items-center justify-center rounded-full ring-2 ring-card"
-                  style={{ background: c.color.background }}
+                  style={{ ...catVars(c.id), background: c.color.tint }}
                 >
-                  <Glyph cat={c} size={16} color={c.color.text} />
+                  <Glyph cat={c} size={16} color={c.color.pillText} />
                 </span>
               ))}
             </div>

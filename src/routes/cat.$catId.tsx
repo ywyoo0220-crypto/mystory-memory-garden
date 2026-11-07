@@ -1,3 +1,4 @@
+import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getCategory } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
@@ -26,19 +27,20 @@ export const Route = createFileRoute("/cat/$catId")({
 });
 
 function CatQuestions() {
-  const cat = getCategory(Route.useParams().catId)!;
+  const cat = getCategory(Route.useParams().catId);
   const { records } = useStore();
+  if (!cat) return null;
   return (
-    <main>
+    <main className="category-list" style={catVars(cat.id)}>
       <BackBar title={cat.kind === "topic" ? "주제" : "시기"} />
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-center gap-4">
-          <span className="flex size-14 items-center justify-center rounded-full" style={{ background: cat.color.background }}>
-            <Glyph cat={cat} size={26} color={cat.color.text} />
+          <span className="flex size-14 items-center justify-center rounded-full" style={{ background: cat.color.tint }}>
+            <Glyph cat={cat} size={26} color={cat.color.pillText} />
           </span>
           <h1 className="font-serif text-[1.75rem]">{cat.name}</h1>
         </div>
-        <p className="mt-4 text-[1.0625rem] leading-[1.7] text-muted-foreground">
+        <p className="mt-4 text-[1.0625rem] leading-[1.7]">
           질문 하나를 골라 시작하세요. 모든 질문에 답하지 않아도 됩니다.
         </p>
       </div>
@@ -55,7 +57,7 @@ function CatQuestions() {
               >
                 <span
                   className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-[1.5px]"
-                  style={done ? { background: cat.color.text, borderColor: cat.color.text } : { borderColor: "var(--border)" }}
+                  style={done ? { background: cat.color.pillText, borderColor: cat.color.pillText } : { borderColor: "var(--border)" }}
                   aria-hidden
                 >
                   {done && (
@@ -66,7 +68,7 @@ function CatQuestions() {
                 </span>
                 <span className="min-w-0">
                   <span className="block font-serif text-[1.1875rem] leading-[1.5]">{q.core}</span>
-                  <span className="mt-1.5 block text-[0.8125rem] text-muted-foreground">
+                  <span className="mt-1.5 block text-[0.8125rem]">
                     {done ? "기록함 · 눌러서 이어쓰기" : `질문 4개 · 천천히 답해요`}
                   </span>
                 </span>
