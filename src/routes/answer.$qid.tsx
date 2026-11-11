@@ -277,7 +277,7 @@ function AnswerFlow() {
         ))}
       </div>
 
-      <p className="mt-8 text-[0.875rem] font-medium">
+      <p className="mt-5 text-[0.875rem] font-medium">
         {step === 0 ? "핵심 질문" : `이어지는 질문 ${step}/3`}
       </p>
       <h1 className="mt-2 font-serif text-[1.625rem] leading-[1.45]">{steps[step]}</h1>
@@ -289,7 +289,7 @@ function AnswerFlow() {
         value={answers[step]}
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="쓰거나 말로 남기세요."
-        className="mt-6 h-[clamp(5.5rem,calc(100dvh-36rem),14rem)] w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
+        className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
       />
 
       {photos.length > 0 && (
@@ -360,7 +360,7 @@ function AnswerFlow() {
         </p>
       )}
 
-      <div className="mt-auto space-y-2 pt-6">
+      <div className="mt-auto space-y-2 pt-4">
         {recBusy && <p className="text-center text-[0.9375rem]">녹음을 마친 뒤 다음으로 넘어갈 수 있어요.</p>}
         <button
           type="button"
