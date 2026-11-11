@@ -72,7 +72,7 @@ function Home() {
           </Link>
         </div>
       ) : (
-        <div className="mt-4">
+        <div className="-mx-3 mt-4">
           {groups.map((g, i) => (
             <CategoryCard
               key={g.cat.id}
