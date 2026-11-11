@@ -72,9 +72,7 @@ function CatQuestions() {
                 </span>
                 <span className="min-w-0">
                   <span className="block font-serif text-[1.1875rem] leading-[1.5]">{q.core}</span>
-                  <span className="mt-1.5 block text-[0.8125rem]">
-                    {done ? "기록함 · 눌러서 이어쓰기" : "질문 4개"}
-                  </span>
+                  {done && <span className="mt-1.5 block text-[0.8125rem]">기록함 · 눌러서 이어쓰기</span>}
                 </span>
               </Link>
             </li>
