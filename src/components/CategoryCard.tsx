@@ -16,8 +16,8 @@ import { Button } from "./ui/button";
 
 export function CategoryPill({ cat }: { cat: Category }) {
   const c = cardColors(cat);
-  // 시간순(시기) 카드는 라벨 알약 바탕이 항상 어두우므로 아이콘과 이름을 흰색으로 둔다.
-  const label = cat.kind === "period" ? "#FFFFFF" : c.pillText;
+  // 카드 라벨 알약 바탕은 항상 어두우므로 아이콘과 이름을 흰색으로 둔다.
+  const label = "#FFFFFF";
   return (
     <span
       className="inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[0.8125rem] font-medium"
