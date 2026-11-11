@@ -60,12 +60,12 @@ function CatQuestions() {
                 style={done ? { background: cat.color.tint } : { background: "var(--card)", border: "1px solid var(--border)" }}
               >
                 <span
-                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-[1.5px]"
-                  style={done ? { background: cat.color.background, borderColor: cat.color.text } : { borderColor: "var(--border)" }}
+                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border"
+                  style={done ? { borderColor: cat.color.pill, color: cat.color.pill } : { borderColor: "var(--border)" }}
                   aria-hidden
                 >
                   {done && (
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke={cat.color.text} strokeWidth="2">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="m2.5 6 2.5 2.5 4.5-5" />
                     </svg>
                   )}
