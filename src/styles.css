@@ -123,3 +123,15 @@
 .category-surface :focus-visible, .category-list :focus-visible {
   outline-color: var(--ring);
 }
+
+@utility min-h-app {
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+/* nav offset 16px + nav height (3.75rem) + 16px gap + home indicator */
+@utility pb-nav {
+  padding-bottom: calc(3.75rem + 32px + env(safe-area-inset-bottom));
+}
