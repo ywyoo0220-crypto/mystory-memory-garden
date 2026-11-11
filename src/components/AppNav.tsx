@@ -21,7 +21,7 @@ export function AppNav() {
       className="fixed inset-x-0 bottom-[calc(16px+env(safe-area-inset-bottom))] z-40 mx-auto flex w-full max-w-[440px] items-center"
     >
       <div aria-hidden={true} className="min-w-0 shrink grow-0 basis-[11%]" />
-      <div className="flex shrink-0 items-center rounded-full bg-card p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
+      <div className="flex shrink-0 items-center rounded-full border border-border bg-card p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
         {items.map((it) => {
           const active = it.match(path);
           return (

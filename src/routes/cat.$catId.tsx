@@ -56,8 +56,8 @@ function CatQuestions() {
               <Link
                 to="/answer/$qid"
                 params={{ qid: q.id }}
-                className="flex gap-3 rounded-3xl p-5"
-                style={done ? { background: cat.color.tint } : { background: "var(--card)" }}
+                className="flex gap-3 rounded-3xl border border-transparent p-5"
+                style={done ? { background: cat.color.tint } : { background: "var(--card)", border: "1px solid var(--border)" }}
               >
                 <span
                   className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-[1.5px]"
