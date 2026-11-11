@@ -70,8 +70,10 @@ export function VoicePlayer({
     const start = Date.now();
     timer.current = window.setInterval(() => {
       const p = (Date.now() - start) / (durationSec * 1000);
-      if (p >= 1) stop();
-      else setProgress(p);
+      if (p >= 1) {
+        if (src) setProgress(1);
+        else stop();
+      } else setProgress(p);
     }, 100);
   };
 
