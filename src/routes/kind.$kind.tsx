@@ -46,8 +46,8 @@ function KindList() {
           const pending = total === 0;
           const inner = (
             <>
-              <span className="flex size-12 shrink-0 items-center justify-center rounded-full" style={{ background: c.color.tint }}>
-                <span className="inline-flex" style={{ color: c.color.pill }}><CategoryIcon id={c.id} size={22} /></span>
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-full" style={{ background: c.color.background }}>
+                <span className="inline-flex" style={{ color: c.color.text }}><CategoryIcon id={c.id} size={22} /></span>
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[1.0625rem] font-semibold">{c.name}</span>
