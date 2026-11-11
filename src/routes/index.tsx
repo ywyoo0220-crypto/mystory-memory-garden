@@ -39,7 +39,7 @@ function Home() {
 
   return (
     <main className="px-3 pt-4">
-      <header className="flex items-center justify-between px-3 py-3">
+      <header className="flex items-center justify-between gap-6 px-3 py-3 [.large_&]:px-0">
         <h1 className="flex items-center">
           <img
             src={wordmark.url}

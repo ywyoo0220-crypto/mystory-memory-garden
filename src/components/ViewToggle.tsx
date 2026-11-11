@@ -13,7 +13,7 @@ export function ViewToggle({ value, onChange }: { value: Kind; onChange: (k: Kin
           type="button"
           aria-pressed={value === k}
           onClick={() => onChange(k)}
-          className={`h-10 rounded-full px-4 text-[0.9375rem] font-medium transition-colors ${
+          className={`h-10 rounded-full px-4 [.large_&]:px-3 text-[0.9375rem] font-medium transition-colors ${
             value === k ? "bg-ink text-ink-foreground" : "text-foreground"
           }`}
         >
