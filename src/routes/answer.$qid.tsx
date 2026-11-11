@@ -254,7 +254,7 @@ function AnswerFlow() {
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="쓰거나 말로 남기세요."
         rows={6}
-        className="mt-6 w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill-text)"
+        className="mt-6 w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
       />
 
       {photo && step === 0 && (
