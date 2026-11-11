@@ -6,7 +6,7 @@ const items = [
   {
     to: "/record",
     label: "기록하기",
-    match: (p: string) => p.startsWith("/record") || p.startsWith("/kind") || p.startsWith("/cat"),
+    match: (p: string) => p.startsWith("/record") || p.startsWith("/kind") || p.startsWith("/cat") || p.startsWith("/answer"),
   },
   { to: "/help", label: "도움말", match: (p: string) => p.startsWith("/help") },
   { to: "/my", label: "MY", match: (p: string) => p.startsWith("/my") },
