@@ -1,6 +1,6 @@
 import type { Category } from "@/lib/data";
 
-// Refined minimal line icons on a 24 grid, 1.25 stroke, round caps.
+// Refined minimal line icons on a 24 grid, 2.1 stroke, round caps.
 const topicPaths: Record<string, React.ReactNode> = {
   // 인생의 전환점 — a path that forks
   T1: (
@@ -8,8 +8,8 @@ const topicPaths: Record<string, React.ReactNode> = {
       <path d="M12 21v-7" />
       <path d="M12 14c0-4-3-5.5-6-6.5" />
       <path d="M12 14c0-4 3-5.5 6-6.5" />
-      <circle cx="6" cy="6.5" r="1.4" />
-      <circle cx="18" cy="6.5" r="1.4" />
+      <circle cx="6" cy="6.5" r="1.6" />
+      <circle cx="18" cy="6.5" r="1.6" />
     </>
   ),
   // 가족 — house with a window light
@@ -80,22 +80,22 @@ export function Glyph({ cat, size = 16, color }: { cat: Category; size?: number;
   if (cat.kind === "period") {
     // Dial gauge: faint track + filled arc proportional to life stage, with 9 ticks.
     const f = (cat.index + 1) / 9;
-    const r = 8;
+    const r = 7.5;
     const c = 2 * Math.PI * r;
     return (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-        <circle cx="12" cy="12" r={r} stroke={color} strokeOpacity={0.22} strokeWidth="2.25" />
+        <circle cx="12" cy="12" r={r} stroke={color} strokeOpacity={0.3} strokeWidth="4" />
         <circle
           cx="12"
           cy="12"
           r={r}
           stroke={color}
-          strokeWidth="2.25"
+          strokeWidth="4"
           strokeLinecap={f >= 1 ? "butt" : "round"}
           strokeDasharray={`${c * f} ${c}`}
           transform="rotate(-90 12 12)"
         />
-        <circle cx="12" cy="12" r="1.6" fill={color} />
+        <circle cx="12" cy="12" r="2" fill={color} />
       </svg>
     );
   }
@@ -106,7 +106,7 @@ export function Glyph({ cat, size = 16, color }: { cat: Category; size?: number;
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}
-      strokeWidth="1.25"
+      strokeWidth="2.1"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
