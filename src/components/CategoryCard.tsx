@@ -176,8 +176,8 @@ export function CategoryCard({
                 className="flex min-h-14 flex-col items-center justify-center rounded-full px-3 py-1.5 text-center leading-tight break-keep"
                 style={{ background: c.btnBg, color: c.btnFg }}
               >
-                <span className="text-[0.875rem] font-bold">{cat.name}</span>
-                <span className="text-[0.8125rem] font-medium">이야기 더 하기</span>
+                <span className="text-[0.9375rem] font-bold">{cat.name}</span>
+                <span className="text-[0.9375rem] font-medium">이야기 더 하기</span>
               </Link>
             </div>
           </div>
