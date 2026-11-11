@@ -216,7 +216,7 @@ function AnswerFlow() {
   }
 
   return (
-    <main className="category-list flex min-h-screen flex-col px-6 pb-8" style={catVars(cat.id)}>
+    <main className="category-list flex min-h-app flex-col px-6 pb-8" style={catVars(cat.id)}>
       <div className="flex h-16 items-center justify-between">
         <Link
           to="/cat/$catId"
