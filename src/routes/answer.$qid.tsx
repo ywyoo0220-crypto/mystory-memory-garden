@@ -289,7 +289,7 @@ function AnswerFlow() {
         value={answers[step]}
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="쓰거나 말로 남기세요."
-        className="mt-6 h-[clamp(5.5rem,calc(100dvh-36rem),14rem)] w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
+        className="mt-6 min-h-[5.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
       />
 
       {photos.length > 0 && (
