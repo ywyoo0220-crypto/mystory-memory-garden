@@ -2,11 +2,16 @@ import { useSyncExternalStore } from "react";
 import notebook from "@/assets/seed-notebook.jpg";
 import house from "@/assets/seed-house.jpg";
 import type { Kind } from "./data";
+import { clearMedia, deleteMedia } from "./media";
+
+export type AudioClip = { id: string; durationSec: number; mime: string; step: number };
 
 export type StoryRecord = {
   answers: string[];
   photo?: string | undefined;
   voice?: { step: number; durationSec: number; text: string } | undefined;
+  photos?: string[] | undefined;
+  audios?: AudioClip[] | undefined;
   updatedAt: number;
   example?: boolean | undefined;
 };
@@ -194,7 +199,10 @@ export const actions = {
   },
   remove(qids: string[]) {
     const records = { ...state.records };
-    qids.forEach((q) => delete records[q]);
+    qids.forEach((q) => {
+      deleteMedia(mediaRefs(records[q]));
+      delete records[q];
+    });
     write(KEY, records);
     set({ records });
   },
@@ -210,6 +218,7 @@ export const actions = {
   },
   clearAll() {
     write(KEY, {});
+    clearMedia();
     set({ records: {} });
   },
   toggleLarge() {
@@ -224,5 +233,12 @@ export const actions = {
 };
 
 export function hasContent(r?: StoryRecord) {
-  return !!r && (r.answers.some((a) => a.trim()) || !!r.photo || !!r.voice);
+  return !!r && (r.answers.some((a) => a.trim()) || !!r.photo || !!r.voice || !!r.photos?.length || !!r.audios?.length);
+}
+
+export function recordPhotos(r: StoryRecord) {
+  return r.photos ?? (r.photo ? [r.photo] : []);
+}
+export function mediaRefs(r?: StoryRecord) {
+  return r ? [...(r.photos ?? []), ...(r.audios ?? []).map((a) => a.id)] : [];
 }

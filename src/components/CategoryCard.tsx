@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { cardColors, getQuestion, type Category } from "@/lib/data";
-import { actions, type StoryRecord } from "@/lib/store";
+import { actions, recordPhotos, type StoryRecord } from "@/lib/store";
+import { useMediaUrl } from "@/lib/media";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { catVars } from "@/lib/theme";
-import { VoicePlayer } from "./VoicePlayer";
+import { RecordedClip, VoicePlayer } from "./VoicePlayer";
+
+function CardPhoto({ src, fg }: { src: string; fg: string }) {
+  const url = useMediaUrl(src);
+  if (!url) return <div className="aspect-[16/10] w-full rounded-3xl border" style={{ borderColor: fg }} aria-hidden />;
+  return <img src={url} alt="첨부한 사진" loading="lazy" className="aspect-[16/10] w-full rounded-3xl border object-cover" style={{ borderColor: fg }} />;
+}
 import { Button } from "./ui/button";
 
 export function CategoryPill({ cat }: { cat: Category }) {
@@ -24,13 +31,15 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
   const q = getQuestion(qid);
   if (!q) return null;
   const steps = [q.core, ...q.followUps];
+  const photos = recordPhotos(rec);
   return (
     <div className="space-y-6">
       {showCore && <h3 className="font-serif text-[1.5rem] font-bold leading-[1.4]">{q.core}</h3>}
       {steps.map((label, i) => {
         const a = rec.answers[i]?.trim();
         const voice = rec.voice?.step === i ? rec.voice : undefined;
-        if (!a && !voice && !(i === 0 && rec.photo)) return null;
+        const clip = rec.audios?.find((c) => c.step === i);
+        if (!a && !voice && !clip && !(i === 0 && photos.length)) return null;
         return (
           <div key={i} className="space-y-3">
             {i > 0 && <p className="text-[1.0625rem] font-bold leading-[1.5]">{label}</p>}
@@ -41,9 +50,8 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
                 {voice.text && voice.text !== a && <p className="text-[1.0625rem] leading-[1.7]">{voice.text}</p>}
               </div>
             )}
-            {i === 0 && rec.photo && (
-              <img src={rec.photo} alt="첨부한 사진" loading="lazy" className="aspect-[16/10] w-full rounded-3xl border object-cover" style={{ borderColor: fg }} />
-            )}
+            {clip && <RecordedClip clip={clip} fg={fg} accent={accent} />}
+            {i === 0 && photos.map((p) => <CardPhoto key={p} src={p} fg={fg} />)}
           </div>
         );
       })}

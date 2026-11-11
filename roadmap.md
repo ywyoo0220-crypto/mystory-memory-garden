@@ -1,3 +1,3 @@
 - [x] Replace palettes with exact G–K tokens and shared theme context.
 - [x] Apply tokens to cards, lists, answer flow and dark-card details.
-- [x] Include required comparison examples and verify persistence and recording.
+- [x] Include required comparison examples and verify persistence and recording.- [x] Multi-photo attach + voice recording (IndexedDB) in answer flow.
