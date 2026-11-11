@@ -46,14 +46,14 @@ function My() {
           ["주제별", topicN],
           ["시간순", periodN],
         ].map(([l, n]) => (
-          <div key={l} className="rounded-3xl bg-card p-5">
+          <div key={l} className="rounded-3xl border border-border bg-card p-5">
             <p className="text-[0.875rem] text-muted-foreground">{l}</p>
             <p className="mt-1 font-serif text-[1.75rem]">{n}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 divide-y overflow-hidden rounded-[28px] bg-card">
+      <div className="mt-4 divide-y overflow-hidden rounded-[28px] border border-border bg-card">
         <button type="button" className={row} onClick={actions.toggleLarge} aria-pressed={large}>
           큰 글씨
           <span className={`flex h-8 w-14 items-center rounded-full p-1 transition-colors ${large ? "bg-ink" : "bg-muted"}`}>

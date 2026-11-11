@@ -41,7 +41,7 @@ function Help() {
       <h1 className="font-serif text-[1.75rem]">도움말</h1>
       <div className="mt-8 space-y-3">
         {items.map((i) => (
-          <section key={i.t} className="rounded-[28px] bg-card p-6">
+          <section key={i.t} className="rounded-[28px] border border-border bg-card p-6">
             <h2 className="text-[1.0625rem] font-bold">{i.t}</h2>
             <p className="mt-2 text-[1.0625rem] leading-[1.7] text-muted-foreground">{i.d}</p>
           </section>

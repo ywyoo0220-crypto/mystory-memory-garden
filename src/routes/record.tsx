@@ -32,7 +32,7 @@ function RecordStart() {
             key={o.kind}
             to="/kind/$kind"
             params={{ kind: o.kind }}
-            className="block rounded-[32px] bg-card p-6 transition-transform active:scale-[0.99]"
+            className="block rounded-[32px] border border-border bg-card p-6 transition-transform active:scale-[0.99]"
           >
             <div className="flex -space-x-1.5">
               {o.cats.map((c) => (

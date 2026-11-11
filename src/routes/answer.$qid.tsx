@@ -289,7 +289,7 @@ function AnswerFlow() {
         value={answers[step]}
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="쓰거나 말로 남기세요."
-        className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
+        className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border border-border bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
       />
 
       {photos.length > 0 && (
@@ -301,7 +301,7 @@ function AnswerFlow() {
                 type="button"
                 onClick={() => removePhoto(p)}
                 aria-label={`사진 ${i + 1} 빼기`}
-                className="absolute right-2 top-2 h-12 rounded-full bg-card px-4 text-[0.9375rem] font-medium"
+                className="absolute right-2 top-2 h-12 rounded-full border border-border bg-card px-4 text-[0.9375rem] font-medium"
               >
                 사진 빼기
               </button>
@@ -317,7 +317,7 @@ function AnswerFlow() {
           aria-pressed={listening}
           disabled={recBusy}
           className={`flex h-14 items-center justify-center gap-2 rounded-full text-[1rem] font-medium disabled:opacity-40 ${
-            listening ? "bg-(--cat-bg) text-(--cat-text)" : "bg-card"
+            listening ? "bg-(--cat-bg) text-(--cat-text)" : "border border-border bg-card"
           }`}
         >
           {listening && <span className="size-2.5 animate-pulse rounded-full bg-destructive" aria-hidden />}
@@ -326,7 +326,7 @@ function AnswerFlow() {
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="h-14 rounded-full bg-card text-[1rem] font-medium"
+          className="h-14 rounded-full border border-border bg-card text-[1rem] font-medium"
         >
           {photos.length ? "사진 더 넣기" : "사진 넣기"}
         </button>
