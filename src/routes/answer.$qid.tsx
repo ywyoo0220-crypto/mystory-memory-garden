@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { actions, hasContent, recordPhotos, useStore, type AudioClip, type StoryRecord } from "@/lib/store";
 import { deleteMedia, putMedia, useMediaUrl } from "@/lib/media";
-import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { CategoryPill } from "@/components/CategoryCard";
 
 export const Route = createFileRoute("/answer/$qid")({
@@ -343,16 +342,7 @@ function AnswerFlow() {
           }}
         />
       </div>
-      <VoiceRecorder
-        key={step}
-        step={step}
-        clip={clip}
-        disabled={listening}
-        onBusy={setRecBusy}
-        onSave={saveClip}
-        onDelete={deleteClip}
-        onMessage={setMsg}
-      />
+      <p className="mt-4 text-center text-[0.9375rem] text-muted-foreground">적는 내용은 이 기기에 바로 저장돼요.</p>
 
       {msg && (
         <p role="status" className="mt-4 rounded-2xl bg-muted px-4 py-3 text-[0.9375rem] leading-[1.6]">
