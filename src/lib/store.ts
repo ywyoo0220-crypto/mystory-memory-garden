@@ -13,7 +13,7 @@ export type StoryRecord = {
 export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
-const SEEDED = "mystory.seeded.v6";
+const SEEDED = "mystory.seeded.v7";
 const LARGE = "mystory.large.v1";
 const VIEW = "mystory.view.v1";
 
@@ -106,6 +106,21 @@ const seeds: Records = {
   "T5-Q1": {
     answers: ["대체로 건강한 편이었어요. 감기 한 번 걸리면 오래가긴 했지만요.", "", "", ""],
     updatedAt: 8,
+    example: true,
+  },
+  "T2-Q2": {
+    answers: ["아버지요. 새벽마다 묵묵히 일하러 나가시던 뒷모습이 제 삶의 기준이 됐어요.", "", "", ""],
+    updatedAt: 12,
+    example: true,
+  },
+  "T5-Q2": {
+    answers: ["서른다섯에 맹장 수술로 보름 넘게 입원했던 일이요. 그때 처음 건강이 소중하다는 걸 알았어요.", "", "", ""],
+    updatedAt: 13,
+    example: true,
+  },
+  "T5-Q3": {
+    answers: ["쉰을 넘기면서 계단 오르기가 부쩍 힘들어졌어요. 그때부터 아침 산책을 시작했지요.", "", "", ""],
+    updatedAt: 14,
     example: true,
   },
   "A5-Q1": {
