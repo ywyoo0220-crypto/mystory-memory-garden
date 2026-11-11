@@ -48,7 +48,7 @@ function Home() {
             alt="myStory"
             width={1979}
             height={483}
-            className="h-[1.5rem] w-auto"
+            className="h-[1.875rem] w-auto"
           />
         </h1>
         <ViewToggle value={view} onChange={(v) => { actions.setView(v); setOpen(null); }} />
