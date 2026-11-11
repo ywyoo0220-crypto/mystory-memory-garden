@@ -45,7 +45,7 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
             {i > 0 && <p className="text-[1.0625rem] font-bold leading-[1.5]">{label}</p>}
             {a && <p className="whitespace-pre-line text-[1.0625rem] leading-[1.7]">{a}</p>}
             {voice && (
-              <div className="space-y-2">
+              <div className="space-y-4">
                 <VoicePlayer text={voice.text} durationSec={voice.durationSec} fg={fg} accent={accent} />
                 {voice.text && voice.text !== a && <p className="text-[1.0625rem] leading-[1.7]">{voice.text}</p>}
               </div>
