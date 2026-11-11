@@ -36,7 +36,7 @@ function CatQuestions() {
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-center gap-4">
           <span className="flex size-14 items-center justify-center rounded-full" style={{ background: cat.color.tint }}>
-            <Glyph cat={cat} size={26} color={cat.color.pillText} />
+            <Glyph cat={cat} size={26} color={cat.color.pill} />
           </span>
           <h1 className="font-serif text-[1.75rem]">{cat.name}</h1>
         </div>
@@ -57,7 +57,7 @@ function CatQuestions() {
               >
                 <span
                   className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-[1.5px]"
-                  style={done ? { background: cat.color.pillText, borderColor: cat.color.pillText } : { borderColor: "var(--border)" }}
+                  style={done ? { background: cat.color.pill, borderColor: cat.color.pill } : { borderColor: "var(--border)" }}
                   aria-hidden
                 >
                   {done && (

@@ -237,7 +237,7 @@ function AnswerFlow() {
 
       <div className="flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
         {steps.map((_, i) => (
-          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.pillText : "color-mix(in srgb, var(--cat-pill-text) 30%, transparent)" }} />
+          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.pill : "color-mix(in srgb, var(--cat-pill) 30%, transparent)" }} />
         ))}
       </div>
 
