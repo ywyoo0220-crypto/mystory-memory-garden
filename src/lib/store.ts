@@ -188,6 +188,11 @@ export const actions = {
     write(KEY, records);
     set({ records });
   },
+  restoreExamples() {
+    const records = { ...seeds, ...state.records };
+    write(KEY, records);
+    set({ records });
+  },
   clearAll() {
     write(KEY, {});
     set({ records: {} });
