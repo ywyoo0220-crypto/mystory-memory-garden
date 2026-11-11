@@ -42,7 +42,7 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
               </div>
             )}
             {i === 0 && rec.photo && (
-              <img src={rec.photo} alt="첨부한 사진" loading="lazy" className="aspect-[16/10] w-full rounded-3xl object-cover" />
+              <img src={rec.photo} alt="첨부한 사진" loading="lazy" className="aspect-[16/10] w-full rounded-3xl border object-cover" style={{ borderColor: fg }} />
             )}
           </div>
         );
@@ -95,10 +95,10 @@ export function CategoryCard({
           <CategoryPill cat={cat} />
           <span
             className="inline-flex h-8 items-center gap-2 rounded-full px-3 text-[0.8125rem]"
-            style={{ ...catVars(cat.id), background: c.pill, color: c.pillText }}
+            style={{ ...catVars(cat.id), background: "transparent", color: c.count, border: `1px solid ${c.count}` }}
           >
             기록 {entries.length}개
-            <span className="h-3 w-px" style={{ background: c.fg, opacity: 0.3 }} />
+            <span className="h-3 w-px" style={{ background: `color-mix(in srgb, ${c.count} 30%, transparent)` }} />
             <span className="font-bold">{open ? "접기" : "펼치기"}</span>
             <svg
               width="12"
@@ -121,16 +121,16 @@ export function CategoryCard({
         <div>
           <div className="space-y-10 pt-5">
             {entries.map(([qid, rec], i) => (
-              <RecordBody key={qid} qid={qid} rec={rec} fg={c.fg} accent={c.btnFg} showCore={i > 0} />
+              <RecordBody key={qid} qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={i > 0} />
             ))}
             <div className="grid grid-cols-2 gap-2 pb-1">
               {editing ? (
-                <div className="flex h-14 overflow-hidden rounded-full border-[1.5px]" style={{ borderColor: c.fg }}>
-                  <Button variant="palette" type="button" onClick={fix} className="h-full flex-1 text-[0.9375rem] font-medium">
+                <div className="flex h-14 overflow-hidden rounded-full border" style={{ borderColor: c.fg }}>
+                  <Button variant="palette" type="button" onClick={fix} style={{ color: c.fg }} className="h-full flex-1 text-[0.9375rem] font-medium">
                     고치기
                   </Button>
-                  <span className="w-px" style={{ background: c.fg, opacity: 0.3 }} />
-                  <Button variant="palette" type="button" onClick={del} className="h-full flex-1 text-[0.9375rem] font-medium">
+                  <span className="w-px" style={{ background: `color-mix(in srgb, ${c.fg} 30%, transparent)` }} />
+                  <Button variant="palette" type="button" onClick={del} style={{ color: c.fg }} className="h-full flex-1 text-[0.9375rem] font-medium">
                     지우기
                   </Button>
                 </div>
@@ -138,8 +138,8 @@ export function CategoryCard({
                 <Button variant="palette"
                   type="button"
                   onClick={() => setEditing(true)}
-                  className="h-14 rounded-full border-[1.5px] p-0 text-[0.9375rem] font-medium"
-                  style={{ borderColor: c.fg }}
+                  className="h-14 rounded-full border p-0 text-[0.9375rem] font-medium"
+                  style={{ borderColor: c.fg, color: c.fg, background: "transparent" }}
                 >
                   수정하기
                 </Button>

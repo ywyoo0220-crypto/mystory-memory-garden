@@ -237,7 +237,7 @@ function AnswerFlow() {
 
       <div className="flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
         {steps.map((_, i) => (
-          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.pillText : "color-mix(in srgb, var(--cat-pill-text) 30%, transparent)" }} />
+          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.pill : "color-mix(in srgb, var(--cat-pill) 30%, transparent)" }} />
         ))}
       </div>
 
@@ -254,7 +254,7 @@ function AnswerFlow() {
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="쓰거나 말로 남기세요."
         rows={6}
-        className="mt-6 w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill-text)"
+        className="mt-6 w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
       />
 
       {photo && step === 0 && (

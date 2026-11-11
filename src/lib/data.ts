@@ -1,7 +1,7 @@
 import raw from "@/data/questions.json";
 
 export type Kind = "topic" | "period";
-export type CatColor = { background: string; text: string; pill: string; pillText: string; buttonText: string; tint: string };
+export type CatColor = { background: string; text: string; pill: string; pillText: string; countText: string; buttonBackground: string; buttonText: string; tint: string };
 export type Question = { id: string; core: string; followUps: string[] };
 export type Category = {
   id: string;
@@ -25,6 +25,8 @@ function tokenColor(id: string): CatColor {
     text: `var(--${id}-text)`,
     pill: `var(--${id}-pill)`,
     pillText: `var(--${id}-pill-text)`,
+    countText: `var(--${id}-count-text)`,
+    buttonBackground: `var(--${id}-button-bg)`,
     buttonText: `var(--${id}-button-text)`,
     tint: `var(--${id}-tint)`,
   };
@@ -45,8 +47,8 @@ export function getQuestion(qid: string) {
 export function categoriesOf(kind: Kind) {
   return kind === "topic" ? topics : periods;
 }
-/** Card surface colors: filled button = text bg + background label. */
+/** Card surface colors. On light list screens (tint), `pill` is the legible accent. */
 export function cardColors(c: Category) {
-  const { background, text, pill, pillText, buttonText, tint } = c.color;
-  return { bg: background, fg: text, pill, pillText, tint, btnBg: text, btnFg: buttonText };
+  const { background, text, pill, pillText, countText, buttonBackground, buttonText, tint } = c.color;
+  return { bg: background, fg: text, pill, pillText, count: countText, tint, btnBg: buttonBackground, btnFg: buttonText };
 }

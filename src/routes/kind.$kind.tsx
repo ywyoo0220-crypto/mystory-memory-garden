@@ -43,7 +43,7 @@ function KindList() {
           const inner = (
             <>
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full" style={{ background: c.color.tint }}>
-                <Glyph cat={c} size={22} color={c.color.pillText} />
+                <Glyph cat={c} size={22} color={c.color.pill} />
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[1.0625rem] font-semibold">{c.name}</span>
@@ -53,7 +53,7 @@ function KindList() {
               </span>
               {!pending && (
                 <span className="h-1 w-14 overflow-hidden rounded-full bg-muted" aria-hidden>
-                  <span className="block h-full rounded-full" style={{ background: c.color.pillText, width: `${(done / total) * 100}%` }} />
+                  <span className="block h-full rounded-full" style={{ background: c.color.pill, width: `${(done / total) * 100}%` }} />
                 </span>
               )}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { categoryOfQuestion, getQuestion } from "@/lib/data";
 import { actions, hasContent, useStore } from "@/lib/store";
-import { ThemeChips } from "@/components/ThemeChips";
 
 export const Route = createFileRoute("/my")({
   head: () => ({
@@ -18,7 +17,7 @@ export const Route = createFileRoute("/my")({
 });
 
 function My() {
-  const { records, large, hideChips } = useStore();
+  const { records, large } = useStore();
   const entries = Object.entries(records).filter(([, r]) => hasContent(r));
   const topicN = entries.filter(([q]) => q.startsWith("T")).length;
   const periodN = entries.length - topicN;
@@ -81,16 +80,6 @@ function My() {
           모든 기록 지우기
         </button>
       </div>
-      <section className="mt-4 overflow-hidden rounded-[28px] bg-card">
-        <h2 className="px-6 pt-5 text-[1.0625rem] font-semibold">배색 비교</h2>
-        <ThemeChips className="px-6 py-4" />
-        <button type="button" className={`${row} border-t`} onClick={actions.toggleHideChips} aria-pressed={hideChips}>
-          비교용 배색 칩 숨기기
-          <span className={`flex h-8 w-14 items-center rounded-full p-1 transition-colors ${hideChips ? "bg-ink" : "bg-muted"}`}>
-            <span className={`size-6 rounded-full bg-card transition-transform ${hideChips ? "translate-x-6" : ""}`} />
-          </span>
-        </button>
-      </section>
       <p className="mt-6 text-[0.9375rem] leading-[1.6] text-muted-foreground">
         기록은 이 기기의 브라우저에만 저장됩니다.
       </p>

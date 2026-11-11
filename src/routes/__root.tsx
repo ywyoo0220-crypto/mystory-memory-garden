@@ -14,7 +14,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppNav } from "../components/AppNav";
 import { themeCss } from "../lib/theme";
-import { ThemeProvider } from "../components/ThemeProvider";
 
 function NotFoundComponent() {
   return (
@@ -131,13 +130,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <div className="mx-auto min-h-screen w-full max-w-[440px] bg-paper pb-32">
         <Outlet />
       </div>
       <AppNav />
-      </ThemeProvider>
     </QueryClientProvider>
   );
 }

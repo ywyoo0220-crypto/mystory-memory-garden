@@ -68,7 +68,7 @@ export function VoicePlayer({ text, durationSec, fg, accent }: { text: string; d
           <span
             key={i}
             className="w-[2px] flex-1 rounded-full"
-            style={{ height: `${h * 100}%`, background: fg, opacity: i / bars.length <= progress ? 1 : 0.35 }}
+            style={{ height: `${h * 100}%`, background: i / bars.length <= progress ? fg : `color-mix(in srgb, ${fg} 35%, transparent)` }}
           />
         ))}
       </div>

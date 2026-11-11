@@ -41,7 +41,7 @@ function RecordStart() {
                   className="flex size-9 items-center justify-center rounded-full ring-2 ring-card"
                   style={{ ...catVars(c.id), background: c.color.tint }}
                 >
-                  <Glyph cat={c} size={16} color={c.color.pillText} />
+                  <Glyph cat={c} size={16} color={c.color.pill} />
                 </span>
               ))}
             </div>

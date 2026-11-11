@@ -2,7 +2,6 @@ import { useSyncExternalStore } from "react";
 import notebook from "@/assets/seed-notebook.jpg";
 import house from "@/assets/seed-house.jpg";
 import type { Kind } from "./data";
-import { DEFAULT_THEME, isThemeId, type ThemeId } from "./theme";
 
 export type StoryRecord = {
   answers: string[];
@@ -15,10 +14,14 @@ export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
 const SEEDED = "mystory.seeded.v6";
-const THEME = "mystory.theme";
-const HIDE_CHIPS = "mystory.hideThemeChips";
 const LARGE = "mystory.large.v1";
 const VIEW = "mystory.view.v1";
+
+try {
+  if (typeof window !== "undefined") { localStorage.removeItem("mystory.theme"); localStorage.removeItem("mystory.hideThemeChips"); }
+} catch {
+  /* noop */
+}
 
 function read<T>(k: string, fb: T): T {
   try {
@@ -127,8 +130,8 @@ const seeds: Records = {
   },
 };
 
-type State = { records: Records; large: boolean; view: Kind; theme: ThemeId; hideChips: boolean };
-let state: State = { records: {}, large: false, view: "topic", theme: DEFAULT_THEME, hideChips: false };
+type State = { records: Records; large: boolean; view: Kind };
+let state: State = { records: {}, large: false, view: "topic" };
 let loaded = false;
 const listeners = new Set<() => void>();
 
@@ -142,23 +145,18 @@ function load() {
     write(KEY, records);
     write(SEEDED, true);
   }
-  const t = read<unknown>(THEME, DEFAULT_THEME);
-  state = { records, large: read(LARGE, false), view: read<Kind>(VIEW, "topic"), theme: isThemeId(t) ? t : DEFAULT_THEME, hideChips: read(HIDE_CHIPS, false) };
+  state = { records, large: read(LARGE, false), view: read<Kind>(VIEW, "topic") };
   applyLarge();
-  applyTheme();
 }
 function applyLarge() {
   if (typeof document !== "undefined") document.documentElement.classList.toggle("large", state.large);
-}
-function applyTheme() {
-  if (typeof document !== "undefined") document.documentElement.dataset["theme"] = state.theme;
 }
 function set(p: Partial<State>) {
   state = { ...state, ...p };
   listeners.forEach((l) => l());
 }
 
-const serverState: State = { records: {}, large: false, view: "topic", theme: DEFAULT_THEME, hideChips: false };
+const serverState: State = { records: {}, large: false, view: "topic" };
 export function useStore() {
   return useSyncExternalStore(
     (l) => {
@@ -198,15 +196,6 @@ export const actions = {
     write(LARGE, !state.large);
     set({ large: !state.large });
     applyLarge();
-  },
-  setTheme(theme: ThemeId) {
-    write(THEME, theme);
-    set({ theme });
-    applyTheme();
-  },
-  toggleHideChips() {
-    write(HIDE_CHIPS, !state.hideChips);
-    set({ hideChips: !state.hideChips });
   },
   setView(view: Kind) {
     write(VIEW, view);

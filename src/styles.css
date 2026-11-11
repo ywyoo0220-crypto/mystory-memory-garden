@@ -52,7 +52,7 @@
   --secondary: #ebe6df;
   --secondary-foreground: #1a1918;
   --muted: #ebe6df;
-  --muted-foreground: #6b655e;
+  --muted-foreground: #534e49;
   --accent: #ebe6df;
   --accent-foreground: #1a1918;
   --destructive: #b3261e;
@@ -118,8 +118,7 @@
   background-color: var(--cat-bg);
 }
 .category-list {
-  --ring: var(--cat-pill-text);
-  color: var(--cat-pill-text);
+  --ring: var(--cat-pill);
 }
 .category-surface :focus-visible, .category-list :focus-visible {
   outline-color: var(--ring);
