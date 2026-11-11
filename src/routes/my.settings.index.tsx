@@ -63,6 +63,10 @@ function Settings() {
           <h2 className={label}>데이터</h2>
           <Card className="divide-y overflow-hidden">
             <div className={rowCls}>
+              <span className="flex-1 text-[1.0625rem] font-medium">처음 안내 다시 보기</span>
+              <Link to="/onboarding/$n" params={{ n: "1" }} className={`${small} inline-flex items-center`}>보기</Link>
+            </div>
+            <div className={rowCls}>
               <span className="flex-1 text-[1.0625rem] font-medium">예시 기록 다시 담기</span>
               <button type="button" className={small} onClick={() => { actions.restoreExamples(); toast("예시 기록을 담았어요"); }}>불러오기</button>
             </div>

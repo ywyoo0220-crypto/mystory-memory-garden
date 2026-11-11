@@ -36,3 +36,4 @@ use the editor.
 - Photos are blobs in IndexedDB (src/lib/media.ts, records keep "idb:" refs); voice blobs are in IndexedDB "ms-audio" keyed recordId:step (src/lib/audio.ts) and records keep only `voices` metadata — localStorage is too small for media; still no backend.
 - MY screens each have their own route under /my/* (usability testing); profile, settings, shares and the hashed lock PIN live in localStorage via src/lib/prefs.ts, separate from records.
 - Text size is a 3-step setting (html.large / html.xlarge root font-size); the floating button only toggles step 0 ↔ 1.
+- First-run onboarding lives at /onboarding/$n (one route per screen for Maze); root redirects there after the lock while localStorage "ms.onb" is unset, and hides AppNav on it.

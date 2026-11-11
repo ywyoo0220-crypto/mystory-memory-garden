@@ -21,6 +21,8 @@ import { Route as MyArchiveRouteImport } from './routes/my.archive'
 import { Route as MyBackupRouteImport } from './routes/my.backup'
 import { Route as MyExportRouteImport } from './routes/my.export'
 import { Route as MyProfileRouteImport } from './routes/my.profile'
+import { Route as OnboardingIndexRouteImport } from './routes/onboarding.index'
+import { Route as OnboardingNRouteImport } from './routes/onboarding.$n'
 import { Route as MySettingsIndexRouteImport } from './routes/my.settings.index'
 import { Route as MySettingsLockRouteImport } from './routes/my.settings.lock'
 import { Route as MyShareIndexRouteImport } from './routes/my.share.index'
@@ -86,6 +88,16 @@ const MyProfileRoute = MyProfileRouteImport.update({
   path: '/my/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
+  id: '/onboarding/',
+  path: '/onboarding/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingNRoute = OnboardingNRouteImport.update({
+  id: '/onboarding/$n',
+  path: '/onboarding/$n',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MySettingsIndexRoute = MySettingsIndexRouteImport.update({
   id: '/my/settings/',
   path: '/my/settings/',
@@ -119,7 +131,9 @@ export interface FileRoutesByFullPath {
   '/my/backup': typeof MyBackupRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
+  '/onboarding/$n': typeof OnboardingNRoute
   '/my/': typeof MyIndexRoute
+  '/onboarding/': typeof OnboardingIndexRoute
   '/my/settings/lock': typeof MySettingsLockRoute
   '/my/share/manage': typeof MyShareManageRoute
   '/my/settings/': typeof MySettingsIndexRoute
@@ -137,7 +151,9 @@ export interface FileRoutesByTo {
   '/my/backup': typeof MyBackupRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
+  '/onboarding/$n': typeof OnboardingNRoute
   '/my': typeof MyIndexRoute
+  '/onboarding': typeof OnboardingIndexRoute
   '/my/settings/lock': typeof MySettingsLockRoute
   '/my/share/manage': typeof MyShareManageRoute
   '/my/settings': typeof MySettingsIndexRoute
@@ -156,7 +172,9 @@ export interface FileRoutesById {
   '/my/backup': typeof MyBackupRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
+  '/onboarding/$n': typeof OnboardingNRoute
   '/my/': typeof MyIndexRoute
+  '/onboarding/': typeof OnboardingIndexRoute
   '/my/settings/lock': typeof MySettingsLockRoute
   '/my/share/manage': typeof MyShareManageRoute
   '/my/settings/': typeof MySettingsIndexRoute
@@ -176,7 +194,9 @@ export interface FileRouteTypes {
     | '/my/backup'
     | '/my/export'
     | '/my/profile'
+    | '/onboarding/$n'
     | '/my/'
+    | '/onboarding/'
     | '/my/settings/lock'
     | '/my/share/manage'
     | '/my/settings/'
@@ -194,7 +214,9 @@ export interface FileRouteTypes {
     | '/my/backup'
     | '/my/export'
     | '/my/profile'
+    | '/onboarding/$n'
     | '/my'
+    | '/onboarding'
     | '/my/settings/lock'
     | '/my/share/manage'
     | '/my/settings'
@@ -212,7 +234,9 @@ export interface FileRouteTypes {
     | '/my/backup'
     | '/my/export'
     | '/my/profile'
+    | '/onboarding/$n'
     | '/my/'
+    | '/onboarding/'
     | '/my/settings/lock'
     | '/my/share/manage'
     | '/my/settings/'
@@ -231,7 +255,9 @@ export interface RootRouteChildren {
   MyBackupRoute: typeof MyBackupRoute
   MyExportRoute: typeof MyExportRoute
   MyProfileRoute: typeof MyProfileRoute
+  OnboardingNRoute: typeof OnboardingNRoute
   MyIndexRoute: typeof MyIndexRoute
+  OnboardingIndexRoute: typeof OnboardingIndexRoute
   MySettingsLockRoute: typeof MySettingsLockRoute
   MyShareManageRoute: typeof MyShareManageRoute
   MySettingsIndexRoute: typeof MySettingsIndexRoute
@@ -324,6 +350,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/': {
+      id: '/onboarding/'
+      path: '/onboarding'
+      fullPath: '/onboarding/'
+      preLoaderRoute: typeof OnboardingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/$n': {
+      id: '/onboarding/$n'
+      path: '/onboarding/$n'
+      fullPath: '/onboarding/$n'
+      preLoaderRoute: typeof OnboardingNRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/my/settings/': {
       id: '/my/settings/'
       path: '/my/settings'
@@ -367,7 +407,9 @@ const rootRouteChildren: RootRouteChildren = {
   MyBackupRoute: MyBackupRoute,
   MyExportRoute: MyExportRoute,
   MyProfileRoute: MyProfileRoute,
+  OnboardingNRoute: OnboardingNRoute,
   MyIndexRoute: MyIndexRoute,
+  OnboardingIndexRoute: OnboardingIndexRoute,
   MySettingsLockRoute: MySettingsLockRoute,
   MyShareManageRoute: MyShareManageRoute,
   MySettingsIndexRoute: MySettingsIndexRoute,

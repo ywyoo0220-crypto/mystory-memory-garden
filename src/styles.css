@@ -170,3 +170,15 @@
     print-color-adjust: exact;
   }
 }
+
+@keyframes onb-fill {
+  from { background: var(--border); }
+}
+@keyframes onb-rise {
+  from { opacity: 0; transform: translateY(8px); }
+}
+.onb-fill { animation: onb-fill 0.5s ease both; }
+.onb-rise { animation: onb-rise 0.5s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .onb-fill, .onb-rise { animation: none; }
+}

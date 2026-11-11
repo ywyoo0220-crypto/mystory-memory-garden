@@ -18,6 +18,7 @@ import { AppNav } from "../components/AppNav";
 import { Toaster } from "../components/ui/sonner";
 import { themeCss } from "../lib/theme";
 import { getPrefs } from "../lib/prefs";
+import { onbDone } from "../lib/onboarding";
 
 function NotFoundComponent() {
   return (
@@ -137,14 +138,17 @@ function RootComponent() {
   useEffect(() => {
     let unlocked = false;
     try { unlocked = sessionStorage.getItem("mystory.unlocked") === "1"; } catch { /* noop */ }
-    if (!unlocked && path !== "/lock" && getPrefs().pinHash) navigate({ to: "/lock", replace: true });
+    if (!unlocked && path !== "/lock" && getPrefs().pinHash) return void navigate({ to: "/lock", replace: true });
+    // First-run onboarding, after the lock is passed.
+    if (path !== "/lock" && !path.startsWith("/onboarding") && !onbDone()) navigate({ to: "/onboarding/$n", params: { n: "1" }, replace: true });
   }, [path, navigate]);
-  const locked = path === "/lock";
+  const onb = path.startsWith("/onboarding");
+  const locked = path === "/lock" || onb;
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <div className="mx-auto min-h-app w-full max-w-[440px] bg-paper pt-safe pb-nav">
+      <div className={`mx-auto min-h-app w-full max-w-[440px] bg-paper pt-safe ${onb ? "" : "pb-nav"}`}>
         <Outlet />
       </div>
       {!locked && <AppNav />}
