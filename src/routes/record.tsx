@@ -19,8 +19,8 @@ export const Route = createFileRoute("/record")({
 
 function RecordStart() {
   const opts = [
-    { kind: "topic" as const, title: "주제로", desc: "가족, 일, 사랑처럼 주제를 골라 답해요.", cats: topics.slice(0, 5) },
-    { kind: "period" as const, title: "시기로", desc: "유년기부터 지금까지, 시기를 골라 답해요.", cats: periods.slice(0, 5) },
+    { kind: "topic" as const, title: "주제로 기록하기", desc: "가족, 일, 건강처럼 주제별로 기록해요.", cats: topics.slice(0, 5) },
+    { kind: "period" as const, title: "시기로 기록하기", desc: "유년기부터 지금까지, 시기별로 기록해요.", cats: periods.slice(0, 5) },
   ];
   return (
     <main className="px-6 pt-12">
