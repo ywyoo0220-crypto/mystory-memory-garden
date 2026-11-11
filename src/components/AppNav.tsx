@@ -19,9 +19,10 @@ export function AppNav() {
   return (
     <nav
       aria-label="주요 메뉴"
-      className="fixed inset-x-0 bottom-[calc(16px+env(safe-area-inset-bottom))] z-40 mx-auto grid w-full max-w-[440px] grid-cols-[minmax(0,1fr)_auto_minmax(3rem,1fr)] items-center pl-3"
+      className="fixed inset-x-0 bottom-[calc(16px+env(safe-area-inset-bottom))] z-40 mx-auto flex w-full max-w-[440px] items-center"
     >
-      <div className="col-start-2 flex min-w-0 items-center rounded-full bg-card p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
+      <div aria-hidden={true} className="w-[7%] shrink-0" />
+      <div className="flex min-w-0 items-center rounded-full bg-card p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
         {items.map((it) => {
           const active = it.match(path);
           return (
@@ -29,7 +30,7 @@ export function AppNav() {
               key={it.to}
               to={it.to}
               aria-current={active ? "page" : undefined}
-              className={`flex h-12 min-w-12 shrink items-center justify-center whitespace-nowrap rounded-full px-[min(1rem,3.2vw)] text-[0.9375rem] font-medium transition-colors ${
+              className={`flex h-12 min-w-[44px] shrink items-center justify-center whitespace-nowrap rounded-full px-[clamp(6px,2.8vw,14px)] text-[0.9375rem] font-medium transition-colors ${
                 active ? "bg-ink text-ink-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -38,15 +39,17 @@ export function AppNav() {
           );
         })}
       </div>
+      <div aria-hidden={true} className="min-w-0 flex-1" />
       <button
         type="button"
         onClick={actions.toggleLarge}
         aria-pressed={large}
         aria-label="글자 크게 보기"
-        className="justify-self-center flex size-[min(3.75rem,15vw)] min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full bg-ink text-[0.9375rem] font-semibold text-ink-foreground"
+        className="flex size-[min(3.75rem,14vw)] min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-full bg-ink text-[0.9375rem] font-semibold text-ink-foreground"
       >
         {large ? "보통" : "크게"}
       </button>
+      <div aria-hidden={true} className="min-w-0 flex-1" />
     </nav>
   );
 }
