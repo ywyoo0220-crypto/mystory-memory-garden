@@ -168,16 +168,18 @@ export function RecordCard({
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-wrap items-center gap-x-5">
-                    <button type="button" className={textBtn} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
-                      이어서 고치기
-                    </button>
-                    <button type="button" className={textBtn} onClick={() => setConfirming(true)}>
+                  <div className="pt-3">
+                    <div className="flex gap-2">
+                      <button type="button" className="flex min-h-12 flex-1 items-center justify-center rounded-full px-4 text-[1rem] font-bold" style={{ background: c.btnBg, color: c.btnFg }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
+                        수정하기
+                      </button>
+                      <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-12 flex-[1.4] items-center justify-center rounded-full px-4 text-center text-[1rem] font-bold" style={{ border: `1px solid ${c.fg}`, color: c.fg }}>
+                        {cat.name} 이야기 더 하기
+                      </Link>
+                    </div>
+                    <button type="button" className={`${textBtn} mt-1`} onClick={() => setConfirming(true)}>
                       지우기
                     </button>
-                    <Link to="/cat/$catId" params={{ catId: cat.id }} className={`${textBtn} inline-flex items-center font-bold`}>
-                      {cat.name} 이야기 더 하기
-                    </Link>
                   </div>
                 )}
               </div>
