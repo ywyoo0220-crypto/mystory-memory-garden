@@ -26,6 +26,7 @@ function group(records: Records, kind: Kind) {
       const entries = cat.questions
         .filter((q) => hasContent(records[q.id]))
         .map((q) => [q.id, records[q.id]] as [string, StoryRecord]);
+      if (kind === "topic") entries.sort((a, b) => b[1].updatedAt - a[1].updatedAt);
       return { cat, entries };
     })
     .filter((g) => g.entries.length > 0);

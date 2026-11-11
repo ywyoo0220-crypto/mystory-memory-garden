@@ -70,7 +70,13 @@ export function CategoryCard({
   const [editing, setEditing] = useState(false);
   const navigate = useNavigate();
   const firstId = entries[0]?.[0] ?? "";
-  const first = getQuestion(firstId);
+  const headId = entries.reduce((m, e) => (e[1].updatedAt > (m[1]?.updatedAt ?? -Infinity) ? e : m), entries[0] ?? ["", undefined as unknown as StoryRecord])[0];
+  const first = getQuestion(headId);
+  const others = entries.filter(([q]) => q !== headId);
+  const goTo = (qid: string) => {
+    if (!open) onToggle();
+    setTimeout(() => document.getElementById(`rec-${qid}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), open ? 0 : 350);
+  };
 
   const fix = () => {
     if (entries.length === 1) navigate({ to: "/answer/$qid", params: { qid: firstId } });
@@ -117,11 +123,33 @@ export function CategoryCard({
         <h2 className="mt-5 font-serif text-[1.5rem] leading-[1.4]">{first?.core}</h2>
       </Button>
 
+      {!open && others.length > 0 && (
+        <ul className="mt-3 space-y-1">
+          {others.slice(0, 2).map(([qid]) => (
+            <li key={qid}>
+              <button type="button" onClick={() => goTo(qid)} className="flex min-h-8 w-full items-center gap-2.5 rounded-lg text-left text-[0.9375rem]" style={{ color: c.fg }}>
+                <span className="size-[5px] shrink-0 rounded-full" style={{ background: c.fg }} aria-hidden />
+                <span className="truncate">{getQuestion(qid)?.core}</span>
+              </button>
+            </li>
+          ))}
+          {entries.length > 3 && (
+            <li>
+              <button type="button" onClick={() => goTo(others[2]![0])} className="min-h-8 pl-[15px] text-left text-[0.9375rem] font-bold" style={{ color: c.fg }}>
+                외 {entries.length - 3}개
+              </button>
+            </li>
+          )}
+        </ul>
+      )}
+
       <div className="expand" data-open={open}>
         <div>
           <div className="space-y-10 pt-5">
             {entries.map(([qid, rec], i) => (
-              <RecordBody key={qid} qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={i > 0} />
+              <div key={qid} id={`rec-${qid}`} className="scroll-mt-[calc(5rem+env(safe-area-inset-top))]">
+                <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={!(i === 0 && qid === headId)} />
+              </div>
             ))}
             <div className="grid grid-cols-2 gap-2 pb-1">
               {editing ? (
