@@ -1,5 +1,5 @@
 import { catVars } from "@/lib/theme";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { categoriesOf, type Kind } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
 import { CategoryIcon } from "@/components/CategoryIcon";
@@ -29,10 +29,12 @@ function KindList() {
   const kind = Route.useParams().kind as Kind;
   const { records } = useStore();
   const cats = categoriesOf(kind);
+  const navigate = useNavigate();
   return (
     <main>
       <BackBar
         title={kind === "topic" ? "주제 고르기" : "시기 고르기"}
+        onBack={() => navigate({ to: "/record" })}
       />
       <div className="px-6 pb-6 pt-4">
         <h1 className="font-serif text-[1.75rem] leading-[1.4]">{kind === "topic" ? "주제를 고르세요." : "시기를 고르세요."}</h1>
