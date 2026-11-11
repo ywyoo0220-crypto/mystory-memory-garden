@@ -86,7 +86,7 @@ export function CategoryCard({
   return (
     <div
       className="group/card relative"
-      style={{ zIndex: z, marginTop: `calc(${z === 0 ? "0rem" : "var(--stack-overlap, -2rem)"} + ${peek}rem)` }}
+      style={{ zIndex: z, marginTop: `calc(${z === 1 ? "0rem" : "-2rem"} + ${peek}rem)` }}
       data-sheets={sheets}
     >
       {sheets >= 2 && (
