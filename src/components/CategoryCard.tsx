@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { cardColors, getQuestion, type Category } from "@/lib/data";
 import { actions, recordPhotos, type StoryRecord } from "@/lib/store";
@@ -91,7 +91,6 @@ export function RecordCard({
 
   useEffect(() => {
     if (!open) {
-      setConfirming(false);
       return;
     }
     const t = window.setTimeout(() => {
