@@ -355,7 +355,7 @@ function AnswerFlow() {
 
   return (
     <main className="category-list flex min-h-app flex-col px-6 pb-[calc(6rem+16px+env(safe-area-inset-bottom))]" style={catVars(cat.id)}>
-      <div className="flex h-16 items-center justify-between">
+      <div className="relative flex h-16 items-center justify-between">
         <button
           type="button"
           onClick={async () => {
@@ -371,7 +371,7 @@ function AnswerFlow() {
             <path d="m15 5-7 7 7 7" />
           </svg>
         </button>
-        <CategoryPill cat={cat} />
+        <p className="pointer-events-none absolute inset-x-12 text-center text-[1rem] font-semibold">{cat.name}</p>
       </div>
 
       <div className="flex items-center gap-3">
