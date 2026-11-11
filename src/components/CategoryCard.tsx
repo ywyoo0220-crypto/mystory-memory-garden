@@ -171,10 +171,11 @@ export function CategoryCard({
               <Link
                 to="/cat/$catId"
                 params={{ catId: cat.id }}
-                className="flex min-h-14 items-center justify-center rounded-full px-3 text-center text-[0.9375rem] font-bold leading-tight"
+                className="flex min-h-14 flex-col items-center justify-center rounded-full px-3 py-1.5 text-center leading-tight break-keep"
                 style={{ background: c.btnBg, color: c.btnFg }}
               >
-                {cat.name} 이야기 더 하기
+                <span className="text-[0.875rem] font-bold">{cat.name}</span>
+                <span className="text-[0.8125rem] font-medium">이야기 더 하기</span>
               </Link>
             </div>
           </div>
