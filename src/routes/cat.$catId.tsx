@@ -1,7 +1,7 @@
 import { catVars } from "@/lib/theme";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { getCategory } from "@/lib/data";
-import { hasContent, useStore } from "@/lib/store";
+import { actions, hasContent, useStore } from "@/lib/store";
 import { Glyph } from "@/components/Glyph";
 import { BackBar } from "@/components/BackBar";
 
@@ -29,10 +29,17 @@ export const Route = createFileRoute("/cat/$catId")({
 function CatQuestions() {
   const cat = getCategory(Route.useParams().catId);
   const { records } = useStore();
+  const navigate = useNavigate();
   if (!cat) return null;
   return (
     <main className="category-list" style={catVars(cat.id)}>
-      <BackBar title={cat.kind === "topic" ? "주제" : "시기"} />
+      <BackBar
+        title={cat.kind === "topic" ? "주제" : "시기"}
+        onBack={() => {
+          actions.setView(cat.kind);
+          navigate({ to: "/" });
+        }}
+      />
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-center gap-4">
           <span className="flex size-14 items-center justify-center rounded-full" style={{ background: cat.color.tint }}>
