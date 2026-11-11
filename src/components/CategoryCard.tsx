@@ -34,7 +34,7 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
   const photos = recordPhotos(rec);
   return (
     <div className="space-y-6">
-      {showCore && <h3 className="font-serif text-[1.5rem] font-bold leading-[1.4]">{q.core}</h3>}
+      {showCore && <h3 className="font-serif text-[1.5rem] font-medium leading-[1.4]">{q.core}</h3>}
       {steps.map((label, i) => {
         const a = rec.answers[i]?.trim();
         const voice = rec.voice?.step === i ? rec.voice : undefined;
@@ -136,7 +136,7 @@ export function CategoryCard({
             </svg>
           </span>
         </div>
-        <h2 className="mt-5 font-serif text-[1.5rem] font-bold leading-[1.4]">{first?.core}</h2>
+        <h2 className="mt-5 font-serif text-[1.5rem] font-medium leading-[1.4]">{first?.core}</h2>
       </Button>
 
       <div className="expand" data-open={open}>
