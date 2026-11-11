@@ -86,7 +86,7 @@ export function CategoryCard({
   return (
     <div
       className="group/card relative"
-      style={{ zIndex: z, marginTop: `calc(${z === 1 ? "0rem" : "-2rem"} + ${peek}rem)` }}
+      style={{ zIndex: z, marginTop: `calc(${z === 1 ? "0rem" : "-3.25rem"} + ${peek}rem)` }}
       data-sheets={sheets}
     >
       {sheets >= 2 && (
@@ -96,7 +96,7 @@ export function CategoryCard({
         <div aria-hidden className="absolute inset-x-[0.625rem] -top-[0.375rem] h-16 rounded-t-[32px]" style={{ background: `color-mix(in srgb, ${c.bg} 60%, white)` }} />
       )}
     <section
-      className={`category-surface relative rounded-t-[32px] px-6 pt-6 ${last ? "rounded-b-[32px] pb-8" : "pb-14"}`}
+      className={`category-surface relative rounded-t-[32px] px-6 pt-6 ${last ? "rounded-b-[32px] pb-8" : "pb-[4.75rem]"}`}
       style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}
     >
       <Button variant="palette"
