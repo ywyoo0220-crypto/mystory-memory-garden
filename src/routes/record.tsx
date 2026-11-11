@@ -20,7 +20,7 @@ export const Route = createFileRoute("/record")({
 /** 미리 보여줄 주제 다섯 개 (순서대로). */
 const TOPIC_PREVIEW = ["T4", "T1", "T7", "T9", "T10"];
 /** 미리 보여줄 시기 다섯 개 (순서대로). */
-const PERIOD_PREVIEW = ["A1", "A3", "A5", "A6", "A9"];
+const PERIOD_PREVIEW = ["A1", "A3", "A6", "A7", "A9"];
 const previewPeriods = PERIOD_PREVIEW.map((id) => periods.find((c) => c.id === id)).filter(
   (c): c is (typeof periods)[number] => Boolean(c),
 );
