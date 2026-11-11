@@ -371,7 +371,7 @@ function AnswerFlow() {
             <path d="m15 5-7 7 7 7" />
           </svg>
         </button>
-        <p className="pointer-events-none absolute inset-x-12 text-center text-[1rem] font-semibold">{cat.name}</p>
+        <p className="pointer-events-none absolute inset-x-12 text-center text-[1rem] font-medium">{cat.name}</p>
       </div>
 
       <div className="flex items-center gap-3">
