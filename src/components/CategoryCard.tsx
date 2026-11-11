@@ -155,7 +155,7 @@ export function RecordCard({
                 <button type="button" className="h-14 rounded-full border text-[0.9375rem] font-medium" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
                   수정하기
                 </button>
-                <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 flex-col items-center justify-center rounded-full px-3 py-1.5 text-center leading-tight break-keep" style={{ background: c.btnBg, color: c.btnFg }}>
+                <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 flex-col items-center justify-center rounded-full px-3 py-1.5 text-center leading-tight break-keep" style={{ background: c.btnBg, color: "#FFFFFF" }}>
                   <span className="text-[0.9375rem] font-bold">{cat.name}</span>
                   <span className="text-[0.9375rem] font-medium">이야기 더 하기</span>
                 </Link>
