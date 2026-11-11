@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { cardColors, getQuestion, type Category } from "@/lib/data";
-import { actions, recordPhotos, type StoryRecord } from "@/lib/store";
+import { recordPhotos, type StoryRecord } from "@/lib/store";
 import { useMediaUrl } from "@/lib/media";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { catVars } from "@/lib/theme";
