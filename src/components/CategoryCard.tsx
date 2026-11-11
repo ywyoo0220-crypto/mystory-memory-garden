@@ -86,7 +86,6 @@ export function RecordCard({
 }) {
   const c = cardColors(cat);
   const q = getQuestion(qid);
-  const [confirming, setConfirming] = useState(false);
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -108,7 +107,6 @@ export function RecordCard({
   }, [open]);
 
   if (!q) return null;
-  const textBtn = "h-12 px-1 text-[0.9375rem] font-medium underline-offset-4 hover:underline";
 
   return (
     <div
@@ -154,34 +152,14 @@ export function RecordCard({
           <div>
             <div className="pt-5">
               <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
-              <div className="mt-8 border-t pt-2" style={{ borderColor: `color-mix(in srgb, ${c.fg} 30%, transparent)` }}>
-                {confirming ? (
-                  <div className="py-3" role="alert">
-                    <p className="text-[1rem] leading-[1.6]">‘{q.core}’ 기록을 지울까요? 지우면 되돌릴 수 없어요.</p>
-                    <div className="mt-2 flex gap-5">
-                      <button type="button" className={`${textBtn} font-bold`} onClick={() => actions.remove([qid])}>
-                        지우기
-                      </button>
-                      <button type="button" className={textBtn} onClick={() => setConfirming(false)}>
-                        그대로 두기
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="pt-3">
-                    <div className="flex gap-2">
-                      <button type="button" className="flex min-h-12 flex-1 items-center justify-center rounded-full px-4 text-[1rem] font-bold" style={{ background: c.btnBg, color: c.btnFg }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
-                        수정하기
-                      </button>
-                      <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-12 flex-[1.4] items-center justify-center rounded-full px-4 text-center text-[1rem] font-bold" style={{ border: `1px solid ${c.fg}`, color: c.fg }}>
-                        {cat.name} 이야기 더 하기
-                      </Link>
-                    </div>
-                    <button type="button" className={`${textBtn} mt-1`} onClick={() => setConfirming(true)}>
-                      지우기
-                    </button>
-                  </div>
-                )}
+              <div className="mt-8 grid grid-cols-2 gap-2 pb-1">
+                <button type="button" className="h-14 rounded-full border text-[0.9375rem] font-medium" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
+                  수정하기
+                </button>
+                <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 flex-col items-center justify-center rounded-full px-3 py-1.5 text-center leading-tight break-keep" style={{ background: c.btnBg, color: c.btnFg }}>
+                  <span className="text-[0.9375rem] font-bold">{cat.name}</span>
+                  <span className="text-[0.9375rem] font-medium">이야기 더 하기</span>
+                </Link>
               </div>
             </div>
           </div>
