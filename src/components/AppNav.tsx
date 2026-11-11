@@ -29,7 +29,7 @@ export function AppNav() {
               key={it.to}
               to={it.to}
               aria-current={active ? "page" : undefined}
-              className={`flex h-12 min-w-[42px] shrink items-center justify-center whitespace-nowrap rounded-full px-[clamp(8px,4vw,22px)] text-[0.9375rem] font-medium transition-colors ${
+              className={`flex h-12 min-w-[42px] shrink items-center justify-center whitespace-nowrap rounded-full text-[0.9375rem] font-medium transition-colors ${large ? "px-[clamp(6px,2.4vw,14px)]" : "px-[clamp(8px,4vw,22px)]"} ${
                 active ? "bg-ink text-ink-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
