@@ -309,7 +309,8 @@ function AnswerFlow() {
         </ul>
       )}
 
-      <div className="mt-3 grid grid-cols-2 gap-2">
+      <p className="mt-3 text-center text-[0.9375rem] text-muted-foreground">적는 내용은 이 기기에 바로 저장돼요.</p>
+      <div className="mt-4 grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={listening ? stopListening : startListening}
@@ -342,7 +343,6 @@ function AnswerFlow() {
           }}
         />
       </div>
-      <p className="mt-4 text-center text-[0.9375rem] text-muted-foreground">적는 내용은 이 기기에 바로 저장돼요.</p>
 
       {msg && (
         <p role="status" className="mt-4 rounded-2xl bg-muted px-4 py-3 text-[0.9375rem] leading-[1.6]">
