@@ -1,15 +1,42 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
+import { useMediaUrl } from "@/lib/media";
+import type { AudioClip } from "@/lib/store";
 
 const bars = Array.from({ length: 44 }, (_, i) => 0.25 + 0.75 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.6)));
 
-export function VoicePlayer({ text, durationSec, fg, accent }: { text: string; durationSec: number; fg: string; accent: string }) {
+/** Plays a recorded clip stored on this device. */
+export function RecordedClip({ clip, fg, accent }: { clip: AudioClip; fg: string; accent: string }) {
+  const url = useMediaUrl(clip.id);
+  return <VoicePlayer src={url} pending={!url} durationSec={clip.durationSec} fg={fg} accent={accent} />;
+}
+
+export function VoicePlayer({
+  text = "",
+  src,
+  pending,
+  durationSec,
+  fg,
+  accent,
+}: {
+  text?: string;
+  src?: string | undefined;
+  pending?: boolean;
+  durationSec: number;
+  fg: string;
+  accent: string;
+}) {
+  const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const timer = useRef<number | undefined>(undefined);
 
   const stop = () => {
     window.clearInterval(timer.current);
+    if (audio.current) {
+      audio.current.pause();
+      audio.current.currentTime = 0;
+    }
     try {
       window.speechSynthesis?.cancel();
     } catch {
@@ -19,11 +46,19 @@ export function VoicePlayer({ text, durationSec, fg, accent }: { text: string; d
     setProgress(0);
   };
   useEffect(() => stop, []);
+  useEffect(() => {
+    audio.current = null;
+  }, [src]);
 
   const play = () => {
     if (playing) return stop();
     setPlaying(true);
-    try {
+    if (src) {
+      const a = audio.current ?? new Audio(src);
+      audio.current = a;
+      a.onended = stop;
+      a.play().catch(stop);
+    } else try {
       const u = new SpeechSynthesisUtterance(text);
       u.lang = "ko-KR";
       u.rate = 0.95;
@@ -47,6 +82,7 @@ export function VoicePlayer({ text, durationSec, fg, accent }: { text: string; d
       <Button variant="palette"
         type="button"
         onClick={play}
+        disabled={pending}
         aria-label={playing ? "음성 멈추기" : "음성 듣기"}
         aria-pressed={playing}
         className="flex size-12 shrink-0 items-center justify-center rounded-full p-0"
