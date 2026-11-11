@@ -175,7 +175,7 @@ export function VoiceRecorder({
             type="button"
             onClick={stop}
             disabled={phase === "saving"}
-            className={`${big} bg-(--cat-pill-text) font-semibold text-(--cat-pill)`}
+            className={`${big} bg-(--cat-bg) font-semibold text-(--cat-text)`}
           >
             녹음 마치기
           </button>

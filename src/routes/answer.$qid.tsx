@@ -273,7 +273,7 @@ function AnswerFlow() {
 
       <div className="flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
         {steps.map((_, i) => (
-          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.pill : "color-mix(in srgb, var(--cat-pill) 30%, transparent)" }} />
+          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.bg : "var(--border)" }} />
         ))}
       </div>
 
@@ -317,7 +317,7 @@ function AnswerFlow() {
           aria-pressed={listening}
           disabled={recBusy}
           className={`flex h-14 items-center justify-center gap-2 rounded-full text-[1rem] font-medium disabled:opacity-40 ${
-            listening ? "bg-(--cat-pill-text) text-(--cat-pill)" : "bg-card"
+            listening ? "bg-(--cat-bg) text-(--cat-text)" : "bg-card"
           }`}
         >
           {listening && <span className="size-2.5 animate-pulse rounded-full bg-destructive" aria-hidden />}
@@ -366,7 +366,7 @@ function AnswerFlow() {
           type="button"
           onClick={() => go(false)}
           disabled={recBusy}
-          className="h-14 disabled:opacity-40 w-full rounded-full bg-(--cat-pill-text) text-[1rem] font-semibold text-(--cat-pill)"
+          className="h-14 disabled:opacity-40 w-full rounded-full bg-(--cat-bg) text-[1rem] font-semibold text-(--cat-text)"
         >
           {step < 3 ? "다음" : "기록 마치기"}
         </button>

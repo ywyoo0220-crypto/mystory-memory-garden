@@ -39,8 +39,8 @@ function CatQuestions() {
       />
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-center gap-4">
-          <span className="flex size-14 items-center justify-center rounded-full" style={{ background: cat.color.tint }}>
-            <span className="inline-flex" style={{ color: cat.color.pill }}><CategoryIcon id={cat.id} size={26} /></span>
+          <span className="flex size-14 items-center justify-center rounded-full" style={{ background: cat.color.background }}>
+            <span className="inline-flex" style={{ color: cat.color.text }}><CategoryIcon id={cat.id} size={26} /></span>
           </span>
           <h1 className="font-serif text-[1.75rem]">{cat.name}</h1>
         </div>
@@ -61,11 +61,11 @@ function CatQuestions() {
               >
                 <span
                   className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-[1.5px]"
-                  style={done ? { background: cat.color.pill, borderColor: cat.color.pill } : { borderColor: "var(--border)" }}
+                  style={done ? { background: cat.color.background, borderColor: cat.color.text } : { borderColor: "var(--border)" }}
                   aria-hidden
                 >
                   {done && (
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke={cat.color.tint} strokeWidth="2">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke={cat.color.text} strokeWidth="2">
                       <path d="m2.5 6 2.5 2.5 4.5-5" />
                     </svg>
                   )}
