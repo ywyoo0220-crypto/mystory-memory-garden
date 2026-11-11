@@ -38,8 +38,8 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
     <div className="space-y-6">
       {showCore && <h3 className="font-serif text-[1.5rem] font-medium leading-[1.4]">{q.core}</h3>}
       {steps.map((label, i) => {
-        const a = rec.answers[i]?.trim();
         const voice = rec.voices?.find((v) => v.step === i);
+        const a = rec.answers[i]?.trim() || voice?.text?.trim();
         if (!a && !voice && !(i === 0 && photos.length)) return null;
         return (
           <div key={i} className="space-y-3">

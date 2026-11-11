@@ -416,7 +416,7 @@ function AnswerFlow() {
       {voice && (
         <div className="mt-4">
           <div className="rounded-full border border-border bg-card py-1.5 pl-1.5 pr-4">
-            <VoiceBar recordId={qid} voice={voice} text={answers[step] ?? ""} fg={c.pill} accent={c.pillText} />
+            <VoiceBar recordId={qid} voice={voice} text={answers[step] || voice.text || ""} fg={c.pill} accent={c.pillText} />
           </div>
           <button
             type="button"

@@ -103,7 +103,7 @@ function My() {
           예시 기록 비우기 <span className="text-[0.875rem] text-muted-foreground">{exampleN}개</span>
         </button>
         <button type="button" className={row} onClick={actions.restoreExamples}>
-          예시 기록 다시 불러오기
+          예시 기록 담기
         </button>
         <button
           type="button"
