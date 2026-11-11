@@ -3,7 +3,7 @@ import { useState } from "react";
 import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 import { categoriesOf, type Kind } from "@/lib/data";
 import { actions, hasContent, useStore, type Records, type StoryRecord } from "@/lib/store";
-import { CategoryCard } from "@/components/CategoryCard";
+import { RecordCard } from "@/components/CategoryCard";
 import { ViewToggle } from "@/components/ViewToggle";
 
 export const Route = createFileRoute("/")({
@@ -20,24 +20,21 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-function group(records: Records, kind: Kind) {
-  return categoriesOf(kind)
-    .map((cat) => {
-      const entries = cat.questions
-        .filter((q) => hasContent(records[q.id]))
-        .map((q) => [q.id, records[q.id]] as [string, StoryRecord]);
-      if (kind === "topic") entries.sort((a, b) => b[1].updatedAt - a[1].updatedAt);
-      return { cat, entries };
-    })
-    .filter((g) => g.entries.length > 0);
+/** 주제별: newest recorded first, topics interleaved. 시간순: period order, then question order — never by date. */
+export function homeCards(records: Records, kind: Kind) {
+  const cards = categoriesOf(kind).flatMap((cat) =>
+    cat.questions.filter((q) => hasContent(records[q.id])).map((q) => ({ cat, qid: q.id, rec: records[q.id] as StoryRecord })),
+  );
+  if (kind === "topic") cards.sort((a, b) => b.rec.updatedAt - a.rec.updatedAt);
+  return cards;
 }
 
 function Home() {
   const { records, view } = useStore();
   const [open, setOpen] = useState<string | null>(null);
-  const groups = group(records, view);
+  const cards = homeCards(records, view);
   const other: Kind = view === "topic" ? "period" : "topic";
-  const otherCount = group(records, other).reduce((n, g) => n + g.entries.length, 0);
+  const otherCount = homeCards(records, other).length;
   const hasExamples = Object.values(records).some((r) => r.example);
 
   return (
@@ -55,7 +52,7 @@ function Home() {
         <ViewToggle value={view} onChange={(v) => { actions.setView(v); setOpen(null); }} />
       </header>
 
-      {groups.length === 0 ? (
+      {cards.length === 0 ? (
         <div className="mx-3 mt-10 rounded-[32px] bg-card px-6 py-12 text-center">
           <p className="font-serif text-[1.5rem] leading-[1.4]">
             {view === "topic" ? "아직 주제별 기록이 없어요." : "아직 시간순 기록이 없어요."}
@@ -73,15 +70,17 @@ function Home() {
         </div>
       ) : (
         <div className="-mx-3 mt-4">
-          {groups.map((g, i) => (
-            <CategoryCard
-              key={g.cat.id}
-              cat={g.cat}
-              entries={g.entries}
-              open={open === g.cat.id}
-              onToggle={() => setOpen(open === g.cat.id ? null : g.cat.id)}
+          {cards.map((k, i) => (
+            <RecordCard
+              key={k.qid}
+              qid={k.qid}
+              rec={k.rec}
+              cat={k.cat}
+              open={open === k.qid}
+              onToggle={() => setOpen(open === k.qid ? null : k.qid)}
+              first={i === 0}
+              last={i === cards.length - 1}
               z={i + 1}
-              last={i === groups.length - 1}
             />
           ))}
         </div>

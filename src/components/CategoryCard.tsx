@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { cardColors, getQuestion, type Category } from "@/lib/data";
 import { actions, recordPhotos, type StoryRecord } from "@/lib/store";
@@ -59,129 +59,132 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
   );
 }
 
-export function CategoryCard({
+const dateLabel = (t: number) => {
+  const d = new Date(t);
+  return `${d.getMonth() + 1}월 ${d.getDate()}일`;
+};
+
+/** One Home card = one answered core question (one record). */
+export function RecordCard({
+  qid,
+  rec,
   cat,
-  entries,
   open,
   onToggle,
-  z,
+  first,
   last,
+  z,
 }: {
+  qid: string;
+  rec: StoryRecord;
   cat: Category;
-  entries: [string, StoryRecord][];
   open: boolean;
   onToggle: () => void;
-  z: number;
+  first: boolean;
   last: boolean;
+  z: number;
 }) {
   const c = cardColors(cat);
-  const [editing, setEditing] = useState(false);
+  const q = getQuestion(qid);
+  const [confirming, setConfirming] = useState(false);
   const navigate = useNavigate();
-  const firstId = entries[0]?.[0] ?? "";
-  const headId = entries.reduce((m, e) => (e[1].updatedAt > (m[1]?.updatedAt ?? -Infinity) ? e : m), entries[0] ?? ["", undefined as unknown as StoryRecord])[0];
-  const first = getQuestion(headId);
-  const sheets = Math.min(entries.length - 1, 2);
-  const peek = sheets * 0.375; // rem: 6px per sheet
+  const ref = useRef<HTMLDivElement>(null);
 
-  const fix = () => {
-    if (entries.length === 1) navigate({ to: "/answer/$qid", params: { qid: firstId } });
-    else navigate({ to: "/cat/$catId", params: { catId: cat.id } });
-  };
-  const del = () => {
-    if (window.confirm(`${cat.name}의 기록 ${entries.length}개를 지울까요?`)) actions.remove(entries.map((e) => e[0]));
-  };
+  useEffect(() => {
+    if (!open) {
+      setConfirming(false);
+      return;
+    }
+    const t = window.setTimeout(() => {
+      const el = ref.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < 80 || r.top > window.innerHeight * 0.6) {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        el.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+      }
+    }, 80);
+    return () => window.clearTimeout(t);
+  }, [open]);
+
+  if (!q) return null;
+  const textBtn = "h-12 px-1 text-[0.9375rem] font-medium underline-offset-4 hover:underline";
 
   return (
     <div
-      className="group/card relative"
-      style={{ zIndex: z, marginTop: `calc(${z === 1 ? "0rem" : "-3.25rem"} + ${peek}rem)` }}
-      data-sheets={sheets}
+      ref={ref}
+      id={`rec-${qid}`}
+      className="relative scroll-mt-[calc(1rem+env(safe-area-inset-top))]"
+      style={{ zIndex: z, marginTop: first ? 0 : "-2rem" }}
     >
-      {sheets >= 2 && (
-        <div aria-hidden className="absolute inset-x-[1.25rem] -top-[0.75rem] h-16 rounded-t-[32px]" style={{ background: `color-mix(in srgb, ${c.bg} 32%, white)` }} />
-      )}
-      {sheets >= 1 && (
-        <div aria-hidden className="absolute inset-x-[0.625rem] -top-[0.375rem] h-16 rounded-t-[32px]" style={{ background: `color-mix(in srgb, ${c.bg} 60%, white)` }} />
-      )}
-    <section
-      className={`category-surface relative rounded-t-[32px] px-6 pt-6 ${last ? "rounded-b-[32px] pb-8" : "pb-[4.75rem]"}`}
-      style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}
-    >
-      <Button variant="palette"
-        type="button"
-        onClick={onToggle}
-        aria-expanded={open}
-        className="block h-auto w-full whitespace-normal rounded-2xl p-0 text-left [&_svg]:size-auto"
+      <section
+        className={`category-surface relative rounded-t-[32px] px-6 pt-6 ${last ? "rounded-b-[32px] pb-8" : "pb-[3.75rem]"}`}
+        style={{
+          ...catVars(cat.id),
+          background: c.bg,
+          color: c.fg,
+          boxShadow: first ? undefined : `inset 0 1px 0 0 color-mix(in srgb, ${c.count} 40%, transparent)`,
+        }}
       >
-        <div className="flex items-center justify-between gap-2">
-          <CategoryPill cat={cat} />
-          <span
-            className="inline-flex h-8 items-center gap-2 rounded-full px-3 text-[0.8125rem]"
-            style={{ ...catVars(cat.id), background: "transparent", color: c.count, border: `1px solid ${c.count}` }}
-          >
-            기록 {entries.length}개
-            <span className="h-3 w-px" style={{ background: `color-mix(in srgb, ${c.count} 30%, transparent)` }} />
-            <span className="font-bold">{open ? "접기" : "펼치기"}</span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-              aria-hidden
+        <Button
+          variant="palette"
+          type="button"
+          onClick={onToggle}
+          aria-expanded={open}
+          className="block h-auto w-full whitespace-normal rounded-2xl p-0 text-left [&_svg]:size-auto"
+        >
+          <div className="flex items-center justify-between gap-2">
+            <CategoryPill cat={cat} />
+            <span
+              className="inline-flex h-8 shrink-0 items-center gap-2 rounded-full px-3 text-[0.8125rem]"
+              style={{ background: "transparent", color: c.count, border: `1px solid ${c.count}` }}
             >
-              <path d="m3 4.5 3 3 3-3" />
-            </svg>
-          </span>
-        </div>
-        <h2 className="mt-5 font-serif text-[1.5rem] font-medium leading-[1.4]">{first?.core}</h2>
-      </Button>
+              {!open && dateLabel(rec.updatedAt)}
+              {!open && <span className="h-3 w-px" style={{ background: c.count }} />}
+              <span className="font-bold">{open ? "접기" : "펼치기"}</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden>
+                <path d="m3 4.5 3 3 3-3" />
+              </svg>
+            </span>
+          </div>
+          <h2 className="mt-5 font-serif text-[1.5rem] font-medium leading-[1.4]">{q.core}</h2>
+        </Button>
 
-      <div className="expand" data-open={open}>
-        <div>
-          <div className="space-y-10 pt-5">
-            {entries.map(([qid, rec], i) => (
-              <div key={qid} id={`rec-${qid}`} className="scroll-mt-[calc(5rem+env(safe-area-inset-top))]">
-                <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={!(i === 0 && qid === headId)} />
+        <div className="expand" data-open={open}>
+          <div>
+            <div className="pt-5">
+              <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
+              <div className="mt-8 border-t pt-2" style={{ borderColor: `color-mix(in srgb, ${c.fg} 30%, transparent)` }}>
+                {confirming ? (
+                  <div className="py-3" role="alert">
+                    <p className="text-[1rem] leading-[1.6]">‘{q.core}’ 기록을 지울까요? 지우면 되돌릴 수 없어요.</p>
+                    <div className="mt-2 flex gap-5">
+                      <button type="button" className={`${textBtn} font-bold`} onClick={() => actions.remove([qid])}>
+                        지우기
+                      </button>
+                      <button type="button" className={textBtn} onClick={() => setConfirming(false)}>
+                        그대로 두기
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap items-center gap-x-5">
+                    <button type="button" className={textBtn} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
+                      이어서 고치기
+                    </button>
+                    <button type="button" className={textBtn} onClick={() => setConfirming(true)}>
+                      지우기
+                    </button>
+                    <Link to="/cat/$catId" params={{ catId: cat.id }} className={`${textBtn} inline-flex items-center font-bold`}>
+                      {cat.name} 이야기 더 하기
+                    </Link>
+                  </div>
+                )}
               </div>
-            ))}
-            <div className="grid grid-cols-2 gap-2 pb-1">
-              {editing ? (
-                <div className="flex h-14 overflow-hidden rounded-full border" style={{ borderColor: c.fg }}>
-                  <Button variant="palette" type="button" onClick={fix} style={{ color: c.fg }} className="h-full flex-1 text-[0.9375rem] font-medium">
-                    고치기
-                  </Button>
-                  <span className="w-px" style={{ background: `color-mix(in srgb, ${c.fg} 30%, transparent)` }} />
-                  <Button variant="palette" type="button" onClick={del} style={{ color: c.fg }} className="h-full flex-1 text-[0.9375rem] font-medium">
-                    지우기
-                  </Button>
-                </div>
-              ) : (
-                <Button variant="palette"
-                  type="button"
-                  onClick={() => setEditing(true)}
-                  className="h-14 rounded-full border p-0 text-[0.9375rem] font-medium"
-                  style={{ borderColor: c.fg, color: c.fg, background: "transparent" }}
-                >
-                  수정하기
-                </Button>
-              )}
-              <Link
-                to="/cat/$catId"
-                params={{ catId: cat.id }}
-                className="flex min-h-14 flex-col items-center justify-center rounded-full px-3 py-1.5 text-center leading-tight break-keep"
-                style={{ background: c.btnBg, color: c.btnFg }}
-              >
-                <span className="text-[0.9375rem] font-bold">{cat.name}</span>
-                <span className="text-[0.9375rem] font-medium">이야기 더 하기</span>
-              </Link>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
     </div>
   );
 }

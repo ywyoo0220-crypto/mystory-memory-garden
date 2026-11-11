@@ -20,7 +20,7 @@ export type StoryRecord = {
 export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
-const SEEDED = "mystory.seeded.v8";
+const SEEDED = "mystory.seeded.v9";
 const LARGE = "mystory.large.v1";
 const VIEW = "mystory.view.v1";
 
@@ -47,6 +47,9 @@ function write(k: string, v: unknown) {
   }
 }
 
+/** Sample records get realistic recorded dates (Oct–Nov 2026) so cards show a date; higher n = more recent. */
+const seedAt = (n: number) => Date.UTC(2026, 9, 10 + 2 * n, 3);
+
 const seeds: Records = {
   "T10-Q1": {
     answers: [
@@ -56,7 +59,7 @@ const seeds: Records = {
       "그래서 인연은 붙잡는 게 아니라 자주 안부 묻는 거라고 배웠어요.",
     ],
     photo: notebook,
-    updatedAt: 1,
+    updatedAt: seedAt(1),
     example: true,
   },
   "T2-Q1": {
@@ -67,18 +70,18 @@ const seeds: Records = {
       "",
     ],
     photo: house,
-    updatedAt: 2,
+    updatedAt: seedAt(2),
     example: true,
   },
   "T9-Q1": {
     answers: ["정직이요. 손해를 보더라도 떳떳하게 사는 게 결국 남는 거라고 배웠어요.", "", "", ""],
-    updatedAt: 3,
+    updatedAt: seedAt(3),
     example: true,
   },
   "T6-Q1": {
     answers: ["외환위기 때요. 가게 문을 닫을까 매일 고민했지만, 식구들 덕분에 버텼어요.", "", "", ""],
     voices: [{ step: 0, dur: "0:18", audio: false }],
-    updatedAt: 4,
+    updatedAt: seedAt(4),
     example: true,
   },
   "A1-Q1": {
@@ -88,53 +91,53 @@ const seeds: Records = {
       "",
       "",
     ],
-    updatedAt: 5,
+    updatedAt: seedAt(5),
     example: true,
   },
   "A3-Q1": {
     answers: ["스물넷에 서울로 올라온 것. 아무도 없는 곳에서 혼자 시작해 보겠다고 마음먹었어요.", "", "", ""],
     voices: [{ step: 0, dur: "0:24", audio: false }],
-    updatedAt: 6,
+    updatedAt: seedAt(6),
     example: true,
   },
   "T5-Q1": {
     answers: ["대체로 건강한 편이었어요. 감기 한 번 걸리면 오래가긴 했지만요.", "", "", ""],
-    updatedAt: 8,
+    updatedAt: seedAt(8),
     example: true,
   },
   "T2-Q2": {
     answers: ["아버지요. 새벽마다 묵묵히 일하러 나가시던 뒷모습이 제 삶의 기준이 됐어요.", "", "", ""],
-    updatedAt: 12,
+    updatedAt: seedAt(12),
     example: true,
   },
   "T5-Q2": {
     answers: ["서른다섯에 맹장 수술로 보름 넘게 입원했던 일이요. 그때 처음 건강이 소중하다는 걸 알았어요.", "", "", ""],
-    updatedAt: 13,
+    updatedAt: seedAt(13),
     example: true,
   },
   "T5-Q3": {
     answers: ["쉰을 넘기면서 계단 오르기가 부쩍 힘들어졌어요. 그때부터 아침 산책을 시작했지요.", "", "", ""],
-    updatedAt: 14,
+    updatedAt: seedAt(14),
     example: true,
   },
   "A5-Q1": {
     answers: ["마흔이 되어 오래 미뤄 두었던 공부를 다시 시작했어요.", "", "", ""],
-    updatedAt: 11,
+    updatedAt: seedAt(11),
     example: true,
   },
   "A4-Q1": {
     answers: ["첫아이가 태어난 해요. 모든 게 처음이라 서툴렀지만 가장 단단해진 시기였어요.", "", "", ""],
-    updatedAt: 9,
+    updatedAt: seedAt(9),
     example: true,
   },
   "A8-Q1": {
     answers: ["칠순 잔치에 흩어져 살던 형제들이 모두 모였어요. 다 같이 찍은 사진을 지금도 머리맡에 두어요.", "", "", ""],
-    updatedAt: 10,
+    updatedAt: seedAt(10),
     example: true,
   },
   "A6-Q1": {
     answers: ["쉰이 넘어 서예를 배우기 시작했어요. 먹을 갈 때 마음이 차분해져요.", "", "", ""],
-    updatedAt: 7,
+    updatedAt: seedAt(7),
     example: true,
   },
 };
