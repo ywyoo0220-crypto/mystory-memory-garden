@@ -374,16 +374,16 @@ function AnswerFlow() {
         <CategoryPill cat={cat} />
       </div>
 
-      <div className="flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
+      <div className="flex items-center gap-3">
+      <div className="flex flex-1 gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
         {steps.map((_, i) => (
           <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.bg : "var(--border)" }} />
         ))}
       </div>
+      <span className="text-[0.875rem] font-medium tabular-nums" aria-hidden>{step + 1} / {steps.length}</span>
+      </div>
 
-      <p className="mt-5 text-[0.875rem] font-medium">
-        {step === 0 ? "핵심 질문" : `이어지는 질문 ${step}/3`}
-      </p>
-      <h1 className="mt-2 font-serif text-[1.625rem] leading-[1.45]">{steps[step]}</h1>
+      <h1 className="mt-5 font-serif text-[1.625rem] leading-[1.45]">{steps[step]}</h1>
       {step > 0 && <p className="mt-2 text-[0.9375rem]">{q.core}</p>}
 
       <label className="sr-only" htmlFor="answer">답변</label>
