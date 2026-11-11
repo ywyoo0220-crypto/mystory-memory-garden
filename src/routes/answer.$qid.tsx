@@ -2,7 +2,10 @@ import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
-import { actions, hasContent, recordPhotos, useStore, type AudioClip, type StoryRecord } from "@/lib/store";
+import { actions, hasContent, recordPhotos, useStore, type Voice } from "@/lib/store";
+import { audioKey, deleteAudio, fmtDur, MAX_REC_SEC, putAudio } from "@/lib/audio";
+import { VoiceBar } from "@/components/VoicePlayer";
+import { toast } from "sonner";
 import { deleteMedia, putMedia, useMediaUrl } from "@/lib/media";
 import { CategoryPill } from "@/components/CategoryCard";
 
@@ -73,17 +76,25 @@ function AnswerFlow() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(["", "", "", ""]);
   const [photos, setPhotos] = useState<string[]>([]);
-  const [audios, setAudios] = useState<AudioClip[]>([]);
-  const [recBusy, setRecBusy] = useState(false);
-  const [voice, setVoice] = useState<StoryRecord["voice"]>();
+  const [voices, setVoices] = useState<Voice[]>([]);
   const [done, setDone] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
-  const [listening, setListening] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
   const init = useRef(false);
-  const rec = useRef<SR | null>(null);
-  const voiceStart = useRef(0);
-  const baseText = useRef("");
-  const heard = useRef("");
+  // Mirror of the latest values so async recorder callbacks never save stale state.
+  const latest = useRef({ answers, photos, voices });
+  latest.current = { answers, photos, voices };
+  const active = useRef(false);
+  const sessionStep = useRef(0);
+  const startedAt = useRef(0);
+  const micState = useRef<"pending" | "on" | "off">("off");
+  const sr = useRef<SR | null>(null);
+  const mr = useRef<MediaRecorder | null>(null);
+  const stream = useRef<MediaStream | null>(null);
+  const chunks = useRef<Blob[]>([]);
+  const tick = useRef<number | undefined>(undefined);
+  const finishing = useRef<Promise<void> | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -93,82 +104,177 @@ function AnswerFlow() {
       init.current = true;
       setAnswers([0, 1, 2, 3].map((i) => r.answers[i] ?? ""));
       setPhotos(recordPhotos(r));
-      setAudios(r.audios ?? []);
-      setVoice(r.voice);
+      setVoices(r.voices ?? []);
     }
   }, [records, qid]);
 
-  useEffect(() => () => rec.current?.stop(), []);
-
-  const persist = (a = answers, p = photos, au = audios, v = voice) => {
-    const r = { answers: a, photos: p, audios: au, photo: undefined, voice: v };
+  const persist = (a = latest.current.answers, p = latest.current.photos, v = latest.current.voices) => {
+    const r = { answers: a, photos: p, voices: v, photo: undefined };
     if (hasContent({ ...r, updatedAt: 0 })) {
       if (!actions.saveRecord(qid, r)) setMsg("저장 공간이 부족해요. 사진을 빼고 다시 시도하세요.");
     } else if (records[qid]) actions.remove([qid]);
   };
 
-  const stopListening = () => {
-    rec.current?.stop();
+  const updateAnswer = (i: number, text: string) => {
+    const next = latest.current.answers.map((a, j) => (j === i ? text : a));
+    latest.current.answers = next;
+    setAnswers(next);
   };
 
-  const startListening = () => {
+  /** Stops dictation and recording together; resolves once the voice is saved. */
+  const stopSpeaking = (): Promise<void> => {
+    if (!active.current) return finishing.current ?? Promise.resolve();
+    active.current = false;
+    window.clearInterval(tick.current);
+    setSpeaking(false);
+    try {
+      sr.current?.stop();
+    } catch {
+      /* noop */
+    }
+    sr.current = null;
+    const rec = mr.current;
+    mr.current = null;
+    micState.current = "off";
+    const stepAt = sessionStep.current;
+    const dur = (Date.now() - startedAt.current) / 1000;
+    const releaseMic = () => {
+      stream.current?.getTracks().forEach((t) => t.stop());
+      stream.current = null;
+    };
+    const p = new Promise<void>((res) => {
+      if (!rec || rec.state === "inactive") {
+        releaseMic();
+        persist();
+        res();
+        return;
+      }
+      rec.onstop = async () => {
+        releaseMic();
+        const blob = new Blob(chunks.current, { type: rec.mimeType || "audio/mp4" });
+        chunks.current = [];
+        if (blob.size) {
+          try {
+            await putAudio(audioKey(qid, stepAt), blob);
+            const v = [...latest.current.voices.filter((x) => x.step !== stepAt), { step: stepAt, dur: fmtDur(dur), audio: true }];
+            latest.current.voices = v;
+            setVoices(v);
+          } catch {
+            setMsg("목소리를 저장하지 못했어요. 휴대폰 저장 공간을 확인해 주세요.");
+          }
+        }
+        persist();
+        res();
+      };
+      rec.stop();
+    });
+    finishing.current = p.finally(() => {
+      finishing.current = null;
+    });
+    return finishing.current;
+  };
+
+  useEffect(() => () => void stopSpeaking(), []);
+
+  const NOTE_NO_SR = "이 화면에선 글로 바뀌지 않아요. 목소리만 남겨요. 글은 키보드의 받아쓰기 버튼으로 적을 수 있어요.";
+  const NOTE_NO_MIC = "마이크 권한이 없어서 목소리는 남기지 못해요. 글로만 옮겨요.";
+  const NOTE_NONE = "이 화면에선 말하기가 안 돼요. 글 칸을 누르고 키보드의 받아쓰기 버튼을 써 보세요.";
+
+  /** One tap starts dictation (synchronously, inside the gesture) and then asks for the microphone. */
+  const startSpeaking = () => {
+    setMsg(null);
+    const stepAt = step;
+    sessionStep.current = stepAt;
+    active.current = true;
+    const base = latest.current.answers[stepAt]?.trimEnd() ?? "";
+    const prefix = base ? base + " " : "";
+    let srOk = false;
     const w = window as unknown as { SpeechRecognition?: new () => SR; webkitSpeechRecognition?: new () => SR };
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;
-    if (!Ctor) {
-      setMsg("이 브라우저는 말로 입력을 지원하지 않아요. 키보드의 마이크 버튼을 눌러 말해 보세요.");
-      return;
-    }
-    setMsg(null);
-    const r = new Ctor();
-    r.lang = "ko-KR";
-    r.continuous = true;
-    r.interimResults = true;
-    baseText.current = answers[step] ? answers[step].trimEnd() + " " : "";
-    heard.current = "";
-    let finalText = "";
-    r.onresult = (e) => {
-      let interim = "";
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        const res = e.results[i];
-        if (!res) continue;
-        const t = res[0].transcript;
-        if (res.isFinal) finalText += t;
-        else interim += t;
+    if (Ctor) {
+      try {
+        const r = new Ctor();
+        r.lang = "ko-KR";
+        r.continuous = true;
+        r.interimResults = true;
+        let finalText = "";
+        r.onresult = (e) => {
+          let interim = "";
+          for (let i = e.resultIndex; i < e.results.length; i++) {
+            const res = e.results[i];
+            if (!res) continue;
+            if (res.isFinal) finalText += res[0].transcript;
+            else interim += res[0].transcript;
+          }
+          updateAnswer(stepAt, prefix + (finalText + interim).trim());
+        };
+        r.onerror = (e) => {
+          if (e.error === "no-speech" || e.error === "aborted") return;
+          // iOS can refuse dictation while recording: keep the recording, point to keyboard dictation.
+          if (micState.current !== "off") setMsg(NOTE_NO_SR);
+          else setMsg(NOTE_NONE);
+        };
+        r.onend = () => {
+          sr.current = null;
+          if (active.current && micState.current === "off") void stopSpeaking();
+        };
+        r.start();
+        sr.current = r;
+        srOk = true;
+      } catch {
+        srOk = false;
       }
-      heard.current = (finalText + interim).trim();
-      setAnswers((prev) => prev.map((a, i) => (i === step ? baseText.current + heard.current : a)));
-    };
-    r.onerror = (e) => {
-      if (e.error === "not-allowed") setMsg("마이크 사용을 허락해 주세요. 또는 키보드의 마이크 버튼을 이용하세요.");
-      else if (e.error !== "no-speech" && e.error !== "aborted") setMsg("말을 알아듣지 못했어요. 다시 해 보세요.");
-    };
-    r.onend = () => {
-      setListening(false);
-      rec.current = null;
-      if (heard.current) {
-        const dur = Math.max(1, Math.round((Date.now() - voiceStart.current) / 1000));
-        setVoice({ step, durationSec: dur, text: heard.current });
+    }
+    startedAt.current = Date.now();
+    setElapsed(0);
+    setSpeaking(true);
+    tick.current = window.setInterval(() => {
+      const sec = (Date.now() - startedAt.current) / 1000;
+      setElapsed(sec);
+      if (sec >= MAX_REC_SEC) {
+        toast("2분이 되어 멈췄어요");
+        void stopSpeaking();
+      }
+    }, 250);
+
+    const micFail = () => {
+      micState.current = "off";
+      if (!active.current) return;
+      if (srOk && sr.current) setMsg(NOTE_NO_MIC);
+      else {
+        setMsg(NOTE_NONE);
+        void stopSpeaking();
       }
     };
-    try {
-      r.start();
-      rec.current = r;
-      voiceStart.current = Date.now();
-      setListening(true);
-    } catch {
-      setMsg("말로 입력을 시작하지 못했어요. 키보드로 입력해 주세요.");
-    }
+    const md = typeof navigator !== "undefined" ? navigator.mediaDevices : undefined;
+    if (!md?.getUserMedia || typeof MediaRecorder === "undefined") return micFail();
+    micState.current = "pending";
+    md.getUserMedia({ audio: true })
+      .then((st) => {
+        if (!active.current) {
+          st.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        stream.current = st;
+        const rec = new MediaRecorder(st);
+        chunks.current = [];
+        rec.ondataavailable = (e) => e.data.size && chunks.current.push(e.data);
+        rec.start(1000);
+        mr.current = rec;
+        micState.current = "on";
+        if (!srOk) setMsg(NOTE_NO_SR);
+      })
+      .catch(micFail);
   };
 
-  const go = (skip: boolean) => {
-    stopListening();
-    const a = skip ? answers : answers;
-    persist(a);
+  const go = async () => {
+    await stopSpeaking();
+    persist();
     setMsg(null);
     if (step < 3) {
       setStep(step + 1);
       window.scrollTo({ top: 0 });
-    } else if (hasContent({ answers: a, photos, audios, voice, updatedAt: 0 })) {
+    } else if (hasContent({ ...latest.current, updatedAt: 0 })) {
       setDone(true);
     } else {
       navigate({ to: "/cat/$catId", params: { catId: cat?.id ?? "" } });
@@ -186,36 +292,34 @@ function AnswerFlow() {
       }
     }
     if (!added.length) return;
-    const next = [...photos, ...added];
+    const next = [...latest.current.photos, ...added];
+    latest.current.photos = next;
     setPhotos(next);
-    persist(answers, next);
+    persist();
   };
   const removePhoto = (ref: string) => {
     const next = photos.filter((p) => p !== ref);
+    latest.current.photos = next;
     setPhotos(next);
-    persist(answers, next);
+    persist();
     deleteMedia([ref]);
   };
-  const clip = audios.find((a) => a.step === step);
-  const saveClip = (c: AudioClip) => {
-    if (clip) deleteMedia([clip.id]);
-    const next = [...audios.filter((a) => a.step !== c.step), c];
-    setAudios(next);
-    persist(answers, photos, next);
-  };
-  const deleteClip = () => {
-    if (!clip) return;
-    const next = audios.filter((a) => a !== clip);
-    setAudios(next);
-    persist(answers, photos, next);
-    deleteMedia([clip.id]);
+  const voice = voices.find((v) => v.step === step);
+  /** Deletes the audio file and its voice entry; the dictated text stays. */
+  const deleteVoiceOnly = () => {
+    if (!voice) return;
+    deleteAudio([audioKey(qid, step)]);
+    const next = voices.filter((v) => v !== voice);
+    latest.current.voices = next;
+    setVoices(next);
+    persist();
   };
 
   if (!cat || !q) return null;
   const c = cardColors(cat);
 
   if (done) {
-    const first = answers.find((a) => a.trim()) ?? voice?.text ?? "";
+    const first = answers.find((a) => a.trim()) ?? "";
     return (
       <main className="px-6 pt-16">
         <p className="text-[1rem] font-medium">기록했습니다.</p>
@@ -254,13 +358,13 @@ function AnswerFlow() {
       <div className="flex h-16 items-center justify-between">
         <button
           type="button"
-          onClick={() => {
-            stopListening();
+          onClick={async () => {
+            await stopSpeaking();
             persist();
             navigate({ to: "/cat/$catId", params: { catId: cat.id } });
           }}
           aria-label="뒤로"
-          disabled={recBusy}
+         
           className="-ml-3 flex size-12 items-center justify-center rounded-full"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
@@ -309,23 +413,39 @@ function AnswerFlow() {
         </ul>
       )}
 
+      {voice && (
+        <div className="mt-4">
+          <div className="rounded-full border border-border bg-card py-1.5 pl-1.5 pr-4">
+            <VoiceBar recordId={qid} voice={voice} text={answers[step] ?? ""} fg={c.pill} accent={c.pillText} />
+          </div>
+          <button
+            type="button"
+            onClick={deleteVoiceOnly}
+            disabled={speaking}
+            className="mt-1 h-12 px-2 text-[0.9375rem] font-medium underline underline-offset-4 disabled:opacity-40"
+          >
+            음성만 지우기
+          </button>
+        </div>
+      )}
       <p className="mt-3 text-center text-[0.9375rem] text-muted-foreground">적는 내용은 이 기기에 바로 저장돼요.</p>
       <div className="mt-4 grid grid-cols-2 gap-2">
         <button
           type="button"
-          onClick={listening ? stopListening : startListening}
-          aria-pressed={listening}
-          disabled={recBusy}
-          className={`flex h-14 items-center justify-center gap-2 rounded-full text-[1rem] font-medium disabled:opacity-40 ${
-            listening ? "bg-(--cat-bg) text-(--cat-text)" : "border border-border bg-card"
+          onClick={() => (speaking ? void stopSpeaking() : startSpeaking())}
+          aria-pressed={speaking}
+          className={`flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 font-medium ${
+            speaking ? "bg-destructive text-[0.8125rem] text-destructive-foreground" : "border border-border bg-card text-[1rem]"
           }`}
         >
-          {listening && <span className="size-2.5 animate-pulse rounded-full bg-destructive" aria-hidden />}
-          {listening ? "듣는 중 · 멈추기" : "말로 하기"}
+          {speaking ? `말하는 중 · ${fmtDur(elapsed)} · 누르면 멈춤` : voice ? "다시 말하기" : "말로 하기"}
         </button>
         <button
           type="button"
-          onClick={() => fileRef.current?.click()}
+          onClick={() => {
+            void stopSpeaking();
+            fileRef.current?.click();
+          }}
           className="h-14 rounded-full border border-border bg-card text-[1rem] font-medium"
         >
           {photos.length ? "사진 더 넣기" : "사진 넣기"}
@@ -343,24 +463,24 @@ function AnswerFlow() {
           }}
         />
       </div>
+      {!voice && <p className="mt-3 text-center text-[0.9375rem] text-muted-foreground">말하면 글로 바뀌고, 목소리도 함께 남아요.</p>}
 
       {msg && (
-        <p role="status" className="mt-4 rounded-2xl bg-muted px-4 py-3 text-[0.9375rem] leading-[1.6]">
+        <p role="status" className="mt-3 rounded-2xl bg-muted px-4 py-2.5 text-[0.875rem] leading-[1.55]">
           {msg}
         </p>
       )}
 
       <div className="mt-auto space-y-2 pt-4">
-        {recBusy && <p className="text-center text-[0.9375rem]">녹음을 마친 뒤 다음으로 넘어갈 수 있어요.</p>}
         <button
           type="button"
-          onClick={() => go(false)}
-          disabled={recBusy}
-          className="h-14 disabled:opacity-40 w-full rounded-full bg-(--cat-bg) text-[1rem] font-semibold text-(--cat-text)"
+          onClick={() => void go()}
+         
+          className="h-14 w-full rounded-full bg-(--cat-bg) text-[1rem] font-semibold text-(--cat-text)"
         >
           {step < 3 ? "다음" : "기록 마치기"}
         </button>
-        <button type="button" onClick={() => go(true)} disabled={recBusy} className="disabled:opacity-40 h-12 w-full rounded-full text-[1rem]">
+        <button type="button" onClick={() => void go()} className="h-12 w-full rounded-full text-[1rem]">
           다음에 답할게요
         </button>
       </div>

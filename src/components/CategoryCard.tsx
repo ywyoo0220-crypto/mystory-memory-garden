@@ -5,7 +5,7 @@ import { actions, recordPhotos, type StoryRecord } from "@/lib/store";
 import { useMediaUrl } from "@/lib/media";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { catVars } from "@/lib/theme";
-import { RecordedClip, VoicePlayer } from "./VoicePlayer";
+import { VoiceBar } from "./VoicePlayer";
 
 function CardPhoto({ src, fg }: { src: string; fg: string }) {
   const url = useMediaUrl(src);
@@ -39,20 +39,18 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
       {showCore && <h3 className="font-serif text-[1.5rem] font-medium leading-[1.4]">{q.core}</h3>}
       {steps.map((label, i) => {
         const a = rec.answers[i]?.trim();
-        const voice = rec.voice?.step === i ? rec.voice : undefined;
-        const clip = rec.audios?.find((c) => c.step === i);
-        if (!a && !voice && !clip && !(i === 0 && photos.length)) return null;
+        const voice = rec.voices?.find((v) => v.step === i);
+        if (!a && !voice && !(i === 0 && photos.length)) return null;
         return (
           <div key={i} className="space-y-3">
             {i > 0 && <p className="text-[1.0625rem] font-bold leading-[1.5]">{label}</p>}
-            {a && <p className="whitespace-pre-line text-[1.0625rem] leading-[1.7]">{a}</p>}
             {voice && (
-              <div className="space-y-4">
-                <VoicePlayer text={voice.text} durationSec={voice.durationSec} fg={fg} accent={accent} />
-                {voice.text && voice.text !== a && <p className="text-[1.0625rem] leading-[1.7]">{voice.text}</p>}
+              <div className="pb-3">
+                <VoiceBar recordId={qid} voice={voice} text={a ?? ""} fg={fg} accent={accent} />
               </div>
             )}
-            {clip && <RecordedClip clip={clip} fg={fg} accent={accent} />}
+            {voice && a && <p className="text-[0.8125rem] font-medium">음성 기록을 글로 옮긴 내용</p>}
+            {a && <p className="whitespace-pre-line text-[1.0625rem] leading-[1.7]">{a}</p>}
             {i === 0 && photos.map((p) => <CardPhoto key={p} src={p} fg={fg} />)}
           </div>
         );

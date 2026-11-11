@@ -33,4 +33,4 @@ use the editor.
 - Records live in localStorage via src/lib/store.ts (useSyncExternalStore); no backend yet — keeps the app login-free.
 - Large-text mode scales the root font-size, so sizes must use rem, not px.
 - Category colors come from a single palette in src/data/themes.json, emitted as --{catId}-{token} CSS variables by lib/theme.ts; on light list screens (tint) use `pill` as the accent because pillText can equal tint.
-- Photos and voice recordings are stored as blobs in IndexedDB (src/lib/media.ts) and records keep "idb:" refs — localStorage is too small for media; still no backend.
+- Photos are blobs in IndexedDB (src/lib/media.ts, records keep "idb:" refs); voice blobs are in IndexedDB "ms-audio" keyed recordId:step (src/lib/audio.ts) and records keep only `voices` metadata — localStorage is too small for media; still no backend.

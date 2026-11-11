@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "./ui/button";
-import { useMediaUrl } from "@/lib/media";
-import type { AudioClip } from "@/lib/store";
+import { audioKey, parseDur, useAudioUrl } from "@/lib/audio";
+import type { Voice } from "@/lib/store";
 
 const bars = Array.from({ length: 44 }, (_, i) => 0.25 + 0.75 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.6)));
 
-/** Plays a recorded clip stored on this device. */
-export function RecordedClip({ clip, fg, accent }: { clip: AudioClip; fg: string; accent: string }) {
-  const url = useMediaUrl(clip.id);
-  return <VoicePlayer src={url} pending={!url} durationSec={clip.durationSec} fg={fg} accent={accent} />;
+/** Only one voice plays at a time: starting a bar stops whichever was playing. */
+let stopCurrent: (() => void) | null = null;
+
+/** Voice bar for one answer. Without an audio file (sample records) the text is read aloud instead. */
+export function VoiceBar({ recordId, voice, text, fg, accent }: { recordId: string; voice: Voice; text: string; fg: string; accent: string }) {
+  const url = useAudioUrl(voice.audio ? audioKey(recordId, voice.step) : undefined);
+  return <VoicePlayer src={url} pending={voice.audio && !url} text={text} durationSec={parseDur(voice.dur)} fg={fg} accent={accent} />;
 }
 
 export function VoicePlayer({
@@ -42,34 +46,42 @@ export function VoicePlayer({
     } catch {
       /* noop */
     }
+    if (stopCurrent === stop) stopCurrent = null;
     setPlaying(false);
     setProgress(0);
   };
-  useEffect(() => stop, []);
+  const stopRef = useRef(stop);
+  stopRef.current = stop;
+  useEffect(() => () => stopRef.current(), []);
   useEffect(() => {
     audio.current = null;
   }, [src]);
 
   const play = () => {
     if (playing) return stop();
+    stopCurrent?.();
+    stopCurrent = stop;
     setPlaying(true);
     if (src) {
       const a = audio.current ?? new Audio(src);
       audio.current = a;
       a.onended = stop;
       a.play().catch(stop);
-    } else try {
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = "ko-KR";
-      u.rate = 0.95;
-      u.onend = stop;
-      window.speechSynthesis?.speak(u);
-    } catch {
-      /* speech output unavailable: animate only */
+    } else {
+      toast("예시 기록이라 글을 합성음으로 읽어 드려요");
+      try {
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "ko-KR";
+        u.rate = 0.95;
+        u.onend = stop;
+        window.speechSynthesis?.speak(u);
+      } catch {
+        /* speech output unavailable: animate only */
+      }
     }
     const start = Date.now();
     timer.current = window.setInterval(() => {
-      const p = (Date.now() - start) / (durationSec * 1000);
+      const p = (Date.now() - start) / (Math.max(1, durationSec) * 1000);
       if (p >= 1) {
         if (src) setProgress(1);
         else stop();
@@ -87,7 +99,7 @@ export function VoicePlayer({
         disabled={pending}
         aria-label={playing ? "음성 멈추기" : "음성 듣기"}
         aria-pressed={playing}
-        className="flex size-10 shrink-0 items-center justify-center rounded-full p-0"
+        className="flex size-11 shrink-0 items-center justify-center rounded-full p-0"
         style={{ background: fg, color: accent }}
       >
         {playing ? (

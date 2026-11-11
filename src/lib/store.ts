@@ -2,23 +2,25 @@ import { useSyncExternalStore } from "react";
 import notebook from "@/assets/seed-notebook.jpg";
 import house from "@/assets/seed-house.jpg";
 import type { Kind } from "./data";
-import { clearMedia, deleteMedia } from "./media";
+import { clearMedia, deleteMedia, getMedia } from "./media";
+import { audioKey, clearAudio, deleteAudio, fmtDur, putAudio } from "./audio";
 
-export type AudioClip = { id: string; durationSec: number; mime: string; step: number };
+/** Per-answer voice metadata; the blob itself lives in IndexedDB under audioKey(recordId, step). */
+export type Voice = { step: number; dur: string; audio: boolean };
+type LegacyClip = { id: string; durationSec: number; step: number };
 
 export type StoryRecord = {
   answers: string[];
   photo?: string | undefined;
-  voice?: { step: number; durationSec: number; text: string } | undefined;
   photos?: string[] | undefined;
-  audios?: AudioClip[] | undefined;
+  voices?: Voice[] | undefined;
   updatedAt: number;
   example?: boolean | undefined;
 };
 export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
-const SEEDED = "mystory.seeded.v7";
+const SEEDED = "mystory.seeded.v8";
 const LARGE = "mystory.large.v1";
 const VIEW = "mystory.view.v1";
 
@@ -74,12 +76,8 @@ const seeds: Records = {
     example: true,
   },
   "T6-Q1": {
-    answers: ["", "", "", ""],
-    voice: {
-      step: 0,
-      durationSec: 18,
-      text: "외환위기 때요. 가게 문을 닫을까 매일 고민했지만, 식구들 덕분에 버텼어요.",
-    },
+    answers: ["외환위기 때요. 가게 문을 닫을까 매일 고민했지만, 식구들 덕분에 버텼어요.", "", "", ""],
+    voices: [{ step: 0, dur: "0:18", audio: false }],
     updatedAt: 4,
     example: true,
   },
@@ -94,17 +92,8 @@ const seeds: Records = {
     example: true,
   },
   "A3-Q1": {
-    answers: [
-      "",
-      "",
-      "",
-      "",
-    ],
-    voice: {
-      step: 0,
-      durationSec: 24,
-      text: "스물넷에 서울로 올라온 것. 아무도 없는 곳에서 혼자 시작해 보겠다고 마음먹었어요.",
-    },
+    answers: ["스물넷에 서울로 올라온 것. 아무도 없는 곳에서 혼자 시작해 보겠다고 마음먹었어요.", "", "", ""],
+    voices: [{ step: 0, dur: "0:24", audio: false }],
     updatedAt: 6,
     example: true,
   },
@@ -165,8 +154,39 @@ function load() {
     write(KEY, records);
     write(SEEDED, true);
   }
+  records = migrate(records);
   state = { records, large: read(LARGE, false), view: read<Kind>(VIEW, "topic") };
   applyLarge();
+}
+/** Older records kept `voice` (sample text) or `audios` (blobs in the media store); move them to `voices`. */
+function migrate(records: Records) {
+  let dirty = false;
+  const out: Records = {};
+  for (const [id, r0] of Object.entries(records)) {
+    const r = r0 as StoryRecord & { voice?: { step: number; durationSec: number; text: string }; audios?: LegacyClip[] };
+    if (!r.voice && !r.audios) {
+      out[id] = r;
+      continue;
+    }
+    dirty = true;
+    const answers = [...r.answers];
+    const voices: Voice[] = [...(r.voices ?? [])];
+    if (r.voice) {
+      if (!answers[r.voice.step]?.trim()) answers[r.voice.step] = r.voice.text;
+      voices.push({ step: r.voice.step, dur: fmtDur(r.voice.durationSec), audio: false });
+    }
+    for (const c of r.audios ?? []) {
+      voices.splice(0, voices.length, ...voices.filter((v) => v.step !== c.step), { step: c.step, dur: fmtDur(c.durationSec), audio: true });
+      getMedia(c.id)
+        .then((b) => b && putAudio(audioKey(id, c.step), b))
+        .then(() => deleteMedia([c.id]))
+        .catch(() => {});
+    }
+    const { voice: _v, audios: _a, ...rest } = r;
+    out[id] = { ...rest, answers, voices };
+  }
+  if (dirty) write(KEY, out);
+  return out;
 }
 function applyLarge() {
   if (typeof document !== "undefined") document.documentElement.classList.toggle("large", state.large);
@@ -201,6 +221,7 @@ export const actions = {
     const records = { ...state.records };
     qids.forEach((q) => {
       deleteMedia(mediaRefs(records[q]));
+      deleteAudio(voiceKeys(q, records[q]));
       delete records[q];
     });
     write(KEY, records);
@@ -219,7 +240,15 @@ export const actions = {
   clearAll() {
     write(KEY, {});
     clearMedia();
+    clearAudio();
     set({ records: {} });
+  },
+  /** Merges records from a backup file (backup wins on conflicts). */
+  importRecords(incoming: Records) {
+    const records = { ...state.records, ...incoming };
+    const ok = write(KEY, records);
+    set({ records });
+    return ok;
   },
   toggleLarge() {
     write(LARGE, !state.large);
@@ -233,12 +262,15 @@ export const actions = {
 };
 
 export function hasContent(r?: StoryRecord) {
-  return !!r && (r.answers.some((a) => a.trim()) || !!r.photo || !!r.voice || !!r.photos?.length || !!r.audios?.length);
+  return !!r && (r.answers.some((a) => a.trim()) || !!r.photo || !!r.photos?.length || !!r.voices?.length);
 }
 
 export function recordPhotos(r: StoryRecord) {
   return r.photos ?? (r.photo ? [r.photo] : []);
 }
 export function mediaRefs(r?: StoryRecord) {
-  return r ? [...(r.photos ?? []), ...(r.audios ?? []).map((a) => a.id)] : [];
+  return r ? [...(r.photos ?? [])] : [];
+}
+export function voiceKeys(id: string, r?: StoryRecord) {
+  return (r?.voices ?? []).filter((v) => v.audio).map((v) => audioKey(id, v.step));
 }
