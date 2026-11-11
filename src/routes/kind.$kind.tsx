@@ -33,7 +33,7 @@ function KindList() {
   return (
     <main>
       <BackBar
-        title={kind === "topic" ? "주제 고르기" : "시기 고르기"}
+        title=""
         onBack={() => navigate({ to: "/record" })}
       />
       <div className="px-6 pb-6 pt-4">
