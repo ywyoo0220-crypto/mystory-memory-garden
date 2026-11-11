@@ -251,7 +251,7 @@ function AnswerFlow() {
   }
 
   return (
-    <main className="category-list flex min-h-app flex-col px-6 pb-8" style={catVars(cat.id)}>
+    <main className="category-list flex min-h-app flex-col px-6 pb-[calc(6rem+16px+env(safe-area-inset-bottom))]" style={catVars(cat.id)}>
       <div className="flex h-16 items-center justify-between">
         <button
           type="button"
@@ -289,8 +289,7 @@ function AnswerFlow() {
         value={answers[step]}
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="쓰거나 말로 남기세요."
-        rows={6}
-        className="mt-6 w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
+        className="mt-6 h-[clamp(5.5rem,calc(100dvh-36rem),14rem)] w-full resize-none rounded-3xl border-0 bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
       />
 
       {photos.length > 0 && (
@@ -361,7 +360,7 @@ function AnswerFlow() {
         </p>
       )}
 
-      <div className="mt-auto space-y-2 pt-10">
+      <div className="mt-auto space-y-2 pt-6">
         {recBusy && <p className="text-center text-[0.9375rem]">녹음을 마친 뒤 다음으로 넘어갈 수 있어요.</p>}
         <button
           type="button"
@@ -374,11 +373,6 @@ function AnswerFlow() {
         <button type="button" onClick={() => go(true)} disabled={recBusy} className="disabled:opacity-40 h-12 w-full rounded-full text-[1rem]">
           다음에 답할게요
         </button>
-        {step > 0 && (
-          <button type="button" onClick={() => setStep(step - 1)} disabled={recBusy} className="disabled:opacity-40 h-12 w-full rounded-full text-[0.9375rem]">
-            이전 질문
-          </button>
-        )}
       </div>
     </main>
   );

@@ -15,7 +15,6 @@ const items = [
 export function AppNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const { large } = useStore();
-  if (path.startsWith("/answer")) return null;
   return (
     <nav
       aria-label="주요 메뉴"
