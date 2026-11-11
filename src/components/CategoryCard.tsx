@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { cardColors, getQuestion, type Category } from "@/lib/data";
 import { actions, type StoryRecord } from "@/lib/store";
-import { Glyph } from "./Glyph";
+import { CategoryIcon } from "@/components/CategoryIcon";
 import { catVars } from "@/lib/theme";
 import { VoicePlayer } from "./VoicePlayer";
 import { Button } from "./ui/button";
@@ -14,7 +14,7 @@ export function CategoryPill({ cat }: { cat: Category }) {
       className="inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[0.8125rem] font-medium"
       style={{ ...catVars(cat.id), background: c.pill, color: c.pillText }}
     >
-      <Glyph cat={cat} size={14} color={c.pillText} />
+      <span className="inline-flex" style={{ color: c.pillText }}><CategoryIcon id={cat.id} size={16} /></span>
       {cat.name}
     </span>
   );

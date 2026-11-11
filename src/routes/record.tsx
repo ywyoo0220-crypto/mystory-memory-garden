@@ -1,7 +1,7 @@
 import { catVars } from "@/lib/theme";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { periods, topics } from "@/lib/data";
-import { Glyph } from "@/components/Glyph";
+import { CategoryIcon } from "@/components/CategoryIcon";
 
 export const Route = createFileRoute("/record")({
   head: () => ({
@@ -41,7 +41,7 @@ function RecordStart() {
                   className="flex size-9 items-center justify-center rounded-full ring-2 ring-card"
                   style={{ ...catVars(c.id), background: c.color.tint }}
                 >
-                  <Glyph cat={c} size={16} color={c.color.pill} />
+                  <span className="inline-flex" style={{ color: c.color.pill }}><CategoryIcon id={c.id} size={16} /></span>
                 </span>
               ))}
             </div>
