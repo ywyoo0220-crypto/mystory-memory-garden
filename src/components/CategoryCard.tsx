@@ -72,11 +72,8 @@ export function CategoryCard({
   const firstId = entries[0]?.[0] ?? "";
   const headId = entries.reduce((m, e) => (e[1].updatedAt > (m[1]?.updatedAt ?? -Infinity) ? e : m), entries[0] ?? ["", undefined as unknown as StoryRecord])[0];
   const first = getQuestion(headId);
-  const others = entries.filter(([q]) => q !== headId);
-  const goTo = (qid: string) => {
-    if (!open) onToggle();
-    setTimeout(() => document.getElementById(`rec-${qid}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), open ? 0 : 350);
-  };
+  const sheets = Math.min(entries.length - 1, 2);
+  const peek = sheets * 0.375; // rem: 6px per sheet
 
   const fix = () => {
     if (entries.length === 1) navigate({ to: "/answer/$qid", params: { qid: firstId } });
@@ -87,9 +84,20 @@ export function CategoryCard({
   };
 
   return (
+    <div
+      className="group/card relative"
+      style={{ zIndex: z, marginTop: `calc(${z === 1 ? "0rem" : "-2rem"} + ${peek}rem)` }}
+      data-sheets={sheets}
+    >
+      {sheets >= 2 && (
+        <div aria-hidden className="absolute inset-x-[1.25rem] -top-[0.75rem] h-16 rounded-t-[32px]" style={{ background: `color-mix(in srgb, ${c.bg} 32%, white)` }} />
+      )}
+      {sheets >= 1 && (
+        <div aria-hidden className="absolute inset-x-[0.625rem] -top-[0.375rem] h-16 rounded-t-[32px]" style={{ background: `color-mix(in srgb, ${c.bg} 60%, white)` }} />
+      )}
     <section
-      className={`category-surface relative -mt-8 rounded-t-[32px] px-6 pt-6 first:mt-0 ${last ? "rounded-b-[32px] pb-8" : "pb-14"}`}
-      style={{ ...catVars(cat.id), background: c.bg, color: c.fg, zIndex: z }}
+      className={`category-surface relative rounded-t-[32px] px-6 pt-6 ${last ? "rounded-b-[32px] pb-8" : "pb-14"}`}
+      style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}
     >
       <Button variant="palette"
         type="button"
@@ -122,26 +130,6 @@ export function CategoryCard({
         </div>
         <h2 className="mt-5 font-serif text-[1.5rem] leading-[1.4]">{first?.core}</h2>
       </Button>
-
-      {!open && others.length > 0 && (
-        <ul className="mt-3 space-y-1">
-          {others.slice(0, 2).map(([qid]) => (
-            <li key={qid}>
-              <button type="button" onClick={() => goTo(qid)} className="flex min-h-8 w-full items-center gap-2.5 rounded-lg text-left text-[0.9375rem]" style={{ color: c.fg }}>
-                <span className="size-[5px] shrink-0 rounded-full" style={{ background: c.fg }} aria-hidden />
-                <span className="truncate">{getQuestion(qid)?.core}</span>
-              </button>
-            </li>
-          ))}
-          {entries.length > 3 && (
-            <li>
-              <button type="button" onClick={() => goTo(others[2]![0])} className="min-h-8 pl-[15px] text-left text-[0.9375rem] font-bold" style={{ color: c.fg }}>
-                외 {entries.length - 3}개
-              </button>
-            </li>
-          )}
-        </ul>
-      )}
 
       <div className="expand" data-open={open}>
         <div>
@@ -185,5 +173,6 @@ export function CategoryCard({
         </div>
       </div>
     </section>
+    </div>
   );
 }
