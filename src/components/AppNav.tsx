@@ -19,7 +19,7 @@ export function AppNav() {
   return (
     <nav
       aria-label="주요 메뉴"
-      className="fixed inset-x-0 bottom-[calc(16px+env(safe-area-inset-bottom))] z-40 mx-auto grid w-full max-w-[440px] grid-cols-[minmax(0,1fr)_auto_minmax(3rem,1fr)] items-center px-3"
+      className="fixed inset-x-0 bottom-[calc(16px+env(safe-area-inset-bottom))] z-40 mx-auto grid w-full max-w-[440px] grid-cols-[minmax(0,1fr)_auto_minmax(3rem,1fr)] items-center pl-3"
     >
       <div className="col-start-2 flex min-w-0 items-center rounded-full bg-card p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
         {items.map((it) => {
