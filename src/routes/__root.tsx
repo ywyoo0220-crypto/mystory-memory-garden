@@ -88,7 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "질문에 답하며 나의 인생 이야기를 기록하세요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#FAF9F6" },
+      { name: "theme-color", content: "#F2F4F6" },
     ],
     links: [
       {

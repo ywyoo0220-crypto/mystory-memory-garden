@@ -38,10 +38,10 @@
 
 :root {
   --radius: 1rem;
-  --paper: #faf9f6;
+  --paper: #f2f4f6;
   --ink: #1a1918;
   --ink-foreground: #ffffff;
-  --background: #faf9f6;
+  --background: #f2f4f6;
   --foreground: #1a1918;
   --card: #ffffff;
   --card-foreground: #1a1918;
@@ -49,18 +49,18 @@
   --popover-foreground: #1a1918;
   --primary: #1a1918;
   --primary-foreground: #ffffff;
-  --secondary: #ebe6df;
+  --secondary: #e8eaed;
   --secondary-foreground: #1a1918;
-  --muted: #ebe6df;
+  --muted: #e8eaed;
   --muted-foreground: #534e49;
-  --accent: #ebe6df;
+  --accent: #e8eaed;
   --accent-foreground: #1a1918;
   --destructive: #b3261e;
   --destructive-foreground: #ffffff;
   --border: rgba(0, 0, 0, 0.08);
   --input: rgba(0, 0, 0, 0.08);
   --ring: #1a1918;
-  --comparison-border: #d9d4ce;
+  --comparison-border: #dcdfe4;
 }
 
 @layer base {
