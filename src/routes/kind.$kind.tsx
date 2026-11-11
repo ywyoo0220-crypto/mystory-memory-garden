@@ -2,7 +2,7 @@ import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { categoriesOf, type Kind } from "@/lib/data";
 import { actions, hasContent, useStore } from "@/lib/store";
-import { Glyph } from "@/components/Glyph";
+import { CategoryIcon } from "@/components/CategoryIcon";
 import { BackBar } from "@/components/BackBar";
 
 export const Route = createFileRoute("/kind/$kind")({
@@ -50,7 +50,7 @@ function KindList() {
           const inner = (
             <>
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full" style={{ background: c.color.tint }}>
-                <Glyph cat={c} size={22} color={c.color.pill} />
+                <span className="inline-flex" style={{ color: c.color.pill }}><CategoryIcon id={c.id} size={22} /></span>
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[1.0625rem] font-semibold">{c.name}</span>

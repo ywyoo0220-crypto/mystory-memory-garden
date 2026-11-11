@@ -2,7 +2,7 @@ import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { getCategory } from "@/lib/data";
 import { actions, hasContent, useStore } from "@/lib/store";
-import { Glyph } from "@/components/Glyph";
+import { CategoryIcon } from "@/components/CategoryIcon";
 import { BackBar } from "@/components/BackBar";
 
 export const Route = createFileRoute("/cat/$catId")({
@@ -43,7 +43,7 @@ function CatQuestions() {
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-center gap-4">
           <span className="flex size-14 items-center justify-center rounded-full" style={{ background: cat.color.tint }}>
-            <Glyph cat={cat} size={26} color={cat.color.pill} />
+            <span className="inline-flex" style={{ color: cat.color.pill }}><CategoryIcon id={cat.id} size={26} /></span>
           </span>
           <h1 className="font-serif text-[1.75rem]">{cat.name}</h1>
         </div>
