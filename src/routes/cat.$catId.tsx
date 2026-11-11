@@ -39,7 +39,7 @@ function CatQuestions() {
       />
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-center gap-4">
-          <span className="flex size-14 items-center justify-center rounded-full" style={{ background: cat.color.background }}>
+          <span className="flex size-[2.125rem] items-center justify-center rounded-full" style={{ background: cat.color.background }}>
             <span className="inline-flex" style={{ color: cat.color.text }}><CategoryIcon id={cat.id} size={16} /></span>
           </span>
           <h1 className="font-serif text-[1.75rem]">{cat.name}</h1>
