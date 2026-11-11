@@ -17,9 +17,15 @@ export const Route = createFileRoute("/record")({
   component: RecordStart,
 });
 
+/** 미리 보여줄 주제 다섯 개 (순서대로). */
+const TOPIC_PREVIEW = ["T4", "T1", "T7", "T9", "T10"];
+const previewTopics = TOPIC_PREVIEW.map((id) => topics.find((c) => c.id === id)).filter(
+  (c): c is (typeof topics)[number] => Boolean(c),
+);
+
 function RecordStart() {
   const opts = [
-    { kind: "topic" as const, title: "주제로 기록하기", desc: "가족, 일, 건강처럼 주제별로 기록해요.", cats: topics.slice(0, 5) },
+    { kind: "topic" as const, title: "주제로 기록하기", desc: "가족, 일, 건강처럼 주제별로 기록해요.", cats: previewTopics },
     { kind: "period" as const, title: "시기로 기록하기", desc: "유년기부터 지금까지, 시기별로 기록해요.", cats: periods.slice(0, 5) },
   ];
   return (
