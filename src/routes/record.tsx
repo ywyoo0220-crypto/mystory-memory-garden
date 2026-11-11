@@ -39,9 +39,9 @@ function RecordStart() {
                 <span
                   key={c.id}
                   className="flex size-9 items-center justify-center rounded-full ring-2 ring-card"
-                  style={{ ...catVars(c.id), background: c.color.tint }}
+                  style={{ ...catVars(c.id), background: c.color.background }}
                 >
-                  <span className="inline-flex" style={{ color: c.color.pill }}><CategoryIcon id={c.id} size={16} /></span>
+                  <span className="inline-flex" style={{ color: c.color.text }}><CategoryIcon id={c.id} size={16} /></span>
                 </span>
               ))}
             </div>
