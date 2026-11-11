@@ -36,6 +36,12 @@ export async function putMedia(blob: Blob) {
   return `idb:${id}`;
 }
 
+/** Restores a blob under a known ref (backup restore). */
+export async function putMediaAt(ref: string, blob: Blob) {
+  const buf = await blob.arrayBuffer();
+  await tx("readwrite", (s) => s.put({ type: blob.type, buf }, ref.slice(4)));
+}
+
 export async function getMedia(ref: string) {
   const v = await tx<{ type: string; buf: ArrayBuffer } | undefined>("readonly", (s) => s.get(ref.slice(4)));
   return v ? new Blob([v.buf], { type: v.type }) : undefined;

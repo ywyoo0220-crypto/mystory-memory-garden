@@ -51,8 +51,8 @@ export async function getAudio(key: string) {
 export function deleteAudio(keys: string[]) {
   keys.forEach((k) => tx("readwrite", (s) => s.delete(k)).then(() => changed(k)).catch(() => {}));
 }
-export function clearAudio() {
-  tx("readwrite", (s) => s.clear()).catch(() => {});
+export function clearAudio(): Promise<void> {
+  return tx("readwrite", (s) => s.clear()).then(() => undefined, () => undefined);
 }
 export async function allAudioKeys() {
   return (await tx<IDBValidKey[]>("readonly", (s) => s.getAllKeys())).map(String);

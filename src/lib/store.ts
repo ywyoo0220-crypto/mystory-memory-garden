@@ -21,6 +21,9 @@ export type Records = Record<string, StoryRecord>;
 const KEY = "mystory.records.v1";
 const SEEDED = "mystory.seeded.v10";
 const LARGE = "mystory.large.v1";
+const SIZE = "mystory.textsize.v1";
+const DEFAULT_VIEW = "mystory.defaultView.v1";
+export type TextSize = 0 | 1 | 2;
 const VIEW = "mystory.view.v1";
 
 try {
@@ -66,8 +69,8 @@ export function withExamples(records: Records, now = Date.now()): Records {
   return { ...exampleSeeds(now), ...records };
 }
 
-type State = { records: Records; large: boolean; view: Kind };
-let state: State = { records: {}, large: false, view: "topic" };
+type State = { records: Records; large: boolean; textSize: TextSize; view: Kind; defaultView: Kind };
+let state: State = { records: {}, large: false, textSize: 0, view: "topic", defaultView: "topic" };
 let loaded = false;
 const listeners = new Set<() => void>();
 
@@ -82,7 +85,9 @@ function load() {
     write(SEEDED, true);
   }
   records = migrate(records);
-  state = { records, large: read(LARGE, false), view: read<Kind>(VIEW, "topic") };
+  const textSize = read<TextSize | null>(SIZE, null) ?? (read(LARGE, false) ? 1 : 0);
+  const defaultView = read<Kind | null>(DEFAULT_VIEW, null);
+  state = { records, large: textSize > 0, textSize, view: defaultView ?? read<Kind>(VIEW, "topic"), defaultView: defaultView ?? "topic" };
   applyLarge();
 }
 /** Older records kept `voice` (sample text) or `audios` (blobs in the media store); move them to `voices`. */
@@ -116,14 +121,16 @@ function migrate(records: Records) {
   return out;
 }
 function applyLarge() {
-  if (typeof document !== "undefined") document.documentElement.classList.toggle("large", state.large);
+  if (typeof document === "undefined") return;
+  document.documentElement.classList.toggle("large", state.textSize > 0);
+  document.documentElement.classList.toggle("xlarge", state.textSize === 2);
 }
 function set(p: Partial<State>) {
   state = { ...state, ...p };
   listeners.forEach((l) => l());
 }
 
-const serverState: State = { records: {}, large: false, view: "topic" };
+const serverState: State = { records: {}, large: false, textSize: 0, view: "topic", defaultView: "topic" };
 export function useStore() {
   return useSyncExternalStore(
     (l) => {
@@ -177,10 +184,25 @@ export const actions = {
     set({ records });
     return ok;
   },
+  /** Floating button: 보통 ↔ 크게 (아주 크게 goes back to 보통). */
   toggleLarge() {
-    write(LARGE, !state.large);
-    set({ large: !state.large });
+    actions.setTextSize(state.textSize === 0 ? 1 : 0);
+  },
+  setTextSize(textSize: TextSize) {
+    write(SIZE, textSize);
+    set({ textSize, large: textSize > 0 });
     applyLarge();
+  },
+  setDefaultView(defaultView: Kind) {
+    write(DEFAULT_VIEW, defaultView);
+    write(VIEW, defaultView);
+    set({ defaultView, view: defaultView });
+  },
+  /** Backup restore: replaces every record. */
+  replaceRecords(records: Records) {
+    const ok = write(KEY, records);
+    set({ records });
+    return ok;
   },
   setView(view: Kind) {
     write(VIEW, view);
@@ -200,4 +222,13 @@ export function mediaRefs(r?: StoryRecord) {
 }
 export function voiceKeys(id: string, r?: StoryRecord) {
   return (r?.voices ?? []).filter((v) => v.audio).map((v) => audioKey(id, v.step));
+}
+
+/** A step counts as filled when it has text, a voice, or (step 0) a photo — photos belong to the first answer. */
+export function filledSteps(r?: StoryRecord) {
+  if (!r) return [false, false, false, false];
+  return [0, 1, 2, 3].map((i) => !!r.answers[i]?.trim() || !!r.voices?.some((v) => v.step === i) || (i === 0 && recordPhotos(r).length > 0));
+}
+export function isIncomplete(r?: StoryRecord) {
+  return hasContent(r) && filledSteps(r).some((f) => !f);
 }

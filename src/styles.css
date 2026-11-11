@@ -68,11 +68,14 @@
     border-color: var(--color-border);
   }
   html {
-    font-size: 100%;
+    font-size: 106.25%;
     transition: font-size 0.2s ease;
   }
   html.large {
-    font-size: 120%;
+    font-size: 131.25%;
+  }
+  html.xlarge {
+    font-size: 143.75%;
   }
   html,
   body {
@@ -143,4 +146,27 @@
 /* nav offset 16px + nav height (3.75rem) + 16px gap + home indicator */
 @utility pb-nav {
   padding-bottom: calc(3.75rem + 32px + env(safe-area-inset-bottom));
+}
+
+@media print {
+  .no-print,
+  nav {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    font-size: 12pt !important;
+  }
+  .print-chapter {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .pb-nav {
+    padding-bottom: 0 !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }

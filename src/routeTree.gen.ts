@@ -11,11 +11,20 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HelpRouteImport } from './routes/help'
-import { Route as MyRouteImport } from './routes/my'
+import { Route as LockRouteImport } from './routes/lock'
 import { Route as RecordRouteImport } from './routes/record'
 import { Route as AnswerQidRouteImport } from './routes/answer.$qid'
 import { Route as CatCatIdRouteImport } from './routes/cat.$catId'
 import { Route as KindKindRouteImport } from './routes/kind.$kind'
+import { Route as MyIndexRouteImport } from './routes/my.index'
+import { Route as MyArchiveRouteImport } from './routes/my.archive'
+import { Route as MyBackupRouteImport } from './routes/my.backup'
+import { Route as MyExportRouteImport } from './routes/my.export'
+import { Route as MyProfileRouteImport } from './routes/my.profile'
+import { Route as MySettingsIndexRouteImport } from './routes/my.settings.index'
+import { Route as MySettingsLockRouteImport } from './routes/my.settings.lock'
+import { Route as MyShareIndexRouteImport } from './routes/my.share.index'
+import { Route as MyShareManageRouteImport } from './routes/my.share.manage'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -27,9 +36,9 @@ const HelpRoute = HelpRouteImport.update({
   path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MyRoute = MyRouteImport.update({
-  id: '/my',
-  path: '/my',
+const LockRoute = LockRouteImport.update({
+  id: '/lock',
+  path: '/lock',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecordRoute = RecordRouteImport.update({
@@ -52,73 +61,181 @@ const KindKindRoute = KindKindRouteImport.update({
   path: '/kind/$kind',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MyIndexRoute = MyIndexRouteImport.update({
+  id: '/my/',
+  path: '/my/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyArchiveRoute = MyArchiveRouteImport.update({
+  id: '/my/archive',
+  path: '/my/archive',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyBackupRoute = MyBackupRouteImport.update({
+  id: '/my/backup',
+  path: '/my/backup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyExportRoute = MyExportRouteImport.update({
+  id: '/my/export',
+  path: '/my/export',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyProfileRoute = MyProfileRouteImport.update({
+  id: '/my/profile',
+  path: '/my/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MySettingsIndexRoute = MySettingsIndexRouteImport.update({
+  id: '/my/settings/',
+  path: '/my/settings/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MySettingsLockRoute = MySettingsLockRouteImport.update({
+  id: '/my/settings/lock',
+  path: '/my/settings/lock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyShareIndexRoute = MyShareIndexRouteImport.update({
+  id: '/my/share/',
+  path: '/my/share/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyShareManageRoute = MyShareManageRouteImport.update({
+  id: '/my/share/manage',
+  path: '/my/share/manage',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/help': typeof HelpRoute
-  '/my': typeof MyRoute
+  '/lock': typeof LockRoute
   '/record': typeof RecordRoute
   '/answer/$qid': typeof AnswerQidRoute
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
+  '/my/archive': typeof MyArchiveRoute
+  '/my/backup': typeof MyBackupRoute
+  '/my/export': typeof MyExportRoute
+  '/my/profile': typeof MyProfileRoute
+  '/my/': typeof MyIndexRoute
+  '/my/settings/lock': typeof MySettingsLockRoute
+  '/my/share/manage': typeof MyShareManageRoute
+  '/my/settings/': typeof MySettingsIndexRoute
+  '/my/share/': typeof MyShareIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/help': typeof HelpRoute
-  '/my': typeof MyRoute
+  '/lock': typeof LockRoute
   '/record': typeof RecordRoute
   '/answer/$qid': typeof AnswerQidRoute
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
+  '/my/archive': typeof MyArchiveRoute
+  '/my/backup': typeof MyBackupRoute
+  '/my/export': typeof MyExportRoute
+  '/my/profile': typeof MyProfileRoute
+  '/my': typeof MyIndexRoute
+  '/my/settings/lock': typeof MySettingsLockRoute
+  '/my/share/manage': typeof MyShareManageRoute
+  '/my/settings': typeof MySettingsIndexRoute
+  '/my/share': typeof MyShareIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/help': typeof HelpRoute
-  '/my': typeof MyRoute
+  '/lock': typeof LockRoute
   '/record': typeof RecordRoute
   '/answer/$qid': typeof AnswerQidRoute
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
+  '/my/archive': typeof MyArchiveRoute
+  '/my/backup': typeof MyBackupRoute
+  '/my/export': typeof MyExportRoute
+  '/my/profile': typeof MyProfileRoute
+  '/my/': typeof MyIndexRoute
+  '/my/settings/lock': typeof MySettingsLockRoute
+  '/my/share/manage': typeof MyShareManageRoute
+  '/my/settings/': typeof MySettingsIndexRoute
+  '/my/share/': typeof MyShareIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/help'
-    | '/my'
+    | '/lock'
     | '/record'
     | '/answer/$qid'
     | '/cat/$catId'
     | '/kind/$kind'
+    | '/my/archive'
+    | '/my/backup'
+    | '/my/export'
+    | '/my/profile'
+    | '/my/'
+    | '/my/settings/lock'
+    | '/my/share/manage'
+    | '/my/settings/'
+    | '/my/share/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/help'
-    | '/my'
+    | '/lock'
     | '/record'
     | '/answer/$qid'
     | '/cat/$catId'
     | '/kind/$kind'
+    | '/my/archive'
+    | '/my/backup'
+    | '/my/export'
+    | '/my/profile'
+    | '/my'
+    | '/my/settings/lock'
+    | '/my/share/manage'
+    | '/my/settings'
+    | '/my/share'
   id:
     | '__root__'
     | '/'
     | '/help'
-    | '/my'
+    | '/lock'
     | '/record'
     | '/answer/$qid'
     | '/cat/$catId'
     | '/kind/$kind'
+    | '/my/archive'
+    | '/my/backup'
+    | '/my/export'
+    | '/my/profile'
+    | '/my/'
+    | '/my/settings/lock'
+    | '/my/share/manage'
+    | '/my/settings/'
+    | '/my/share/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HelpRoute: typeof HelpRoute
-  MyRoute: typeof MyRoute
+  LockRoute: typeof LockRoute
   RecordRoute: typeof RecordRoute
   AnswerQidRoute: typeof AnswerQidRoute
   CatCatIdRoute: typeof CatCatIdRoute
   KindKindRoute: typeof KindKindRoute
+  MyArchiveRoute: typeof MyArchiveRoute
+  MyBackupRoute: typeof MyBackupRoute
+  MyExportRoute: typeof MyExportRoute
+  MyProfileRoute: typeof MyProfileRoute
+  MyIndexRoute: typeof MyIndexRoute
+  MySettingsLockRoute: typeof MySettingsLockRoute
+  MyShareManageRoute: typeof MyShareManageRoute
+  MySettingsIndexRoute: typeof MySettingsIndexRoute
+  MyShareIndexRoute: typeof MyShareIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -137,11 +254,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/my': {
-      id: '/my'
-      path: '/my'
-      fullPath: '/my'
-      preLoaderRoute: typeof MyRouteImport
+    '/lock': {
+      id: '/lock'
+      path: '/lock'
+      fullPath: '/lock'
+      preLoaderRoute: typeof LockRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/record': {
@@ -172,17 +289,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KindKindRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/my/': {
+      id: '/my/'
+      path: '/my'
+      fullPath: '/my/'
+      preLoaderRoute: typeof MyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my/archive': {
+      id: '/my/archive'
+      path: '/my/archive'
+      fullPath: '/my/archive'
+      preLoaderRoute: typeof MyArchiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my/backup': {
+      id: '/my/backup'
+      path: '/my/backup'
+      fullPath: '/my/backup'
+      preLoaderRoute: typeof MyBackupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my/export': {
+      id: '/my/export'
+      path: '/my/export'
+      fullPath: '/my/export'
+      preLoaderRoute: typeof MyExportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my/profile': {
+      id: '/my/profile'
+      path: '/my/profile'
+      fullPath: '/my/profile'
+      preLoaderRoute: typeof MyProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my/settings/': {
+      id: '/my/settings/'
+      path: '/my/settings'
+      fullPath: '/my/settings/'
+      preLoaderRoute: typeof MySettingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my/settings/lock': {
+      id: '/my/settings/lock'
+      path: '/my/settings/lock'
+      fullPath: '/my/settings/lock'
+      preLoaderRoute: typeof MySettingsLockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my/share/': {
+      id: '/my/share/'
+      path: '/my/share'
+      fullPath: '/my/share/'
+      preLoaderRoute: typeof MyShareIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my/share/manage': {
+      id: '/my/share/manage'
+      path: '/my/share/manage'
+      fullPath: '/my/share/manage'
+      preLoaderRoute: typeof MyShareManageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HelpRoute: HelpRoute,
-  MyRoute: MyRoute,
+  LockRoute: LockRoute,
   RecordRoute: RecordRoute,
   AnswerQidRoute: AnswerQidRoute,
   CatCatIdRoute: CatCatIdRoute,
   KindKindRoute: KindKindRoute,
+  MyArchiveRoute: MyArchiveRoute,
+  MyBackupRoute: MyBackupRoute,
+  MyExportRoute: MyExportRoute,
+  MyProfileRoute: MyProfileRoute,
+  MyIndexRoute: MyIndexRoute,
+  MySettingsLockRoute: MySettingsLockRoute,
+  MyShareManageRoute: MyShareManageRoute,
+  MySettingsIndexRoute: MySettingsIndexRoute,
+  MyShareIndexRoute: MyShareIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -10,6 +10,10 @@ import { deleteMedia, putMedia, useMediaUrl } from "@/lib/media";
 import { CategoryPill } from "@/components/CategoryCard";
 
 export const Route = createFileRoute("/answer/$qid")({
+  validateSearch: (s: Record<string, unknown>): { step?: number | undefined } => {
+    const n = Number(s["step"]);
+    return Number.isInteger(n) && n >= 0 && n <= 3 ? { step: n } : {};
+  },
   beforeLoad: ({ params }) => {
     if (!getQuestion(params.qid)) throw notFound();
   },
@@ -73,7 +77,8 @@ function AnswerFlow() {
   const { records } = useStore();
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(0);
+  const startStep = Route.useSearch().step ?? 0;
+  const [step, setStep] = useState(startStep);
   const [answers, setAnswers] = useState<string[]>(["", "", "", ""]);
   const [photos, setPhotos] = useState<string[]>([]);
   const [voices, setVoices] = useState<Voice[]>([]);

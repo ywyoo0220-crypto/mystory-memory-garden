@@ -4,6 +4,8 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
+  useNavigate,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -15,6 +17,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppNav } from "../components/AppNav";
 import { Toaster } from "../components/ui/sonner";
 import { themeCss } from "../lib/theme";
+import { getPrefs } from "../lib/prefs";
 
 function NotFoundComponent() {
   return (
@@ -128,6 +131,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  // App lock: once per launch (session), send to /lock while a PIN is set.
+  useEffect(() => {
+    let unlocked = false;
+    try { unlocked = sessionStorage.getItem("mystory.unlocked") === "1"; } catch { /* noop */ }
+    if (!unlocked && path !== "/lock" && getPrefs().pinHash) navigate({ to: "/lock", replace: true });
+  }, [path, navigate]);
+  const locked = path === "/lock";
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -135,7 +147,7 @@ function RootComponent() {
       <div className="mx-auto min-h-app w-full max-w-[440px] bg-paper pt-safe pb-nav">
         <Outlet />
       </div>
-      <AppNav />
+      {!locked && <AppNav />}
       <Toaster position="top-center" />
     </QueryClientProvider>
   );

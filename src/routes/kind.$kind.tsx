@@ -2,6 +2,7 @@ import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { categoriesOf, type Kind } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
+import { periodYears, usePrefs } from "@/lib/prefs";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { BackBar } from "@/components/BackBar";
 
@@ -29,6 +30,7 @@ function KindList() {
   const kind = Route.useParams().kind as Kind;
   const { records } = useStore();
   const cats = categoriesOf(kind);
+  const { profile } = usePrefs();
   const navigate = useNavigate();
   return (
     <main>
@@ -50,7 +52,10 @@ function KindList() {
                 <span className="inline-flex" style={{ color: c.color.text }}><CategoryIcon id={c.id} size={22} /></span>
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block text-[1.0625rem] font-semibold">{c.name}</span>
+                <span className="block text-[1.0625rem] font-semibold">
+                  {c.name}
+                  {kind === "period" && periodYears(profile.birth, c.index) && <span className="font-normal text-muted-foreground"> · {periodYears(profile.birth, c.index)}</span>}
+                </span>
                 <span className="block text-[0.875rem]">
                   {pending ? "질문 준비 중" : done ? `${total}개 중 ${done}개 기록함` : `질문 ${total}개`}
                 </span>

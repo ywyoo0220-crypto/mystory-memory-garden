@@ -34,3 +34,5 @@ use the editor.
 - Large-text mode scales the root font-size, so sizes must use rem, not px.
 - Category colors come from a single palette in src/data/themes.json, emitted as --{catId}-{token} CSS variables by lib/theme.ts; on light list screens (tint) use `pill` as the accent because pillText can equal tint.
 - Photos are blobs in IndexedDB (src/lib/media.ts, records keep "idb:" refs); voice blobs are in IndexedDB "ms-audio" keyed recordId:step (src/lib/audio.ts) and records keep only `voices` metadata — localStorage is too small for media; still no backend.
+- MY screens each have their own route under /my/* (usability testing); profile, settings, shares and the hashed lock PIN live in localStorage via src/lib/prefs.ts, separate from records.
+- Text size is a 3-step setting (html.large / html.xlarge root font-size); the floating button only toggles step 0 ↔ 1.
