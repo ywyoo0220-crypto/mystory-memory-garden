@@ -2,8 +2,8 @@ import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import wordmark from "@/assets/mystory_wordmark.png.asset.json";
-import { allCategories, cardColors, getCategory, type Category } from "@/lib/data";
-import { actions, hasContent, useStore } from "@/lib/store";
+import { cardColors, getCategory, type Category } from "@/lib/data";
+import { actions, useStore } from "@/lib/store";
 import { prefs, usePrefs, validBirth } from "@/lib/prefs";
 import { catVars } from "@/lib/theme";
 import { CategoryPill } from "@/components/CategoryCard";
@@ -38,7 +38,7 @@ function Onboarding() {
   const { n } = Route.useParams();
   const step = Number(n);
   const navigate = useNavigate();
-  const { textSize, records } = useStore();
+  const { textSize } = useStore();
   useEffect(() => onbLog(`onb_view_${step}`), [step]);
 
   const go = (k: number) => navigate({ to: "/onboarding/$n", params: { n: String(k) } });
@@ -53,15 +53,6 @@ function Onboarding() {
     actions.toggleLarge();
   };
 
-  const startFirst = () => {
-    onbLog("onb_first_start");
-    finishOnb();
-    let qid = FIRST_QID;
-    if (hasContent(records[qid])) {
-      qid = allCategories.flatMap((c) => c.questions).find((q) => !hasContent(records[q.id]))?.id ?? FIRST_QID;
-    }
-    navigate({ to: "/answer/$qid", params: { qid }, search: { step: 0 }, replace: true });
-  };
   const tour = () => {
     onbLog("onb_tour");
     finishOnb();
@@ -111,8 +102,7 @@ function Onboarding() {
           <Footer dots={<Dots step={step} />}>
             {step === 5 ? (
               <>
-                <button type="button" className={primary} onClick={startFirst}>첫 질문 시작하기</button>
-                <button type="button" className={ghost} onClick={tour}>예시 기록 먼저 둘러보기</button>
+                <button type="button" className={primary} onClick={tour}>시작하기</button>
               </>
             ) : (
               <button type="button" className={primary} onClick={() => go(step + 1)}>{step === 1 ? "시작하기" : "다음"}</button>
