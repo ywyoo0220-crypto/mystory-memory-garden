@@ -31,7 +31,7 @@ export const Route = createFileRoute("/onboarding/$n")({
 
 const FIRST_QID = "A1-Q2";
 const BIG_NOTE = "글자는 화면 아래 ‘크게’ 버튼으로 언제든 바꿀 수 있어요.";
-const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-[1.0625rem] font-semibold text-ink-foreground";
+const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-[1.0625rem] font-medium text-ink-foreground";
 const ghost = "flex h-12 w-full items-center justify-center rounded-full text-[1rem] font-medium";
 
 function Onboarding() {
@@ -126,7 +126,7 @@ function Onboarding() {
 
 function Footer({ dots, children }: { dots: ReactNode; children: ReactNode }) {
   return (
-    <div className="sticky bottom-0 mt-6 space-y-2 bg-gradient-to-t from-paper from-70% to-transparent px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-8">
+    <div className="sticky bottom-0 mt-2 space-y-2 bg-gradient-to-t from-paper from-70% to-transparent px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-6">
       {dots}
       {children}
     </div>
@@ -146,7 +146,7 @@ function Dots({ step }: { step: number }) {
 function Head({ title, sub }: { title: string; sub: string }) {
   return (
     <>
-      <h2 className="whitespace-pre-line text-[1.9rem] font-extrabold leading-[1.38] tracking-[-0.03em] [text-wrap:balance]">{title}</h2>
+      <h2 className="whitespace-pre-line text-[1.9rem] font-medium leading-[1.38] tracking-[-0.03em] [text-wrap:balance]">{title}</h2>
       <p className="mt-3 text-[1.05rem] leading-[1.7] text-muted-foreground">{sub}</p>
     </>
   );
@@ -180,7 +180,7 @@ function Screen1({ big }: { big: boolean }) {
         </div>
         <ol className="mt-3.5 space-y-2">
           {steps.map((s, i) => (
-            <li key={i} className={`onb-rise ${i === 0 ? "text-[1.375rem] font-bold leading-[1.4]" : "text-[1rem] leading-[1.5]"}`} style={{ animationDelay: `${DELAYS[i]}s` }}>
+            <li key={i} className={`onb-rise ${i === 0 ? "text-[1.375rem] font-medium leading-[1.4]" : "text-[1rem] leading-[1.5]"}`} style={{ animationDelay: `${DELAYS[i]}s` }}>
               {s}
             </li>
           ))}
@@ -212,7 +212,7 @@ function Screen3() {
   return (
     <>
       <Head title={"주제별로도, 시간순으로도\n모아 볼 수 있어요."} sub="기록은 이 휴대폰에 저장돼요. 보여줄 사람은 내가 정해요." />
-      <div aria-hidden inert className="pointer-events-none mt-6">
+      <div aria-hidden inert className="pointer-events-none mt-4">
         {cats.map((cat, i) => {
           const c = cardColors(cat);
           const last = i === cats.length - 1;
@@ -220,11 +220,11 @@ function Screen3() {
             <div key={cat.id} className="relative" style={{ zIndex: i + 1, marginTop: i ? "-2rem" : 0 }}>
               <Surface
                 cat={cat}
-                className={last ? "pb-8" : "rounded-b-none pb-[3.75rem]"}
+                className={`!pt-5 ${last ? "pb-5" : "rounded-b-none pb-[2.5rem]"}`}
                 style={{ boxShadow: i ? `inset 0 1px 0 0 color-mix(in srgb, ${c.count} 40%, transparent)` : undefined }}
               >
                 <CategoryPill cat={cat} />
-                <p className="mt-5 text-[1.375rem] font-medium leading-[1.4]">{cat.questions[0]?.core}</p>
+                <p className="mt-3 text-[1.0625rem] font-medium leading-[1.4]">{cat.questions[0]?.core}</p>
               </Surface>
             </div>
           );
