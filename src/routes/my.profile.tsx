@@ -93,7 +93,7 @@ function ProfilePage() {
         />
         <label className="block">
           <span className="text-[0.9375rem] font-medium">이름</span>
-          <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김순자" autoComplete="name" />
+          <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김정희" autoComplete="name" />
         </label>
         <label className="block">
           <span className="text-[0.9375rem] font-medium">태어난 해</span>
