@@ -170,7 +170,7 @@ function Screen1({ big }: { big: boolean }) {
   const steps = [q.core, ...q.followUps];
   return (
     <>
-      <Head title={"질문에 답하다 보면\n기억이 이어져요."} sub="질문 하나에 4단계예요. 큰 질문으로 시작해서 기억을 하나씩 따라가요." />
+      <Head title={"질문에 답하다 보면\n기억이 이어져요."} sub="큰 질문으로 시작해서, 이어지는 질문을 따라 기억을 하나씩 떠올려요." />
       <Surface cat={cat} className="mt-4 !pt-5 pb-5">
         <CategoryPill cat={cat} />
         <div className="mt-3.5 flex gap-1.5" aria-hidden>
