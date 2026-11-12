@@ -171,16 +171,16 @@ function Screen1({ big }: { big: boolean }) {
   return (
     <>
       <Head title={"질문에 답하다 보면\n기억이 이어져요."} sub="질문 하나에 4단계예요. 큰 질문으로 시작해서 기억을 하나씩 따라가요." />
-      <Surface cat={cat} className="mt-6 pb-7">
+      <Surface cat={cat} className="mt-4 !pt-5 pb-5">
         <CategoryPill cat={cat} />
-        <div className="mt-5 flex gap-1.5" aria-hidden>
+        <div className="mt-3.5 flex gap-1.5" aria-hidden>
           {DELAYS.map((d, i) => (
             <span key={i} className="onb-fill h-1 flex-1 rounded-full" style={{ background: c.pill, animationDelay: `${d}s` }} />
           ))}
         </div>
-        <ol className="mt-5 space-y-3">
+        <ol className="mt-3.5 space-y-2">
           {steps.map((s, i) => (
-            <li key={i} className={`onb-rise ${i === 0 ? "text-[1.375rem] font-bold leading-[1.4]" : "text-[1rem] leading-[1.6]"}`} style={{ animationDelay: `${DELAYS[i]}s` }}>
+            <li key={i} className={`onb-rise ${i === 0 ? "text-[1.375rem] font-bold leading-[1.4]" : "text-[1rem] leading-[1.5]"}`} style={{ animationDelay: `${DELAYS[i]}s` }}>
               {s}
             </li>
           ))}
