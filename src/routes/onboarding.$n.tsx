@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import wordmark from "@/assets/mystory_wordmark.png.asset.json";
@@ -73,9 +73,9 @@ function Onboarding() {
         {step === 1 ? (
           <img src={wordmark.url} alt="myStory" width={1979} height={483} className="ml-4 h-[1.625rem] w-auto" />
         ) : (
-          <button type="button" aria-label="뒤로" onClick={() => go(step - 1)} className="flex size-12 items-center justify-center rounded-full">
+          <Link to="/onboarding/$n" params={{ n: String(step - 1) }} aria-label="뒤로" className="flex size-12 items-center justify-center rounded-full">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden><path d="m15 5-7 7 7 7" /></svg>
-          </button>
+          </Link>
         )}
         <div className="flex items-center gap-1">
           {step === 1 && (
@@ -105,7 +105,7 @@ function Onboarding() {
                 <button type="button" className={primary} onClick={tour}>시작하기</button>
               </>
             ) : (
-              <button type="button" className={primary} onClick={() => go(step + 1)}>{step === 1 ? "시작하기" : "다음"}</button>
+              <Link to="/onboarding/$n" params={{ n: String(step + 1) }} className={primary}>{step === 1 ? "시작하기" : "다음"}</Link>
             )}
           </Footer>
         </>
