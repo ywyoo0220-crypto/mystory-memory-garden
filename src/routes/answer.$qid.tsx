@@ -382,7 +382,7 @@ function AnswerFlow() {
       <div className="flex items-center gap-3">
       <div className="flex flex-1 gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
         {steps.map((_, i) => (
-          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? c.bg : "var(--border)" }} />
+          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? "var(--ink)" : "var(--border)" }} />
         ))}
       </div>
       <span className="text-[0.875rem] font-medium tabular-nums" aria-hidden>{step + 1} / {steps.length}</span>
@@ -481,7 +481,7 @@ function AnswerFlow() {
           type="button"
           onClick={() => void go()}
          
-          className="h-14 w-full rounded-full bg-(--cat-bg) text-[1rem] font-semibold text-(--cat-text)"
+          className="h-14 w-full rounded-full bg-ink text-[1rem] font-semibold text-ink-foreground"
         >
           {step < 3 ? "다음" : "기록 마치기"}
         </button>
