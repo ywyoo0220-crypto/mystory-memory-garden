@@ -116,7 +116,7 @@ function Onboarding() {
 
 function Footer({ dots, children }: { dots: ReactNode; children: ReactNode }) {
   return (
-    <div className="sticky bottom-0 mt-2 space-y-2 bg-gradient-to-t from-paper from-70% to-transparent px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-6">
+    <div className="sticky bottom-0 z-20 mt-2 space-y-2 bg-gradient-to-t from-paper from-70% to-transparent px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-6">
       {dots}
       {children}
     </div>
