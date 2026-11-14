@@ -13,7 +13,7 @@ export const Chevron = () => (
 export function SubHeader({ title, back = "/my", sub, close }: { title: string; back?: string; sub?: string; close?: boolean }) {
   return (
     <div className="no-print">
-      <BackLink to={back} close={close} />
+      <BackLink to={back} close={!!close} />
       <div className="px-6 pb-4 pt-2">
         <h1 className="text-[1.75rem] font-bold leading-[1.3]">{title}</h1>
         {sub && <p className="mt-2 text-[0.9375rem] leading-[1.6] text-muted-foreground">{sub}</p>}
