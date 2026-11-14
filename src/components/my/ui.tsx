@@ -10,10 +10,10 @@ export const Chevron = () => (
   </svg>
 );
 
-export function SubHeader({ title, back = "/my", sub }: { title: string; back?: string; sub?: string }) {
+export function SubHeader({ title, back = "/my", sub, close }: { title: string; back?: string; sub?: string; close?: boolean }) {
   return (
     <div className="no-print">
-      <BackLink to={back} />
+      <BackLink to={back} close={close} />
       <div className="px-6 pb-4 pt-2">
         <h1 className="text-[1.75rem] font-bold leading-[1.3]">{title}</h1>
         {sub && <p className="mt-2 text-[0.9375rem] leading-[1.6] text-muted-foreground">{sub}</p>}
@@ -21,12 +21,12 @@ export function SubHeader({ title, back = "/my", sub }: { title: string; back?: 
     </div>
   );
 }
-function BackLink({ to }: { to: string }) {
+function BackLink({ to, close }: { to: string; close?: boolean }) {
   return (
     <div className="flex h-16 items-center px-2">
-      <Link to={to} aria-label="뒤로" className="flex size-12 items-center justify-center rounded-full">
+      <Link to={to} aria-label={close ? "닫기" : "뒤로"} className="flex size-12 items-center justify-center rounded-full">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
-          <path d="m15 5-7 7 7 7" />
+          <path d={close ? "M6 6l12 12M18 6 6 18" : "m15 5-7 7 7 7"} />
         </svg>
       </Link>
     </div>

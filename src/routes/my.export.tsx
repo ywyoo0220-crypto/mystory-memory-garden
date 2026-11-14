@@ -61,7 +61,7 @@ function ExportPage() {
 
   return (
     <main className="book-export pb-6">
-      <SubHeader title="기록 책으로 묶기" />
+      <SubHeader title="기록 책으로 묶기" close />
       <section className="book-controls no-print space-y-6 px-4 pb-6">
         <div>
           <p className="text-[1.125rem] font-semibold">남긴 기록을 한 권으로 엮어요.</p>

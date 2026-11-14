@@ -143,12 +143,13 @@ function RootComponent() {
     if (path !== "/lock" && !path.startsWith("/onboarding") && !onbDone()) navigate({ to: "/onboarding/$n", params: { n: "1" }, replace: true });
   }, [path, navigate]);
   const onb = path.startsWith("/onboarding");
-  const locked = path === "/lock" || onb;
+  const fullscreen = onb || path === "/my/export";
+  const locked = path === "/lock" || fullscreen;
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <div className={`mx-auto min-h-app w-full max-w-[440px] bg-paper pt-safe ${onb ? "" : "pb-nav"}`}>
+      <div className={`mx-auto min-h-app w-full max-w-[440px] bg-paper pt-safe ${fullscreen ? "" : "pb-nav"}`}>
         <Outlet />
       </div>
       {!locked && <AppNav />}
