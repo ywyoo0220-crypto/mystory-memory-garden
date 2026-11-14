@@ -349,7 +349,7 @@ function AnswerFlow() {
           <Link
             to="/cat/$catId"
             params={{ catId: cat.id }}
-            className="flex h-14 w-full items-center justify-center rounded-full border-[1.5px] border-ink text-[1rem] font-semibold"
+            className="flex h-14 w-full items-center justify-center rounded-full border border-ink text-[1rem] font-semibold"
           >
             {cat.name} 더 기록하기
           </Link>
