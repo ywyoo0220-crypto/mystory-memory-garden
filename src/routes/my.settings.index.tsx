@@ -33,7 +33,7 @@ function Settings() {
         <Card className="divide-y overflow-hidden">
           <div className={rowCls}>
             <span className="flex-1 text-[1.0625rem] font-medium">글자 크기</span>
-            <Segmented<TextSize> compact label="글자 크기" value={textSize} onChange={actions.setTextSize} options={[[0, "보통"], [1, "크게"]]} />
+            <Segmented<TextSize> compact label="글자 크기" value={textSize} onChange={actions.setTextSize} options={[[0, <span key="n" className="text-[0.9375rem]">보통</span>], [1, <span key="l" className="text-[1.25rem] font-bold leading-none">크게</span>]]} />
           </div>
           <div className={rowCls}>
             <span className="flex-1 text-[1.0625rem] font-medium">처음 보기</span>

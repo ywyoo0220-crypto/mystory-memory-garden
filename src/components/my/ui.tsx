@@ -48,7 +48,7 @@ export function Avatar({ name, photo, size }: { name: string; photo?: string | u
   );
 }
 
-export function Segmented<T extends string | number>({ value, options, onChange, label, compact }: { value: T; options: [T, string][]; onChange: (v: T) => void; label: string; compact?: boolean }) {
+export function Segmented<T extends string | number>({ value, options, onChange, label, compact }: { value: T; options: [T, import("react").ReactNode][]; onChange: (v: T) => void; label: string; compact?: boolean }) {
   return (
     <div role="group" aria-label={label} className={compact ? "flex shrink-0 rounded-full bg-muted p-1" : "flex rounded-full border border-ink p-1"}>
       {options.map(([v, l]) => (
