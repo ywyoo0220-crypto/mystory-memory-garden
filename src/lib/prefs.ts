@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 
 /** Profile, MY settings, local shares and the app-lock PIN hash; all on this device only. */
-export type Profile = { name: string; birth: string; photo?: string | undefined };
+export type Profile = { name: string; birth: string; photo?: string | undefined; cover?: string | undefined; coverUp?: string | undefined };
 export type ShareScope = "me" | "family" | "link";
 export type Share = { id: string; qids: string[]; scope: ShareScope; withVoice: boolean; t: number; link?: string | undefined };
 type Prefs = { profile: Profile; notify: boolean; aiGreeting: boolean; shares: Share[]; pinHash: string | null };
@@ -70,7 +70,7 @@ export function getPrefs() {
 export const prefs = {
   setProfile(profile: Profile) {
     const ok = write(K.profile, profile);
-    set({ profile });
+    if (ok) set({ profile });
     return ok;
   },
   setNotify(v: boolean) {

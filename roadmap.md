@@ -3,4 +3,7 @@
 - [x] Replace only the nine age palettes and verify all nine Home cards plus the 70대 answer screen.
 - [x] Start without automatic examples; load examples and supplied profile only from settings.
 - [x] Limit text size to normal/large and fill recorded archive dots with category colors.
+- [x] Redesign book controls, cover choice, fixed parts, and print pages.
+- [x] Update example identity and cover; preserve cover in profile and backup.
+- [x] Verify photo/no-photo screens, persistence, and first five printed pages.
 - [x] Include required comparison examples and verify persistence and recording.- [x] Multi-photo attach + voice recording (IndexedDB) in answer flow.

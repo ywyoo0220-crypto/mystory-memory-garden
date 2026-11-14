@@ -14,6 +14,7 @@ export type StoryRecord = {
   answers: string[];
   photo?: string | undefined;
   photos?: string[] | undefined;
+  photoSteps?: number[] | undefined;
   voices?: Voice[] | undefined;
   updatedAt: number;
   example?: boolean | undefined;
@@ -174,7 +175,7 @@ export const actions = {
     const records = withExamples(state.records);
     write(KEY, records);
     write(EXAMPLES_OPT_IN, true);
-    prefs.setProfile({ name: "김정희", birth: "1960", photo: exampleProfilePhoto.url });
+    prefs.setProfile({ name: "이영숙", birth: "1958", photo: exampleProfilePhoto.url, cover: "ex" });
     set({ records });
   },
   clearAll() {

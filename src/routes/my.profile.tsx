@@ -56,7 +56,7 @@ function ProfilePage() {
 
   const save = () => {
     if (birth && !validBirth(birth)) return void toast("태어난 해를 네 자리로 입력하세요");
-    if (!prefs.setProfile({ name: name.trim(), birth, photo })) return void toast("저장 공간이 부족해요");
+    if (!prefs.setProfile({ ...profile, name: name.trim(), birth, photo })) return void toast("저장 공간이 부족해요");
     toast("프로필을 저장했어요");
     navigate({ to: "/my" });
   };

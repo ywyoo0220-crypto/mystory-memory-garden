@@ -61,6 +61,9 @@
   --input: rgba(0, 0, 0, 0.08);
   --ring: #1a1918;
   --comparison-border: #d1d1d6;
+  --book-sheet-shadow: 0 2px 10px color-mix(in srgb, var(--ink) 8%, transparent);
+  --book-photo-border: color-mix(in srgb, var(--ink) 15%, transparent);
+  --book-page-number: #6b655f;
 }
 
 @layer base {
@@ -145,27 +148,100 @@
   padding-bottom: calc(3.75rem + 32px + env(safe-area-inset-bottom));
 }
 
+.cover-options { display: flex; gap: 0.625rem; overflow-x: auto; padding: 0.5rem; margin: 0.5rem -0.5rem 0; }
+.cover-tile { width: 4.75rem; height: 4.75rem; flex: 0 0 4.75rem; border-radius: 0.75rem; border: 1px solid var(--comparison-border); padding: 0; white-space: normal; font-size: 0.75rem; line-height: 1.5; background: var(--card); color: var(--ink); }
+.cover-tile img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+.cover-tile[aria-pressed="true"] { outline: 3px solid var(--ink); outline-offset: 2px; }
+.cover-upload { border-color: var(--ink); }
+.book-preview { margin: 0 1rem; display: flex; flex-direction: column; gap: 1rem; container-type: inline-size; }
+.book-sheet { background: var(--card); color: var(--ink); box-shadow: var(--book-sheet-shadow); }
+.book-cover { aspect-ratio: 170 / 240; height: 141.176cqw; display: flex; flex-direction: column; padding: 15.3cqw 10cqw 11.76cqw; box-sizing: border-box; }
+.book-cover.has-cover-photo { padding-top: 0; }
+.book-cover-photo { width: 125%; max-width: none; margin-left: -12.5%; height: 81.88cqw; flex: 0 0 81.88cqw; object-fit: cover; }
+.book-stripe { display: flex; width: 100%; height: 0.625rem; flex-shrink: 0; }
+.book-stripe span { flex-basis: 0; }
+.book-cover > .book-stripe { width: 125%; margin-left: -12.5%; height: 32.94cqw; }
+.book-cover.has-cover-photo > .book-stripe { height: 2.94cqw; }
+.book-cover-info { margin-top: auto; padding-top: 1.5rem; }
+.book-cover-info h2 { font-size: 1.625rem; line-height: 1.2; font-weight: 800; letter-spacing: -0.04em; overflow-wrap: anywhere; }
+.book-cover-info p { margin-top: 0.75rem; font-size: 0.75rem; color: var(--muted-foreground); }
+.book-wordmark { height: 1.125rem; width: auto; margin-top: 1.5rem; }
+.book-contents { padding: 2.5rem 10% 3rem; }
+.book-contents > h2 { font-size: 1.375rem; font-weight: 800; }
+.book-toc-part { margin-top: 1.75rem; }
+.book-toc-part h3 { font-size: 0.8125rem; font-weight: 700; margin-bottom: 0.625rem; }
+.book-toc-row { display: flex; gap: 0.625rem; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border); font-size: 0.8125rem; }
+.book-color-square { width: 0.75rem; height: 0.75rem; flex-shrink: 0; }
+.book-count { margin-left: auto; font-variant-numeric: tabular-nums; }
+.book-part-page { aspect-ratio: 170 / 240; display: flex; justify-content: center; flex-direction: column; padding: 0 10%; }
+.book-part-number { font-size: 0.8125rem; font-weight: 700; }
+.book-part-page h2 { font-size: 1.5rem; font-weight: 800; line-height: 1.4; margin-top: 0.75rem; }
+.book-part-page > p:last-of-type { margin-top: 0.75rem; font-size: 0.8125rem; color: var(--muted-foreground); }
+.book-part-page .book-stripe { margin-top: 1.5rem; }
+.book-chapter-header { padding: 1.75rem 10% 1.5rem; }
+.book-chapter-heading { display: flex; align-items: center; gap: 0.625rem; }
+.book-chapter-heading h2 { font-size: 1.375rem; font-weight: 800; line-height: 1.4; }
+.book-chapter-header p { margin-top: 0.5rem; font-size: 0.8125rem; }
+.book-chapter-body { padding: 0 10% 1.75rem; }
+.book-record { padding: 1.75rem 0; }
+.book-record + .book-record { border-top: 1px solid var(--border); }
+.book-record h3 { font-size: 1rem; font-weight: 800; line-height: 1.45; text-wrap: balance; }
+.book-answer-block { margin-top: 0.875rem; }
+.book-answer-block h4 { display: flex; gap: 0.5rem; font-size: 0.8125rem; font-weight: 700; line-height: 1.6; color: var(--muted-foreground); margin-bottom: 0.5rem; }
+.book-follow-square { width: 0.5rem; height: 0.5rem; margin-top: 0.375rem; flex-shrink: 0; box-shadow: inset 0 0 0 1px var(--book-photo-border); }
+.book-answer { font-size: 0.875rem; line-height: 1.85; word-break: keep-all; white-space: pre-line; orphans: 2; widows: 2; }
+.book-voice-tag { display: inline-block; border: 1px solid var(--muted-foreground); color: var(--muted-foreground); font-size: 0.6875rem; line-height: 1.4; padding: 0.0625rem 0.25rem; margin-right: 0.5rem; vertical-align: 0.0625rem; white-space: nowrap; }
+.book-record-photo { display: block; width: 100%; max-height: 17.5rem; object-fit: cover; margin-top: 0.875rem; break-inside: avoid; }
+
+@page { size: 170mm 240mm; margin: 18mm 0 20mm;
+  @bottom-center { content: counter(page); font: 500 8pt "Pretendard Variable", Pretendard, sans-serif; color: #6b655f; }
+}
+@page cover { margin: 0; @bottom-center { content: none; } }
+@page front { @bottom-center { content: none; } }
 @media print {
-  .no-print,
-  nav {
-    display: none !important;
-  }
-  html,
-  body {
-    background: #ffffff !important;
-    font-size: 12pt !important;
-  }
-  .print-chapter {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-  .pb-nav {
-    padding-bottom: 0 !important;
-  }
-  * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+  .no-print, nav, [data-sonner-toaster] { display: none !important; }
+  html, html.large, body { background: var(--card) !important; font-size: 10pt !important; }
+  body *, body *::before, body *::after { box-shadow: none !important; border-radius: 0 !important; max-width: none !important; overflow: visible !important; }
+  body > div, body .min-h-app { min-height: 0 !important; padding: 0 !important; margin: 0 !important; width: 100% !important; background: var(--card) !important; }
+  .book-export { padding: 0 !important; }
+  .book-preview { display: block; margin: 0; container-type: normal; }
+  .book-sheet { width: 170mm; }
+  .book-cover { page: cover; width: 170mm; height: 240mm; aspect-ratio: auto; padding: 26mm 17mm 20mm; break-after: page; }
+  .book-cover.has-cover-photo { padding-top: 0; }
+  .book-cover-photo { width: 170mm; height: 139.2mm; flex: 0 0 139.2mm; margin-left: -17mm; }
+  .book-cover > .book-stripe { width: 170mm; height: 56mm; margin-left: -17mm; }
+  .book-cover.has-cover-photo > .book-stripe { height: 5mm; }
+  .book-cover-info { padding-top: 10mm; }
+  .book-cover-info h2 { font-size: 28pt; font-weight: 800; }
+  .book-cover-info p { font-size: 10pt; margin-top: 4mm; }
+  .book-wordmark { height: 13.5pt; margin-top: 8mm; }
+  .book-contents { page: front; padding: 0 17mm; break-after: page; }
+  .book-contents > h2 { font-size: 22pt; }
+  .book-toc-part { margin-top: 9mm; }
+  .book-toc-part h3 { font-size: 10pt; margin-bottom: 3mm; }
+  .book-toc-row { font-size: 10pt; padding: 4mm 0; gap: 3mm; }
+  .book-color-square { width: 9pt; height: 9pt; }
+  .book-part-page { page: front; height: 202mm; aspect-ratio: auto; padding: 0 17mm; break-after: page; }
+  .book-part-number { font-size: 10pt; }
+  .book-part-page h2 { font-size: 22pt; margin-top: 4mm; }
+  .book-part-page > p:last-of-type { font-size: 10pt; margin-top: 4mm; }
+  .book-part-page .book-stripe { height: 4mm; margin-top: 8mm; }
+  .book-chapter { break-before: page; }
+  .book-chapter-header { padding: 10mm 17mm 8mm; break-inside: avoid; break-after: avoid; }
+  .book-chapter-heading h2 { font-size: 20pt; }
+  .book-chapter-header p { font-size: 10pt; margin-top: 3mm; }
+  .book-chapter-body { padding: 0 17mm; }
+  .book-record { padding: 7mm 0; }
+  .book-record h3 { font-size: 12pt; }
+  .book-answer-block { margin-top: 4mm; }
+  .book-answer-block h4 { font-size: 9pt; gap: 2mm; margin-bottom: 2mm; }
+  .book-follow-square { width: 6pt; height: 6pt; margin-top: 3pt; border: 1px solid var(--book-photo-border); }
+  .book-answer { font-size: 10pt; }
+  .book-voice-tag { font-size: 7.5pt; padding: 0.5pt 3pt; }
+  .book-record-photo { max-height: 80mm; margin-top: 4mm; break-inside: avoid; }
+  .book-cover-photo, .book-record-photo { overflow: clip !important; }
+  .book-preview h2, .book-preview h3, .book-preview h4 { break-after: avoid; }
+  .book-cover-photo, .book-stripe, .book-chapter-header, .book-color-square, .book-follow-square { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
 @keyframes onb-fill {

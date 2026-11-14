@@ -46,7 +46,7 @@ function Backup() {
         }
       }
       const { profile } = getPrefs();
-      const data: BackupFile = { app: "myStory", v: 1, t: Date.now(), records, profile: { name: profile.name, birth: profile.birth, photo: profile.photo }, audio, media };
+      const data: BackupFile = { app: "myStory", v: 1, t: Date.now(), records, profile: { ...profile }, audio, media };
       const json = JSON.stringify(data);
       try {
         const a = document.createElement("a");

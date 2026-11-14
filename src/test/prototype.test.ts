@@ -20,7 +20,7 @@ describe("Prototype usability rules", () => {
   });
   it("sets the supplied sample profile only when examples are loaded", () => {
     actions.restoreExamples();
-    expect(getPrefs().profile).toEqual({ name: "김정희", birth: "1960", photo: photo.url });
+    expect(getPrefs().profile).toEqual({ name: "이영숙", birth: "1958", photo: photo.url, cover: "ex" });
   });
   it("supports only normal and large, mapping legacy very large to large", () => {
     expect([0, 1, 2].map(normalizeTextSize)).toEqual([0, 1, 1]);
