@@ -31,9 +31,20 @@ function Settings() {
       <SubHeader title="설정" />
       <div className="space-y-6 px-4">
         <Card className="divide-y overflow-hidden">
-          <div className={rowCls}>
-            <span className="flex-1 text-[1.0625rem] font-medium">글자 크기</span>
-            <Segmented<TextSize> compact label="글자 크기" value={textSize} onChange={actions.setTextSize} options={[[0, <span key="n" className="text-[0.9375rem]">보통</span>], [1, <span key="l" className="text-[1.25rem] font-bold leading-none">크게</span>]]} />
+          <div className="px-5 py-4">
+            <span className="block text-[1.0625rem] font-medium">글자 크기</span>
+            <div role="radiogroup" aria-label="글자 크기" className="mt-3 grid grid-cols-2 gap-2">
+              {([[0, "보통", "text-[1.25rem] font-semibold", "text-[0.9375rem] font-medium"], [1, "크게", "text-[1.875rem] font-extrabold", "text-[1.0625rem] font-bold"]] as const).map(([v, name, big, small]) => {
+                const on = textSize === v;
+                return (
+                  <button key={v} type="button" role="radio" aria-checked={on} onClick={() => actions.setTextSize(v as TextSize)}
+                    className={`flex min-h-[6rem] flex-col items-center justify-center gap-1 rounded-2xl border transition-colors ${on ? "border-ink bg-ink text-ink-foreground" : "border-border bg-muted text-foreground"}`}>
+                    <span aria-hidden className={`leading-none ${big}`}>가</span>
+                    <span className={small}>{name}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
           <div className={rowCls}>
             <span className="flex-1 text-[1.0625rem] font-medium">처음 보기</span>
