@@ -61,7 +61,7 @@ function CatQuestions() {
               >
                 <span
                   className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border"
-                  style={done ? { borderColor: cat.color.pill, color: cat.color.pill } : { borderColor: "var(--border)" }}
+                  style={done ? { borderColor: `var(--${cat.id}-list-accent)`, color: `var(--${cat.id}-list-accent)` } : { borderColor: "var(--border)" }}
                   aria-hidden
                 >
                   {done && (

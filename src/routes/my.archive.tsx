@@ -59,7 +59,7 @@ function Grid({ title, cats, records, birth = "" }: { title: string; cats: Categ
               </div>
               {yrs && <p className="mt-1 text-[0.75rem] text-muted-foreground">{yrs}</p>}
               <div className="mt-3 h-1 overflow-hidden rounded-full bg-muted" aria-hidden>
-                <div className="h-full rounded-full" style={{ width: n ? `${(f / n) * 100}%` : 0, background: `var(--${c.id}-pill)` }} />
+                <div className="h-full rounded-full" style={{ width: n ? `${(f / n) * 100}%` : 0, background: `var(--${c.id}-list-accent)` }} />
               </div>
             </li>
           );

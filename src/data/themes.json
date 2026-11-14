@@ -124,94 +124,94 @@
     "tint": "#FFEDF5"
    },
    "A1": {
-    "background": "#BCE9FF",
+    "background": "#EFFF24",
     "text": "#000000",
     "pill": "#000000",
-    "pillText": "#BCE9FF",
+    "pillText": "#EFFF24",
     "countText": "#000000",
     "buttonBackground": "#000000",
-    "buttonText": "#BCE9FF",
-    "tint": "#E9F6FB"
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #EFFF24 12%, #FFFFFF)"
    },
    "A2": {
-    "background": "#08A2FF",
+    "background": "#BDE9FF",
     "text": "#000000",
     "pill": "#000000",
-    "pillText": "#08A2FF",
+    "pillText": "#BDE9FF",
     "countText": "#000000",
     "buttonBackground": "#000000",
-    "buttonText": "#08A2FF",
-    "tint": "#F9FFFC"
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #BDE9FF 12%, #FFFFFF)"
    },
    "A3": {
-    "background": "#FF68FD",
+    "background": "#E4D1BE",
     "text": "#000000",
     "pill": "#000000",
-    "pillText": "#FF68FD",
+    "pillText": "#E4D1BE",
     "countText": "#000000",
     "buttonBackground": "#000000",
-    "buttonText": "#FF68FD",
-    "tint": "#F9FFFC"
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #E4D1BE 12%, #FFFFFF)"
    },
    "A4": {
-    "background": "#EDFF00",
+    "background": "#D9B5FB",
     "text": "#000000",
     "pill": "#000000",
-    "pillText": "#EDFF00",
+    "pillText": "#D9B5FB",
     "countText": "#000000",
     "buttonBackground": "#000000",
-    "buttonText": "#EDFF00",
-    "tint": "#F9FFFC"
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #D9B5FB 12%, #FFFFFF)"
    },
    "A5": {
-    "background": "#DCB8FE",
+    "background": "#9CB8C3",
     "text": "#000000",
     "pill": "#000000",
-    "pillText": "#DCB8FE",
+    "pillText": "#9CB8C3",
     "countText": "#000000",
     "buttonBackground": "#000000",
-    "buttonText": "#DCB8FE",
-    "tint": "#F9FFFC"
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #9CB8C3 12%, #FFFFFF)"
    },
    "A6": {
-    "background": "#93AEB9",
-    "text": "#1D1D1D",
-    "pill": "#232B2E",
-    "pillText": "#E9F6FB",
-    "countText": "#1D1D1D",
-    "buttonBackground": "#232B2E",
-    "buttonText": "#E9F6FB",
-    "tint": "#E9F6FB"
+    "background": "#FB64F9",
+    "text": "#000000",
+    "pill": "#000000",
+    "pillText": "#FB64F9",
+    "countText": "#000000",
+    "buttonBackground": "#000000",
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #FB64F9 12%, #FFFFFF)"
    },
    "A7": {
-    "background": "#00616A",
-    "text": "#FFFFFF",
-    "pill": "#122A2D",
-    "pillText": "#F5FEFF",
-    "countText": "#FFFFFF",
-    "buttonBackground": "#122A2D",
-    "buttonText": "#F5FEFF",
-    "tint": "#F5FEFF"
+    "background": "#149CF4",
+    "text": "#000000",
+    "pill": "#000000",
+    "pillText": "#149CF4",
+    "countText": "#000000",
+    "buttonBackground": "#000000",
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #149CF4 12%, #FFFFFF)"
    },
    "A8": {
-    "background": "#E7D4C1",
-    "text": "#000000",
-    "pill": "#000000",
-    "pillText": "#E7D4C1",
-    "countText": "#000000",
-    "buttonBackground": "#000000",
-    "buttonText": "#E7D4C1",
-    "tint": "#F9FFFC"
+    "background": "#515C44",
+    "text": "#FFFFFF",
+    "pill": "#FFFFFF",
+    "pillText": "#515C44",
+    "countText": "#FFFFFF",
+    "buttonBackground": "#515C44",
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #515C44 12%, #FFFFFF)"
    },
    "A9": {
-    "background": "#8F9B81",
-    "text": "#000000",
-    "pill": "#000000",
-    "pillText": "#F9FFFC",
-    "countText": "#000000",
-    "buttonBackground": "#000000",
-    "buttonText": "#F9FFFC",
-    "tint": "#F9FFFC"
+    "background": "#004A51",
+    "text": "#FFFFFF",
+    "pill": "#FFFFFF",
+    "pillText": "#004A51",
+    "countText": "#FFFFFF",
+    "buttonBackground": "#004A51",
+    "buttonText": "#FFFFFF",
+    "tint": "color-mix(in srgb, #004A51 12%, #FFFFFF)"
    }
   }
  },

@@ -22,10 +22,13 @@ export function themeCss() {
   const vars = Object.entries(data.theme.categories)
     .flatMap(([cat, t]) => MAP.map(([k, n]) => `--${cat}-${n}:${t[k]};`))
     .join("");
-  return `:root{${vars}}`;
+  const accents = Object.entries(data.theme.categories)
+    .map(([cat, t]) => `--${cat}-list-accent:${cat.startsWith("A") && t.text === "#FFFFFF" ? t.background : t.pill};`)
+    .join("");
+  return `:root{${vars}${accents}}`;
 }
 
 /** Per-card CSS variables pointing at a category's tokens. */
 export function catVars(catId: string) {
-  return { ...Object.fromEntries(MAP.map(([, n]) => [`--cat-${n}`, `var(--${catId}-${n})`])), "--ring": `var(--${catId}-text)` } as Record<string, string>;
+  return { ...Object.fromEntries(MAP.map(([, n]) => [`--cat-${n}`, `var(--${catId}-${n})`])), "--cat-list-accent": `var(--${catId}-list-accent)`, "--ring": `var(--${catId}-text)` } as Record<string, string>;
 }

@@ -80,7 +80,7 @@ export const Dot = ({ catId, filled = true, size = 10 }: { catId: string; filled
   <span
     aria-hidden
     className="inline-block shrink-0 rounded-full"
-    style={{ width: `${size / 16}rem`, height: `${size / 16}rem`, background: filled ? `var(--${catId}-pill)` : "transparent", border: `1.5px solid var(--${catId}-pill)` }}
+    style={{ width: `${size / 16}rem`, height: `${size / 16}rem`, background: filled ? `var(--${catId}-list-accent)` : "transparent", border: `1.5px solid var(--${catId}-list-accent)` }}
   />
 );
 

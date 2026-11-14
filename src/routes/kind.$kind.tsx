@@ -62,7 +62,7 @@ function KindList() {
               </span>
               {!pending && (
                 <span className="h-1 w-14 overflow-hidden rounded-full bg-muted" aria-hidden>
-                  <span className="block h-full rounded-full" style={{ background: c.color.pill, width: `${(done / total) * 100}%` }} />
+                  <span className="block h-full rounded-full" style={{ background: `var(--${c.id}-list-accent)`, width: `${(done / total) * 100}%` }} />
                 </span>
               )}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>

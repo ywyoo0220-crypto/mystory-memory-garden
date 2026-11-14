@@ -130,7 +130,7 @@
   background-color: var(--cat-bg);
 }
 .category-list {
-  --ring: var(--cat-pill);
+  --ring: var(--cat-list-accent);
 }
 .category-surface :focus-visible, .category-list :focus-visible {
   outline-color: var(--ring);

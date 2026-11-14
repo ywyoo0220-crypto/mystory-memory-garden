@@ -397,7 +397,7 @@ function AnswerFlow() {
         value={answers[step]}
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="쓰거나 말로 남기세요."
-        className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border border-border bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-pill)"
+        className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border border-border bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"
       />
 
       {photos.length > 0 && (
@@ -421,7 +421,7 @@ function AnswerFlow() {
       {voice && (
         <div className="mt-4">
           <div className="rounded-full border border-border bg-card py-1.5 pl-1.5 pr-4">
-            <VoiceBar recordId={qid} voice={voice} text={answers[step] || voice.text || ""} fg={c.pill} accent={c.pillText} />
+            <VoiceBar recordId={qid} voice={voice} text={answers[step] || voice.text || ""} fg={cat.kind === "period" ? c.bg : c.pill} accent={cat.kind === "period" ? c.fg : c.pillText} />
           </div>
           <button
             type="button"
