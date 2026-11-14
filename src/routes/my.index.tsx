@@ -29,7 +29,7 @@ function My() {
     ["/my/export", "기록 책으로 묶기", "PDF로 저장해요"],
     ["/my/share", "기록 공유하기", sharedN ? `${sharedN}개 공유 중` : "보여줄 사람을 직접 정해요"],
     ["/my/backup", "백업과 복원", "기기를 바꿔도 기록을 지켜요"],
-    ["/my/settings", "설정", `글자 ${["보통", "크게", "아주 크게"][textSize]} · 앱 잠금 ${pinHash ? "켜짐" : "꺼짐"}`],
+    ["/my/settings", "설정", `글자 ${["보통", "크게"][textSize]} · 앱 잠금 ${pinHash ? "켜짐" : "꺼짐"}`],
   ];
   return (
     <main className="space-y-4 px-4 pt-6">

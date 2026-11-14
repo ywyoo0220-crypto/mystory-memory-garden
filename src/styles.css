@@ -74,9 +74,6 @@
   html.large {
     font-size: 131.25%;
   }
-  html.xlarge {
-    font-size: 143.75%;
-  }
   html,
   body {
     scrollbar-width: none;

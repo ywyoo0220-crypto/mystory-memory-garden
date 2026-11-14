@@ -14,7 +14,7 @@ const items = [
 
 export function AppNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
-  const { large, textSize } = useStore();
+  const { large } = useStore();
   return (
     <nav
       aria-label="주요 메뉴"
@@ -29,7 +29,7 @@ export function AppNav() {
               key={it.to}
               to={it.to}
               aria-current={active ? "page" : undefined}
-              className={`flex h-12 min-w-[42px] shrink items-center justify-center whitespace-nowrap rounded-full text-[0.9375rem] font-medium transition-colors ${textSize === 2 ? "px-[clamp(4px,1.2vw,10px)]" : large ? "px-[clamp(6px,2.4vw,14px)]" : "px-[clamp(8px,4vw,22px)]"} ${
+              className={`flex h-12 min-w-[42px] shrink items-center justify-center whitespace-nowrap rounded-full text-[0.9375rem] font-medium transition-colors ${large ? "px-[clamp(6px,2.4vw,14px)]" : "px-[clamp(8px,4vw,22px)]"} ${
                 active ? "bg-ink text-ink-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >

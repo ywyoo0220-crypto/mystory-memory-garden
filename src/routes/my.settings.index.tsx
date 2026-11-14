@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { actions, useStore, type TextSize } from "@/lib/store";
 import { prefs, usePrefs } from "@/lib/prefs";
 import { Card, Chevron, rowCls, Segmented, SubHeader, Toggle } from "@/components/my/ui";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/my/settings/")({
   head: () => ({
@@ -31,7 +32,7 @@ function Settings() {
       <div className="space-y-6 px-4">
         <section>
           <h2 className={label}>글자 크기</h2>
-          <Segmented<TextSize> label="글자 크기" value={textSize} onChange={actions.setTextSize} options={[[0, "보통"], [1, "크게"], [2, "아주 크게"]]} />
+          <Segmented<TextSize> label="글자 크기" value={textSize} onChange={actions.setTextSize} options={[[0, "보통"], [1, "크게"]]} />
         </section>
         <section>
           <h2 className={label}>처음 보여줄 보기</h2>
@@ -67,8 +68,8 @@ function Settings() {
               <Link to="/onboarding/$n" params={{ n: "1" }} className={`${small} inline-flex items-center`}>보기</Link>
             </div>
             <div className={rowCls}>
-              <span className="flex-1 text-[1.0625rem] font-medium">예시 기록 다시 담기</span>
-              <button type="button" className={small} onClick={() => { actions.restoreExamples(); toast("예시 기록을 담았어요"); }}>불러오기</button>
+              <span className="flex-1 text-[1.0625rem] font-medium">예시 기록 담기</span>
+              <Button variant="palette" type="button" className={small} onClick={() => { actions.restoreExamples(); toast("예시 기록을 담았어요"); }}>불러오기</Button>
             </div>
             <div className={rowCls}>
               <span className="flex-1 text-[1.0625rem] font-medium">예시 기록 비우기</span>

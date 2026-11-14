@@ -1,5 +1,7 @@
 import { useSyncExternalStore } from "react";
 import { EXAMPLE_RECORDS } from "@/data/exampleRecords";
+import exampleProfilePhoto from "@/assets/example-profile.png.asset.json";
+import { prefs } from "./prefs";
 import type { Kind } from "./data";
 import { clearMedia, deleteMedia, getMedia } from "./media";
 import { audioKey, clearAudio, deleteAudio, fmtDur, putAudio } from "./audio";
@@ -19,11 +21,17 @@ export type StoryRecord = {
 export type Records = Record<string, StoryRecord>;
 
 const KEY = "mystory.records.v1";
-const SEEDED = "mystory.seeded.v10";
+const EXAMPLES_OPT_IN = "mystory.examples.opt-in.v1";
 const LARGE = "mystory.large.v1";
 const SIZE = "mystory.textsize.v1";
 const DEFAULT_VIEW = "mystory.defaultView.v1";
-export type TextSize = 0 | 1 | 2;
+export type TextSize = 0 | 1;
+export function normalizeTextSize(value: number): TextSize {
+  return value > 0 ? 1 : 0;
+}
+export function initialRecords(records: Records, examplesOptIn: boolean): Records {
+  return examplesOptIn ? records : Object.fromEntries(Object.entries(records).filter(([, r]) => !r.example));
+}
 const VIEW = "mystory.view.v1";
 
 try {
@@ -77,15 +85,11 @@ const listeners = new Set<() => void>();
 function load() {
   if (loaded || typeof window === "undefined") return;
   loaded = true;
-  let records = read<Records>(KEY, {});
-  if (!read<boolean>(SEEDED, false)) {
-    records = Object.fromEntries(Object.entries(records).filter(([, r]) => !r.example));
-    records = withExamples(records);
-    write(KEY, records);
-    write(SEEDED, true);
-  }
+  let records = initialRecords(read<Records>(KEY, {}), read<boolean>(EXAMPLES_OPT_IN, false));
+  write(KEY, records);
   records = migrate(records);
-  const textSize = read<TextSize | null>(SIZE, null) ?? (read(LARGE, false) ? 1 : 0);
+  const textSize = normalizeTextSize(read<number | null>(SIZE, null) ?? (read(LARGE, false) ? 1 : 0));
+  write(SIZE, textSize);
   const defaultView = read<Kind | null>(DEFAULT_VIEW, null);
   state = { records, large: textSize > 0, textSize, view: defaultView ?? read<Kind>(VIEW, "topic"), defaultView: defaultView ?? "topic" };
   applyLarge();
@@ -123,7 +127,7 @@ function migrate(records: Records) {
 function applyLarge() {
   if (typeof document === "undefined") return;
   document.documentElement.classList.toggle("large", state.textSize > 0);
-  document.documentElement.classList.toggle("xlarge", state.textSize === 2);
+  document.documentElement.classList.remove("xlarge");
 }
 function set(p: Partial<State>) {
   state = { ...state, ...p };
@@ -169,6 +173,8 @@ export const actions = {
   restoreExamples() {
     const records = withExamples(state.records);
     write(KEY, records);
+    write(EXAMPLES_OPT_IN, true);
+    prefs.setProfile({ name: "김정희", birth: "1960", photo: exampleProfilePhoto.url });
     set({ records });
   },
   clearAll() {
@@ -180,11 +186,12 @@ export const actions = {
   /** Merges records from a backup file (backup wins on conflicts). */
   importRecords(incoming: Records) {
     const records = { ...state.records, ...incoming };
+    write(EXAMPLES_OPT_IN, true);
     const ok = write(KEY, records);
     set({ records });
     return ok;
   },
-  /** Floating button: 보통 ↔ 크게 (아주 크게 goes back to 보통). */
+  /** Floating button: 보통 ↔ 크게. */
   toggleLarge() {
     actions.setTextSize(state.textSize === 0 ? 1 : 0);
   },
@@ -200,6 +207,7 @@ export const actions = {
   },
   /** Backup restore: replaces every record. */
   replaceRecords(records: Records) {
+    write(EXAMPLES_OPT_IN, true);
     const ok = write(KEY, records);
     set({ records });
     return ok;

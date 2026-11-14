@@ -35,5 +35,6 @@ use the editor.
 - Category colors come from src/data/themes.json via lib/theme.ts; light-list controls use the derived list-accent token (dark age background, otherwise pill), so inverted dark-age pills remain legible outside cards.
 - Photos are blobs in IndexedDB (src/lib/media.ts, records keep "idb:" refs); voice blobs are in IndexedDB "ms-audio" keyed recordId:step (src/lib/audio.ts) and records keep only `voices` metadata — localStorage is too small for media; still no backend.
 - MY screens each have their own route under /my/* (usability testing); profile, settings, shares and the hashed lock PIN live in localStorage via src/lib/prefs.ts, separate from records.
-- Text size is a 3-step setting (html.large / html.xlarge root font-size); the floating button only toggles step 0 ↔ 1.
+- Text size uses two steps (normal/large); normalize legacy larger values to large so settings and floating controls stay consistent.
+- Example records require explicit settings opt-in; startup removes legacy auto-seeded examples but preserves personal records, and explicit imports remain intact.
 - First-run onboarding lives at /onboarding/$n (one route per screen for Maze); root redirects there after the lock while localStorage "ms.onb" is unset, and hides AppNav on it.
