@@ -38,7 +38,10 @@ function Settings() {
                 const on = textSize === v;
                 return (
                   <button key={v} type="button" role="radio" aria-checked={on} onClick={() => actions.setTextSize(v as TextSize)}
-                    className={`flex min-h-[6rem] flex-col items-center justify-center gap-1 rounded-2xl border transition-colors ${on ? "border-ink bg-ink text-ink-foreground" : "border-border bg-muted text-foreground"}`}>
+                    className={`relative flex min-h-[6rem] flex-col items-center justify-center gap-1 rounded-2xl border-2 bg-card text-foreground transition-colors ${on ? "border-ink" : "border-border"}`}>
+                    <span aria-hidden className={`absolute right-2.5 top-2.5 flex size-[1.375rem] items-center justify-center rounded-full ${on ? "bg-ink text-ink-foreground" : "border-2 border-border"}`}>
+                      {on && <svg viewBox="0 0 24 24" className="size-[0.875rem]" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>}
+                    </span>
                     <span aria-hidden className={`leading-none ${big}`}>가</span>
                     <span className={small}>{name}</span>
                   </button>
