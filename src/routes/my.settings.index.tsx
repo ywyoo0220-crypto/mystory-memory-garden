@@ -34,7 +34,7 @@ function Settings() {
           <div className="px-5 py-4">
             <span className="block text-[1.0625rem] font-medium">글자 크기</span>
             <div role="radiogroup" aria-label="글자 크기" className="mt-3 grid grid-cols-2 gap-2">
-              {([[0, "보통", "text-[1.25rem] font-semibold", "text-[0.9375rem] font-medium"], [1, "크게", "text-[1.875rem] font-extrabold", "text-[1.0625rem] font-bold"]] as const).map(([v, name, big, small]) => {
+              {([[0, "보통", "text-[1.25rem] font-semibold", ""], [1, "크게", "text-[1.875rem] font-extrabold", ""]] as const).map(([v, name, big]) => {
                 const on = textSize === v;
                 return (
                   <button key={v} type="button" role="radio" aria-checked={on} onClick={() => actions.setTextSize(v as TextSize)}
@@ -42,8 +42,7 @@ function Settings() {
                     <span aria-hidden className={`absolute right-2.5 top-2.5 flex size-[1.375rem] items-center justify-center rounded-full ${on ? "bg-ink text-ink-foreground" : "border-2 border-border"}`}>
                       {on && <svg viewBox="0 0 24 24" className="size-[0.875rem]" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>}
                     </span>
-                    <span aria-hidden className={`leading-none ${big}`}>가</span>
-                    <span className={small}>{name}</span>
+                    <span className={`leading-none ${big}`}>{name}</span>
                   </button>
                 );
               })}
