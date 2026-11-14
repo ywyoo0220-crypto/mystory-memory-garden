@@ -30,15 +30,15 @@ function Settings() {
     <main className="pb-6">
       <SubHeader title="설정" />
       <div className="space-y-6 px-4">
-        <section>
-          <h2 className={label}>글자 크기</h2>
-          <Segmented<TextSize> label="글자 크기" value={textSize} onChange={actions.setTextSize} options={[[0, "보통"], [1, "크게"]]} />
-        </section>
-        <section>
-          <h2 className={label}>처음 보여줄 보기</h2>
-          <Segmented label="처음 보여줄 보기" value={defaultView} onChange={actions.setDefaultView} options={[["topic", "주제별"], ["period", "시간순"]]} />
-        </section>
         <Card className="divide-y overflow-hidden">
+          <div className={rowCls}>
+            <span className="flex-1 text-[1.0625rem] font-medium">글자 크기</span>
+            <Segmented<TextSize> compact label="글자 크기" value={textSize} onChange={actions.setTextSize} options={[[0, "보통"], [1, "크게"]]} />
+          </div>
+          <div className={rowCls}>
+            <span className="flex-1 text-[1.0625rem] font-medium">처음 보기</span>
+            <Segmented compact label="처음 보여줄 보기" value={defaultView} onChange={actions.setDefaultView} options={[["topic", "주제별"], ["period", "시간순"]]} />
+          </div>
           <Link to="/my/settings/lock" className={rowCls}>
             <span className="flex-1">
               <span className="block text-[1.0625rem] font-medium">앱 잠금</span>

@@ -48,16 +48,16 @@ export function Avatar({ name, photo, size }: { name: string; photo?: string | u
   );
 }
 
-export function Segmented<T extends string | number>({ value, options, onChange, label }: { value: T; options: [T, string][]; onChange: (v: T) => void; label: string }) {
+export function Segmented<T extends string | number>({ value, options, onChange, label, compact }: { value: T; options: [T, string][]; onChange: (v: T) => void; label: string; compact?: boolean }) {
   return (
-    <div role="group" aria-label={label} className="flex rounded-full border border-ink p-1">
+    <div role="group" aria-label={label} className={compact ? "flex shrink-0 rounded-full bg-muted p-1" : "flex rounded-full border border-ink p-1"}>
       {options.map(([v, l]) => (
         <button
           key={String(v)}
           type="button"
           aria-pressed={value === v}
           onClick={() => onChange(v)}
-          className={`h-12 flex-1 rounded-full px-3 text-[0.9375rem] font-medium transition-colors ${value === v ? "bg-ink text-ink-foreground" : "text-foreground"}`}
+          className={`${compact ? "h-10 px-3.5" : "h-12 flex-1 px-3"} rounded-full text-[0.9375rem] font-medium transition-colors ${value === v ? "bg-ink text-ink-foreground" : "text-foreground"}`}
         >
           {l}
         </button>
