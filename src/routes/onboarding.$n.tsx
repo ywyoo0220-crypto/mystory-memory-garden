@@ -182,14 +182,12 @@ function Screen1({ big }: { big: boolean }) {
 }
 
 function Screen2() {
-  const question = getCategory("A1")?.questions.find((q) => q.id === FIRST_QID);
   return (
     <>
       <Head title={"쓰고, 말하고,\n사진도 넣어요."} sub="말하면 글로 바뀌고, 목소리도 함께 남아요. 편한 방법을 골라 남기면 돼요." />
       <div aria-hidden className="pointer-events-none mt-3 select-none" inert>
         <span className="inline-flex rounded-full border border-border px-3 py-1 text-[0.875rem] font-medium text-muted-foreground">예시 화면</span>
         <div className="mt-2 w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-3">
-          <p className="text-[0.9375rem] leading-[1.4] text-muted-foreground">{question?.core}</p>
           <TypingText text="어릴 때 나는 동네에서 장난꾸러기로 통했어" />
           <div className="mt-1 flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[0.875rem] text-muted-foreground">
