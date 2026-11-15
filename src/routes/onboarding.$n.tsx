@@ -185,13 +185,13 @@ function Screen2() {
   const question = getCategory("A1")?.questions.find((q) => q.id === FIRST_QID);
   return (
     <>
-      <Head title={"쓰고, 말하고,\n사진도 넣어요."} sub="말하면 글로 바뀌고, 목소리도 함께 남아요. 편한 방법을 골라 남기면 돼요." />
-      <div aria-hidden className="pointer-events-none mt-3 select-none" inert>
+      <h2 className="text-[1.9rem] font-medium leading-[1.38]">글·말·사진으로.</h2>
+      <div aria-hidden className="pointer-events-none mt-2 select-none" inert>
         <span className="inline-flex rounded-full border border-border px-3 py-1 text-[0.875rem] font-medium text-muted-foreground">예시 화면</span>
-        <div className="mt-2 w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-3">
+        <div className="mt-1 w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card px-2 py-1">
           <p className="text-[0.9375rem] leading-[1.4] text-muted-foreground">{question?.core}</p>
-          <p className="mt-1 text-[1.0625rem] leading-[1.7] text-ink">골목에서 해 질 때까지 고무줄을 하던 아이였어요. 엄마가 부르는 소리가 나야 집에 들어갔지요.</p>
-          <div className="mt-2 flex items-center gap-3">
+          <p className="mt-1 text-[1.0625rem] leading-[1.7] text-ink">고무줄을 하며 놀았어요.</p>
+          <div className="mt-1 flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[0.875rem] text-muted-foreground">
               <svg className="size-3 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="m7 4 14 8-14 8Z" /></svg>
               목소리 0:12
@@ -201,7 +201,7 @@ function Screen2() {
             </span>
           </div>
         </div>
-        <div className="mt-2 grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <span className="flex h-11 items-center justify-center gap-2 rounded-full bg-muted text-[0.9375rem] font-medium">
             <svg className="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8" /></svg>
             말로 하기
@@ -211,7 +211,7 @@ function Screen2() {
             사진 넣기
           </span>
         </div>
-        <p className="mt-2 text-center text-[0.9375rem] leading-[1.5] text-muted-foreground">직접 적는 것은 다음 화면부터예요. 적은 내용은 이 기기에 바로 저장돼요.</p>
+        <p className="mt-1 text-center text-[0.9375rem] leading-[1.5] text-muted-foreground">안내 후 기록해요.<br />이 기기에 저장돼요.</p>
       </div>
     </>
   );
