@@ -182,16 +182,36 @@ function Screen1({ big }: { big: boolean }) {
 }
 
 function Screen2() {
+  const question = getCategory("A1")?.questions.find((q) => q.id === FIRST_QID);
   return (
     <>
       <Head title={"쓰고, 말하고,\n사진도 넣어요."} sub="말하면 글로 바뀌고, 목소리도 함께 남아요. 편한 방법을 골라 남기면 돼요." />
-      <div aria-hidden className="pointer-events-none mt-6 select-none" inert>
-        <div className="min-h-[9rem] w-full rounded-3xl border border-border bg-card p-5 text-[1.0625rem] leading-[1.7]">여기에 쓰기</div>
-        <p className="mt-3 text-center text-[0.9375rem] text-muted-foreground">적는 내용은 이 기기에 바로 저장돼요.</p>
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          <span className="flex h-14 items-center justify-center rounded-full border border-border bg-card text-[1rem] font-medium">말로 하기</span>
-          <span className="flex h-14 items-center justify-center rounded-full border border-border bg-card text-[1rem] font-medium">사진 넣기</span>
+      <div aria-hidden className="pointer-events-none mt-3 select-none" inert>
+        <span className="inline-flex rounded-full border border-border px-3 py-1 text-[0.875rem] font-medium text-muted-foreground">예시 화면</span>
+        <div className="mt-2 w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-3">
+          <p className="text-[0.9375rem] leading-[1.4] text-muted-foreground">{question?.core}</p>
+          <p className="mt-1 text-[1.0625rem] leading-[1.7] text-ink">골목에서 해 질 때까지 고무줄을 하던 아이였어요. 엄마가 부르는 소리가 나야 집에 들어갔지요.</p>
+          <div className="mt-2 flex items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[0.875rem] text-muted-foreground">
+              <svg className="size-3 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="m7 4 14 8-14 8Z" /></svg>
+              목소리 0:12
+            </span>
+            <span className="flex size-[3.5rem] shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground">
+              <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
+            </span>
+          </div>
         </div>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          <span className="flex h-11 items-center justify-center gap-2 rounded-full bg-muted text-[0.9375rem] font-medium">
+            <svg className="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8" /></svg>
+            말로 하기
+          </span>
+          <span className="flex h-11 items-center justify-center gap-2 rounded-full bg-muted text-[0.9375rem] font-medium">
+            <svg className="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
+            사진 넣기
+          </span>
+        </div>
+        <p className="mt-2 text-center text-[0.9375rem] leading-[1.5] text-muted-foreground">직접 적는 것은 다음 화면부터예요. 적은 내용은 이 기기에 바로 저장돼요.</p>
       </div>
     </>
   );

@@ -1,3 +1,5 @@
+- [x] Make onboarding screen 2 a clearly non-interactive example and verify navigation.
+- [ ] Fit onboarding screen 2 at 375×667 without scrolling: awaiting choice between shorter copy, smaller text, or allowing scrolling; exact supplied sizes and copy exceed the viewport.
 - [x] Remove inactive settings and make device-only sharing honest.
 - [x] Localize error screens and standardize MyStory text without changing storage compatibility.
 - [x] Add and verify a once-per-session, skippable launch overlay.
