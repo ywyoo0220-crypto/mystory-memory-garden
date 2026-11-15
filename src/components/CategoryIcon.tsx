@@ -1,6 +1,7 @@
 // MyStory category icons — 24×24, single color (inherits `currentColor`).
-// Topic icons (T1–T10) are simple geometric marks; life-period icons (A1–A9) are a pie in 10 steps
-// of 36°; A9 stays one step short of full.
+// Topic icons (T1–T10) are simple geometric marks; life-period icons (A1–A9) are a clock face; the
+// hand moves one hour per period, from 12 o'clock (유년기) to 8 o'clock (80대 이후). Nothing fills, so
+// no period reads as "full" or "finished".
 import * as React from "react";
 
 const PATHS: Record<string, string> = {
@@ -14,15 +15,15 @@ const PATHS: Record<string, string> = {
   "T8": "<path d=\"M4 21V11a8 8 0 0 1 16 0v10h-5v-9a3 3 0 0 0-6 0v9z\" fill=\"currentColor\"/>",
   "T9": "<path d=\"M12 2l3 7 7 .6-5.3 4.6 1.6 7.3L12 17.6 5.7 21.5l1.6-7.3L2 9.6 9 9z\" fill=\"currentColor\"/>",
   "T10": "<path d=\"M15 3a9 9 0 1 0 6 15A7.5 7.5 0 0 1 15 3z\" fill=\"currentColor\"/>",
-  "A1": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 0 1 17.88 3.91Z\" fill=\"currentColor\"/>",
-  "A2": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 0 1 21.51 8.91Z\" fill=\"currentColor\"/>",
-  "A3": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 0 1 21.51 15.09Z\" fill=\"currentColor\"/>",
-  "A4": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 0 1 17.88 20.09Z\" fill=\"currentColor\"/>",
-  "A5": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 0 1 12.00 22.00Z\" fill=\"currentColor\"/>",
-  "A6": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 1 1 6.12 20.09Z\" fill=\"currentColor\"/>",
-  "A7": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 1 1 2.49 15.09Z\" fill=\"currentColor\"/>",
-  "A8": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 1 1 2.49 8.91Z\" fill=\"currentColor\"/>",
-  "A9": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12V2A10 10 0 1 1 6.12 3.91Z\" fill=\"currentColor\"/>"
+  "A1": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L12.00 5.00\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
+  "A2": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L15.50 5.94\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
+  "A3": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L18.06 8.50\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
+  "A4": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L19.00 12.00\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
+  "A5": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L18.06 15.50\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
+  "A6": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L15.50 18.06\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
+  "A7": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L12.00 19.00\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
+  "A8": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L8.50 18.06\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
+  "A9": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L5.94 15.50\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>"
 };
 
 export const CATEGORY_NAMES: Record<string, string> = {

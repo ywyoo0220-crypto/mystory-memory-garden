@@ -12,4 +12,4 @@
 - [x] Update example identity and cover; preserve cover in profile and backup.
 - [x] Verify photo/no-photo screens, persistence, and first five printed pages.
 - [x] Include required comparison examples and verify persistence and recording.- [x] Multi-photo attach + voice recording (IndexedDB) in answer flow.
-- [x] Redraw the nine period pies in 10 steps of 36° so 80대 이후 keeps one open slice; verify on period screens.
+- [x] Redraw the nine period icons as a clock face (hand from 12 to 8 o'clock); verify list, card and pill sizes.
