@@ -189,15 +189,6 @@ function Screen2() {
         <span className="inline-flex rounded-full border border-border px-3 py-1 text-[0.875rem] font-medium text-muted-foreground">예시 화면</span>
         <div className="mt-2 w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-3">
           <TypingText text="어릴 때 나는 동네에서 장난꾸러기로 통했어" />
-          <div className="mt-1 flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[0.875rem] text-muted-foreground">
-              <svg className="size-3 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="m7 4 14 8-14 8Z" /></svg>
-              목소리 0:12
-            </span>
-            <span className="flex size-[3.5rem] shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground">
-              <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
-            </span>
-          </div>
         </div>
         <div className="mt-2 grid grid-cols-2 gap-2">
           <span className="flex h-11 items-center justify-center gap-2 rounded-full bg-muted text-[0.9375rem] font-medium">
