@@ -8,9 +8,9 @@ export const Route = createFileRoute("/record")({
     meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "기록하기 — myStory" },
+      { title: "기록하기 — MyStory" },
       { name: "description", content: "주제나 시기를 골라 나의 이야기를 기록하세요." },
-      { property: "og:title", content: "기록하기 — myStory" },
+      { property: "og:title", content: "기록하기 — MyStory" },
       { property: "og:description", content: "주제나 시기를 골라 나의 이야기를 기록하세요." },
     ],
   }),

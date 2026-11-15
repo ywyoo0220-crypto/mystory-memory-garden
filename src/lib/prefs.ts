@@ -4,16 +4,14 @@ import { useSyncExternalStore } from "react";
 export type Profile = { name: string; birth: string; photo?: string | undefined; cover?: string | undefined; coverUp?: string | undefined };
 export type ShareScope = "me" | "family" | "link";
 export type Share = { id: string; qids: string[]; scope: ShareScope; withVoice: boolean; t: number; link?: string | undefined };
-type Prefs = { profile: Profile; notify: boolean; aiGreeting: boolean; shares: Share[]; pinHash: string | null };
+type Prefs = { profile: Profile; shares: Share[]; pinHash: string | null };
 
 const K = {
   profile: "mystory.profile.v1",
-  notify: "mystory.notify.v1",
-  ai: "mystory.aiGreeting.v1",
   shares: "mystory.shares.v1",
   pin: "mystory.pin.v1",
 };
-const empty: Prefs = { profile: { name: "", birth: "" }, notify: false, aiGreeting: true, shares: [], pinHash: null };
+const empty: Prefs = { profile: { name: "", birth: "" }, shares: [], pinHash: null };
 
 function read<T>(k: string, fb: T): T {
   try {
@@ -40,8 +38,6 @@ function load() {
   loaded = true;
   state = {
     profile: read(K.profile, empty.profile),
-    notify: read(K.notify, false),
-    aiGreeting: read(K.ai, true),
     shares: read(K.shares, []),
     pinHash: read<string | null>(K.pin, null),
   };
@@ -72,14 +68,6 @@ export const prefs = {
     const ok = write(K.profile, profile);
     if (ok) set({ profile });
     return ok;
-  },
-  setNotify(v: boolean) {
-    write(K.notify, v);
-    set({ notify: v });
-  },
-  setAiGreeting(v: boolean) {
-    write(K.ai, v);
-    set({ aiGreeting: v });
   },
   addShare(s: Share) {
     const shares = [s, ...state.shares];

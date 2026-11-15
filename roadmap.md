@@ -1,3 +1,6 @@
+- [x] Remove inactive settings and make device-only sharing honest.
+- [x] Localize error screens and standardize MyStory text without changing storage compatibility.
+- [x] Add and verify a once-per-session, skippable launch overlay.
 - [x] Replace palettes with exact G–K tokens and shared theme context.
 - [x] Apply tokens to cards, lists, answer flow and dark-card details.
 - [x] Replace only the nine age palettes and verify all nine Home cards plus the 70대 answer screen.

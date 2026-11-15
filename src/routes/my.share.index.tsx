@@ -10,9 +10,9 @@ import { Card, Chevron, Dot, SubHeader, Toggle } from "@/components/my/ui";
 export const Route = createFileRoute("/my/share/")({
   head: () => ({
     meta: [
-      { title: "기록 공유하기 — myStory" },
+      { title: "기록 공유하기 — MyStory" },
       { name: "description", content: "보여줄 기록과 사람을 직접 골라요." },
-      { property: "og:title", content: "기록 공유하기 — myStory" },
+      { property: "og:title", content: "기록 공유하기 — MyStory" },
       { property: "og:description", content: "보여줄 기록과 사람을 직접 골라요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -38,16 +38,8 @@ function SharePage() {
 
   const submit = async () => {
     const id = Date.now().toString(36);
-    const link = scope === "link" ? `https://mystory-memory-garden.lovable.app/s/${id}` : undefined;
-    prefs.addShare({ id, qids: picked, scope, withVoice: scope === "me" || !noVoice, t: Date.now(), link });
-    if (link) {
-      try {
-        await navigator.clipboard.writeText(link);
-        toast("링크를 복사했어요");
-      } catch {
-        toast(`링크: ${link}`);
-      }
-    } else toast(scope === "me" ? "저장했어요" : "공유했어요");
+    prefs.addShare({ id, qids: picked, scope, withVoice: scope === "me" || !noVoice, t: Date.now() });
+    toast(scope === "me" ? "저장했어요" : "공유 설정을 저장했어요");
     navigate({ to: "/my/share/manage" });
   };
 
@@ -57,7 +49,7 @@ function SharePage() {
       <div className="space-y-4 px-4">
         {sharedN > 0 && (
           <Link to="/my/share/manage" className="flex min-h-14 items-center gap-3 rounded-[20px] border border-border bg-card px-5">
-            <span className="flex-1 text-[1rem] font-medium">공유 관리 · {sharedN}개 공유 중</span>
+            <span className="flex-1 text-[1rem] font-medium">공유 관리 · {sharedN}개 설정됨</span>
             <Chevron />
           </Link>
         )}
@@ -160,9 +152,10 @@ function SharePage() {
                 );
               })}
             </div>
+            <p className="text-[0.9375rem] text-muted-foreground">지금은 시범 버전이라 공유 설정만 저장돼요. 실제로 보내지지는 않아요.</p>
             <div className="flex gap-2">
               <button type="button" className="h-14 rounded-full border border-ink px-6 text-[1rem] font-medium" onClick={() => setStep(1)}>이전</button>
-              <button type="button" className={primary} onClick={() => void submit()}>{scope === "me" ? "저장하기" : "공유하기"}</button>
+              <button type="button" className={primary} onClick={() => void submit()}>{scope === "me" ? "저장하기" : "공유 설정 저장하기"}</button>
             </div>
           </>
         )}

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/cat/$catId")({
     if (!c || c.questions.length === 0) throw notFound();
   },
   head: ({ params }) => {
-    const t = `${getCategory(params.catId)?.name ?? "질문"} — myStory`;
+    const t = `${getCategory(params.catId)?.name ?? "질문"} — MyStory`;
     return {
       meta: [
       { property: "og:type", content: "website" },

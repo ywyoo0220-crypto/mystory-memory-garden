@@ -2,17 +2,17 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { actions, useStore, type TextSize } from "@/lib/store";
-import { prefs, usePrefs } from "@/lib/prefs";
-import { Card, Chevron, rowCls, Segmented, SubHeader, Toggle } from "@/components/my/ui";
+import { usePrefs } from "@/lib/prefs";
+import { Card, Chevron, rowCls, Segmented, SubHeader } from "@/components/my/ui";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/my/settings/")({
   head: () => ({
     meta: [
-      { title: "설정 — myStory" },
-      { name: "description", content: "글자 크기, 처음 보기, 앱 잠금, 알림과 데이터." },
-      { property: "og:title", content: "설정 — myStory" },
-      { property: "og:description", content: "글자 크기, 처음 보기, 앱 잠금, 알림과 데이터." },
+      { title: "설정 — MyStory" },
+      { name: "description", content: "글자 크기, 처음 보기, 앱 잠금과 데이터." },
+      { property: "og:title", content: "설정 — MyStory" },
+      { property: "og:description", content: "글자 크기, 처음 보기, 앱 잠금과 데이터." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/my/settings/")({
 
 function Settings() {
   const { textSize, defaultView } = useStore();
-  const { pinHash, notify, aiGreeting } = usePrefs();
+  const { pinHash } = usePrefs();
   const [confirm, setConfirm] = useState(false);
   const label = "px-2 pb-2 text-[0.9375rem] font-bold";
   const small = "h-12 shrink-0 rounded-full border border-ink px-5 text-[0.9375rem] font-medium";
@@ -59,19 +59,6 @@ function Settings() {
             </span>
             <Chevron />
           </Link>
-          <div className={rowCls}>
-            <span className="flex-1">
-              <span className="block text-[1.0625rem] font-medium">기록 알림</span>
-              <span className="block text-[0.875rem] text-muted-foreground">오늘의 질문을 알림으로 받아요</span>
-            </span>
-            <Toggle on={notify} onChange={prefs.setNotify} label="기록 알림" />
-          </div>
-          <div className={rowCls}>
-            <span className="flex-1">
-              <span className="block text-[1.0625rem] font-medium">AI 인사 한마디</span>
-            </span>
-            <Toggle on={aiGreeting} onChange={prefs.setAiGreeting} label="AI 인사 한마디" />
-          </div>
         </Card>
         <section>
           <h2 className={label}>데이터</h2>

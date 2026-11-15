@@ -8,9 +8,9 @@ import { SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/settings/lock")({
   head: () => ({
     meta: [
-      { title: "앱 잠금 — myStory" },
+      { title: "앱 잠금 — MyStory" },
       { name: "description", content: "숫자 4자리로 앱을 잠가요." },
-      { property: "og:title", content: "앱 잠금 — myStory" },
+      { property: "og:title", content: "앱 잠금 — MyStory" },
       { property: "og:description", content: "숫자 4자리로 앱을 잠가요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

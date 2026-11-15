@@ -1,8 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { hashPin, periodYears, validBirth } from "@/lib/prefs";
+import { getPrefs, hashPin, periodYears, prefs, validBirth } from "@/lib/prefs";
 import { filledSteps, isIncomplete } from "@/lib/store";
 
 describe("MY rules", () => {
+  it("stores device-only share settings without a link for family and link scopes", () => {
+    getPrefs();
+    for (const scope of ["family", "link"] as const) {
+      prefs.addShare({ id: `test-${scope}`, scope, qids: ["T1-Q1"], withVoice: false, t: 1 });
+      const saved = JSON.parse(localStorage.getItem("mystory.shares.v1") ?? "[]");
+      expect(saved[0]).toEqual({ id: `test-${scope}`, scope, qids: ["T1-Q1"], withVoice: false, t: 1 });
+      expect(saved[0]).not.toHaveProperty("link");
+    }
+    prefs.removeShares();
+  });
   it("period years from birth year", () => {
     expect(periodYears("1955", 0)).toBe("1955–1964");
     expect(periodYears("1955", 2)).toBe("1975–1984");

@@ -9,7 +9,7 @@ import { catVars } from "@/lib/theme";
 import { CategoryPill } from "@/components/CategoryCard";
 import { finishOnb, onbLog } from "@/lib/onboarding";
 
-const TITLE = "처음 안내 — myStory";
+const TITLE = "처음 안내 — MyStory";
 const DESC = "질문에 답하며 기록하는 방법을 알아봐요.";
 
 export const Route = createFileRoute("/onboarding/$n")({
@@ -71,7 +71,7 @@ function Onboarding() {
     <main className="flex min-h-app flex-col">
       <div className="flex h-16 items-center justify-between gap-2 px-2">
         {step === 1 ? (
-          <img src={wordmark.url} alt="myStory" width={1979} height={483} className="ml-4 h-[1.625rem] w-auto" />
+          <img src={wordmark.url} alt="MyStory" width={1979} height={483} className="ml-4 h-[1.625rem] w-auto" />
         ) : (
           <Link to="/onboarding/$n" params={{ n: String(step - 1) }} aria-label="뒤로" className="flex size-12 items-center justify-center rounded-full">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden><path d="m15 5-7 7 7 7" /></svg>

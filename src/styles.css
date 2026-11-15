@@ -255,3 +255,31 @@
 @media (prefers-reduced-motion: reduce) {
   .onb-fill, .onb-rise { animation: none; }
 }
+
+/* The launch overlay never changes the mounted app's layout or focus. */
+.launch-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  animation: launch-exit 300ms ease-out 1100ms both;
+}
+.launch-wordmark {
+  width: min(12rem, 65%);
+  height: auto;
+  animation: launch-enter 600ms ease-out both;
+}
+@keyframes launch-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes launch-exit {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .launch-screen, .launch-wordmark { animation: none; }
+}

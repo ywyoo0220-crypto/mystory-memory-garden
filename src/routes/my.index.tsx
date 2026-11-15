@@ -7,9 +7,9 @@ import { Avatar, Card, Chevron, ContinueCard, Dot, rowCls } from "@/components/m
 export const Route = createFileRoute("/my/")({
   head: () => ({
     meta: [
-      { title: "MY — myStory" },
+      { title: "MY — MyStory" },
       { name: "description", content: "프로필, 아카이브, 책 만들기, 공유, 백업과 설정." },
-      { property: "og:title", content: "MY — myStory" },
+      { property: "og:title", content: "MY — MyStory" },
       { property: "og:description", content: "프로필, 아카이브, 책 만들기, 공유, 백업과 설정." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -27,7 +27,7 @@ function My() {
   const sub = [profile.birth && `${profile.birth}년생`, `기록 ${entries.length}개`].filter(Boolean).join(" · ");
   const menu: [string, string, string][] = [
     ["/my/export", "기록 책으로 묶기", "PDF로 저장해요"],
-    ["/my/share", "기록 공유하기", sharedN ? `${sharedN}개 공유 중` : "보여줄 사람을 직접 정해요"],
+    ["/my/share", "기록 공유하기", sharedN ? `${sharedN}개 공유 설정됨` : "보여줄 사람을 직접 정해요"],
     ["/my/backup", "백업과 복원", "기기를 바꿔도 기록을 지켜요"],
     ["/my/settings", "설정", `글자 ${["보통", "크게"][textSize]} · 앱 잠금 ${pinHash ? "켜짐" : "꺼짐"}`],
   ];

@@ -1,6 +1,6 @@
 {
-  "name": "myStory",
-  "short_name": "myStory",
+  "name": "MyStory",
+  "short_name": "MyStory",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

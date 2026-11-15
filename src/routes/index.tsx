@@ -11,9 +11,9 @@ export const Route = createFileRoute("/")({
     meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "myStory — 나의 기록" },
+      { title: "MyStory — 나의 기록" },
       { name: "description", content: "주제별, 시간순으로 모아 보는 나의 인생 이야기." },
-      { property: "og:title", content: "myStory — 나의 기록" },
+      { property: "og:title", content: "MyStory — 나의 기록" },
       { property: "og:description", content: "주제별, 시간순으로 모아 보는 나의 인생 이야기." },
     ],
   }),
@@ -43,7 +43,7 @@ function Home() {
         <h1 className="flex items-center">
           <img
             src={wordmark.url}
-            alt="myStory"
+            alt="MyStory"
             width={1979}
             height={483}
             className="h-[1.875rem] w-auto"

@@ -21,9 +21,9 @@ export const Route = createFileRoute("/answer/$qid")({
     meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "답하기 — myStory" },
+      { title: "답하기 — MyStory" },
       { name: "description", content: "쓰거나 말로 남기세요." },
-      { property: "og:title", content: "답하기 — myStory" },
+      { property: "og:title", content: "답하기 — MyStory" },
       { property: "og:description", content: "쓰거나 말로 남기세요." },
     ],
   }),

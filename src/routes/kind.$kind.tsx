@@ -11,7 +11,7 @@ export const Route = createFileRoute("/kind/$kind")({
     if (params.kind !== "topic" && params.kind !== "period") throw notFound();
   },
   head: ({ params }) => {
-    const t = params.kind === "period" ? "시기 고르기 — myStory" : "주제 고르기 — myStory";
+    const t = params.kind === "period" ? "시기 고르기 — MyStory" : "주제 고르기 — MyStory";
     return {
       meta: [
       { property: "og:type", content: "website" },

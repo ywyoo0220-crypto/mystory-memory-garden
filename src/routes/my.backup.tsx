@@ -10,9 +10,9 @@ import { Card, SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/backup")({
   head: () => ({
     meta: [
-      { title: "백업과 복원 — myStory" },
+      { title: "백업과 복원 — MyStory" },
       { name: "description", content: "글, 사진, 목소리를 백업 파일로 저장하고 다시 불러와요." },
-      { property: "og:title", content: "백업과 복원 — myStory" },
+      { property: "og:title", content: "백업과 복원 — MyStory" },
       { property: "og:description", content: "글, 사진, 목소리를 백업 파일로 저장하고 다시 불러와요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -71,7 +71,7 @@ function Backup() {
       data = JSON.parse(await f.text()) as BackupFile;
       if (data.app !== "myStory" || typeof data.records !== "object") throw new Error();
     } catch {
-      return void toast("myStory 백업 파일이 아니에요");
+      return void toast("MyStory 백업 파일이 아니에요");
     }
     await clearAudio();
     for (const [k, d] of Object.entries(data.audio ?? {})) await putAudio(k, await dataUrlToBlob(d));

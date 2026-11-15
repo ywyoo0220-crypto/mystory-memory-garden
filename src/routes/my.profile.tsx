@@ -7,9 +7,9 @@ import { Avatar, SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/profile")({
   head: () => ({
     meta: [
-      { title: "프로필 — myStory" },
+      { title: "프로필 — MyStory" },
       { name: "description", content: "이름, 태어난 해, 프로필 사진을 정해요." },
-      { property: "og:title", content: "프로필 — myStory" },
+      { property: "og:title", content: "프로필 — MyStory" },
       { property: "og:description", content: "이름, 태어난 해, 프로필 사진을 정해요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

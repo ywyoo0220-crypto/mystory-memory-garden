@@ -16,7 +16,7 @@ I attached `mystory_questions.json` (all categories, questions, and per-category
 Bottom navigation (floating pill, centered, text-only labels): **홈 · 기록하기 · 도움말 · MY**. To the right of the pill, a separate round black button **크게** toggles a large-text mode (scales the whole UI ~120%).
 
 1. **홈 (Home)**
-   - Top bar: serif wordmark "myStory" on the left, segmented toggle **주제별 | 시간순** on the right (pill shape, selected = black fill, white text).
+   - Top bar: serif wordmark "MyStory" on the left, segmented toggle **주제별 | 시간순** on the right (pill shape, selected = black fill, white text).
    - Below: a **stacked deck of category cards**, one per category that has records. Cards overlap like a stack (each card has 32px top radius and overlaps the previous one by 32px). A collapsed card shows: category label pill (icon + name), a pill "기록 n개 | 펼치기 ⌄" on the right, and the first recorded core question as a large serif headline.
    - Tapping a card expands it smoothly (animated height) to show every recorded answer: the core question, then each follow-up question (bold, sans) with the user's answer below (regular). Photos appear as rounded images; voice answers appear as a play button + thin waveform (44 thin bars) + duration.
    - At the bottom of an expanded card: two equal pill buttons — **수정하기** (outline) and **"{카테고리} 이야기 더 하기"** (filled). Tapping 수정하기 expands to reveal **고치기 / 지우기** halves.

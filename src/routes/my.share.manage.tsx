@@ -6,10 +6,10 @@ import { Card, SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/share/manage")({
   head: () => ({
     meta: [
-      { title: "공유 관리 — myStory" },
-      { name: "description", content: "공유 중인 기록을 보고 언제든 해제해요." },
-      { property: "og:title", content: "공유 관리 — myStory" },
-      { property: "og:description", content: "공유 중인 기록을 보고 언제든 해제해요." },
+      { title: "공유 관리 — MyStory" },
+      { name: "description", content: "공유 설정한 기록을 보고 언제든 해제해요." },
+      { property: "og:title", content: "공유 관리 — MyStory" },
+      { property: "og:description", content: "공유 설정한 기록을 보고 언제든 해제해요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -23,7 +23,7 @@ function Manage() {
     <main className="pb-6">
       <SubHeader title="공유 관리" back="/my/share" />
       <div className="space-y-3 px-4">
-        {shares.length === 0 && <p className="py-8 text-center text-muted-foreground">공유 중인 기록이 없어요.</p>}
+        {shares.length === 0 && <p className="py-8 text-center text-muted-foreground">공유 설정한 기록이 없어요.</p>}
         {shares.map((s) => {
           const d = new Date(s.t);
           const cats = [...new Set(s.qids.map((q) => categoryOfQuestion(q)?.name).filter(Boolean))].join(", ");

@@ -41,3 +41,7 @@ use the editor.
 - Book assembly uses lib/book.ts for fixed topic-then-period ordering and cover eligibility; optional photoSteps aligns photo refs to answers, with legacy photos at step zero.
 - Cover choice and one resized uploaded cover live in the local profile and travel with backups; profile edits preserve these fields.
 - Book preview and browser print share one document, with zero horizontal page margins and content-side padding to avoid Chromium clipping.
+
+- Launch uses a root-shell overlay and a sessionStorage flag; underlying lock/onboarding mounts immediately and storage is checked only after hydration.
+- Shared error screens subscribe to the text-size store and serve root/router defaults so direct missing URLs honor the saved text size.
+- Keep the legacy backup app discriminator and PIN salt unchanged when updating display branding, to preserve existing backups and locks.
