@@ -185,12 +185,12 @@ function Screen2() {
   const question = getCategory("A1")?.questions.find((q) => q.id === FIRST_QID);
   return (
     <>
-      <h2 className="text-[1.9rem] font-medium leading-[1.38]">글·말·사진으로.</h2>
-      <div aria-hidden className="pointer-events-none mt-2 select-none" inert>
+      <Head title={"쓰고, 말하고,\n사진도 넣어요."} sub="말하면 글로 바뀌고, 목소리도 함께 남아요. 편한 방법을 골라 남기면 돼요." />
+      <div aria-hidden className="pointer-events-none mt-3 select-none" inert>
         <span className="inline-flex rounded-full border border-border px-3 py-1 text-[0.875rem] font-medium text-muted-foreground">예시 화면</span>
-        <div className="mt-1 w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card px-2 py-1">
+        <div className="mt-2 w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-3">
           <p className="text-[0.9375rem] leading-[1.4] text-muted-foreground">{question?.core}</p>
-          <p className="mt-1 text-[1.0625rem] leading-[1.7] text-ink">고무줄을 하며 놀았어요.</p>
+          <TypingText text="어릴 때 나는 동네에서 장난꾸러기로 통했어" />
           <div className="mt-1 flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[0.875rem] text-muted-foreground">
               <svg className="size-3 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="m7 4 14 8-14 8Z" /></svg>
@@ -201,7 +201,7 @@ function Screen2() {
             </span>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="mt-2 grid grid-cols-2 gap-2">
           <span className="flex h-11 items-center justify-center gap-2 rounded-full bg-muted text-[0.9375rem] font-medium">
             <svg className="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8" /></svg>
             말로 하기
@@ -211,9 +211,31 @@ function Screen2() {
             사진 넣기
           </span>
         </div>
-        <p className="mt-1 text-center text-[0.9375rem] leading-[1.5] text-muted-foreground">안내 후 기록해요.<br />이 기기에 저장돼요.</p>
       </div>
     </>
+  );
+}
+
+function TypingText({ text }: { text: string }) {
+  const chars = Array.from(text);
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return void setN(chars.length);
+    let i = 0;
+    let t: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      i = i >= chars.length ? 0 : i + 1;
+      setN(i);
+      t = setTimeout(tick, i >= chars.length ? 2200 : i === 0 ? 500 : 110);
+    };
+    t = setTimeout(tick, 600);
+    return () => clearTimeout(t);
+  }, [text]);
+  return (
+    <p className="mt-1 min-h-[3.6em] text-[1.0625rem] leading-[1.7] text-ink">
+      {chars.slice(0, n).join("")}
+      <span className="onb-caret ml-px inline-block h-[1.1em] w-[2px] translate-y-[0.15em] bg-ink" />
+    </p>
   );
 }
 
