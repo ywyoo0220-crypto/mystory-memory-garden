@@ -91,7 +91,7 @@ function ProfilePage() {
             </button>
           </div>
           <p className="mt-8 text-caption font-normal text-muted-foreground">기록자</p>
-          <p className="mt-2 truncate text-title font-medium">{name.trim() || "이름을 넣어 주세요"}</p>
+          <p className="mt-2 truncate text-title">{name.trim() || "이름을 넣어 주세요"}</p>
           <span aria-hidden className="mx-auto mt-7 mb-6 block h-px w-7 bg-ink" />
           <p className="text-caption font-normal text-muted-foreground">
             {[validBirth(birth) && `${birth}년생`, place.trim() && `${place.trim()} 출생`].filter(Boolean).join(" · ") || "태어난 해와 곳"}
