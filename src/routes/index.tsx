@@ -29,10 +29,21 @@ export function homeCards(records: Records, kind: Kind) {
   return cards;
 }
 
+/** One card per category, in the order its first record appears in homeCards. */
+export function homeGroups(records: Records, kind: Kind) {
+  const groups: { cat: ReturnType<typeof categoriesOf>[number]; items: { qid: string; rec: StoryRecord }[] }[] = [];
+  for (const k of homeCards(records, kind)) {
+    const g = groups.find((x) => x.cat.id === k.cat.id);
+    if (g) g.items.push({ qid: k.qid, rec: k.rec });
+    else groups.push({ cat: k.cat, items: [{ qid: k.qid, rec: k.rec }] });
+  }
+  return groups;
+}
+
 function Home() {
   const { records, view } = useStore();
   const [open, setOpen] = useState<string | null>(null);
-  const cards = homeCards(records, view);
+  const cards = homeGroups(records, view);
   const other: Kind = view === "topic" ? "period" : "topic";
   const otherCount = homeCards(records, other).length;
   const hasExamples = Object.values(records).some((r) => r.example);
@@ -72,12 +83,11 @@ function Home() {
         <div className="-mx-6 mt-4">
           {cards.map((k, i) => (
             <RecordCard
-              key={k.qid}
-              qid={k.qid}
-              rec={k.rec}
+              key={k.cat.id}
+              items={k.items}
               cat={k.cat}
-              open={open === k.qid}
-              onToggle={() => setOpen(open === k.qid ? null : k.qid)}
+              open={open === k.cat.id}
+              onToggle={() => setOpen(open === k.cat.id ? null : k.cat.id)}
               first={i === 0}
               last={i === cards.length - 1}
               z={i + 1}

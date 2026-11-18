@@ -69,10 +69,9 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
   );
 }
 
-/** One Home card = one answered core question (one record). */
+/** One Home card = one category; every answered core question in it is listed, so the card grows with the records. */
 export function RecordCard({
-  qid,
-  rec,
+  items,
   cat,
   open,
   onToggle,
@@ -80,8 +79,7 @@ export function RecordCard({
   last,
   z,
 }: {
-  qid: string;
-  rec: StoryRecord;
+  items: { qid: string; rec: StoryRecord }[];
   cat: Category;
   open: boolean;
   onToggle: () => void;
@@ -90,14 +88,11 @@ export function RecordCard({
   z: number;
 }) {
   const c = cardColors(cat);
-  const q = getQuestion(qid);
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!open) {
-      return;
-    }
+    if (!open) return;
     const t = window.setTimeout(() => {
       const el = ref.current;
       if (!el) return;
@@ -110,22 +105,19 @@ export function RecordCard({
     return () => window.clearTimeout(t);
   }, [open]);
 
-  if (!q) return null;
+  const list = items.filter((k) => getQuestion(k.qid));
+  if (!list.length) return null;
 
   return (
     <div
       ref={ref}
-      id={`rec-${qid}`}
+      id={`cat-${cat.id}`}
       className="relative scroll-mt-[calc(1rem+env(safe-area-inset-top))]"
       style={{ zIndex: z, marginTop: first ? 0 : "-1.5rem" }}
     >
       <section
         className={`category-surface relative rounded-t-[32px] px-6 pt-6 ${last ? "rounded-b-[32px] pb-8" : "pb-[3.75rem]"}`}
-        style={{
-          ...catVars(cat.id),
-          background: c.bg,
-          color: c.fg,
-        }}
+        style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}
       >
         <Button
           variant="palette"
@@ -146,22 +138,40 @@ export function RecordCard({
               </svg>
             </span>
           </div>
-          <h2 className="mt-6 font-serif text-title font-medium">{q.core}</h2>
         </Button>
+
+        {list.map(({ qid, rec }, i) => {
+          const q = getQuestion(qid)!;
+          return (
+            <div key={qid} id={`rec-${qid}`} className={i > 0 ? "mt-6 border-t border-current/20 pt-6" : "mt-6"}>
+              <button type="button" onClick={onToggle} className="block w-full text-left">
+                <h2 className="font-serif text-title font-medium">{q.core}</h2>
+              </button>
+              <div className="expand" data-open={open}>
+                <div>
+                  <div className="pt-6">
+                    <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
+                    <button
+                      type="button"
+                      className="mt-6 flex min-h-12 w-full items-center justify-center rounded-full border px-4 py-2 text-center text-caption font-medium break-keep"
+                      style={{ borderColor: c.fg, color: c.fg, background: "transparent" }}
+                      onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}
+                    >
+                      이 기록 수정하기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
 
         <div className="expand" data-open={open}>
           <div>
-            <div className="pt-6">
-              <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
-              <div className="mt-8 grid grid-cols-2 gap-2 pb-1">
-                <button type="button" className="flex min-h-14 items-center justify-center rounded-full border px-4 py-2 text-center text-caption font-medium break-keep" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
-                  수정하기
-                </button>
-                <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 flex-col items-center justify-center rounded-full px-4 py-2 text-center break-keep" style={{ background: c.btnBg, color: "#FFFFFF" }}>
-                  <span className="text-caption font-medium">{cat.name}</span>
-                  <span className="text-caption font-medium">이야기 더 하기</span>
-                </Link>
-              </div>
+            <div className="pt-8 pb-1">
+              <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 items-center justify-center rounded-full px-4 py-2 text-center text-caption font-medium break-keep" style={{ background: c.btnBg, color: "#FFFFFF" }}>
+                {cat.name} 이야기 더 하기
+              </Link>
             </div>
           </div>
         </div>
