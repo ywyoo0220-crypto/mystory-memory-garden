@@ -1,6 +1,6 @@
 import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { actions, hasContent, recordPhotos, useStore, type Voice } from "@/lib/store";
 import { audioKey, deleteAudio, fmtDur, MAX_REC_SEC, putAudio } from "@/lib/audio";
@@ -417,14 +417,7 @@ function AnswerFlow() {
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4">
 
-      {/* Words are separate spans only for the reveal; the heading is read as one sentence. */}
-      <h1 key={step} className="ms-reveal mt-6 font-serif text-title" aria-label={steps[step]}>
-        {(steps[step] ?? "").split(" ").map((w, i) => (
-          <Fragment key={i}>
-            <span aria-hidden style={{ "--i": i } as CSSProperties}>{w}</span>{" "}
-          </Fragment>
-        ))}
-      </h1>
+      <h1 className="mt-6 font-serif text-title">{steps[step]}</h1>
       {step > 0 && <p className="mt-2 text-caption">{q.core}</p>}
 
       <label className="sr-only" htmlFor="answer">답변</label>
