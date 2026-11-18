@@ -55,11 +55,15 @@ function SharedPage() {
   const cover = share.cover ?? defaultCover(qids, records, profile.name);
   return (
     // White page (not the app's grey) so pale category colours still read as blocks.
-    <main className="relative min-h-app bg-white pb-16">
-      <button type="button" aria-label="미리보기 닫기" onClick={close} className="fixed right-4 top-4 z-50 inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card/85 px-4 text-caption font-medium text-ink shadow-sm backdrop-blur">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-        닫기
-      </button>
+    <main className="relative min-h-app bg-white pb-16 pt-14">
+      {/* Preview bar: says this is the recipient's view and gives a way out, without covering the page as it scrolls. */}
+      <div className="fixed inset-x-0 top-0 z-50 mx-auto flex h-14 w-full max-w-[440px] items-center justify-between border-b border-border bg-white px-4 pt-safe">
+        <span className="text-caption text-muted-foreground">받는 사람 화면 미리보기</span>
+        <button type="button" aria-label="미리보기 닫기" onClick={close} className="inline-flex h-12 items-center gap-2 px-2 text-caption font-medium text-ink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          닫기
+        </button>
+      </div>
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>
         <img src={wordmark.url} alt="MyStory" className="h-6 w-auto self-start" />
         {cover && <CoverPhoto src={cover} />}
