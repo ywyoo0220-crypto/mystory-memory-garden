@@ -17,3 +17,4 @@
 - [x] Clarify tutorial versus real recording without restoring duplicate labels.
 - [x] Fix onboarding mobile scrolling, example visibility and profile input progression.
 - [x] Verify first-run recording and return flow, small screens and both text sizes; run all tests.
+- [x] Simplify onboarding header, separate three-screen help replay, and skip profile setup on first visit; verify both flows.

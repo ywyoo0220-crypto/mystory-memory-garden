@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -42,7 +43,7 @@ function Help() {
       <section className="mt-8 rounded-[28px] bg-ink p-6 text-ink-foreground">
         <h2 className="text-body font-medium">처음 안내 다시 보기</h2>
         <p className="mt-2 text-body opacity-80">앱 소개와 화면 둘러보기를 다시 볼 수 있어요.</p>
-        <Link to="/onboarding/$n" params={{ n: "1" }} className="mt-4 inline-flex h-12 items-center rounded-full bg-card px-6 text-caption font-medium text-foreground">처음 안내 보기 →</Link>
+        <Button asChild variant="palette" className="mt-4 inline-flex h-12 items-center rounded-full bg-card px-6 text-caption font-medium text-foreground"><Link to="/onboarding/$n" params={{ n: "1" }} search={{ mode: "help" }}>처음 안내 보기 →</Link></Button>
       </section>
       <div className="mt-4 space-y-4">
         {items.map((i) => (

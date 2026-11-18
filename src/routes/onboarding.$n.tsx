@@ -1,27 +1,27 @@
-import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { toast } from "sonner";
 import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 import { cardColors, getCategory, type Category } from "@/lib/data";
-import { actions, useStore } from "@/lib/store";
-import { prefs, usePrefs, validBirth } from "@/lib/prefs";
 import { catVars } from "@/lib/theme";
 import { CategoryPill } from "@/components/CategoryCard";
 import { Button } from "@/components/ui/button";
-import { canSaveOnboardingProfile, finishOnb, onbLog } from "@/lib/onboarding";
+import { finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
 
 const TITLE = "처음 안내 — MyStory";
 const DESC = "질문에 답하며 기록하는 방법을 알아봐요.";
 
 export const Route = createFileRoute("/onboarding/$n")({
-  beforeLoad: ({ params }) => {
+  validateSearch: (search: Record<string, unknown>): { mode?: "help" } => search["mode"] === "help" ? { mode: "help" } : {},
+  beforeLoad: ({ params, search }) => {
     if (!["1", "2", "3", "4", "5"].includes(params.n)) throw notFound();
+    const step = onboardingStep(Number(params.n), search.mode ?? "first");
+    if (step !== Number(params.n)) throw redirect({ to: "/onboarding/$n", params: { n: String(step) }, search, replace: true });
   },
   head: ({ params }) => ({
     meta: [
-      { title: `${TITLE} ${params.n}/5` },
+      { title: `${TITLE} — ${params.n === "5" ? "첫 질문 시작" : `사용 안내 ${params.n}/3`}` },
       { name: "description", content: DESC },
-      { property: "og:title", content: `${TITLE} ${params.n}/5` },
+      { property: "og:title", content: `${TITLE} — ${params.n === "5" ? "첫 질문 시작" : `사용 안내 ${params.n}/3`}` },
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -33,29 +33,25 @@ export const Route = createFileRoute("/onboarding/$n")({
 const FIRST_QID = "A1-Q2";
 const BIG_NOTE = "글자 크기는 홈이나 MY에서 바꿀 수 있어요.";
 const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground";
-const ghost = "flex h-12 w-full items-center justify-center rounded-full text-body font-medium";
 
 function Onboarding() {
   const { n } = Route.useParams();
+  const search = Route.useSearch();
+  const mode = search.mode ?? "first";
   const step = Number(n);
+  const previous = previousOnboardingStep(step, mode);
+  const next = nextOnboardingStep(step, mode);
   const navigate = useNavigate();
-  const { textSize } = useStore();
   const content = useRef<HTMLDivElement>(null);
   useEffect(() => {
     onbLog(`onb_view_${step}`);
     content.current?.scrollTo({ top: 0 });
   }, [step]);
 
-  const go = (k: number) => navigate({ to: "/onboarding/$n", params: { n: String(k) } });
   const skip = () => {
     onbLog(`onb_skip_${step}`);
     finishOnb();
     navigate({ to: "/", replace: true });
-  };
-  const big = textSize > 0;
-  const toggleBig = () => {
-    if (!big) onbLog("onb_big_on");
-    actions.toggleLarge();
   };
 
   /** The last screen shows the first question, so "시작하기" opens that question rather than the empty home. */
@@ -70,7 +66,6 @@ function Onboarding() {
     1: <Screen1 />,
     2: <Screen2 />,
     3: <Screen3 />,
-    4: null,
     5: <Screen5 />,
   } as Record<number, ReactNode>;
 
@@ -80,44 +75,34 @@ function Onboarding() {
         {step === 1 ? (
           <img src={wordmark.url} alt="MyStory" width={1979} height={483} className="ml-4 h-[1.625rem] w-auto" />
         ) : (
-          <Button asChild variant="palette" className="size-12 rounded-full p-0"><Link to="/onboarding/$n" params={{ n: String(step - 1) }} aria-label="뒤로">
+          <Button asChild variant="palette" className="size-12 rounded-full p-0"><Link to="/onboarding/$n" params={{ n: String(previous ?? 1) }} search={search} aria-label="뒤로">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden><path d="m15 5-7 7 7 7" /></svg>
           </Link></Button>
         )}
         <div className="flex items-center gap-1">
-          {step === 1 && (
-            <Button variant="palette"
-              type="button"
-              aria-pressed={big}
-              onClick={toggleBig}
-              className={`h-12 whitespace-nowrap rounded-full border border-ink px-4 text-caption font-medium ${big ? "bg-ink text-ink-foreground" : ""}`}
-            >
-              글자 크게
-            </Button>
-          )}
-          {step < 5 && (
+          {mode === "help" ? (
+            <Button asChild variant="palette" className="size-12 rounded-full p-0"><Link to="/help" aria-label="닫기">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden><path d="M6 6l12 12M18 6 6 18" /></svg>
+            </Link></Button>
+          ) : step < 5 && (
             <Button variant="palette" type="button" onClick={skip} className="h-12 whitespace-nowrap px-4 text-caption font-medium">안내 건너뛰기</Button>
           )}
         </div>
       </div>
 
       <p className="shrink-0 px-6 pb-2 pt-2 text-caption font-medium text-ink">{EYEBROW[step]}</p>
-      {step === 4 ? (
-        <Screen4 onNext={() => go(5)} />
-      ) : (
-        <>
           <div ref={content} className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2">{screen[step]}</div>
           <Footer>
-            {step === 5 ? (
+            {mode === "help" && step === 3 ? (
+              <Button asChild variant="palette" className={primary}><Link to="/help">도움말로 돌아가기</Link></Button>
+            ) : step === 5 ? (
               <>
                 <Button variant="palette" type="button" className={primary} onClick={tour}>첫 질문에 답하기</Button>
               </>
             ) : (
-              <Button asChild variant="palette" className={primary}><Link to="/onboarding/$n" params={{ n: String(step + 1) }}>{step === 3 ? "내 정보로 넘어가기" : "다음"}</Link></Button>
+              <Button asChild variant="palette" className={primary}><Link to="/onboarding/$n" params={{ n: String(next ?? step) }} search={search}>{step === 3 ? "시작해 볼까요" : "다음"}</Link></Button>
             )}
           </Footer>
-        </>
-      )}
     </main>
   );
 }
@@ -130,7 +115,7 @@ function Footer({ children }: { children: ReactNode }) {
   );
 }
 
-const EYEBROW: Record<number, string> = { 1: "사용 안내 1/3", 2: "사용 안내 2/3", 3: "사용 안내 3/3", 4: "내 정보 넣기 · 선택", 5: "이제 시작해요" };
+const EYEBROW: Record<number, string> = { 1: "사용 안내 1/3", 2: "사용 안내 2/3", 3: "사용 안내 3/3", 5: "이제 시작해요" };
 
 function Head({ step, title, sub }: { step: number; title: string; sub: string }) {
   return (
@@ -256,47 +241,6 @@ function Screen3() {
           );
         })}
       </Frame>
-    </>
-  );
-}
-
-function Screen4({ onNext }: { onNext: () => void }) {
-  const { profile } = usePrefs();
-  const [name, setName] = useState("");
-  const [birth, setBirth] = useState("");
-  const [birthTouched, setBirthTouched] = useState(false);
-  const birthInput = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    setName((v) => v || profile.name);
-    setBirth((v) => v || profile.birth);
-  }, [profile.name, profile.birth]);
-  const save = () => {
-    if (!canSaveOnboardingProfile(name, birth)) return;
-    if (!prefs.setProfile({ ...profile, name: name.trim(), birth })) return void toast("저장하지 못했어요. 다시 시도하거나 나중에 해 주세요.");
-    onNext();
-  };
-  const input = "mt-2 h-14 w-full rounded-2xl border border-comparison-border bg-card px-4 text-body outline-none focus:border-ink";
-  const invalidBirth = birthTouched && Boolean(birth) && !validBirth(birth);
-  return (
-    <>
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2">
-        <Head step={4} title={"이름과 태어난 해를\n넣어 볼까요?"} sub="태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요. 나중에 MY에서 해도 돼요." />
-        <form id="onb-profile" className="mt-6 space-y-6" onSubmit={(e) => { e.preventDefault(); save(); }}>
-          <label className="block">
-            <span className="text-caption font-medium">이름</span>
-            <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김정희" autoComplete="name" enterKeyHint="next" onKeyDown={(e) => { if (e.key === "Enter" && !e.nativeEvent.isComposing) { e.preventDefault(); birthInput.current?.focus(); } }} />
-          </label>
-          <label className="block">
-            <span className="text-caption font-medium">태어난 해</span>
-            <input ref={birthInput} className={input} value={birth} onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))} onBlur={() => setBirthTouched(true)} aria-invalid={invalidBirth} aria-describedby={invalidBirth ? "birth-error" : undefined} placeholder="예: 1955" inputMode="numeric" maxLength={4} enterKeyHint="done" />
-            {invalidBirth && <span id="birth-error" className="mt-2 block text-caption text-destructive">태어난 해를 네 자리로 확인해 주세요.</span>}
-          </label>
-        </form>
-      </div>
-      <Footer>
-        <Button variant="palette" type="submit" form="onb-profile" className={`${primary} disabled:opacity-30`} disabled={!canSaveOnboardingProfile(name, birth)}>저장하고 계속</Button>
-        <Button variant="palette" type="button" className={ghost} onClick={onNext}>나중에 하기</Button>
-      </Footer>
     </>
   );
 }
