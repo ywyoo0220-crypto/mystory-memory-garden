@@ -39,8 +39,9 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
     if (!a && !voice && !(i === 0 && photos.length)) return null;
     return (
       <div key={i} className="ms-in" style={{ "--i": i } as CSSProperties}>
-        {/* Follow-up question: one size below the answer and tight to it, so the answer (the person's own words) leads. */}
-        {i > 0 && <p className="mb-2 text-caption font-medium">{label}</p>}
+        {/* Follow-up question: one size below the answer, with 16px of air so the voice bar
+            (a taller, bordered control) never looks cramped against the question. */}
+        {i > 0 && <p className="mb-4 text-caption font-medium">{label}</p>}
         <div className="space-y-4">
           {voice && <VoiceBar recordId={qid} voice={voice} text={a ?? ""} fg={fg} accent={accent} />}
           {voice && a ? (
