@@ -51,7 +51,8 @@ function SharedPage() {
   // Shares made before the cover step have no cover saved: example records then get the example cover.
   const cover = share.cover ?? defaultCover(qids, records, profile.name);
   return (
-    <main className="pb-16">
+    // White page (not the app's grey) so pale category colours still read as blocks.
+    <main className="min-h-app bg-white pb-16">
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>
         <img src={wordmark.url} alt="MyStory" className="h-6 w-auto self-start" />
         {cover && <CoverPhoto src={cover} />}
@@ -62,11 +63,16 @@ function SharedPage() {
         </p>
       </section>
 
-      <div className="space-y-12 px-6 pt-10">
-        {qids.map((q) => <SharedRecord key={q} qid={q} rec={records[q]!} withVoice={share.withVoice} />)}
+      {/* Records are parted by a hairline above each one after the first. */}
+      <div className="divide-y divide-border px-6">
+        {qids.map((q) => (
+          <div key={q} className="py-10 first:pt-10">
+            <SharedRecord qid={q} rec={records[q]!} withVoice={share.withVoice} />
+          </div>
+        ))}
       </div>
 
-      <footer className="mt-16 space-y-2 px-6 text-center">
+      <footer className="mt-6 space-y-2 border-t border-border px-6 pt-12 text-center">
         <p className="text-body font-medium">MyStory</p>
         <p className="text-caption text-muted-foreground">질문에 답하며 나만의 색깔로 채워 가는 이야기</p>
         <p className="pt-6 text-caption text-muted-foreground [word-break:keep-all]">시범 버전 · 실제로 보내지지 않고, 링크를 만든 휴대폰에서만 열려요.</p>
