@@ -30,6 +30,7 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Project rules
+- Question-list back navigation uses router history when available and a mode-specific fallback on direct entry, so Home and recording entry flows retain their origins.
 - Records live in localStorage via src/lib/store.ts (useSyncExternalStore); no backend yet — keeps the app login-free.
 - Large-text mode scales the root font-size, so sizes must use rem, not px.
 - Category colors come from src/data/themes.json via lib/theme.ts; light-list controls use the derived list-accent token (dark age background, otherwise pill), so inverted dark-age pills remain legible outside cards.

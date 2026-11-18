@@ -1,9 +1,17 @@
 import { catVars } from "@/lib/theme";
-import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate, useRouter } from "@tanstack/react-router";
 import { getCategory } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { BackBar } from "@/components/BackBar";
+
+export function goBackFromQuestions(
+  history: { canGoBack: () => boolean; back: () => void },
+  fallback: () => void,
+) {
+  if (history.canGoBack()) history.back();
+  else fallback();
+}
 
 export const Route = createFileRoute("/cat/$catId")({
   beforeLoad: ({ params }) => {
@@ -33,15 +41,17 @@ function CatQuestions() {
   const { records } = useStore();
   const edit = Route.useSearch().mode === "edit";
   const navigate = useNavigate();
+  const router = useRouter();
   if (!cat) return null;
   return (
     <main className="category-list" style={catVars(cat.id)}>
       <BackBar
         title={cat.kind === "topic" ? "주제" : "시기"}
         onBack={() =>
-          edit && typeof window !== "undefined" && window.history.length > 1
-            ? window.history.back()
-            : navigate({ to: edit ? "/" : "/kind/$kind", params: { kind: cat.kind } })
+          goBackFromQuestions(router.history, () => {
+            if (edit) void navigate({ to: "/" });
+            else void navigate({ to: "/kind/$kind", params: { kind: cat.kind } });
+          })
         }
       />
       <div className="px-6 pb-6 pt-2">
