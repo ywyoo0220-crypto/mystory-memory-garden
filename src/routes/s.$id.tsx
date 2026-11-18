@@ -56,8 +56,9 @@ function SharedPage() {
   return (
     // White page (not the app's grey) so pale category colours still read as blocks.
     <main className="relative min-h-app bg-white pb-16">
-      <button type="button" aria-label="미리보기 닫기" onClick={close} className="fixed right-4 top-4 z-50 flex size-12 items-center justify-center rounded-full bg-ink text-ink-foreground shadow">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      <button type="button" aria-label="미리보기 닫기" onClick={close} className="fixed right-4 top-4 z-50 inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card/85 px-4 text-caption font-medium text-ink shadow-sm backdrop-blur">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        닫기
       </button>
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>
         <img src={wordmark.url} alt="MyStory" className="h-6 w-auto self-start" />

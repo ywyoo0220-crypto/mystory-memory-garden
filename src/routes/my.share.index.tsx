@@ -104,9 +104,10 @@ function SharePage() {
         {step === 0 && (
           <>
             {list.length > 0 && (
-              <div className="flex justify-end">
-                <button type="button" className="inline-flex h-12 items-center px-2 text-caption font-medium underline underline-offset-4" onClick={() => setPicked(picked.length === list.length ? [] : list.map(([q]) => q))}>
-                  {picked.length === list.length ? "전체 해제" : "전체 선택"}
+              <div className="flex min-h-12 items-center justify-between">
+                <span className="text-caption text-muted-foreground">선택한 이야기 <b className="font-medium text-ink">{picked.length}</b>개</span>
+                <button type="button" className="inline-flex h-12 items-center rounded-full px-4 text-caption font-medium active:bg-secondary" onClick={() => setPicked(picked.length === list.length ? [] : list.map(([q]) => q))}>
+                  {picked.length === list.length ? "선택 해제" : "전체 선택"}
                 </button>
               </div>
             )}

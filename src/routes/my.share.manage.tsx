@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { categoryOfQuestion } from "@/lib/data";
+import { toast } from "sonner";
+import { shareUrl } from "@/lib/share";
 import { prefs, SCOPES, usePrefs } from "@/lib/prefs";
 import { Card, SubHeader } from "@/components/my/ui";
 
@@ -26,23 +27,17 @@ function Manage() {
         {shares.length === 0 && <p className="py-8 text-center text-muted-foreground">공유 설정한 기록이 없어요.</p>}
         {shares.map((s) => {
           const d = new Date(s.t);
-          const cats = [...new Set(s.qids.map((q) => categoryOfQuestion(q)?.name).filter(Boolean))].join(", ");
           return (
-            <Card key={s.id} className="flex items-start gap-4 p-6">
-              <div className="min-w-0 flex-1">
-                <p className="text-body font-medium">
-                  기록 {s.qids.length}개 · {SCOPES.find((x) => x[0] === s.scope)?.[1]}
-                </p>
-                <p className="mt-1 text-caption text-muted-foreground">
-                  {d.getFullYear()}년 {d.getMonth() + 1}월 {d.getDate()}일 · {s.withVoice ? "목소리 포함" : "목소리는 글로만"}
-                </p>
-                <p className="mt-1 text-caption text-muted-foreground">{cats}</p>
-                {s.link && <p className="mt-1 break-all text-caption">{s.link}</p>}
-                <Link to="/s/$id" params={{ id: s.id }} className="mt-1 inline-flex h-12 items-center text-caption font-medium underline underline-offset-4">받는 사람 화면 보기</Link>
+            <Card key={s.id} className="p-6">
+              <p className="text-body font-medium">{SCOPES.find((x) => x[0] === s.scope)?.[1]} 공유 중</p>
+              <p className="mt-1 text-caption text-muted-foreground">
+                이야기 {s.qids.length}개 · {s.withVoice ? "목소리 포함" : "글로만"} · {d.getFullYear()}.{d.getMonth() + 1}.{d.getDate()}
+              </p>
+              <div className="mt-4 flex gap-2">
+                <Link to="/s/$id" params={{ id: s.id }} className="inline-flex h-12 flex-1 items-center justify-center rounded-full border border-ink text-caption font-medium">화면 보기</Link>
+                <button type="button" className="h-12 flex-1 rounded-full border border-ink text-caption font-medium" onClick={() => void navigator.clipboard?.writeText(s.link || shareUrl(s.id)).then(() => toast("링크를 복사했어요"), () => {})}>링크 복사</button>
+                <button type="button" className="h-12 rounded-full bg-destructive/10 px-4 text-caption font-medium text-destructive" onClick={() => prefs.removeShares([s.id])}>해제</button>
               </div>
-              <button type="button" className="h-12 shrink-0 rounded-full border border-ink px-6 text-caption font-medium" onClick={() => prefs.removeShares([s.id])}>
-                해제
-              </button>
             </Card>
           );
         })}
