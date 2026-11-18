@@ -142,7 +142,13 @@ export function RecordCard({
         {list.map(({ qid, rec }, i) => {
           const q = getQuestion(qid)!;
           return (
-            <div key={qid} id={`rec-${qid}`} className={i > 0 ? "mt-6 border-t border-current/20 pt-6" : "mt-6"}>
+            <div key={qid} id={`rec-${qid}`} className={i > 0 ? "mt-10" : "mt-6"}>
+              {/* 선 대신 작은 챕터 인덱스(01, 02)와 넉넉한 여백으로 질문을 가른다. 기록이 하나면 인덱스를 생략한다. */}
+              {list.length > 1 && (
+                <p className="mb-3 text-caption font-medium tabular-nums" style={{ color: c.count }}>
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+              )}
               <button type="button" onClick={onToggle} className="block w-full text-left">
                 <h2 className="font-serif text-title font-medium">{q.core}</h2>
               </button>
