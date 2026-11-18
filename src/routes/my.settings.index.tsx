@@ -6,6 +6,7 @@ import { usePrefs } from "@/lib/prefs";
 import { Card, Chevron, rowCls, Segmented, SubHeader } from "@/components/my/ui";
 import { Button } from "@/components/ui/button";
 import { resetApp } from "@/lib/reset";
+import { setSizeButtonHidden, useSizeButtonHidden } from "@/components/TextSizeButton";
 
 export const Route = createFileRoute("/my/settings/")({
   head: () => ({
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/my/settings/")({
 function Settings() {
   const { textSize, defaultView } = useStore();
   const { pinHash } = usePrefs();
+  const btnHidden = useSizeButtonHidden();
   const [confirm, setConfirm] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
   const [resetting, setResetting] = useState(false);
@@ -50,6 +52,13 @@ function Settings() {
                 );
               })}
             </div>
+          </div>
+          <div className={rowCls}>
+            <span className="flex-1">
+              <span className="block text-body font-medium">'크게' 버튼 보이기</span>
+              <span className="block text-caption text-muted-foreground">끄면 화면 아래 버튼이 사라져요. 글자 크기는 여기서 바꿀 수 있어요.</span>
+            </span>
+            <Segmented compact label="'크게' 버튼 보이기" value={btnHidden ? "off" : "on"} onChange={(v) => setSizeButtonHidden(v === "off")} options={[["on", "켜기"], ["off", "끄기"]]} />
           </div>
           <div className={rowCls}>
             <span className="flex-1 text-body font-medium">처음 보기</span>
