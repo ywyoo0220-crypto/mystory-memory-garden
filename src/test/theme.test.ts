@@ -25,8 +25,17 @@ describe("Final palette", () => {
     for (const [id, tokens] of Object.entries(palette.theme.categories))
       for (const [key, value] of Object.entries(tokens)) expect(css).toContain(`--${id}-${names[key as keyof typeof names]}:${value};`);
   });
-  it("keeps 사랑과 증오 text pure black", () => {
-    expect(palette.theme.categories.T4.text).toBe("#000000");
+  it("sets every topic card's text to pure black or white, with a black pill and button", () => {
+    const dark = ["T3", "T6", "T8", "T10"];
+    for (let i = 1; i <= 10; i++) {
+      const id = `T${i}` as keyof typeof palette.theme.categories;
+      const tokens = palette.theme.categories[id];
+      const text = dark.includes(id) ? "#FFFFFF" : "#000000";
+      expect(tokens.text).toBe(text);
+      expect(tokens.countText).toBe(text);
+      expect(tokens.pill).toBe("#000000");
+      expect(tokens.buttonBackground).toBe("#000000");
+    }
   });
   it("uses buttonBackground/buttonText for the filled button and countText for the count pill", () => {
     for (const cat of allCategories) {
