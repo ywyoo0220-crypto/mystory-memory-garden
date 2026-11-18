@@ -32,39 +32,38 @@ export function CategoryPill({ cat }: { cat: Category }) {
 function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: StoryRecord; fg: string; accent: string; showCore: boolean }) {
   const q = getQuestion(qid);
   if (!q) return null;
-  const steps = [q.core, ...q.followUps];
   const photos = recordPhotos(rec);
+  const step = (label: string, i: number) => {
+    const voice = rec.voices?.find((v) => v.step === i);
+    const a = rec.answers[i]?.trim() || voice?.text?.trim();
+    if (!a && !voice && !(i === 0 && photos.length)) return null;
+    return (
+      <div key={i} className="ms-in" style={{ "--i": i } as CSSProperties}>
+        {/* Follow-up question: one size below the answer and tight to it, so the answer (the person's own words) leads. */}
+        {i > 0 && <p className="mb-2 text-caption font-medium">{label}</p>}
+        <div className="space-y-4">
+          {voice && <VoiceBar recordId={qid} voice={voice} text={a ?? ""} fg={fg} accent={accent} />}
+          {voice && a ? (
+            <div className="rounded-2xl bg-current/10 p-4">
+              <p className="text-caption font-medium opacity-80">[음성] 말로 남긴 내용</p>
+              <p className="mt-2 whitespace-pre-line text-body">{a}</p>
+            </div>
+          ) : (
+            a && <p className="whitespace-pre-line text-body">{a}</p>
+          )}
+          {i === 0 && photos.map((p) => <CardPhoto key={p} src={p} fg={fg} />)}
+        </div>
+      </div>
+    );
+  };
+  const follow = q.followUps.map((label, k) => step(label, k + 1)).filter(Boolean);
   return (
     <div className="space-y-6">
       {showCore && <h3 className="font-serif text-title font-medium">{q.core}</h3>}
-      {steps.map((label, i) => {
-        const voice = rec.voices?.find((v) => v.step === i);
-        const a = rec.answers[i]?.trim() || voice?.text?.trim();
-        if (!a && !voice && !(i === 0 && photos.length)) return null;
-        return (
-          <div key={i} className={`ms-in ${i > 0 ? "space-y-4 border-t border-current/15 pt-6" : "space-y-4"}`} style={{ "--i": i } as CSSProperties}>
-            {i > 0 && (
-              <p className="text-body font-medium">
-                <span className="font-medium">Q.</span> {label}
-              </p>
-            )}
-            {voice && (
-              <div className="pb-4">
-                <VoiceBar recordId={qid} voice={voice} text={a ?? ""} fg={fg} accent={accent} />
-              </div>
-            )}
-            {voice && a ? (
-              <div className="rounded-2xl bg-current/10 p-4">
-                <p className="text-caption font-medium opacity-80">[음성] 말로 남긴 내용</p>
-                <p className="mt-2 whitespace-pre-line text-body">{a}</p>
-              </div>
-            ) : (
-              a && <p className="whitespace-pre-line text-body">{a}</p>
-            )}
-            {i === 0 && photos.map((p) => <CardPhoto key={p} src={p} fg={fg} />)}
-          </div>
-        );
-      })}
+      {step(q.core, 0)}
+      {/* The follow-ups branch from the core question: one line on the left holds them together
+          (the same branching as the question-structure poster). */}
+      {follow.length > 0 && <div className="space-y-6 border-l-2 border-current/35 pl-4">{follow}</div>}
     </div>
   );
 }
