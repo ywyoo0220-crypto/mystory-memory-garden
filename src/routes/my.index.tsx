@@ -6,9 +6,9 @@ import { Avatar, Card, Chevron, rowCls } from "@/components/my/ui";
 export const Route = createFileRoute("/my/")({
   head: () => ({
     meta: [
-      { title: "MY — MyStory" },
+      { title: "MY — 마이스토리" },
       { name: "description", content: "프로필, 이어서 쓰기, 책 만들기, 공유, 백업과 설정." },
-      { property: "og:title", content: "MY — MyStory" },
+      { property: "og:title", content: "MY — 마이스토리" },
       { property: "og:description", content: "프로필, 이어서 쓰기, 책 만들기, 공유, 백업과 설정." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

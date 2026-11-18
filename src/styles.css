@@ -47,13 +47,14 @@
 }
 
 :root {
+  /* White paper, grey surfaces: the page is the blank canvas the colours fill (2026-11-19). */
   --radius: 1rem;
-  --paper: #f5f5f7;
+  --paper: #ffffff;
   --ink: #1a1918;
   --ink-foreground: #ffffff;
-  --background: #f5f5f7;
+  --background: #ffffff;
   --foreground: #1a1918;
-  --card: #ffffff;
+  --card: #f5f5f7;
   --card-foreground: #1a1918;
   --popover: #ffffff;
   --popover-foreground: #1a1918;
@@ -418,9 +419,34 @@ html.ms-pre-launch .ms-home, html.ms-launching .ms-home { animation-play-state: 
 .ms-bar {
   transition: transform 0.25s ease-out, background-color 0.25s ease-out;
 }
+/* Completion: the answered card starts as blank paper and fills with its category colour from the
+   bottom up — the "colour your own story" idea as one motion. Text turns to the card's colour at the end. */
+@keyframes ms-fill-up {
+  from { clip-path: inset(100% 0 0 0 round 2rem); }
+  to { clip-path: inset(0 0 0 0 round 2rem); }
+}
+@keyframes ms-fill-ink { from { color: var(--ink); } }
+.ms-fill {
+  position: relative;
+  isolation: isolate;
+  background: var(--background);
+  color: var(--fill-fg);
+  box-shadow: inset 0 0 0 1px var(--comparison-border);
+  animation: ms-fill-ink 0.4s ease 0.8s both;
+}
+.ms-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--fill-bg);
+  animation: ms-fill-up 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.35s both;
+}
 @media (prefers-reduced-motion: reduce) {
   .ms-deck > *, .ms-home, .launch-screen.launch-leaving, .expand[data-open="true"] .ms-in { animation: none; }
   .ms-ripple::before, .ms-ripple::after { animation: none; opacity: 0; }
   .ms-seg { transition: none; }
   .ms-bar { transition: none; transform: none !important; }
+  .ms-fill, .ms-fill::before { animation: none; }
 }

@@ -8,9 +8,9 @@ import { SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/settings/lock")({
   head: () => ({
     meta: [
-      { title: "앱 잠금 — MyStory" },
+      { title: "앱 잠금 — 마이스토리" },
       { name: "description", content: "숫자 4자리로 앱을 잠가요." },
-      { property: "og:title", content: "앱 잠금 — MyStory" },
+      { property: "og:title", content: "앱 잠금 — 마이스토리" },
       { property: "og:description", content: "숫자 4자리로 앱을 잠가요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -38,7 +38,7 @@ function LockSettings() {
       }
       if (p !== first) {
         setFirst(null);
-        setErr("두 번 입력한 숫자가 달라요. 다시 정하세요.");
+        setErr("두 번 누른 숫자가 달라요. 다시 정해 주세요.");
         return;
       }
       await prefs.setPin(p);
@@ -63,7 +63,7 @@ function LockSettings() {
           </button>
         </div>
       ) : (
-        <PinPad title={first ? "한 번 더 입력하세요." : "숫자 4자리를 정하세요."} error={err} onDone={onDone} />
+        <PinPad title={first ? "한 번 더 눌러 주세요." : "숫자 4자리를 정해 주세요."} error={err} onDone={onDone} />
       )}
     </main>
   );

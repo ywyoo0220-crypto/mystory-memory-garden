@@ -5,9 +5,9 @@ import { ContinueCard, SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/continue")({
   head: () => ({
     meta: [
-      { title: "이어서 쓰기 — MyStory" },
+      { title: "이어서 쓰기 — 마이스토리" },
       { name: "description", content: "쓰다 만 기록을 모아 이어서 써요." },
-      { property: "og:title", content: "이어서 쓰기 — MyStory" },
+      { property: "og:title", content: "이어서 쓰기 — 마이스토리" },
       { property: "og:description", content: "쓰다 만 기록을 모아 이어서 써요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

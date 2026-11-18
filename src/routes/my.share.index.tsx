@@ -11,9 +11,9 @@ import { Card, Dot, SubHeader, Toggle } from "@/components/my/ui";
 export const Route = createFileRoute("/my/share/")({
   head: () => ({
     meta: [
-      { title: "기록 공유하기 — MyStory" },
+      { title: "기록 공유하기 — 마이스토리" },
       { name: "description", content: "보여줄 기록과 사람을 직접 골라요." },
-      { property: "og:title", content: "기록 공유하기 — MyStory" },
+      { property: "og:title", content: "기록 공유하기 — 마이스토리" },
       { property: "og:description", content: "보여줄 기록과 사람을 직접 골라요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -64,9 +64,9 @@ function SharePage() {
   };
   const send = async (id: string) => {
     const url = shareUrl(id);
-    const title = profile.name.trim() ? `${profile.name.trim()}의 이야기` : "MyStory 이야기";
+    const title = profile.name.trim() ? `${profile.name.trim()}의 이야기` : "마이스토리 이야기";
     try {
-      if (navigator.share) return void (await navigator.share({ title, text: "MyStory에서 고른 기록을 보내요.", url }));
+      if (navigator.share) return void (await navigator.share({ title, text: "마이스토리에서 고른 기록을 보내요.", url }));
       await navigator.clipboard.writeText(url);
       toast("링크를 복사했어요");
     } catch {
@@ -99,7 +99,7 @@ function SharePage() {
       <SubHeader
         title="기록 공유하기"
         {...(step > 0 ? { onBack: () => setStep(step - 1) } : {})}
-        sub="원하는 사람에게만 보여줄 이야기를 골라주세요."
+        {...(step === 0 ? { sub: "원하는 사람에게만 보여줄 이야기를 골라 주세요." } : {})}
         action={
           step === 0 && sharedN > 0 ? (
             <Link to="/my/share/manage" className="inline-flex h-12 shrink-0 items-center px-2 text-caption font-medium">
@@ -146,7 +146,7 @@ function SharePage() {
               })}
             </Card>
             <button type="button" className={primary} disabled={!picked.length} onClick={() => setStep(1)}>
-              {picked.length ? `${picked.length}개 선택하고 다음` : "이야기를 골라주세요"}
+              {picked.length ? `${picked.length}개 선택하고 다음` : "이야기를 골라 주세요"}
             </button>
           </>
         )}
@@ -188,10 +188,10 @@ function SharePage() {
             {hasVoice && (
               <Card className="flex items-center gap-4 px-6 py-2">
                 <span className="flex-1">
-                  <span className="block text-body font-medium">{!noVoice ? "목소리 포함" : "목소리는 글로만 보내요"}</span>
-                  {<span className="block text-caption text-muted-foreground">목소리는 빼고 보내기</span>}
+                  <span className="block text-body font-medium">목소리도 함께 보내기</span>
+                  <span className="block text-caption text-muted-foreground">{noVoice ? "지금은 글만 보내요." : "받는 사람이 목소리를 들을 수 있어요."}</span>
                 </span>
-                {<Toggle on={noVoice} onChange={setNoVoice} label="목소리는 빼고 보내기" />}
+                <Toggle on={!noVoice} onChange={(v) => setNoVoice(!v)} label="목소리도 함께 보내기" />
               </Card>
             )}
             <CoverPicker qids={picked} records={records} value={coverSrc} onChange={setCover} bookCover={personaCover(profile.name)} />

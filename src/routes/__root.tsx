@@ -27,17 +27,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
-      { name: "apple-mobile-web-app-title", content: "MyStory" },
-      { title: "MyStory — 나의 이야기 기록" },
-      { name: "description", content: "질문에 답하며 나의 인생 이야기를 기록하세요." },
+      { name: "apple-mobile-web-app-title", content: "마이스토리" },
+      { title: "마이스토리 — 나의 이야기 기록" },
+      { name: "description", content: "질문에 답하며 나의 인생 이야기를 기록해요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#F5F5F7" },
+      { name: "theme-color", content: "#FFFFFF" },
     ],
     links: [
       {
         rel: "stylesheet",
-        href: "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css",
+        // Bundled (OFL 1.1) so the exhibition phones never fall back to the system font when the venue Wi-Fi drops.
+        href: "/fonts/pretendard/pretendardvariable-dynamic-subset.css",
       },
       {
         rel: "stylesheet",

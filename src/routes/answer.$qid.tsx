@@ -1,6 +1,6 @@
 import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { actions, hasContent, recordPhotos, useStore, type Voice } from "@/lib/store";
 import { audioKey, deleteAudio, fmtDur, MAX_REC_SEC, putAudio } from "@/lib/audio";
@@ -22,10 +22,10 @@ export const Route = createFileRoute("/answer/$qid")({
     meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "답하기 — MyStory" },
-      { name: "description", content: "쓰거나 말로 남기세요." },
-      { property: "og:title", content: "답하기 — MyStory" },
-      { property: "og:description", content: "쓰거나 말로 남기세요." },
+      { title: "답하기 — 마이스토리" },
+      { name: "description", content: "쓰거나 말로 남겨요." },
+      { property: "og:title", content: "답하기 — 마이스토리" },
+      { property: "og:description", content: "쓰거나 말로 남겨요." },
     ],
   }),
   component: AnswerFlow,
@@ -119,7 +119,7 @@ function AnswerFlow() {
   const persist = (a = latest.current.answers, p = latest.current.photos, v = latest.current.voices) => {
     const r = { answers: a, photos: p, voices: v, photo: undefined };
     if (hasContent({ ...r, updatedAt: 0 })) {
-      if (!actions.saveRecord(qid, r)) setMsg("저장 공간이 부족해요. 사진을 빼고 다시 시도하세요.");
+      if (!actions.saveRecord(qid, r)) setMsg("저장 공간이 부족해요. 사진을 빼고 다시 해 보세요.");
     } else if (records[qid]) actions.remove([qid]);
   };
 
@@ -275,7 +275,7 @@ function AnswerFlow() {
       .catch(micFail);
   };
 
-  /** Onboarding's first question returns straight to Home in 시간순, where the new card shows first. */
+  /** Onboarding's first question returns straight to Home in 시기별, where the new card shows first. */
   const tourHome = () => {
     let t: string | null = null;
     try { t = sessionStorage.getItem("mystory.tour.v1"); sessionStorage.removeItem("mystory.tour.v1"); } catch { /* noop */ }
@@ -342,9 +342,9 @@ function AnswerFlow() {
     const first = answers.find((a) => a.trim()) ?? "";
     return (
       <main className="px-6 pt-12">
-        <p className="text-body font-medium">기록했습니다.</p>
+        <p className="text-body font-medium">기록했어요.</p>
         <h1 className="mt-2 font-serif text-title">이야기 하나가 쌓였어요.</h1>
-        <article className="category-surface mt-8 rounded-[32px] p-6 pb-8" style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}>
+        <article className="ms-fill category-surface mt-8 rounded-[32px] p-6 pb-8" style={{ ...catVars(cat.id), "--fill-bg": c.bg, "--fill-fg": c.fg } as CSSProperties}>
           <CategoryPill cat={cat} />
           <h2 className="mt-6 font-serif text-title">{q.core}</h2>
           {photos[0] && <Photo src={photos[0]} className="mt-6 aspect-[16/10] w-full rounded-3xl object-cover" />}

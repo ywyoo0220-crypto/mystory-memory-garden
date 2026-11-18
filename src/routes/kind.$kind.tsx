@@ -11,15 +11,15 @@ export const Route = createFileRoute("/kind/$kind")({
     if (params.kind !== "topic" && params.kind !== "period") throw notFound();
   },
   head: ({ params }) => {
-    const t = params.kind === "period" ? "시기 고르기 — MyStory" : "주제 고르기 — MyStory";
+    const t = params.kind === "period" ? "시기 고르기 — 마이스토리" : "주제 고르기 — 마이스토리";
     return {
       meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
         { title: t },
-        { name: "description", content: "기록할 범주를 고르세요." },
+        { name: "description", content: "기록할 범주를 골라요." },
         { property: "og:title", content: t },
-        { property: "og:description", content: "기록할 범주를 고르세요." },
+        { property: "og:description", content: "기록할 범주를 골라요." },
       ],
     };
   },
@@ -39,7 +39,7 @@ function KindList() {
         onBack={() => navigate({ to: "/record" })}
       />
       <div className="px-6 pb-6 pt-4">
-        <h1 className="font-serif text-title">{kind === "topic" ? "주제를 고르세요." : "시기를 고르세요."}</h1>
+        <h1 className="font-serif text-title">{kind === "topic" ? "어떤 주제로 쓸까요?" : "어느 시기를 쓸까요?"}</h1>
       </div>
       <ul className="space-y-1 px-6">
         {cats.map((c) => {

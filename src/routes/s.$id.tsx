@@ -13,10 +13,10 @@ import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 export const Route = createFileRoute("/s/$id")({
   head: () => ({
     meta: [
-      { title: "MyStory에서 보낸 이야기" },
-      { name: "description", content: "MyStory에서 골라 보낸 기록이에요." },
-      { property: "og:title", content: "MyStory에서 보낸 이야기" },
-      { property: "og:description", content: "MyStory에서 골라 보낸 기록이에요." },
+      { title: "마이스토리에서 보낸 이야기" },
+      { name: "description", content: "마이스토리에서 골라 보낸 기록이에요." },
+      { property: "og:title", content: "마이스토리에서 보낸 이야기" },
+      { property: "og:description", content: "마이스토리에서 골라 보낸 기록이에요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -66,12 +66,12 @@ function SharedPage() {
         </button>
       </div>
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>
-        <img src={wordmark.url} alt="MyStory" className="h-6 w-auto self-start" />
+        <img src={wordmark.url} alt="마이스토리" className="h-6 w-auto self-start" />
         {cover && <CoverPhoto src={cover} />}
         <h1 className="mt-8 text-center text-title">{name ? `${name}의 이야기` : "나의 이야기"}</h1>
         <p className="mt-2 text-center text-caption">기록 {qids.length}개{span && ` · ${span}`}</p>
         <p className="mt-auto pt-10 text-center text-caption [word-break:keep-all]">
-          {name ? `${name} 님이` : "보낸 분이"} MyStory에서 골라 보낸 기록이에요.
+          {name ? `${name} 님이` : "보낸 분이"} 마이스토리에서 골라 보낸 기록이에요.
         </p>
       </section>
 
@@ -85,7 +85,7 @@ function SharedPage() {
       </div>
 
       <footer className="mt-6 space-y-2 border-t border-border px-6 pt-12 text-center">
-        <p className="text-body font-medium">MyStory</p>
+        <p className="text-body font-medium">마이스토리</p>
         <p className="text-caption text-muted-foreground">질문에 답하며 나만의 색깔로 채워 가는 이야기</p>
         <p className="pt-6 text-caption text-muted-foreground [word-break:keep-all]">시범 버전 · 실제로 보내지지 않고, 링크를 만든 휴대폰에서만 열려요.</p>
         {share.withVoice && qids.some((q: string) => records[q]?.voices?.some((v) => v.audio)) && (

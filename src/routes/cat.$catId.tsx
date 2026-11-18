@@ -1,7 +1,7 @@
 import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate, useRouter } from "@tanstack/react-router";
 import { getCategory } from "@/lib/data";
-import { hasContent, useStore } from "@/lib/store";
+import { filledSteps, hasContent, useStore } from "@/lib/store";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { BackBar } from "@/components/BackBar";
 
@@ -19,15 +19,15 @@ export const Route = createFileRoute("/cat/$catId")({
     if (!c || c.questions.length === 0) throw notFound();
   },
   head: ({ params }) => {
-    const t = `${getCategory(params.catId)?.name ?? "질문"} — MyStory`;
+    const t = `${getCategory(params.catId)?.name ?? "질문"} — 마이스토리`;
     return {
       meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
         { title: t },
-        { name: "description", content: "답하고 싶은 질문을 고르세요." },
+        { name: "description", content: "답하고 싶은 질문을 골라요." },
         { property: "og:title", content: t },
-        { property: "og:description", content: "답하고 싶은 질문을 고르세요." },
+        { property: "og:description", content: "답하고 싶은 질문을 골라요." },
       ],
     };
   },
@@ -62,23 +62,25 @@ function CatQuestions() {
           <h1 className="font-serif text-title">{cat.name}</h1>
         </div>
         <p className="mt-4 text-body">
-          {edit ? "수정할 기록을 고르세요." : "질문 하나를 골라 시작하세요. 모든 질문에 답하지 않아도 됩니다."}
+          {edit ? "수정할 기록을 골라 주세요." : "하나를 골라 시작해요. 모든 질문에 답하지 않아도 돼요."}
         </p>
       </div>
       <ul className="space-y-2 px-6">
         {cat.questions.filter((q) => !edit || hasContent(records[q.id])).map((q) => {
+          // Answered questions take their category colour, as on home: the list fills in as you write.
           const done = hasContent(records[q.id]);
+          const filled = filledSteps(records[q.id]).filter(Boolean).length;
           return (
             <li key={q.id}>
               <Link
                 to="/answer/$qid"
                 params={{ qid: q.id }}
                 className="flex gap-4 rounded-3xl border border-transparent p-6"
-                style={done ? { background: cat.color.tint } : { background: "var(--card)", border: "1px solid var(--border)" }}
+                style={done ? { background: cat.color.background, color: cat.color.text } : { background: "var(--card)", border: "1px solid var(--border)" }}
               >
                 <span
                   className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full border"
-                  style={done ? { borderColor: `var(--${cat.id}-list-accent)`, color: `var(--${cat.id}-list-accent)` } : { borderColor: "var(--border)" }}
+                  style={done ? { borderColor: "currentColor" } : { borderColor: "var(--comparison-border)" }}
                   aria-hidden
                 >
                   {done && (
@@ -91,7 +93,7 @@ function CatQuestions() {
                   <span className="block font-serif text-body">{q.core}</span>
                   {done && (
                     <span className="mt-4 block text-caption">
-                      {edit ? "눌러서 수정하기" : "눌러서 이어쓰기"} ›
+                      {edit ? "눌러서 수정하기" : filled === 4 ? "다 썼어요 · 눌러서 수정하기" : `4개 중 ${filled}개 · 눌러서 이어쓰기`} ›
                     </span>
                   )}
                 </span>

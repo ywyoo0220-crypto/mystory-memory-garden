@@ -8,7 +8,7 @@ describe("Example records", () => {
   it("주제별 order", () => {
     expect(homeCards(exampleSeeds(now), "topic").map((c) => c.qid)).toEqual(["T7-Q2", "T1-Q1", "T8-Q3", "T2-Q1", "T10-Q2"]);
   });
-  it("시간순 order", () => {
+  it("시기별 order", () => {
     expect(homeCards(exampleSeeds(now), "period").map((c) => c.qid)).toEqual(["A1-Q3", "A3-Q4", "A6-Q3"]);
   });
   it("t = now - daysAgo days, ex true, no audio", () => {

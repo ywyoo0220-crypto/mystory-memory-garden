@@ -13,9 +13,9 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/my/export")({
   head: () => ({ meta: [
-    { title: "기록 공유하기 — MyStory" },
+    { title: "기록 공유하기 — 마이스토리" },
     { name: "description", content: "고른 기록을 파일로 만들어 가족이나 가까운 사람에게 보내요." },
-    { property: "og:title", content: "기록 공유하기 — MyStory" },
+    { property: "og:title", content: "기록 공유하기 — 마이스토리" },
     { property: "og:description", content: "고른 기록을 파일로 만들어 가족이나 가까운 사람에게 보내요." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary" },
@@ -99,7 +99,7 @@ function ExportPage() {
           <div className="book-cover-info">
             <h2>{profile.name.trim() ? `${profile.name.trim()}의 이야기` : "나의 이야기"}</h2>
             <p>{count}개의 기록 · {new Date().getFullYear()}</p>
-            <img src={wordmark.url} alt="MyStory" className="book-wordmark" />
+            <img src={wordmark.url} alt="마이스토리" className="book-wordmark" />
           </div>
         </header>
         <section className="book-sheet book-contents">

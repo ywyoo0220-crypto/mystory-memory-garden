@@ -10,9 +10,9 @@ import { Card, SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/backup")({
   head: () => ({
     meta: [
-      { title: "백업과 복원 — MyStory" },
+      { title: "백업과 복원 — 마이스토리" },
       { name: "description", content: "글, 사진, 목소리를 백업 파일로 저장하고 다시 불러와요." },
-      { property: "og:title", content: "백업과 복원 — MyStory" },
+      { property: "og:title", content: "백업과 복원 — 마이스토리" },
       { property: "og:description", content: "글, 사진, 목소리를 백업 파일로 저장하고 다시 불러와요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -52,7 +52,7 @@ function Backup() {
       const shareFile = new File([json], name, { type: "application/json" });
       if (typeof navigator.canShare === "function" && navigator.canShare({ files: [shareFile] })) {
         try {
-          await navigator.share({ files: [shareFile], title: "MyStory 백업 파일" });
+          await navigator.share({ files: [shareFile], title: "마이스토리 백업 파일" });
           toast("백업 파일을 보냈어요");
           return;
         } catch (e) {
@@ -82,7 +82,7 @@ function Backup() {
       data = JSON.parse(await f.text()) as BackupFile;
       if (data.app !== "myStory" || typeof data.records !== "object") throw new Error();
     } catch {
-      return void toast("MyStory 백업 파일이 아니에요");
+      return void toast("마이스토리 백업 파일이 아니에요");
     }
     const incoming = normalizeRecords(data.records);
     if (!Object.keys(incoming).length) return void toast("백업 파일에 불러올 기록이 없어요");

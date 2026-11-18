@@ -107,6 +107,6 @@ export const validBirth = (b: string) => /^\d{4}$/.test(b) && Number(b) >= 1900 
 
 export const SCOPES: [ShareScope, string, string][] = [
   ["me", "나만 보기", "공유하지 않고 내 휴대폰에만 둬요"],
-  ["family", "가족에게만", "내가 고른 가족만 볼 수 있어요"],
+  ["family", "가족에게만", "링크를 가족에게만 보내요"],
   ["link", "링크를 받은 사람", "링크를 아는 사람은 누구나 볼 수 있어요"],
 ];

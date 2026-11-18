@@ -11,9 +11,9 @@ import { TextSizeChoice } from "@/components/TextSizeChoice";
 export const Route = createFileRoute("/my/settings/")({
   head: () => ({
     meta: [
-      { title: "설정 — MyStory" },
+      { title: "설정 — 마이스토리" },
       { name: "description", content: "글자 크기, 처음 보기, 앱 잠금과 데이터." },
-      { property: "og:title", content: "설정 — MyStory" },
+      { property: "og:title", content: "설정 — 마이스토리" },
       { property: "og:description", content: "글자 크기, 처음 보기, 앱 잠금과 데이터." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -44,7 +44,7 @@ function Settings() {
           </div>
           <div className={rowCls}>
             <span className="flex-1 text-body font-medium">처음 보기</span>
-            <Segmented compact label="처음 보여줄 보기" value={defaultView} onChange={actions.setDefaultView} options={[["topic", "주제별"], ["period", "시간순"]]} />
+            <Segmented compact label="처음 보여줄 보기" value={defaultView} onChange={actions.setDefaultView} options={[["topic", "주제별"], ["period", "시기별"]]} />
           </div>
           <Link to="/my/settings/lock" className={rowCls}>
             <span className="flex-1">

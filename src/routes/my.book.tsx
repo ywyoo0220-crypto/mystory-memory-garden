@@ -4,10 +4,10 @@ import { SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/book")({
   head: () => ({
     meta: [
-      { title: "책으로 만들기 — MyStory" },
-      { name: "description", content: "MyStory의 기록은 이런 책으로 만들 수 있어요." },
-      { property: "og:title", content: "책으로 만들기 — MyStory" },
-      { property: "og:description", content: "MyStory의 기록은 이런 책으로 만들 수 있어요." },
+      { title: "책으로 만들기 — 마이스토리" },
+      { name: "description", content: "마이스토리의 기록은 이런 책으로 만들 수 있어요." },
+      { property: "og:title", content: "책으로 만들기 — 마이스토리" },
+      { property: "og:description", content: "마이스토리의 기록은 이런 책으로 만들 수 있어요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -26,7 +26,7 @@ function BookPage() {
       <SubHeader title="책으로 만들기" />
       <div className="space-y-8 px-6">
         <div>
-          <p className="text-body font-medium">MyStory의 기록은 이런 책으로 만들 수 있어요.</p>
+          <p className="text-body font-medium">마이스토리의 기록은 이런 책으로 만들 수 있어요.</p>
           <p className="mt-2 text-caption text-muted-foreground [word-break:keep-all]">
             남긴 질문과 답이 주제와 시기의 차례대로 실려요. 기록마다 그 주제나 시기의 색으로 쪽이 바뀌고, 함께 남긴 사진도 들어가요.
           </p>

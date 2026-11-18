@@ -20,7 +20,7 @@ export function AppNav() {
       aria-label="주요 메뉴"
       className="fixed inset-x-0 bottom-[calc(16px+env(safe-area-inset-bottom))] z-40 mx-auto flex w-full max-w-[440px] items-center justify-center"
     >
-      <div className="flex shrink-0 items-center rounded-full border border-border bg-card p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
+      <div className="flex shrink-0 items-center rounded-full border border-border bg-background p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
         {items.map((it) => {
           const active = it.match(path);
           return (

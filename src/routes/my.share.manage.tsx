@@ -7,9 +7,9 @@ import { Card, Chevron, SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/share/manage")({
   head: () => ({
     meta: [
-      { title: "공유 관리 — MyStory" },
+      { title: "공유 관리 — 마이스토리" },
       { name: "description", content: "공유 설정한 기록을 보고 언제든 해제해요." },
-      { property: "og:title", content: "공유 관리 — MyStory" },
+      { property: "og:title", content: "공유 관리 — 마이스토리" },
       { property: "og:description", content: "공유 설정한 기록을 보고 언제든 해제해요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

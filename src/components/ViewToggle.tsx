@@ -3,7 +3,7 @@ import type { Kind } from "@/lib/data";
 export function ViewToggle({ value, onChange }: { value: Kind; onChange: (k: Kind) => void }) {
   const opts: [Kind, string][] = [
     ["topic", "주제별"],
-    ["period", "시간순"],
+    ["period", "시기별"],
   ];
   return (
     <div role="group" aria-label="보기 방식" className="flex rounded-full border border-ink p-1">

@@ -8,10 +8,10 @@ export const Route = createFileRoute("/record")({
     meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "기록하기 — MyStory" },
-      { name: "description", content: "주제나 시기를 골라 나의 이야기를 기록하세요." },
-      { property: "og:title", content: "기록하기 — MyStory" },
-      { property: "og:description", content: "주제나 시기를 골라 나의 이야기를 기록하세요." },
+      { title: "기록하기 — 마이스토리" },
+      { name: "description", content: "주제나 시기를 골라 나의 이야기를 기록해요." },
+      { property: "og:title", content: "기록하기 — 마이스토리" },
+      { property: "og:description", content: "주제나 시기를 골라 나의 이야기를 기록해요." },
     ],
   }),
   component: RecordStart,
@@ -36,7 +36,7 @@ function RecordStart() {
   return (
     <main className="px-6 pt-12">
       <h1 className="font-serif text-title">무엇부터 기록할까요?</h1>
-      <p className="mt-4 text-body text-muted-foreground">답하고 싶은 질문만 고르면 됩니다.</p>
+      <p className="mt-4 text-body text-muted-foreground">답하고 싶은 질문만 골라도 돼요.</p>
       <div className="mt-8 space-y-4">
         {opts.map((o) => (
           <Link

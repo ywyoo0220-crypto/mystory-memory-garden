@@ -9,7 +9,7 @@ export const LAUNCH_SESSION_KEY = "mystory.launch.seen.v1";
 export const LAUNCH_MS = 5700;
 /** Reduced motion: no video, the last frame as a still with the sentence and wordmark together. */
 export const LAUNCH_REDUCED_MS = 3000;
-export const LAUNCH_LABEL = "질문에 답하며 나만의 색깔로 채워 가는 이야기, MyStory";
+export const LAUNCH_LABEL = "질문에 답하며 나만의 색깔로 채워 가는 이야기, 마이스토리";
 
 /** Storage is read only after hydration; the app continues mounting underneath. */
 export function LaunchScreen() {

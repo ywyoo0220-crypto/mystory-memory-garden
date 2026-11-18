@@ -1,11 +1,11 @@
 {
-  "name": "MyStory",
-  "short_name": "MyStory",
+  "name": "마이스토리",
+  "short_name": "마이스토리",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#F5F5F7",
-  "theme_color": "#F5F5F7",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "/icon-192.png",

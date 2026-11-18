@@ -7,9 +7,9 @@ import { Avatar, SubHeader } from "@/components/my/ui";
 export const Route = createFileRoute("/my/profile")({
   head: () => ({
     meta: [
-      { title: "프로필 — MyStory" },
+      { title: "프로필 — 마이스토리" },
       { name: "description", content: "이름, 태어난 해와 곳, 프로필 사진을 정해요." },
-      { property: "og:title", content: "프로필 — MyStory" },
+      { property: "og:title", content: "프로필 — 마이스토리" },
       { property: "og:description", content: "이름, 태어난 해와 곳, 프로필 사진을 정해요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -62,7 +62,7 @@ function ProfilePage() {
   }, [profile]);
 
   const save = () => {
-    if (birth && !validBirth(birth)) return void toast("태어난 해를 네 자리로 입력하세요");
+    if (birth && !validBirth(birth)) return void toast("태어난 해를 네 자리로 넣어 주세요");
     if (!prefs.setProfile({ ...profile, name: name.trim(), birth, birthplace: place.trim() || undefined, photo })) return void toast("저장 공간이 부족해요");
     toast("프로필을 저장했어요");
     navigate({ to: "/my" });

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { actions, useStore } from "@/lib/store";
 import { finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
 
-const TITLE = "처음 안내 — MyStory";
+const TITLE = "처음 안내 — 마이스토리";
 const DESC = "질문에 답하며 기록하는 방법을 알아봐요.";
 
 export const Route = createFileRoute("/onboarding/$n")({
@@ -74,7 +74,7 @@ function Onboarding() {
     <main className="fixed inset-0 mx-auto flex w-full max-w-[440px] flex-col bg-paper pt-safe">
       <div className="flex min-h-16 shrink-0 flex-wrap items-center justify-between gap-2 px-2">
         {step === 1 ? (
-          <img src={wordmark.url} alt="MyStory" width={1979} height={483} className="ml-4 h-[1.625rem] w-auto" />
+          <img src={wordmark.url} alt="마이스토리" width={1979} height={483} className="ml-4 h-7 w-auto" />
         ) : (
           <Button asChild variant="palette" className="size-12 rounded-full p-0"><Link to="/onboarding/$n" params={{ n: String(previous ?? 1) }} search={search} aria-label="뒤로">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden><path d="m15 5-7 7 7 7" /></svg>
@@ -116,7 +116,7 @@ function Footer({ children }: { children: ReactNode }) {
   );
 }
 
-const EYEBROW: Record<number, string> = { 1: "사용 안내 1/3", 2: "사용 안내 2/3", 3: "사용 안내 3/3", 5: "이제 시작해요" };
+const EYEBROW: Record<number, string> = { 1: "사용 안내 1/3", 2: "사용 안내 2/3", 3: "사용 안내 3/3", 5: "마지막 안내" };
 
 function Head({ step, title, sub }: { step: number; title: string; sub?: string }) {
   return (
@@ -225,7 +225,7 @@ function Screen3() {
   const cats = ["T7", "T8", "T1"].map((id) => getCategory(id)).filter((cat): cat is Category => Boolean(cat));
   return (
     <>
-      <Head step={3} title={"주제별로도, 시간순으로도\n모아 볼 수 있어요."} sub="홈에서 내 기록을 모아 봐요. 같은 주제나 시기의 이야기는 카드 한 장에 쌓이고, 이 휴대폰에만 저장돼요." />
+      <Head step={3} title={"주제별로도, 시기별로도\n모아 볼 수 있어요."} sub="홈에서 내 기록을 모아 봐요. 같은 주제나 시기의 이야기는 카드 한 장에 쌓이고, 이 휴대폰에만 저장돼요." />
       <Frame className="mt-4">
         {cats.map((cat, i) => {
           const last = i === cats.length - 1;
