@@ -261,27 +261,77 @@
   position: fixed;
   inset: 0;
   z-index: 2147483647;
+  overflow: hidden;
+  background: var(--background);
+  animation: launch-exit 500ms cubic-bezier(0.4, 0, 0.6, 1) 5200ms both;
+}
+/* Pre-rendered colour bleed: the six period colours seep in from the edges (launch_bg.mp4). */
+.launch-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.launch-grain {
+  position: absolute;
+  inset: 0;
+  background: url("/launch/launch_grain.png") repeat;
+  background-size: 160px 160px; /* 480px tile: one grain per device pixel at ×3 */
+  pointer-events: none;
+}
+.launch-stack {
+  position: absolute;
+  inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--background);
-  animation: launch-exit 300ms ease-out 1100ms both;
+  padding-bottom: 12vh;
 }
+.launch-lede {
+  position: absolute;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 1.3125rem;
+  font-weight: 400;
+  line-height: 1.62;
+  letter-spacing: -0.01em;
+  color: #3f3c39;
+  word-break: keep-all;
+  animation: launch-out 600ms cubic-bezier(0.4, 0, 0.6, 1) 2900ms both;
+}
+.launch-line {
+  display: block;
+}
+.launch-line-1 { animation: launch-rise 800ms cubic-bezier(0.25, 0.1, 0.25, 1) 250ms both; }
+.launch-line-2 { animation: launch-rise 800ms cubic-bezier(0.25, 0.1, 0.25, 1) 750ms both; }
+.launch-line-3 { animation: launch-rise 800ms cubic-bezier(0.25, 0.1, 0.25, 1) 1250ms both; }
+/* The wordmark takes the sentence's place once it has gone. */
 .launch-wordmark {
-  width: min(12rem, 65%);
+  position: absolute;
+  width: min(46vw, 13rem);
   height: auto;
-  animation: launch-enter 600ms ease-out both;
+  animation: launch-rise 900ms cubic-bezier(0.25, 0.1, 0.25, 1) 3500ms both;
 }
-@keyframes launch-enter {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes launch-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes launch-out {
+  from { opacity: 1; }
+  to { opacity: 0; transform: translateY(-4px); }
 }
 @keyframes launch-exit {
   from { opacity: 1; }
   to { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .launch-screen, .launch-wordmark { animation: none; }
+  .launch-screen, .launch-lede, .launch-line, .launch-wordmark { animation: none; }
+  .launch-lede, .launch-wordmark { position: static; }
+  .launch-wordmark { width: min(40vw, 11rem); margin-top: 2.75rem; }
 }
 
 @keyframes onb-caret-blink { 50% { opacity: 0; } }
