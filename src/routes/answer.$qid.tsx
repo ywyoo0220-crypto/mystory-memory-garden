@@ -452,7 +452,7 @@ function AnswerFlow() {
       <AlertDialog open={confirmRef !== null} onOpenChange={(o) => !o && setConfirmRef(null)}>
         <AlertDialogContent className="max-w-[360px] rounded-3xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-title font-medium">이 사진을 뺄까요?</AlertDialogTitle>
+            <AlertDialogTitle className="text-title">이 사진을 뺄까요?</AlertDialogTitle>
             <AlertDialogDescription className="text-body">기록에서 사진이 빠져요.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2">

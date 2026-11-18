@@ -63,7 +63,7 @@ function SharedPage() {
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>
         <img src={wordmark.url} alt="MyStory" className="h-6 w-auto self-start" />
         {cover && <CoverPhoto src={cover} />}
-        <h1 className="mt-8 text-center text-title font-medium">{name ? `${name}의 이야기` : "나의 이야기"}</h1>
+        <h1 className="mt-8 text-center text-title">{name ? `${name}의 이야기` : "나의 이야기"}</h1>
         <p className="mt-2 text-center text-caption">기록 {qids.length}개{span && ` · ${span}`}</p>
         <p className="mt-auto pt-10 text-center text-caption [word-break:keep-all]">
           {name ? `${name} 님이` : "보낸 분이"} MyStory에서 골라 보낸 기록이에요.
@@ -153,7 +153,7 @@ function SharedRecord({ qid, rec, withVoice }: { qid: string; rec: StoryRecord; 
           </span>
           <span className="ml-auto tabular-nums text-muted-foreground">{fullDate(rec.updatedAt)}</span>
         </p>
-        <h2 className="mt-4 text-title font-medium [word-break:keep-all]">{q.core}</h2>
+        <h2 className="mt-4 text-title [word-break:keep-all]">{q.core}</h2>
       </header>
       <div className="space-y-6 pt-6">
         {step(q.core, 0)}

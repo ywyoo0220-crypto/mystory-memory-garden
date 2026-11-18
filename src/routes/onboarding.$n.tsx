@@ -121,7 +121,7 @@ const EYEBROW: Record<number, string> = { 1: "사용 안내 1/3", 2: "사용 안
 function Head({ step, title, sub }: { step: number; title: string; sub?: string }) {
   return (
     <>
-      <h1 className="whitespace-pre-line text-title font-medium [text-wrap:balance]">{title}</h1>
+      <h1 className="whitespace-pre-line text-title [text-wrap:balance]">{title}</h1>
       {sub && <p className="mt-4 text-body text-muted-foreground">{sub}</p>}
     </>
   );
@@ -166,7 +166,7 @@ function Screen1() {
         </div>
         <ol className="mt-4 space-y-2">
           {steps.map((s, i) => (
-            <li key={i} className={`onb-rise ${i === 0 ? "text-title font-medium" : "text-body"}`} style={{ animationDelay: `${DELAYS[i]}s` }}>
+            <li key={i} className={`onb-rise ${i === 0 ? "text-title" : "text-body"}`} style={{ animationDelay: `${DELAYS[i]}s` }}>
               {s}
             </li>
           ))}
@@ -259,7 +259,7 @@ function Screen5() {
       <Frame className="mt-6">
         <Surface cat={cat} className="pb-8">
           <CategoryPill cat={cat} />
-          <p className="mt-6 text-title font-medium">{q.core}</p>
+          <p className="mt-6 text-title">{q.core}</p>
         </Surface>
       </Frame>
       <p className="mt-4 text-center text-caption text-muted-foreground">답은 짧아도 괜찮아요.</p>

@@ -43,7 +43,7 @@ function My() {
         </span>
         <span className="min-w-0 flex-1">
           <span className="block text-caption font-medium text-muted-foreground">기록자</span>
-          <span className="mt-1 block text-title font-medium">{profile.name || "프로필 만들기"}</span>
+          <span className="mt-1 block text-title">{profile.name || "프로필 만들기"}</span>
           <span className="mt-1 block text-caption text-muted-foreground">{sub}</span>
         </span>
         <Chevron />

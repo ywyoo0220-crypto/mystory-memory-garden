@@ -12,6 +12,9 @@
   --text-body--line-height: 1.7;
   --text-caption: 0.9375rem;
   --text-caption--line-height: 1.5;
+  /* Two weights: regular 400 for body and title-size text, and this one for small emphasis.
+     Pretendard Medium (500) read almost like Regular on phones, so 'medium' is SemiBold (600). */
+  --font-weight-medium: 600;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

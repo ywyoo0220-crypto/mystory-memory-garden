@@ -60,7 +60,7 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
   const follow = q.followUps.map((label, k) => step(label, k + 1)).filter(Boolean);
   return (
     <div className="space-y-6">
-      {showCore && <h3 className="font-serif text-title font-medium">{q.core}</h3>}
+      {showCore && <h3 className="font-serif text-title">{q.core}</h3>}
       {step(q.core, 0)}
       {/* The follow-ups branch from the core question: one line on the left holds them together
           (the same branching as the question-structure poster). */}
@@ -150,7 +150,7 @@ export function RecordCard({
                 {i > 0 && <span aria-hidden="true" className="block h-px w-7 shrink-0" style={{ background: c.fg }} />}
                 <div id={`rec-${qid}`}>
                   <button type="button" onClick={onToggle} className="block w-full text-left">
-                    <h2 className="font-serif text-title font-medium">{q.core}</h2>
+                    <h2 className="font-serif text-title">{q.core}</h2>
                   </button>
                   <div className="expand" data-open={open}>
                     <div>

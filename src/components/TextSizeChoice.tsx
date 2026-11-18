@@ -33,7 +33,8 @@ export function TextSizeChoice({ labelledBy }: { labelledBy: string }) {
                 </svg>
               )}
             </span>
-            <span className={`${size} font-medium`}>{name}</span>
+            {/* Title size is regular, smaller emphasis semibold (one rule for the whole app). */}
+            <span className={size === "text-title" ? size : `${size} font-medium`}>{name}</span>
           </button>
         );
       })}
