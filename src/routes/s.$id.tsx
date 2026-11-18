@@ -88,7 +88,9 @@ function SharedPage() {
         <p className="text-body font-medium">MyStory</p>
         <p className="text-caption text-muted-foreground">질문에 답하며 나만의 색깔로 채워 가는 이야기</p>
         <p className="pt-6 text-caption text-muted-foreground [word-break:keep-all]">시범 버전 · 실제로 보내지지 않고, 링크를 만든 휴대폰에서만 열려요.</p>
-        <p className="text-caption text-muted-foreground [word-break:keep-all]">음성은 클로바더빙으로 만든 합성 음성이에요.</p>
+        {share.withVoice && qids.some((q: string) => records[q]?.voices?.some((v) => v.audio)) && (
+          <p className="text-caption text-muted-foreground [word-break:keep-all]">음성은 클로바더빙으로 만든 합성 음성이에요.</p>
+        )}
         <Link to="/my/share/manage" className="inline-flex h-12 items-center px-2 text-caption font-medium underline underline-offset-4">공유 관리로 돌아가기</Link>
       </footer>
     </main>
