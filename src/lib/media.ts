@@ -51,8 +51,8 @@ export function deleteMedia(refs: string[]) {
   refs.filter(isMediaRef).forEach((r) => tx("readwrite", (s) => s.delete(r.slice(4))).catch(() => {}));
 }
 
-export function clearMedia() {
-  tx("readwrite", (s) => s.clear()).catch(() => {});
+export function clearMedia(): Promise<void> {
+  return tx("readwrite", (s) => s.clear()).then(() => undefined, () => undefined);
 }
 
 /** Resolves a photo/audio ref (idb ref or plain URL) to a displayable URL. */

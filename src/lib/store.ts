@@ -180,8 +180,8 @@ export const actions = {
   },
   clearAll() {
     write(KEY, {});
-    clearMedia();
-    clearAudio();
+    void clearMedia();
+    void clearAudio();
     set({ records: {} });
   },
   /** Merges records from a backup file (backup wins on conflicts). */

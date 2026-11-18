@@ -5,6 +5,7 @@ import { actions, useStore, type TextSize } from "@/lib/store";
 import { usePrefs } from "@/lib/prefs";
 import { Card, Chevron, rowCls, Segmented, SubHeader } from "@/components/my/ui";
 import { Button } from "@/components/ui/button";
+import { resetApp } from "@/lib/reset";
 
 export const Route = createFileRoute("/my/settings/")({
   head: () => ({
@@ -24,6 +25,8 @@ function Settings() {
   const { textSize, defaultView } = useStore();
   const { pinHash } = usePrefs();
   const [confirm, setConfirm] = useState(false);
+  const [confirmReset, setConfirmReset] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const label = "px-2 pb-2 text-[0.9375rem] font-bold";
   const small = "h-12 shrink-0 rounded-full border border-ink px-5 text-[0.9375rem] font-medium";
   return (
@@ -83,6 +86,39 @@ function Settings() {
               <div className={rowCls}>
                 <span className="flex-1 text-[1.0625rem] font-medium text-destructive">모든 기록 지우기</span>
                 <button type="button" className={`${small} border-destructive text-destructive`} onClick={() => setConfirm(true)}>지우기</button>
+              </div>
+            )}
+          </Card>
+        </section>
+        <section>
+          <h2 className={label}>휴대폰 넘겨주기</h2>
+          <Card className="divide-y overflow-hidden">
+            {confirmReset ? (
+              <div className="px-5 py-4" role="alert">
+                <p className="text-[1rem] font-medium">기록, 사진, 목소리, 이름, 앱 잠금, 설정을 모두 지우고 처음 설치한 상태로 되돌릴까요? 되돌릴 수 없어요.</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    disabled={resetting}
+                    className="h-12 rounded-full bg-destructive px-5 text-[0.9375rem] font-semibold text-destructive-foreground disabled:opacity-40"
+                    onClick={async () => {
+                      setResetting(true);
+                      await resetApp();
+                      window.location.replace("/");
+                    }}
+                  >
+                    {resetting ? "되돌리는 중…" : "처음으로 되돌리기"}
+                  </button>
+                  <button type="button" className={small} onClick={() => setConfirmReset(false)}>그대로 두기</button>
+                </div>
+              </div>
+            ) : (
+              <div className={rowCls}>
+                <span className="flex-1">
+                  <span className="block text-[1.0625rem] font-medium text-destructive">처음 상태로 되돌리기</span>
+                  <span className="block text-[0.875rem] text-muted-foreground">다른 사람이 이 휴대폰으로 처음부터 쓸 수 있게 해요.</span>
+                </span>
+                <button type="button" className={`${small} border-destructive text-destructive`} onClick={() => setConfirmReset(true)}>되돌리기</button>
               </div>
             )}
           </Card>

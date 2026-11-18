@@ -76,7 +76,7 @@ function Backup() {
     await clearAudio();
     for (const [k, d] of Object.entries(data.audio ?? {})) await putAudio(k, await dataUrlToBlob(d));
     if (data.media) {
-      clearMedia();
+      await clearMedia();
       for (const [k, d] of Object.entries(data.media)) await putMediaAt(k, await dataUrlToBlob(d));
     }
     actions.replaceRecords(data.records);
