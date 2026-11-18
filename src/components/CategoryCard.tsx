@@ -135,8 +135,6 @@ export function RecordCard({
               className="inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 text-caption"
               style={{ background: "transparent", color: c.count, border: `1px solid ${c.count}` }}
             >
-              {!open && dateLabel(rec.updatedAt)}
-              {!open && <span className="h-3 w-px" style={{ background: c.count }} />}
               <span className="font-medium">{open ? "접기" : "펼치기"}</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden>
                 <path d="m3 4.5 3 3 3-3" />
@@ -149,6 +147,7 @@ export function RecordCard({
         <div className="expand" data-open={open}>
           <div>
             <div className="pt-6">
+              <p className="pb-4 text-caption font-medium" style={{ color: c.fg }}>{dateLabel(rec.updatedAt)}에 기록</p>
               <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
               <div className="mt-8 grid grid-cols-2 gap-2 pb-1">
                 <button type="button" className="h-14 rounded-full border text-caption font-medium" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
