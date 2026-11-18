@@ -1,12 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
+import { categoryOfQuestion, getQuestion } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
 import { prefs, SCOPES, usePrefs, type ShareScope } from "@/lib/prefs";
 import { defaultCover, personaCover, shareUrl } from "@/lib/share";
 import { CoverPicker } from "@/components/CoverPicker";
-import { catVars } from "@/lib/theme";
 import { Card, Dot, SubHeader, Toggle } from "@/components/my/ui";
 
 export const Route = createFileRoute("/my/share/")({
@@ -47,6 +46,22 @@ function SharePage() {
     setMade(id);
     window.scrollTo(0, 0);
   };
+  const navigate = useNavigate();
+  // Coming back from the recipient preview restores the choices made so far.
+  useEffect(() => {
+    try {
+      const d = JSON.parse(sessionStorage.getItem("ms.share.draft") || "null");
+      sessionStorage.removeItem("ms.share.draft");
+      if (!d?.qids?.length) return;
+      setPicked(d.qids); setScope(d.scope); setNoVoice(!d.withVoice); if (d.cover) setCover(d.cover); setStep(2);
+    } catch { /* noop */ }
+  }, []);
+  const preview = () => {
+    try {
+      sessionStorage.setItem("ms.share.draft", JSON.stringify({ id: "preview", qids: picked, scope, withVoice: !noVoice, t: Date.now(), link: "", cover: coverSrc || undefined }));
+    } catch { /* noop */ }
+    navigate({ to: "/s/$id", params: { id: "preview" } });
+  };
   const send = async (id: string) => {
     const url = shareUrl(id);
     const title = profile.name.trim() ? `${profile.name.trim()}의 이야기` : "MyStory 이야기";
@@ -83,9 +98,10 @@ function SharePage() {
     <main className="pb-6">
       <SubHeader
         title="기록 공유하기"
+        onBack={step > 0 ? () => setStep(step - 1) : undefined}
         sub="원하는 사람에게만 보여줄 이야기를 골라주세요."
         action={
-          sharedN > 0 ? (
+          step === 0 && sharedN > 0 ? (
             <Link to="/my/share/manage" className="inline-flex h-12 shrink-0 items-center px-2 text-caption font-medium">
               기록 관리 ({sharedN})
             </Link>
@@ -94,14 +110,18 @@ function SharePage() {
       />
       <div className="space-y-4 px-6">
         {step === 1 && <h2 className="text-body font-medium">누구에게 보여줄까요?</h2>}
-        {step === 2 && <h2 className="text-body font-medium">공유하기 전에 확인해 보세요</h2>}
+        {step === 2 && (
+          <div>
+            <h2 className="text-body font-medium">공유 미리보기</h2>
+            <p className="mt-1 text-caption text-muted-foreground">받는 사람에게 이렇게 전달돼요.</p>
+          </div>
+        )}
 
         {step === 0 && (
           <>
             {list.length > 0 && (
-              <div className="flex min-h-12 items-center justify-between">
-                <span className="text-caption text-muted-foreground">선택한 이야기 {picked.length}개</span>
-                <button type="button" className="inline-flex h-12 items-center rounded-full px-4 text-caption font-medium active:bg-secondary" onClick={() => setPicked(picked.length === list.length ? [] : list.map(([q]) => q))}>
+              <div className="flex min-h-12 items-center justify-end">
+                <button type="button" className="inline-flex h-12 items-center rounded-full px-4 text-caption font-normal active:bg-secondary" onClick={() => setPicked(picked.length === list.length ? [] : list.map(([q]) => q))}>
                   {picked.length === list.length ? "선택 해제" : "전체 선택"}
                 </button>
               </div>
@@ -126,7 +146,7 @@ function SharePage() {
               })}
             </Card>
             <button type="button" className={primary} disabled={!picked.length} onClick={() => setStep(1)}>
-              {picked.length}개 고르고 다음
+              {picked.length ? `${picked.length}개 선택하고 다음` : "이야기를 골라주세요"}
             </button>
           </>
         )}
@@ -155,7 +175,6 @@ function SharePage() {
             </div>
             <p className="text-caption text-muted-foreground">공유한 뒤에도 공유 관리에서 언제든 해제할 수 있어요.</p>
             <div className="flex gap-2">
-              <button type="button" className="h-14 rounded-full border border-ink px-6 text-body font-medium" onClick={() => setStep(0)}>이전</button>
               <button type="button" className={primary} onClick={() => setStep(2)}>다음</button>
             </div>
           </>
@@ -176,28 +195,22 @@ function SharePage() {
               </Card>
             )}
             <CoverPicker qids={picked} records={records} value={coverSrc} onChange={setCover} bookCover={personaCover(profile.name)} />
-            <div className="space-y-2">
+            <Card className="divide-y overflow-hidden">
               {picked.map((q) => {
                 const cat = categoryOfQuestion(q);
-                if (!cat) return null;
-                const c = cardColors(cat);
-                const r = records[q];
-                const voice = !!r?.voices?.length;
                 return (
-                  <div key={q} className="rounded-[20px] p-6" style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}>
-                    <p className="text-caption font-medium">
-                      {cat.name}
-                      {voice && (!noVoice ? " · 목소리 포함" : " · 목소리는 글로만")}
-                    </p>
-                    <p className="mt-1 text-body font-medium">{getQuestion(q)?.core}</p>
-                    <p className="mt-2 line-clamp-2 text-caption">{r?.answers.find((a) => a.trim()) || r?.voices?.[0]?.text}</p>
+                  <div key={q} className="flex items-center gap-4 px-6 py-4">
+                    {cat && <Dot catId={cat.id} />}
+                    <span className="min-w-0 flex-1 text-body">{getQuestion(q)?.core}</span>
                   </div>
                 );
               })}
-            </div>
+            </Card>
+            <button type="button" onClick={preview} className="flex h-14 w-full items-center justify-center rounded-full border border-ink text-body font-medium">
+              받는 사람 화면 미리보기
+            </button>
             <p className="text-caption text-muted-foreground">지금은 시범 버전이라 실제로 보내지지 않아요. 링크와 받는 사람 화면만 만들어져요.</p>
             <div className="flex gap-2">
-              <button type="button" className="h-14 rounded-full border border-ink px-6 text-body font-medium" onClick={() => setStep(1)}>이전</button>
               <button type="button" className={primary} onClick={submit}>링크 만들기</button>
             </div>
           </>

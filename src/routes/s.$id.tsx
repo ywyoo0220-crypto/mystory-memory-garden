@@ -32,7 +32,8 @@ function SharedPage() {
   const { id } = Route.useParams();
   const { shares, profile } = usePrefs();
   const { records } = useStore();
-  const share = shares.find((s) => s.id === id);
+  // "preview" shows the unsaved share being built in /my/share (kept in sessionStorage).
+  const share = id === "preview" ? readDraft() : shares.find((s) => s.id === id);
   const router = useRouter();
   const canGoBack = useCanGoBack();
   const close = () => (canGoBack ? router.history.back() : void router.navigate({ to: "/my/share/manage" }));
@@ -161,4 +162,13 @@ function SharedRecord({ qid, rec, withVoice }: { qid: string; rec: StoryRecord; 
       </div>
     </article>
   );
+}
+
+function readDraft() {
+  try {
+    const v = JSON.parse(sessionStorage.getItem("ms.share.draft") || "null");
+    return v && Array.isArray(v.qids) ? v : undefined;
+  } catch {
+    return undefined;
+  }
 }

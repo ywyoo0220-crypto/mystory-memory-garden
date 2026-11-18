@@ -96,7 +96,7 @@ function RootComponent() {
     try { applyPersonaLinks(document, resolvePersona(window.location.search, sessionStorage)); } catch { /* noop */ }
   }, [path]);
   const onb = path.startsWith("/onboarding");
-  const fullscreen = onb || path === "/my/export" || path.startsWith("/answer") || path.startsWith("/s/");
+  const fullscreen = onb || path === "/my/export" || path === "/my/share" || path === "/my/share/" || path.startsWith("/answer") || path.startsWith("/s/");
   const locked = path === "/lock" || fullscreen;
 
   return (
