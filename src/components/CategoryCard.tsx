@@ -120,7 +120,6 @@ export function RecordCard({
           ...catVars(cat.id),
           background: c.bg,
           color: c.fg,
-          boxShadow: first ? undefined : `inset 0 1px 0 0 color-mix(in srgb, ${c.count} 40%, transparent)`,
         }}
       >
         <Button

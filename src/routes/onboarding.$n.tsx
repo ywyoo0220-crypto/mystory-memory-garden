@@ -237,14 +237,12 @@ function Screen3() {
       <Head title={"주제별로도, 시간순으로도\n모아 볼 수 있어요."} sub="기록은 이 휴대폰에 저장돼요. 보여줄 사람은 내가 정해요." />
       <div aria-hidden inert className="pointer-events-none mt-4">
         {cats.map((cat, i) => {
-          const c = cardColors(cat);
           const last = i === cats.length - 1;
           return (
             <div key={cat.id} className="onb-stack relative" style={{ zIndex: i + 1, marginTop: i ? "-2rem" : 0, animationDelay: `${300 + i * 440}ms` }}>
               <Surface
                 cat={cat}
                 className={`!pt-5 ${last ? "pb-5" : "pb-[2.5rem]"}`}
-                style={{ boxShadow: i ? `inset 0 1px 0 0 color-mix(in srgb, ${c.count} 40%, transparent)` : undefined }}
               >
                 <CategoryPill cat={cat} />
                 <p className="mt-3 text-[1.0625rem] font-medium leading-[1.4]">{cat.questions[0]?.core}</p>
