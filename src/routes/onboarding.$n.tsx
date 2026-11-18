@@ -252,14 +252,15 @@ function Screen5() {
   if (!q) return null;
   return (
     <>
-      <Head step={5} title={"첫 질문으로\n시작해요."} sub="사용 안내가 끝났어요. 아래 버튼을 누르면 내 이야기를 직접 남겨요. 답은 짧아도 괜찮아요." />
+      <Head step={5} title={"첫 질문으로\n시작해요."} sub="답은 짧아도 괜찮아요." />
+      {/* Above the example card: choosing 크게 makes the page longer, and the choice must stay in view. */}
+      <SizeChoice />
       <Frame className="mt-6">
         <Surface cat={cat} className="pb-8">
           <CategoryPill cat={cat} />
           <p className="mt-6 text-title font-medium">{q.core}</p>
         </Surface>
       </Frame>
-      <SizeChoice />
     </>
   );
 }
