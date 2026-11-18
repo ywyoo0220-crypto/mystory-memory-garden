@@ -13,10 +13,10 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/my/export")({
   head: () => ({ meta: [
-    { title: "기록 책으로 묶기 — MyStory" },
-    { name: "description", content: "남긴 기록을 한 권으로 엮고 대표 사진과 함께 PDF로 저장해요." },
-    { property: "og:title", content: "기록 책으로 묶기 — MyStory" },
-    { property: "og:description", content: "남긴 기록을 한 권으로 엮고 대표 사진과 함께 PDF로 저장해요." },
+    { title: "기록 공유하기 — MyStory" },
+    { name: "description", content: "고른 기록을 파일로 만들어 가족이나 가까운 사람에게 보내요." },
+    { property: "og:title", content: "기록 공유하기 — MyStory" },
+    { property: "og:description", content: "고른 기록을 파일로 만들어 가족이나 가까운 사람에게 보내요." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary" },
   ] }),
@@ -61,13 +61,13 @@ function ExportPage() {
 
   return (
     <main className="book-export pb-6">
-      <SubHeader title="기록 책으로 묶기" close />
+      <SubHeader title="기록 공유하기" close />
       <section className="book-controls no-print space-y-6 px-6 pb-6">
         <div>
-          <p className="text-body font-medium">남긴 기록을 한 권의 책으로 엮어 간직해요.</p>
+          <p className="text-body font-medium">고른 기록을 파일로 만들어 보내거나 저장해요.</p>
           <p className="mt-2 text-caption text-muted-foreground">
             {both && "주제 질문에 남긴 기록이 1부, 시기 질문에 남긴 기록이 2부가 돼요. "}
-            아래는 책의 미리보기예요. ‘PDF로 저장’을 누르면 인쇄 창에서 PDF로 저장할 수 있어요.
+            아래는 파일의 미리보기예요. ‘파일 만들기’를 누르면 인쇄 창이 열려요. 거기서 ‘PDF로 저장’을 고르면 파일이 만들어져요.
           </p>
         </div>
         {both && <div className="space-y-4">
@@ -89,7 +89,7 @@ function ExportPage() {
             if (file) void upload(file);
           }} />
         </div>
-        <Button variant="palette" disabled={!count || uploading} onClick={() => window.print()} className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground">PDF로 저장</Button>
+        <Button variant="palette" disabled={!count || uploading} onClick={() => window.print()} className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground">파일 만들기</Button>
       </section>
 
       <article className="book-preview" aria-label="책 미리보기">

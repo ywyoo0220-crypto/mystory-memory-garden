@@ -18,6 +18,7 @@ import { Route as CatCatIdRouteImport } from './routes/cat.$catId'
 import { Route as KindKindRouteImport } from './routes/kind.$kind'
 import { Route as MyIndexRouteImport } from './routes/my.index'
 import { Route as MyBackupRouteImport } from './routes/my.backup'
+import { Route as MyBookRouteImport } from './routes/my.book'
 import { Route as MyContinueRouteImport } from './routes/my.continue'
 import { Route as MyExportRouteImport } from './routes/my.export'
 import { Route as MyProfileRouteImport } from './routes/my.profile'
@@ -71,6 +72,11 @@ const MyIndexRoute = MyIndexRouteImport.update({
 const MyBackupRoute = MyBackupRouteImport.update({
   id: '/my/backup',
   path: '/my/backup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyBookRoute = MyBookRouteImport.update({
+  id: '/my/book',
+  path: '/my/book',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyContinueRoute = MyContinueRouteImport.update({
@@ -128,6 +134,7 @@ export interface FileRoutesByFullPath {
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
   '/my/backup': typeof MyBackupRoute
+  '/my/book': typeof MyBookRoute
   '/my/continue': typeof MyContinueRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
   '/my/backup': typeof MyBackupRoute
+  '/my/book': typeof MyBookRoute
   '/my/continue': typeof MyContinueRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
   '/my/backup': typeof MyBackupRoute
+  '/my/book': typeof MyBookRoute
   '/my/continue': typeof MyContinueRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/cat/$catId'
     | '/kind/$kind'
     | '/my/backup'
+    | '/my/book'
     | '/my/continue'
     | '/my/export'
     | '/my/profile'
@@ -211,6 +221,7 @@ export interface FileRouteTypes {
     | '/cat/$catId'
     | '/kind/$kind'
     | '/my/backup'
+    | '/my/book'
     | '/my/continue'
     | '/my/export'
     | '/my/profile'
@@ -231,6 +242,7 @@ export interface FileRouteTypes {
     | '/cat/$catId'
     | '/kind/$kind'
     | '/my/backup'
+    | '/my/book'
     | '/my/continue'
     | '/my/export'
     | '/my/profile'
@@ -252,6 +264,7 @@ export interface RootRouteChildren {
   CatCatIdRoute: typeof CatCatIdRoute
   KindKindRoute: typeof KindKindRoute
   MyBackupRoute: typeof MyBackupRoute
+  MyBookRoute: typeof MyBookRoute
   MyContinueRoute: typeof MyContinueRoute
   MyExportRoute: typeof MyExportRoute
   MyProfileRoute: typeof MyProfileRoute
@@ -329,6 +342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyBackupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/my/book': {
+      id: '/my/book'
+      path: '/my/book'
+      fullPath: '/my/book'
+      preLoaderRoute: typeof MyBookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/my/continue': {
       id: '/my/continue'
       path: '/my/continue'
@@ -404,6 +424,7 @@ const rootRouteChildren: RootRouteChildren = {
   CatCatIdRoute: CatCatIdRoute,
   KindKindRoute: KindKindRoute,
   MyBackupRoute: MyBackupRoute,
+  MyBookRoute: MyBookRoute,
   MyContinueRoute: MyContinueRoute,
   MyExportRoute: MyExportRoute,
   MyProfileRoute: MyProfileRoute,

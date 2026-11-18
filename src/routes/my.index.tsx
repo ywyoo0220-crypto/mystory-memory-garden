@@ -19,16 +19,15 @@ export const Route = createFileRoute("/my/")({
 
 function My() {
   const { records, textSize } = useStore();
-  const { profile, shares, pinHash } = usePrefs();
+  const { profile, pinHash } = usePrefs();
   const entries = Object.entries(records).filter(([, r]) => hasContent(r));
   const incomplete = entries.filter(([, r]) => isIncomplete(r)).sort((a, b) => b[1].updatedAt - a[1].updatedAt);
-  const sharedN = new Set(shares.flatMap((s) => s.qids)).size;
   const sub = [profile.birth && `${profile.birth}년생`, `기록 ${entries.length}개`].filter(Boolean).join(" · ");
   const groups: [string, [string, string, string][]][] = [
     ["내 기록", [
       ["/my/continue", "이어서 쓰기", incomplete.length ? `작성 중인 기록 ${incomplete.length}개` : "작성 중인 기록 없음"],
-      ["/my/export", "기록 책으로 묶기", "한 권의 PDF로 만들어 간직해요"],
-      ["/my/share", "기록 공유하기", sharedN ? `고른 기록만 보여줘요 · ${sharedN}개 공유 중` : "고른 기록만 골라 보여줘요"],
+      ["/my/export", "기록 공유하기", "고른 기록을 파일로 만들어 보내요"],
+      ["/my/book", "책으로 만들기", "기록이 이런 책이 돼요"],
     ]],
     ["보관과 보안", [
       ["/my/backup", "백업과 복원", "기기를 바꿔도 기록을 지켜요"],
