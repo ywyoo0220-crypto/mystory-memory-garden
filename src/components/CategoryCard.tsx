@@ -140,8 +140,8 @@ export function RecordCard({
         </Button>
 
         {/* 기록이 2개 이상일 때만, 두 기록 사이 여백의 정중앙에 28px 짧은 먹색 선을 놓는다.
-            선 위아래 각 40px(총 80px)로 여유를 둔다. */}
-        <div className="mt-6 flex flex-col gap-10">
+            선 위아래 각 32px(총 64px)로 여유를 둔다. */}
+        <div className="mt-6 flex flex-col gap-8">
           {list.map(({ qid, rec }, i) => {
             const q = getQuestion(qid)!;
             return (
