@@ -23,8 +23,6 @@ export const Route = createFileRoute("/my/share/")({
   component: SharePage,
 });
 
-const STEPS = ["기록 고르기", "보여줄 사람", "미리보기"];
-
 function SharePage() {
   const { records } = useStore();
   const { shares, profile } = usePrefs();
@@ -95,12 +93,8 @@ function SharePage() {
         }
       />
       <div className="space-y-4 px-6">
-        <div aria-label={`${step + 1}/3단계 · ${STEPS[step]}`} role="img" className="flex items-center gap-2">
-          {STEPS.map((s, i) => <span key={s} className={`h-0.5 flex-1 rounded-full ${i <= step ? "bg-ink" : "bg-[#D1D1D6]"}`} />)}
-        </div>
-        <p className="text-caption font-medium [word-break:keep-all]">
-          {step + 1}. {STEPS[step]}
-        </p>
+        {step === 1 && <h2 className="text-body font-medium">누구에게 보여줄까요?</h2>}
+        {step === 2 && <h2 className="text-body font-medium">공유하기 전에 확인해 보세요</h2>}
 
         {step === 0 && (
           <>
