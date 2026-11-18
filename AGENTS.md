@@ -39,6 +39,7 @@ use the editor.
 - Text size uses two steps (normal/large); normalize legacy larger values to large so settings and floating controls stay consistent.
 - Example records require explicit settings opt-in; startup removes legacy auto-seeded examples but preserves personal records, and explicit imports remain intact.
 - First-run onboarding lives at /onboarding/$n (one route per screen for Maze); root redirects there after the lock while localStorage "ms.onb" is unset, and hides AppNav on it.
+- Onboarding uses a fixed flex shell with an independently scrolling middle and an opaque footer; examples cannot slide underneath actions. Profile progression uses the shared onboarding validator to guard both submission and button state.
 - Book assembly uses lib/book.ts for fixed topic-then-period ordering and cover eligibility; optional photoSteps aligns photo refs to answers, with legacy photos at step zero.
 - Cover choice and one resized uploaded cover live in the local profile and travel with backups; profile edits preserve these fields.
 - Book preview and browser print share one document, with zero horizontal page margins and content-side padding to avoid Chromium clipping.

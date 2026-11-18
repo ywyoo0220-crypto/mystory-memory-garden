@@ -14,3 +14,6 @@
 - [x] Include required comparison examples and verify persistence and recording.- [x] Multi-photo attach + voice recording (IndexedDB) in answer flow.
 - [x] Redraw the nine period icons as a clock face (hand from 12 to 8 o'clock); verify list, card and pill sizes.
 - [x] After the onboarding first question, return straight to Home in 시간순 so the new card shows.
+- [x] Clarify tutorial versus real recording without restoring duplicate labels.
+- [x] Fix onboarding mobile scrolling, example visibility and profile input progression.
+- [x] Verify first-run recording and return flow, small screens and both text sizes; run all tests.

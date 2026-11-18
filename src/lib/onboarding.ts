@@ -1,4 +1,11 @@
+import { validBirth } from "./prefs";
+
 export const ONB_KEY = "ms.onb";
+
+/** Optional birth year; a real name is required only for saving the profile. */
+export function canSaveOnboardingProfile(name: string, birth: string) {
+  return Boolean(name.trim()) && (!birth || validBirth(birth));
+}
 
 export function onbDone() {
   try { return !!localStorage.getItem(ONB_KEY); } catch { return true; }
