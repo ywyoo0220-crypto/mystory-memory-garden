@@ -27,8 +27,8 @@ function My() {
   const groups: [string, [string, string, string][]][] = [
     ["내 기록", [
       ["/my/continue", "이어서 쓰기", incomplete.length ? `작성 중인 기록 ${incomplete.length}개` : "작성 중인 기록 없음"],
-      ["/my/export", "기록 책으로 묶기", "PDF로 저장해요"],
-      ["/my/share", "기록 공유하기", sharedN ? `${sharedN}개 공유 설정됨` : "보여줄 사람을 직접 정해요"],
+      ["/my/export", "기록 책으로 묶기", "한 권의 PDF로 만들어 간직해요"],
+      ["/my/share", "기록 공유하기", sharedN ? `고른 기록만 보여줘요 · ${sharedN}개 공유 중` : "고른 기록만 골라 보여줘요"],
     ]],
     ["보관과 보안", [
       ["/my/backup", "백업과 복원", "기기를 바꿔도 기록을 지켜요"],

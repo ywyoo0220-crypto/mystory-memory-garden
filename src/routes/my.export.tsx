@@ -64,7 +64,7 @@ function ExportPage() {
       <SubHeader title="기록 책으로 묶기" close />
       <section className="book-controls no-print space-y-6 px-6 pb-6">
         <div>
-          <p className="text-body font-medium">남긴 기록을 한 권으로 엮어요.</p>
+          <p className="text-body font-medium">남긴 기록을 한 권의 책으로 엮어 간직해요.</p>
           <p className="mt-2 text-caption text-muted-foreground">
             {both && "주제 질문에 남긴 기록이 1부, 시기 질문에 남긴 기록이 2부가 돼요. "}
             아래는 책의 미리보기예요. ‘PDF로 저장’을 누르면 인쇄 창에서 PDF로 저장할 수 있어요.

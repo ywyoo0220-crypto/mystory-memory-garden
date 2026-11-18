@@ -47,6 +47,7 @@ function SharePage() {
     <main className="pb-6">
       <SubHeader title="기록 공유하기" />
       <div className="space-y-4 px-6">
+        <p className="text-body font-medium">고른 기록만 정한 사람에게 보여줘요.</p>
         {sharedN > 0 && (
           <Link to="/my/share/manage" className="flex min-h-14 items-center gap-4 rounded-[20px] border border-border bg-card px-6">
             <span className="flex-1 text-body font-medium">공유 관리 · {sharedN}개 설정됨</span>
