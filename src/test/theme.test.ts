@@ -8,14 +8,14 @@ const names = { background: "bg", text: "text", pill: "pill", pillText: "pill-te
 describe("Final palette", () => {
   const ageBackgrounds = ["#EFFF24", "#BDE9FF", "#E4D1BE", "#D9B5FB", "#9CB8C3", "#FB64F9", "#149CF4", "#515C44", "#004A51"];
   ageBackgrounds.forEach((background, i) => {
-    it(`keeps A${i + 1}'s exact lifetime palette and inverted pill`, () => {
+    it(`keeps A${i + 1}'s exact lifetime palette with a black pill and white label`, () => {
       const id = `A${i + 1}` as keyof typeof palette.theme.categories;
       const text = i < 7 ? "#000000" : "#FFFFFF";
       const tokens = palette.theme.categories[id];
       expect(tokens.background).toBe(background);
       expect(tokens.text).toBe(text);
-      expect(tokens.pill).toBe(text);
-      expect(tokens.pillText).toBe(background);
+      expect(tokens.pill).toBe("#000000");
+      expect(tokens.pillText).toBe("#FFFFFF");
       expect(tokens.countText).toBe(text);
     });
   });

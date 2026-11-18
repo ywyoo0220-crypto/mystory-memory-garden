@@ -33,7 +33,7 @@ use the editor.
 - Question-list back navigation uses router history when available and a mode-specific fallback on direct entry, so Home and recording entry flows retain their origins.
 - Records live in localStorage via src/lib/store.ts (useSyncExternalStore); no backend yet — keeps the app login-free.
 - Large-text mode scales the root font-size, so sizes must use rem, not px.
-- Category colors come from src/data/themes.json via lib/theme.ts; light-list controls use the derived list-accent token (dark age background, otherwise pill), so inverted dark-age pills remain legible outside cards.
+- Category colors come from src/data/themes.json via lib/theme.ts; every category pill is a black fill with a white label, so light-list controls use the derived list-accent token (dark age background, otherwise pill) to stay legible on light tints.
 - Photos are blobs in IndexedDB (src/lib/media.ts, records keep "idb:" refs); voice blobs are in IndexedDB "ms-audio" keyed recordId:step (src/lib/audio.ts) and records keep only `voices` metadata — localStorage is too small for media; still no backend.
 - MY screens each have their own route under /my/* (usability testing); profile, settings, shares and the hashed lock PIN live in localStorage via src/lib/prefs.ts, separate from records.
 - Text size uses two steps (normal/large); normalize legacy larger values to large so settings and floating controls stay consistent.
