@@ -11,10 +11,10 @@ export const Chevron = () => (
   </svg>
 );
 
-export function SubHeader({ title, back = "/my", sub, close }: { title: string; back?: string; sub?: string; close?: boolean }) {
+export function SubHeader({ title, back = "/my", sub, close, onBack }: { title: string; back?: string; sub?: string; close?: boolean; onBack?: () => void }) {
   return (
     <div className="no-print">
-      <BackLink to={back} close={!!close} />
+      {onBack ? <BackBar title="" onBack={onBack} /> : <BackLink to={back} close={!!close} />}
       <div className="px-6 pb-4 pt-2">
         <h1 className="text-title font-medium">{title}</h1>
         {sub && <p className="mt-2 text-caption text-muted-foreground">{sub}</p>}

@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useRouter } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { prefs, usePrefs } from "@/lib/prefs";
@@ -22,6 +22,11 @@ export const Route = createFileRoute("/my/settings/lock")({
 function LockSettings() {
   const { pinHash } = usePrefs();
   const navigate = useNavigate();
+  const router = useRouter();
+  const goBack = useCallback(() => {
+    if (router.history.canGoBack()) router.history.back();
+    else navigate({ to: "/my" });
+  }, [router, navigate]);
   const [first, setFirst] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const onDone = useCallback(
@@ -39,13 +44,13 @@ function LockSettings() {
       await prefs.setPin(p);
       try { sessionStorage.setItem("mystory.unlocked", "1"); } catch { /* noop */ }
       toast("앱 잠금을 켰어요");
-      navigate({ to: "/my/settings" });
+      goBack();
     },
-    [first, navigate],
+    [first, goBack],
   );
   return (
     <main className="pb-6">
-      <SubHeader title="앱 잠금" back="/my/settings" />
+      <SubHeader title="앱 잠금" onBack={goBack} />
       {pinHash ? (
         <div className="space-y-4 px-6">
           <p className="text-body">앱 잠금이 켜져 있어요. 앱을 열 때마다 숫자 4자리를 입력해야 해요.</p>
