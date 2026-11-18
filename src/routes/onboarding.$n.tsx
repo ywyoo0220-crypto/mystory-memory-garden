@@ -234,7 +234,7 @@ function Screen3() {
   const [order, setOrder] = useState(["T7", "T8", "T1"]);
   const [flip, setFlip] = useState(0);
   const cats = order.map((id) => getCategory(id)!);
-  const next = () => { setOrder((o) => [o[2], o[0], o[1]]); setFlip((f) => f + 1); };
+  const next = () => { setOrder((o) => [o[2]!, o[0]!, o[1]!]); setFlip((f) => f + 1); };
   return (
     <>
       <Head title={"주제별로도, 시간순으로도\n모아 볼 수 있어요."} sub="기록은 이 휴대폰에 저장돼요. 보여줄 사람은 내가 정해요." />
