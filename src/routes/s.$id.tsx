@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useCanGoBack, useRouter } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { recordPhotos, useStore, type StoryRecord } from "@/lib/store";
@@ -33,6 +33,9 @@ function SharedPage() {
   const { shares, profile } = usePrefs();
   const { records } = useStore();
   const share = shares.find((s) => s.id === id);
+  const router = useRouter();
+  const canGoBack = useCanGoBack();
+  const close = () => (canGoBack ? router.history.back() : void router.navigate({ to: "/my/share/manage" }));
   if (!share) {
     return (
       <main className="flex min-h-app flex-col items-center justify-center px-6 text-center">
@@ -52,7 +55,10 @@ function SharedPage() {
   const cover = share.cover ?? defaultCover(qids, records, profile.name);
   return (
     // White page (not the app's grey) so pale category colours still read as blocks.
-    <main className="min-h-app bg-white pb-16">
+    <main className="relative min-h-app bg-white pb-16">
+      <button type="button" aria-label="미리보기 닫기" onClick={close} className="fixed right-4 top-4 z-50 flex size-12 items-center justify-center rounded-full bg-ink text-ink-foreground shadow">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>
         <img src={wordmark.url} alt="MyStory" className="h-6 w-auto self-start" />
         {cover && <CoverPhoto src={cover} />}

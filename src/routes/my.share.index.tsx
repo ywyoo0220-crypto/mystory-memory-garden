@@ -39,7 +39,7 @@ function SharePage() {
   const hasVoice = picked.some((q) => records[q]?.voices?.length);
   /** Default cover until the user picks one: the persona's book cover, the example cover, or none. */
   const coverSrc = cover ?? defaultCover(picked, records, profile.name);
-  const sharedN = new Set(shares.flatMap((s) => s.qids)).size;
+  const sharedN = shares.length;
   const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground disabled:opacity-40";
 
   const [made, setMade] = useState<string | null>(null);
@@ -88,7 +88,7 @@ function SharePage() {
         <p className="text-body font-medium">고른 기록만 정한 사람에게 링크로 보여줘요.</p>
         {sharedN > 0 && (
           <Link to="/my/share/manage" className="flex min-h-14 items-center gap-4 rounded-[20px] border border-border bg-card px-6">
-            <span className="flex-1 text-body font-medium">공유 관리 · {sharedN}개 설정됨</span>
+            <span className="flex-1 text-body font-medium">공유 중인 링크 관리 · {sharedN}개</span>
             <Chevron />
           </Link>
         )}
@@ -103,6 +103,13 @@ function SharePage() {
 
         {step === 0 && (
           <>
+            {list.length > 0 && (
+              <div className="flex justify-end">
+                <button type="button" className="inline-flex h-12 items-center px-2 text-caption font-medium underline underline-offset-4" onClick={() => setPicked(picked.length === list.length ? [] : list.map(([q]) => q))}>
+                  {picked.length === list.length ? "전체 해제" : "전체 선택"}
+                </button>
+              </div>
+            )}
             {list.length === 0 && <p className="py-8 text-center text-muted-foreground">아직 공유할 기록이 없어요.</p>}
             <Card className="divide-y overflow-hidden">
               {list.map(([q]) => {
