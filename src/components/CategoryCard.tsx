@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { cardColors, getQuestion, type Category } from "@/lib/data";
 import { recordPhotos, type StoryRecord } from "@/lib/store";
@@ -42,7 +42,7 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
         const a = rec.answers[i]?.trim() || voice?.text?.trim();
         if (!a && !voice && !(i === 0 && photos.length)) return null;
         return (
-          <div key={i} className={i > 0 ? "space-y-4 border-t border-current/15 pt-6" : "space-y-4"}>
+          <div key={i} className={`ms-in ${i > 0 ? "space-y-4 border-t border-current/15 pt-6" : "space-y-4"}`} style={{ "--i": i } as CSSProperties}>
             {i > 0 && (
               <p className="text-body font-medium">
                 <span className="font-medium">Q.</span> {label}
@@ -113,7 +113,7 @@ export function RecordCard({
       ref={ref}
       id={`cat-${cat.id}`}
       className="relative scroll-mt-[calc(1rem+env(safe-area-inset-top))]"
-      style={{ zIndex: z, marginTop: first ? 0 : "-1.5rem" }}
+      style={{ zIndex: z, marginTop: first ? 0 : "-1.5rem", "--i": Math.min(z - 1, 8) } as CSSProperties}
     >
       <section
         className={`category-surface relative rounded-t-[32px] px-6 pt-6 ${last ? "rounded-b-[32px] pb-8" : "pb-[3.75rem]"}`}
@@ -149,7 +149,7 @@ export function RecordCard({
               </button>
               <div className="expand" data-open={open}>
                 <div>
-                  <div className="pt-6">
+                  <div className="pt-6" style={{ "--j": Math.min(i, 3) } as CSSProperties}>
                     <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
                   </div>
                 </div>
@@ -160,7 +160,7 @@ export function RecordCard({
 
         <div className="expand" data-open={open}>
           <div>
-            <div className="pt-8 pb-1">
+            <div className="ms-in pt-8 pb-1" style={{ "--i": 2 } as CSSProperties}>
               {/* 질문 수와 상관없이 하단은 한 줄로 통일: 질문이 여럿이면 수정은 질문 목록에서 고른다. */}
               <div className="grid grid-cols-[3fr_7fr] gap-2">
                 <button

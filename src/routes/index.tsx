@@ -80,7 +80,7 @@ function Home() {
           </Link>
         </div>
       ) : (
-        <div className="-mx-6 mt-4">
+        <div key={view} className="ms-deck -mx-6 mt-4">
           {cards.map((k, i) => (
             <RecordCard
               key={k.cat.id}

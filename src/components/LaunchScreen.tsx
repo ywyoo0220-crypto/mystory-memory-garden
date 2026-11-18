@@ -27,9 +27,12 @@ export function LaunchScreen() {
     const r = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setReduced(r);
     setVisible(true);
+    // Home's card entrance waits on this class (see .ms-deck in styles.css).
+    const root = document.documentElement;
+    root.classList.add("ms-launching");
     requestAnimationFrame(lift);
-    const timer = window.setTimeout(() => setVisible(false), r ? LAUNCH_REDUCED_MS : LAUNCH_MS);
-    return () => window.clearTimeout(timer);
+    const timer = window.setTimeout(() => { root.classList.remove("ms-launching"); setVisible(false); }, r ? LAUNCH_REDUCED_MS : LAUNCH_MS);
+    return () => { window.clearTimeout(timer); root.classList.remove("ms-launching"); };
   }, []);
 
   if (!visible) return null;

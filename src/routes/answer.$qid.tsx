@@ -1,6 +1,6 @@
 import { catVars } from "@/lib/theme";
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { actions, hasContent, recordPhotos, useStore, type Voice } from "@/lib/store";
 import { audioKey, deleteAudio, fmtDur, MAX_REC_SEC, putAudio } from "@/lib/audio";
@@ -417,7 +417,9 @@ function AnswerFlow() {
       <div className="flex items-center gap-4">
       <div className="flex flex-1 gap-2" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
         {steps.map((_, i) => (
-          <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? "var(--ink)" : "var(--border)" }} />
+          <span key={i} className="relative h-1 flex-1 overflow-hidden rounded-full" style={{ background: "var(--border)" }}>
+            <span className="ms-seg absolute inset-0 rounded-full" style={{ background: "var(--ink)", transform: `scaleX(${i <= step ? 1 : 0})` }} />
+          </span>
         ))}
       </div>
       <span className="text-caption font-medium tabular-nums" aria-hidden>{step + 1} / {steps.length}</span>
@@ -425,7 +427,14 @@ function AnswerFlow() {
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4">
 
-      <h1 className="mt-6 font-serif text-title">{steps[step]}</h1>
+      {/* Words are separate spans only for the reveal; the heading is read as one sentence. */}
+      <h1 key={step} className="ms-reveal mt-6 font-serif text-title" aria-label={steps[step]}>
+        {(steps[step] ?? "").split(" ").map((w, i) => (
+          <Fragment key={i}>
+            <span aria-hidden style={{ "--i": i } as CSSProperties}>{w}</span>{" "}
+          </Fragment>
+        ))}
+      </h1>
       {step > 0 && <p className="mt-2 text-caption">{q.core}</p>}
 
       <label className="sr-only" htmlFor="answer">답변</label>
@@ -497,7 +506,7 @@ function AnswerFlow() {
           onClick={() => (speaking ? void stopSpeaking() : startSpeaking())}
           aria-pressed={speaking}
           className={`flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 font-medium ${
-            speaking ? "bg-destructive text-caption text-destructive-foreground" : "border border-border bg-card text-body"
+            speaking ? "ms-ripple bg-destructive text-caption text-destructive-foreground" : "border border-border bg-card text-body"
           }`}
         >
           {speaking ? `말하는 중 · ${fmtDur(elapsed)} · 누르면 멈춤` : voice ? "다시 말하기" : "말로 하기"}

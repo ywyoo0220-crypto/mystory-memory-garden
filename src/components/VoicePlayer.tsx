@@ -114,13 +114,18 @@ export function VoicePlayer({
         )}
       </Button>
       <div className="flex h-8 flex-1 items-center gap-[2px]" aria-hidden>
-        {bars.map((h, i) => (
-          <span
-            key={i}
-            className="w-[2px] flex-1 rounded-full"
-            style={{ height: `${h * 100}%`, background: i / bars.length <= progress ? fg : `color-mix(in srgb, ${fg} 35%, transparent)` }}
-          />
-        ))}
+        {bars.map((h, i) => {
+          // While playing, the few bars around the playhead stand taller (at most a quarter past the row's height).
+          const near = playing ? Math.max(0, 1 - Math.abs(i - progress * bars.length) / 3) : 0;
+          const lift = Math.min(1 + 0.6 * near, 1.25 / h);
+          return (
+            <span
+              key={i}
+              className="ms-bar w-[2px] flex-1 rounded-full"
+              style={{ height: `${h * 100}%`, transform: `scaleY(${lift.toFixed(3)})`, background: i / bars.length <= progress ? fg : `color-mix(in srgb, ${fg} 35%, transparent)` }}
+            />
+          );
+        })}
       </div>
       <span className="text-caption font-medium tabular-nums" style={{ color: fg }}>
         {m}:{s}

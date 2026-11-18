@@ -121,7 +121,7 @@
 @utility expand {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   & > * {
     overflow: hidden;
     min-height: 0;
@@ -358,3 +358,70 @@ html.ms-pre-launch body::before {
   background: var(--background);
 }
 html.ms-pre-route body > div:first-of-type { visibility: hidden; }
+
+/* ── Motion ─────────────────────────────────────────────────────────────
+   Every motion here starts from a tap or a screen change and ends by itself.
+   Nothing is tied to scrolling, and nothing moves while a finger is on the list.
+   With "reduce motion" on, all of it is skipped. */
+@keyframes ms-rise {
+  from { opacity: 0; transform: translateY(1.5rem); }
+}
+/* Home deck: cards come up one after another, once per visit or view switch. */
+.ms-deck > * {
+  animation: ms-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+/* Hold the deck until the launch screen has gone, so the entrance is actually seen. */
+html.ms-pre-launch .ms-deck > *,
+html.ms-launching .ms-deck > * {
+  animation-play-state: paused;
+}
+@keyframes ms-in {
+  from { opacity: 0; transform: translateY(0.5rem); }
+}
+/* Opened card: answers, photos and voice bars follow the card a beat apart. */
+.expand[data-open="true"] .ms-in {
+  animation: ms-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc((var(--i, 0) + var(--j, 0)) * 60ms + 120ms);
+}
+@keyframes ms-reveal {
+  from { opacity: 0; filter: blur(0.375rem); transform: translateY(0.25rem); }
+}
+/* Answer screen: the next question clears word by word. */
+.ms-reveal > span {
+  display: inline-block;
+  animation: ms-reveal 0.5s ease-out both;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+/* Answer screen: a progress segment fills instead of switching colour. */
+.ms-seg {
+  transform-origin: left center;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes ms-ripple {
+  from { inset: 0; opacity: 0.55; }
+  to { inset: -0.5rem; opacity: 0; }
+}
+/* While speaking: a ring leaves the button every 1.6s. A border, not a shadow. */
+.ms-ripple { position: relative; }
+.ms-ripple::before,
+.ms-ripple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--destructive);
+  border-radius: 9999px;
+  pointer-events: none;
+  animation: ms-ripple 1.6s ease-out infinite;
+}
+.ms-ripple::after { animation-delay: 0.8s; }
+/* Voice bar: bars lean up near the playhead. */
+.ms-bar {
+  transition: transform 0.25s ease-out, background-color 0.25s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ms-deck > *, .expand[data-open="true"] .ms-in, .ms-reveal > span { animation: none; }
+  .ms-ripple::before, .ms-ripple::after { animation: none; opacity: 0; }
+  .ms-seg { transition: none; }
+  .ms-bar { transition: none; transform: none !important; }
+}
