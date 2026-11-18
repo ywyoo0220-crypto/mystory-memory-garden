@@ -80,9 +80,8 @@ function CatQuestions() {
                 <span className="min-w-0">
                   <span className="block font-serif text-body">{q.core}</span>
                   {done && (
-                    <span className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-caption">
-                      <span className="inline-flex items-center rounded-full border border-current/30 px-3 py-1">기록함</span>
-                      <span>{edit ? "눌러서 수정하기" : "눌러서 이어쓰기"} ›</span>
+                    <span className="mt-4 block text-caption">
+                      {edit ? "눌러서 수정하기" : "눌러서 이어쓰기"} ›
                     </span>
                   )}
                 </span>
