@@ -243,7 +243,7 @@ function Screen3() {
             <div key={cat.id} className="onb-stack relative" style={{ zIndex: i + 1, marginTop: i ? "-2rem" : 0, animationDelay: `${300 + i * 440}ms` }}>
               <Surface
                 cat={cat}
-                className={`!pt-5 ${last ? "pb-5" : "rounded-b-none pb-[2.5rem]"}`}
+                className={`!pt-5 ${last ? "pb-5" : "pb-[2.5rem]"}`}
                 style={{ boxShadow: i ? `inset 0 1px 0 0 color-mix(in srgb, ${c.count} 40%, transparent)` : undefined }}
               >
                 <CategoryPill cat={cat} />
