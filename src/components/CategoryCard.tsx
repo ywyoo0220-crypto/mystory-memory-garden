@@ -63,7 +63,7 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
       {step(q.core, 0)}
       {/* The follow-ups branch from the core question: one line on the left holds them together
           (the same branching as the question-structure poster). */}
-      {follow.length > 0 && <div className="space-y-6 border-l-2 border-current/35 pl-4">{follow}</div>}
+      {follow.length > 0 && <div className="space-y-6 border-l border-current pl-4">{follow}</div>}
     </div>
   );
 }
