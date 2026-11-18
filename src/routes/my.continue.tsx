@@ -23,8 +23,8 @@ function Continue() {
     .sort((a, b) => b[1].updatedAt - a[1].updatedAt);
   return (
     <main className="pb-6">
-      <SubHeader title="이어서 쓰기" />
-      <div className="space-y-2 px-6">
+      <SubHeader title="이어서 쓰기" sub="쓰다 멈춘 이야기를 이어서 완성해요." />
+      <div className="space-y-4 px-6">
         {list.length === 0 ? (
           <p className="py-12 text-center text-body text-muted-foreground">쓰다 만 기록이 없어요.</p>
         ) : (

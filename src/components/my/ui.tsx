@@ -92,43 +92,27 @@ export function Card({ children, className = "" }: { children: ReactNode; classN
   return <div className={`rounded-[20px] border border-border bg-card ${className}`}>{children}</div>;
 }
 
-/** Opens the answer flow at the first empty question, and says which of the four are still empty. */
+/** Opens the answer flow at the first empty question; shows what the user already wrote as a memory cue. */
 export function ContinueCard({ qid, rec }: { qid: string; rec: StoryRecord }) {
   const cat = categoryOfQuestion(qid);
   const q = getQuestion(qid);
   if (!cat || !q) return null;
   const f = filledSteps(rec);
   const first = Math.max(0, f.indexOf(false));
-  const left = f.flatMap((done, i) => (done ? [] : [i + 1]));
-  const next = [q.core, ...q.followUps][first];
+  const done = f.filter(Boolean).length;
+  const preview = rec.answers.find((a) => a?.trim())?.trim();
   return (
-    <Link to="/answer/$qid" params={{ qid }} search={{ step: first }} className="flex min-h-12 items-center gap-4 rounded-[20px] border border-border bg-card p-4">
-      <span className="min-w-0 flex-1">
-        <span className="flex items-center gap-2 text-caption text-muted-foreground">
-          <Dot catId={cat.id} />
-          {cat.name} · {dateLabel(rec.updatedAt)}
-        </span>
-        <span className="mt-1 block text-body font-medium">{q.core}</span>
-        <span className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <span className="flex gap-2" role="img" aria-label={`질문 4개 중 ${4 - left.length}개에 답했어요. 남은 질문은 ${left.join(", ")}번이에요.`}>
-            {f.map((done, i) => (
-              <span
-                key={i}
-                className={`flex size-6 items-center justify-center rounded-full border border-ink text-caption tabular-nums leading-none ${done ? "bg-ink text-ink-foreground" : "text-foreground"}`}
-              >
-                {i + 1}
-              </span>
-            ))}
-          </span>
-          <span className="text-caption font-medium">남은 질문 {left.length}개</span>
-        </span>
-        {first > 0 && next && (
-          <span className="mt-2 block text-caption text-muted-foreground [word-break:keep-all]">
-            다음 질문 {first + 1} · {next}
-          </span>
-        )}
+    <Link to="/answer/$qid" params={{ qid }} search={{ step: first }} className="block rounded-[20px] border border-border bg-card p-5">
+      <span className="flex items-center gap-2 text-caption text-muted-foreground">
+        <Dot catId={cat.id} />
+        {cat.name} · {dateLabel(rec.updatedAt)}
       </span>
-      <Chevron />
+      <span className="mt-2 block text-body font-medium [word-break:keep-all]">{q.core}</span>
+      {preview && <span className="mt-2 line-clamp-2 block text-caption text-muted-foreground">“{preview}”</span>}
+      <span className="mt-4 flex items-center justify-between gap-4 border-t border-border pt-4">
+        <span className="text-caption text-muted-foreground tabular-nums">{done} / 4 작성</span>
+        <span className="flex h-12 items-center gap-1 rounded-full bg-ink px-5 text-caption font-medium text-ink-foreground">이어서 쓰기</span>
+      </span>
     </Link>
   );
 }
