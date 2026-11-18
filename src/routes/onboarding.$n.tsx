@@ -117,11 +117,11 @@ function Footer({ children }: { children: ReactNode }) {
 
 const EYEBROW: Record<number, string> = { 1: "사용 안내 1/3", 2: "사용 안내 2/3", 3: "사용 안내 3/3", 5: "이제 시작해요" };
 
-function Head({ step, title, sub }: { step: number; title: string; sub: string }) {
+function Head({ step, title, sub }: { step: number; title: string; sub?: string }) {
   return (
     <>
       <h1 className="whitespace-pre-line text-title font-medium [text-wrap:balance]">{title}</h1>
-      <p className="mt-4 text-body text-muted-foreground">{sub}</p>
+      {sub && <p className="mt-4 text-body text-muted-foreground">{sub}</p>}
     </>
   );
 }
@@ -252,7 +252,7 @@ function Screen5() {
   if (!q) return null;
   return (
     <>
-      <Head step={5} title={"첫 질문으로\n시작해요."} sub="답은 짧아도 괜찮아요." />
+      <Head step={5} title={"첫 질문으로\n시작해요."} />
       {/* Above the example card: choosing 크게 makes the page longer, and the choice must stay in view. */}
       <SizeChoice />
       <Frame className="mt-6">
@@ -261,6 +261,7 @@ function Screen5() {
           <p className="mt-6 text-title font-medium">{q.core}</p>
         </Surface>
       </Frame>
+      <p className="mt-4 text-body text-muted-foreground">답은 짧아도 괜찮아요.</p>
     </>
   );
 }
