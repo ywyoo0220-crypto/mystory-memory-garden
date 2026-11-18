@@ -18,3 +18,4 @@
 - [x] Fix onboarding mobile scrolling, example visibility and profile input progression.
 - [x] Verify first-run recording and return flow, small screens and both text sizes; run all tests.
 - [x] Simplify onboarding header, separate three-screen help replay, and skip profile setup on first visit; verify both flows.
+- [x] Unify the settings view switch with the Home switch (black outline, no gray track); verify all three switches.
