@@ -98,7 +98,7 @@ function SharePage() {
     <main className="pb-6">
       <SubHeader
         title="기록 공유하기"
-        onBack={step > 0 ? () => setStep(step - 1) : undefined}
+        {...(step > 0 ? { onBack: () => setStep(step - 1) } : {})}
         sub="원하는 사람에게만 보여줄 이야기를 골라주세요."
         action={
           step === 0 && sharedN > 0 ? (
