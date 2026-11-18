@@ -261,7 +261,7 @@ function Screen5() {
           <p className="mt-6 text-title font-medium">{q.core}</p>
         </Surface>
       </Frame>
-      <p className="mt-4 text-body text-muted-foreground">답은 짧아도 괜찮아요.</p>
+      <p className="mt-4 text-center text-caption text-muted-foreground">답은 짧아도 괜찮아요.</p>
     </>
   );
 }
