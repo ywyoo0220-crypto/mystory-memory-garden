@@ -1,20 +1,20 @@
 // MyStory category icons — 24×24, single color (inherits `currentColor`).
-// Topic icons (T1–T10) are simple geometric marks; life-period icons (A1–A9) are a clock face; the
+// Topic icons (T1–T10) are line drawings, the same set as the printed book and posters; life-period icons (A1–A9) are a clock face; the
 // hand moves one hour per period, from 12 o'clock (유년기) to 8 o'clock (80대 이후). Nothing fills, so
 // no period reads as "full" or "finished".
 import * as React from "react";
 
 const PATHS: Record<string, string> = {
-  "T1": "<path d=\"M4 19V9h11V4l6 7-6 7v-5H8v6z\" fill=\"currentColor\"/>",
-  "T2": "<path d=\"M12 3l9 8h-3v10H6V11H3z\" fill=\"currentColor\"/>",
-  "T3": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\" fill=\"currentColor\"/>",
-  "T4": "<circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\"/><path d=\"M5.6 18.4A9 9 0 0 1 18.4 5.6z\" fill=\"currentColor\"/>",
-  "T5": "<path d=\"M9 3h6v6h6v6h-6v6H9v-6H3V9h6z\" fill=\"currentColor\"/>",
-  "T6": "<path d=\"M2 20L9 6l4 7 3-4 6 11z\" fill=\"currentColor\"/>",
-  "T7": "<circle cx=\"8.5\" cy=\"12\" r=\"6.5\" fill=\"currentColor\"/><circle cx=\"15.5\" cy=\"12\" r=\"6.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\"/>",
-  "T8": "<path d=\"M4 21V11a8 8 0 0 1 16 0v10h-5v-9a3 3 0 0 0-6 0v9z\" fill=\"currentColor\"/>",
-  "T9": "<path d=\"M12 2l3 7 7 .6-5.3 4.6 1.6 7.3L12 17.6 5.7 21.5l1.6-7.3L2 9.6 9 9z\" fill=\"currentColor\"/>",
-  "T10": "<path d=\"M15 3a9 9 0 1 0 6 15A7.5 7.5 0 0 1 15 3z\" fill=\"currentColor\"/>",
+  "T1": "<path d=\"M5 20.5V13a5 5 0 0 1 5-5h8.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M14.5 4.5L18.5 8l-4 3.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"5\" cy=\"20\" r=\"1.7\" fill=\"currentColor\"/>",
+  "T2": "<path d=\"M3.5 11L12 3.5l8.5 7.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M6 9.5V20.5h12V9.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"9.8\" cy=\"14.2\" r=\"2\" fill=\"currentColor\"/><circle cx=\"14.8\" cy=\"16\" r=\"1.4\" fill=\"currentColor\"/>",
+  "T3": "<rect x=\"3.5\" y=\"8\" width=\"17\" height=\"12.5\" rx=\"2.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M3.5 13.5h17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"10.4\" y=\"11.6\" width=\"3.2\" height=\"3.8\" rx=\"0.8\" fill=\"currentColor\"/>",
+  "T4": "<path d=\"M12 20C5.4 15.2 3 11.8 3 8.8A4.6 4.6 0 0 1 12 7.2 4.6 4.6 0 0 1 21 8.8C21 11.8 18.6 15.2 12 20Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M12 20C5.4 15.2 3 11.8 3 8.8A4.6 4.6 0 0 1 12 7.2Z\" fill=\"currentColor\"/>",
+  "T5": "<path d=\"M2.5 12.5H7l2.5-6 4 11 2.5-5h5.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "T6": "<path d=\"M2.5 19.5L9.5 6.5l3.6 6.4 2.4-3.4 6 10z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "T7": "<circle cx=\"9\" cy=\"12\" r=\"6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"15\" cy=\"12\" r=\"6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M12 6.8A6 6 0 0 1 12 17.2 6 6 0 0 1 12 6.8Z\" fill=\"currentColor\"/>",
+  "T8": "<path d=\"M12 6.5C9.6 4.9 6.2 4.7 3.5 5.5v13c2.7-.8 6.1-.6 8.5 1 2.4-1.6 5.8-1.8 8.5-1v-13c-2.7-.8-6.1-.6-8.5 1Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M12 6.5v13\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "T9": "<polygon points=\"12.00,3.40 14.35,9.36 20.75,9.76 15.80,13.84 17.41,20.04 12.00,16.60 6.59,20.04 8.20,13.84 3.25,9.76 9.65,9.36\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "T10": "<path d=\"M15.08 3.54 A9 9 0 1 0 16.50 19.79 A7.2 7.2 0 0 1 15.08 3.54 Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"17.4\" cy=\"6.4\" r=\"1.2\" fill=\"currentColor\"/>",
   "A1": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L12.00 5.00\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
   "A2": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L15.50 5.94\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
   "A3": "<circle cx=\"12\" cy=\"12\" r=\"9.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 12L18.06 8.50\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"12\" cy=\"12\" r=\"1.8\" fill=\"currentColor\"/>",
