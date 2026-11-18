@@ -23,6 +23,7 @@ describe("Profile editing", () => {
     });
     await router.load();
     render(<RouterProvider router={router} />);
+    fireEvent.click(await screen.findByRole("button", { name: "프로필 수정" }));
 
     const name = await screen.findByRole("textbox", { name: "이름" });
     await waitFor(() => expect(name).toHaveValue("기존 이름"));
@@ -47,6 +48,7 @@ describe("Profile editing", () => {
     });
     await router.load();
     render(<RouterProvider router={router} />);
+    fireEvent.click(await screen.findByRole("button", { name: "프로필 수정" }));
 
     fireEvent.click(await screen.findByRole("button", { name: "프로필 사진 바꾸기 또는 지우기" }));
     fireEvent.click(await screen.findByRole("button", { name: "현재 사진 지우기" }));
@@ -68,6 +70,7 @@ describe("Profile editing", () => {
     });
     await router.load();
     render(<RouterProvider router={router} />);
+    fireEvent.click(await screen.findByRole("button", { name: "프로필 수정" }));
 
     const birth = await screen.findByRole("textbox", { name: "태어난 해" });
     await waitFor(() => expect(birth).toHaveValue("1958"));

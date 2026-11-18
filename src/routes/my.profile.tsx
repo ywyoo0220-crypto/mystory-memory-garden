@@ -46,11 +46,15 @@ function ProfilePage() {
   const [place, setPlace] = useState("");
   const [photo, setPhoto] = useState<string | undefined>();
   const [sheet, setSheet] = useState(false);
+  const [editing, setEditing] = useState(true);
   const init = useRef(false);
   const file = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (init.current) return;
-    if (profile.name || profile.birth || profile.birthplace || profile.photo) init.current = true;
+    if (profile.name || profile.birth || profile.birthplace || profile.photo) {
+      init.current = true;
+      setEditing(false);
+    }
     setName(profile.name);
     setBirth(profile.birth);
     setPlace(profile.birthplace ?? "");
@@ -69,7 +73,7 @@ function ProfilePage() {
   const birthBad = birth.length > 0 && !validBirth(birth);
   return (
     <main className="pb-10">
-      <SubHeader title="프로필" sub="책의 첫 장에 이렇게 담겨요." />
+      <SubHeader title="프로필" />
       <div className="space-y-4 px-6">
         <div className="rounded-[20px] bg-card px-6 pt-9 pb-8 text-center">
           <div className="relative mx-auto w-fit">
@@ -77,12 +81,13 @@ function ProfilePage() {
               type="button"
               aria-label={photo ? "프로필 사진 바꾸기 또는 지우기" : "프로필 사진 넣기"}
               onClick={() => (photo ? setSheet(true) : file.current?.click())}
+              disabled={!editing}
               className="relative block rounded-full"
             >
               <Avatar name={name} photo={photo} size={80} />
-              <span aria-hidden className="absolute -bottom-1 -right-1 flex size-9 items-center justify-center rounded-full border-2 border-card bg-ink text-ink-foreground">
+              {editing && <span aria-hidden className="absolute -bottom-1 -right-1 flex size-9 items-center justify-center rounded-full border-2 border-card bg-ink text-ink-foreground">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
-              </span>
+              </span>}
             </button>
           </div>
           <p className="mt-8 text-caption font-normal text-muted-foreground">기록자</p>
@@ -108,6 +113,11 @@ function ProfilePage() {
             }
           }}
         />
+        {!editing ? (
+          <button type="button" onClick={() => setEditing(true)} className="flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground">
+            프로필 수정
+          </button>
+        ) : (<>
         <div className="divide-y overflow-hidden rounded-[20px] border border-border bg-card">
           <label className={field}>
             <span className={labelCls}>이름</span>
@@ -116,10 +126,11 @@ function ProfilePage() {
           <div>
             <label className={field}>
               <span className={labelCls}>태어난 해</span>
+              <span className="flex min-w-0 flex-1 items-center justify-end gap-1">
               <input
                 id="birth-input"
                 aria-describedby={birthBad ? "birth-hint" : undefined}
-                className={input}
+                className={birth ? `${input} max-w-[3.2em]` : input}
                 value={birth}
                 onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))}
                 placeholder="예: 1958"
@@ -127,6 +138,8 @@ function ProfilePage() {
                 maxLength={4}
                 aria-invalid={birthBad}
               />
+              {birth && <span aria-hidden className="text-body font-medium">년</span>}
+              </span>
             </label>
             {birthBad && (
               <p id="birth-hint" className="px-6 pb-3 text-caption font-normal text-destructive">1900년부터 2099년 사이, 네 자리로 입력하세요.</p>
@@ -140,6 +153,7 @@ function ProfilePage() {
         <button type="button" onClick={save} className="flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground">
           저장하기
         </button>
+        </>)}
       </div>
       {sheet && (
         <div role="dialog" aria-modal="true" aria-label="프로필 사진" className="fixed inset-0 z-50">
