@@ -219,8 +219,53 @@ export const actions = {
   },
 };
 
+/**
+ * Accepts records from a backup made by any version of the app and returns only well-formed ones.
+ * Older prototype backups carry a "__v2": true marker, per-step photo arrays with empty slots,
+ * and `t` instead of `updatedAt`; without this a restore can stop the app.
+ */
+export function normalizeRecords(raw: unknown): Records {
+  const out: Records = {};
+  if (!raw || typeof raw !== "object") return out;
+  for (const [id, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (!v || typeof v !== "object" || Array.isArray(v)) continue;
+    const r = v as Record<string, unknown>;
+    if (!Array.isArray(r["answers"])) continue;
+    const answers = [0, 1, 2, 3].map((i) => {
+      const a = (r["answers"] as unknown[])[i];
+      return typeof a === "string" ? a : "";
+    });
+    const rawPhotos = Array.isArray(r["photos"]) ? (r["photos"] as unknown[]) : [];
+    const rawSteps = Array.isArray(r["photoSteps"]) ? (r["photoSteps"] as unknown[]) : null;
+    const photos: string[] = [];
+    const photoSteps: number[] = [];
+    rawPhotos.forEach((p, i) => {
+      if (typeof p !== "string" || !p) return;
+      photos.push(p);
+      const st = rawSteps ? rawSteps[i] : i; // old per-step arrays: the index is the step
+      photoSteps.push(typeof st === "number" && st >= 0 && st <= 3 ? st : 0);
+    });
+    const voices: Voice[] = (Array.isArray(r["voices"]) ? (r["voices"] as unknown[]) : []).flatMap((x) => {
+      if (!x || typeof x !== "object") return [];
+      const o = x as Record<string, unknown>;
+      if (typeof o["step"] !== "number") return [];
+      return [{ step: o["step"], dur: typeof o["dur"] === "string" ? o["dur"] : "0:00", audio: o["audio"] === true, text: typeof o["text"] === "string" ? o["text"] : undefined }];
+    });
+    const t = typeof r["updatedAt"] === "number" ? r["updatedAt"] : typeof r["t"] === "number" ? r["t"] : 0;
+    const rec: StoryRecord = { answers, updatedAt: t };
+    if (photos.length) {
+      rec.photos = photos;
+      rec.photoSteps = photoSteps;
+    } else if (typeof r["photo"] === "string" && r["photo"]) rec.photo = r["photo"];
+    if (voices.length) rec.voices = voices;
+    if (r["example"] === true) rec.example = true;
+    out[id] = rec;
+  }
+  return out;
+}
+
 export function hasContent(r?: StoryRecord) {
-  return !!r && (r.answers.some((a) => a.trim()) || !!r.photo || !!r.photos?.length || !!r.voices?.length);
+  return !!r && ((r.answers ?? []).some((a) => a?.trim()) || !!r.photo || !!r.photos?.length || !!r.voices?.length);
 }
 
 export function recordPhotos(r: StoryRecord) {

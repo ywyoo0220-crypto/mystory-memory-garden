@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import { actions, hasContent, recordPhotos, useStore, voiceKeys, type Records } from "@/lib/store";
+import { actions, hasContent, normalizeRecords, recordPhotos, useStore, voiceKeys, type Records } from "@/lib/store";
 import { getPrefs, prefs, type Profile } from "@/lib/prefs";
 import { blobToDataUrl, clearAudio, dataUrlToBlob, getAudio, putAudio } from "@/lib/audio";
 import { clearMedia, getMedia, isMediaRef, putMediaAt } from "@/lib/media";
@@ -73,13 +73,15 @@ function Backup() {
     } catch {
       return void toast("MyStory 백업 파일이 아니에요");
     }
+    const incoming = normalizeRecords(data.records);
+    if (!Object.keys(incoming).length) return void toast("백업 파일에 불러올 기록이 없어요");
     await clearAudio();
     for (const [k, d] of Object.entries(data.audio ?? {})) await putAudio(k, await dataUrlToBlob(d));
     if (data.media) {
       await clearMedia();
       for (const [k, d] of Object.entries(data.media)) await putMediaAt(k, await dataUrlToBlob(d));
     }
-    actions.replaceRecords(data.records);
+    actions.replaceRecords(incoming);
     prefs.setProfile(data.profile ?? { name: "", birth: "" });
     toast("기록을 복원했어요");
   };
