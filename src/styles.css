@@ -255,7 +255,7 @@
 @keyframes onb-stack {
   from { opacity: 0; transform: translateY(2.5rem); }
 }
-.onb-stack { animation: onb-stack 0.75s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.onb-stack { animation: onb-stack 1.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
 @media (prefers-reduced-motion: reduce) {
   .onb-fill, .onb-rise, .onb-stack { animation: none; }
 }

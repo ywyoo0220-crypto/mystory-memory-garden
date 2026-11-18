@@ -240,7 +240,7 @@ function Screen3() {
           const c = cardColors(cat);
           const last = i === cats.length - 1;
           return (
-            <div key={cat.id} className="onb-stack relative" style={{ zIndex: i + 1, marginTop: i ? "-2rem" : 0, animationDelay: `${150 + i * 220}ms` }}>
+            <div key={cat.id} className="onb-stack relative" style={{ zIndex: i + 1, marginTop: i ? "-2rem" : 0, animationDelay: `${300 + i * 440}ms` }}>
               <Surface
                 cat={cat}
                 className={`!pt-5 ${last ? "pb-5" : "rounded-b-none pb-[2.5rem]"}`}
