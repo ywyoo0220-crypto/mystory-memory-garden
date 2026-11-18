@@ -60,12 +60,13 @@ function ProfilePage() {
     toast("프로필을 저장했어요");
     navigate({ to: "/my" });
   };
-  const row = "flex min-h-16 items-center gap-4 px-6 py-2";
-  const input = "h-12 min-w-0 flex-1 bg-transparent text-right text-body outline-none placeholder:text-muted-foreground";
+  const field = "block px-6 py-4";
+  const labelCls = "block text-caption font-medium text-muted-foreground";
+  const input = "mt-1 h-12 w-full bg-transparent text-body font-medium outline-none placeholder:font-normal placeholder:text-muted-foreground";
   const birthBad = birth.length > 0 && !validBirth(birth);
   return (
     <main className="pb-32">
-      <SubHeader title="프로필" sub="이름과 태어난 해는 언제든 바꿀 수 있어요." />
+      <SubHeader title="프로필" sub="이름과 태어난 해는 책의 첫 장과 시기별 이야기에 담겨요." />
       <div className="space-y-6 px-6">
         <div className="flex flex-col items-center">
           <button type="button" aria-label={photo ? "프로필 사진 바꾸기" : "프로필 사진 넣기"} onClick={() => file.current?.click()} className="relative rounded-full">
@@ -97,12 +98,12 @@ function ProfilePage() {
           }}
         />
         <div className="divide-y overflow-hidden rounded-[20px] border border-border bg-card">
-          <label className={row}>
-            <span className="shrink-0 text-body font-medium">이름</span>
+          <label className={field}>
+            <span className={labelCls}>이름</span>
             <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김정희" autoComplete="name" />
           </label>
-          <label className={row}>
-            <span className="shrink-0 text-body font-medium">태어난 해</span>
+          <label className={field}>
+            <span className={labelCls}>태어난 해</span>
             <input
               className={input}
               value={birth}

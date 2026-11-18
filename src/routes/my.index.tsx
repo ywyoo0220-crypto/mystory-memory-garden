@@ -37,13 +37,16 @@ function My() {
   ];
   return (
     <main className="space-y-6 px-6 pb-32 pt-6">
-      <Link to="/my/profile" className="flex min-h-16 items-center gap-4 rounded-[20px] border border-border bg-card p-4">
-        <Avatar name={profile.name} photo={profile.photo} size={56} />
-        <span className="min-w-0 flex-1">
-          <span className="block text-title font-medium">{profile.name || "프로필 만들기"}</span>
-          <span className="block text-caption text-muted-foreground">{sub}</span>
+      <Link to="/my/profile" className="flex items-center gap-4 rounded-[20px] border border-border bg-card p-5">
+        <span className="shrink-0 rounded-full border-2 border-card shadow-[0_0_0_1px_var(--comparison-border)]">
+          <Avatar name={profile.name} photo={profile.photo} size={64} />
         </span>
-        <span className="inline-flex h-12 shrink-0 items-center rounded-full border border-ink px-4 text-caption font-medium">{profile.name ? "수정" : "만들기"}</span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-caption font-medium text-muted-foreground">기록자</span>
+          <span className="mt-1 block text-title font-medium">{profile.name || "프로필 만들기"}</span>
+          <span className="mt-1 block text-caption text-muted-foreground">{sub}</span>
+        </span>
+        <Chevron />
       </Link>
 
       {groups.map(([title, items]) => (
