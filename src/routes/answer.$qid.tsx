@@ -378,7 +378,13 @@ function AnswerFlow() {
           onClick={async () => {
             await stopSpeaking();
             persist();
-            if (tourHome()) return;
+            if (step > 0) { setStep(step - 1); window.scrollTo({ top: 0 }); return; }
+            let t: string | null = null;
+            try { t = sessionStorage.getItem("mystory.tour.v1"); } catch { /* noop */ }
+            if (t === qid) {
+              try { sessionStorage.removeItem("mystory.tour.v1"); } catch { /* noop */ }
+              return void navigate({ to: "/onboarding/$n", params: { n: "5" } });
+            }
             navigate({ to: "/cat/$catId", params: { catId: cat.id } });
           }}
           aria-label="뒤로"
