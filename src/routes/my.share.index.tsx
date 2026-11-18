@@ -5,6 +5,7 @@ import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
 import { prefs, SCOPES, usePrefs, type ShareScope } from "@/lib/prefs";
 import { shareUrl } from "@/lib/share";
+import { CoverPicker } from "@/components/CoverPicker";
 import { catVars } from "@/lib/theme";
 import { Card, Chevron, Dot, SubHeader, Toggle } from "@/components/my/ui";
 
@@ -33,15 +34,18 @@ function SharePage() {
   /** 'Only me' is not a way of sharing, so the share flow offers only the people to show. */
   const scopes = SCOPES.filter(([v]) => v !== "me");
   const [noVoice, setNoVoice] = useState(true);
+  const [cover, setCover] = useState<string | null>(null);
   const list = Object.entries(records).filter(([, r]) => hasContent(r)).sort((a, b) => b[1].updatedAt - a[1].updatedAt);
   const hasVoice = picked.some((q) => records[q]?.voices?.length);
+  /** Default cover: the example cover for example records, else none, until the user picks one. */
+  const coverSrc = cover ?? (picked.some((q) => records[q]?.example) ? "/ex_cover.jpg" : "");
   const sharedN = new Set(shares.flatMap((s) => s.qids)).size;
   const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground disabled:opacity-40";
 
   const [made, setMade] = useState<string | null>(null);
   const submit = () => {
     const id = Date.now().toString(36);
-    prefs.addShare({ id, qids: picked, scope, withVoice: !noVoice, t: Date.now(), link: shareUrl(id) });
+    prefs.addShare({ id, qids: picked, scope, withVoice: !noVoice, t: Date.now(), link: shareUrl(id), cover: coverSrc || undefined });
     setMade(id);
     window.scrollTo(0, 0);
   };
@@ -168,6 +172,7 @@ function SharePage() {
                 {<Toggle on={noVoice} onChange={setNoVoice} label="목소리는 빼고 보내기" />}
               </Card>
             )}
+            <CoverPicker qids={picked} records={records} value={coverSrc} onChange={setCover} />
             <div className="space-y-2">
               {picked.map((q) => {
                 const cat = categoryOfQuestion(q);

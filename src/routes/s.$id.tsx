@@ -8,6 +8,7 @@ import { fullDate, sharedRecords, shareColor } from "@/lib/share";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { VoiceBar } from "@/components/VoicePlayer";
 import { catVars } from "@/lib/theme";
+import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 
 export const Route = createFileRoute("/s/$id")({
   head: () => ({
@@ -46,13 +47,12 @@ function SharedPage() {
   const color = shareColor(qids);
   const name = profile.name.trim();
   const times = qids.map((q) => records[q]!.updatedAt);
-  const firstPhoto = qids.map((q) => recordPhotos(records[q]!)[0]).find(Boolean);
   const span = times.length ? monthSpan(Math.min(...times), Math.max(...times)) : "";
   return (
     <main className="pb-16">
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>
-        <p className="text-caption font-medium">MyStory</p>
-        {firstPhoto && <CoverPhoto src={firstPhoto} />}
+        <img src={wordmark.url} alt="MyStory" className="h-6 w-auto self-start" />
+        {share.cover && <CoverPhoto src={share.cover} />}
         <h1 className="mt-8 text-center text-title font-medium">{name ? `${name}의 이야기` : "나의 이야기"}</h1>
         <p className="mt-2 text-center text-caption">기록 {qids.length}개{span && ` · ${span}`}</p>
         <p className="mt-auto pt-10 text-center text-caption [word-break:keep-all]">
@@ -82,7 +82,8 @@ function monthSpan(a: number, b: number) {
 function CoverPhoto({ src }: { src: string }) {
   const url = useMediaUrl(src);
   if (!url) return null;
-  return <img src={url} alt="" className="mx-auto mt-10 aspect-[3/4] w-[62%] max-w-[16rem] object-cover" />;
+  // Natural proportions: no cropping of the person's photo.
+  return <img src={url} alt="표지 사진" className="mx-auto mt-10 max-h-[46svh] w-auto max-w-[78%] object-contain" />;
 }
 
 function Photo({ src }: { src: string }) {
@@ -105,8 +106,10 @@ function SharedRecord({ qid, rec, withVoice }: { qid: string; rec: StoryRecord; 
     const ph = photosAt(i);
     if (!a && !voice && !ph.length) return null;
     return (
-      <div key={i} className="space-y-4">
-        {i > 0 && <p className="-mb-2 text-caption font-medium">{label}</p>}
+      <div key={i}>
+        {/* Same as home cards: the question one size smaller, 8px above its answer. */}
+        {i > 0 && <p className="mb-2 text-caption font-medium">{label}</p>}
+        <div className="space-y-4">
         {voice && withVoice && (
           <div className="rounded-full border border-border bg-card py-2 pl-2 pr-4">
             <VoiceBar recordId={qid} voice={voice} text={a ?? ""} fg="var(--ink)" accent="var(--ink-foreground)" />
@@ -114,11 +117,12 @@ function SharedRecord({ qid, rec, withVoice }: { qid: string; rec: StoryRecord; 
         )}
         {a && (
           <p className="whitespace-pre-line text-body">
-            {voice && <span className="mr-2 inline-flex h-6 items-center rounded-full border border-ink px-2 align-[0.1em] text-caption font-medium leading-none">음성 기록</span>}
+            {voice && <span className="mb-1 mr-2 inline-block rounded-full border border-ink px-2 py-0.5 text-caption font-medium leading-snug">음성 기록</span>}
             {a}
           </p>
         )}
         {ph.map((p) => <Photo key={p} src={p} />)}
+        </div>
       </div>
     );
   };

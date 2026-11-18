@@ -3,7 +3,7 @@ import { useSyncExternalStore } from "react";
 /** Profile, MY settings, local shares and the app-lock PIN hash; all on this device only. */
 export type Profile = { name: string; birth: string; photo?: string | undefined; cover?: string | undefined; coverUp?: string | undefined };
 export type ShareScope = "me" | "family" | "link";
-export type Share = { id: string; qids: string[]; scope: ShareScope; withVoice: boolean; t: number; link?: string | undefined };
+export type Share = { id: string; qids: string[]; scope: ShareScope; withVoice: boolean; t: number; link?: string | undefined; cover?: string | undefined };
 type Prefs = { profile: Profile; shares: Share[]; pinHash: string | null };
 
 const K = {
