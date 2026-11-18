@@ -49,23 +49,23 @@ function Home() {
             className="h-[1.875rem] w-auto"
           />
         </h1>
-        <ViewToggle value={view} onChange={(v) => { actions.setView(v); setOpen(null); }} />
+        {/* No records yet: hide the 주제별/시간순 switch so the only choice on screen is where to start. */}
+        {cards.length + otherCount > 0 && (
+          <ViewToggle value={view} onChange={(v) => { actions.setView(v); setOpen(null); }} />
+        )}
       </header>
 
       {cards.length === 0 ? (
         <div className="mx-3 mt-10 rounded-[32px] bg-card px-6 py-12 text-center">
-          <p className="font-serif text-[1.5rem] leading-[1.4]">
-            {view === "topic" ? "아직 주제별 기록이 없어요." : "아직 시간순 기록이 없어요."}
-          </p>
-          <p className="mt-3 text-[1.0625rem] leading-[1.7] text-muted-foreground">
-            질문 하나에 답하는 것부터 시작하세요.
+          <p className="font-serif text-[1.5rem] leading-[1.4]">아직 남긴 기록이 없어요.</p>
+          <p className="mt-3 text-[1.0625rem] leading-[1.7] text-muted-foreground [text-wrap:balance] [word-break:keep-all]">
+            주제나 시기를 고르면 답할 질문이 나와요.
           </p>
           <Link
-            to="/kind/$kind"
-            params={{ kind: view }}
+            to="/record"
             className="mt-8 inline-flex h-14 items-center rounded-full bg-ink px-8 text-[1rem] font-semibold text-ink-foreground"
           >
-            기록 시작하기
+            질문 고르기
           </Link>
         </div>
       ) : (

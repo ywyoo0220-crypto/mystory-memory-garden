@@ -53,10 +53,11 @@ function Onboarding() {
     actions.toggleLarge();
   };
 
+  /** The last screen shows the first question, so "시작하기" opens that question rather than the empty home. */
   const tour = () => {
     onbLog("onb_tour");
     finishOnb();
-    navigate({ to: "/", replace: true });
+    navigate({ to: "/answer/$qid", params: { qid: FIRST_QID }, replace: true });
   };
 
   const screen = {

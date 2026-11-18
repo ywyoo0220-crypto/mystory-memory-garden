@@ -396,7 +396,7 @@ function AnswerFlow() {
         id="answer"
         value={answers[step]}
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
-        placeholder="쓰거나 말로 남기세요."
+        placeholder="한 줄이어도 괜찮아요."
         className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border border-border bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"
       />
 
