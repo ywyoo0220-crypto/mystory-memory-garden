@@ -110,8 +110,8 @@ export function ContinueCard({ qid, rec }: { qid: string; rec: StoryRecord }) {
       <span className="mt-2 block text-body font-medium [word-break:keep-all]">{q.core}</span>
       {preview && <span className="mt-2 line-clamp-2 block text-caption text-muted-foreground">“{preview}”</span>}
       <span className="mt-4 flex items-center justify-between gap-4 border-t border-border pt-4">
-        <span className="text-caption text-muted-foreground tabular-nums">{done} / 4 작성</span>
-        <span className="flex h-12 items-center gap-1 rounded-full bg-ink px-5 text-caption font-medium text-ink-foreground">이어서 쓰기</span>
+        <span className="text-caption text-muted-foreground tabular-nums">4개 중 {done}개 작성 중</span>
+        <span className="flex h-12 items-center gap-1 text-caption font-medium text-ink">이어서 쓰기 →</span>
       </span>
     </Link>
   );
