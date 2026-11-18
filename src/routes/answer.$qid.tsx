@@ -8,6 +8,7 @@ import { VoiceBar } from "@/components/VoicePlayer";
 import { toast } from "sonner";
 import { deleteMedia, putMedia, useMediaUrl } from "@/lib/media";
 import { CategoryPill } from "@/components/CategoryCard";
+import { TextSizeButton } from "@/components/TextSizeButton";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/answer/$qid")({
@@ -75,7 +76,7 @@ function AnswerFlow() {
   const category = categoryOfQuestion(qid);
   const cat = category;
   const steps = q ? [q.core, ...q.followUps] : [];
-  const { records, large } = useStore();
+  const { records } = useStore();
   const navigate = useNavigate();
 
   const startStep = Route.useSearch().step ?? 0;
@@ -351,16 +352,19 @@ function AnswerFlow() {
           {first && <p className="mt-4 line-clamp-4 text-body">{first}</p>}
         </article>
         <div className="mt-8 space-y-2">
-          <button
-            type="button"
-            onClick={() => {
-              actions.setView(cat.kind);
-              navigate({ to: "/" });
-            }}
-            className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground"
-          >
-            홈에서 보기
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                actions.setView(cat.kind);
+                navigate({ to: "/" });
+              }}
+              className="h-14 min-w-0 flex-1 rounded-full bg-ink text-body font-medium text-ink-foreground"
+            >
+              홈에서 보기
+            </button>
+            <TextSizeButton />
+          </div>
           <Link
             to="/cat/$catId"
             params={{ catId: cat.id }}
@@ -402,16 +406,6 @@ function AnswerFlow() {
           </svg>
         </button>
         <p className="pointer-events-none absolute inset-x-12 text-center text-body font-medium">{cat.name}</p>
-        {/* The bottom nav (and its 크게 button) is hidden here, so the same switch sits in the header. */}
-        <button
-          type="button"
-          onClick={actions.toggleLarge}
-          aria-pressed={large}
-          aria-label="글자 크게 보기"
-          className="flex size-12 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-medium text-ink-foreground"
-        >
-          {large ? "보통" : "크게"}
-        </button>
       </div>
 
       <div className="flex items-center gap-4">
@@ -544,14 +538,17 @@ function AnswerFlow() {
 
       </div>
       <div className="shrink-0 space-y-2 border-t border-border px-6 pb-[calc(8px+env(safe-area-inset-bottom))] pt-2">
-        <button
-          type="button"
-          onClick={() => void go()}
-         
-          className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground"
-        >
-          {step < 3 ? "다음" : "기록 마치기"}
-        </button>
+        {/* No menu on this screen, so 크게 sits at the right end of the bottom button (same corner as everywhere else). */}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => void go()}
+            className="h-14 min-w-0 flex-1 rounded-full bg-ink text-body font-medium text-ink-foreground"
+          >
+            {step < 3 ? "다음" : "기록 마치기"}
+          </button>
+          <TextSizeButton />
+        </div>
         <button type="button" onClick={() => void go()} className="h-12 w-full rounded-full text-body">
           다음에 답할게요
         </button>

@@ -1,5 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { actions, useStore } from "@/lib/store";
+import { useStore } from "@/lib/store";
+import { TextSizeButton } from "@/components/TextSizeButton";
 
 const items = [
   { to: "/", label: "홈", match: (p: string) => p === "/" },
@@ -39,15 +40,7 @@ export function AppNav() {
         })}
       </div>
       <div aria-hidden={true} className="min-w-0 flex-1" />
-      <button
-        type="button"
-        onClick={actions.toggleLarge}
-        aria-pressed={large}
-        aria-label="글자 크게 보기"
-        className="flex size-[min(3.75rem,14vw)] min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-full bg-ink text-caption font-medium text-ink-foreground"
-      >
-        {large ? "보통" : "크게"}
-      </button>
+      <TextSizeButton className="size-[min(3.75rem,14vw)] min-h-[48px] min-w-[48px]" />
       <div aria-hidden={true} className="min-w-0 flex-1" />
     </nav>
   );

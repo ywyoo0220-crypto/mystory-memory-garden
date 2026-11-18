@@ -5,6 +5,7 @@ import { cardColors, getCategory, type Category } from "@/lib/data";
 import { catVars } from "@/lib/theme";
 import { CategoryPill } from "@/components/CategoryCard";
 import { Button } from "@/components/ui/button";
+import { TextSizeButton } from "@/components/TextSizeButton";
 import { finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
 
 const TITLE = "처음 안내 — MyStory";
@@ -109,8 +110,10 @@ function Onboarding() {
 
 function Footer({ children }: { children: ReactNode }) {
   return (
-    <div className="z-20 shrink-0 space-y-2 border-t border-comparison-border bg-paper px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4">
-      {children}
+    <div className="z-20 flex shrink-0 items-center gap-2 border-t border-comparison-border bg-paper px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4">
+      {/* 크게 always sits at the bottom-right: here, at the right end of the bottom button. */}
+      <div className="min-w-0 flex-1">{children}</div>
+      <TextSizeButton />
     </div>
   );
 }
