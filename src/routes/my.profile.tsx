@@ -60,8 +60,8 @@ function ProfilePage() {
     toast("프로필을 저장했어요");
     navigate({ to: "/my" });
   };
-  const field = "block px-6 py-4";
-  const labelCls = "block text-caption font-medium text-muted-foreground";
+  const field = "group block px-6 py-5 transition-colors focus-within:bg-secondary/40";
+  const labelCls = "block text-caption font-medium text-muted-foreground transition-colors group-focus-within:text-ink";
   const input = "mt-1 h-12 w-full bg-transparent text-body font-medium outline-none placeholder:font-normal placeholder:text-muted-foreground";
   const birthBad = birth.length > 0 && !validBirth(birth);
   return (
@@ -104,18 +104,21 @@ function ProfilePage() {
           </label>
           <label className={field}>
             <span className={labelCls}>태어난 해</span>
-            <input
-              className={input}
-              value={birth}
-              onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))}
-              placeholder="예: 1955"
-              inputMode="numeric"
-              maxLength={4}
-              aria-invalid={birthBad}
-            />
+            <span className="mt-1 flex h-12 items-baseline gap-1.5">
+              <input
+                className={`${input} mt-0 flex-1`}
+                value={birth}
+                onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                placeholder="예: 1955"
+                inputMode="numeric"
+                maxLength={4}
+                aria-invalid={birthBad}
+              />
+              {birth && <span aria-hidden className="shrink-0 text-caption text-muted-foreground">년</span>}
+            </span>
           </label>
         </div>
-        <p className="px-2 text-caption text-muted-foreground">{birthBad ? "1900년부터 2099년 사이, 네 자리로 입력하세요." : "태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요."}</p>
+        <p className={`px-2 text-caption ${birthBad ? "text-destructive" : "text-muted-foreground"}`}>{birthBad ? "1900년부터 2099년 사이, 네 자리로 입력하세요." : "태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요."}</p>
         <button type="button" onClick={save} className="flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground">
           저장하기
         </button>
