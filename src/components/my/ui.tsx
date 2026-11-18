@@ -11,12 +11,15 @@ export const Chevron = () => (
   </svg>
 );
 
-export function SubHeader({ title, back = "/my", sub, close, onBack }: { title: string; back?: string; sub?: string; close?: boolean; onBack?: () => void }) {
+export function SubHeader({ title, back = "/my", sub, close, onBack, action }: { title: string; back?: string; sub?: string; close?: boolean; onBack?: () => void; action?: ReactNode }) {
   return (
     <div className="no-print">
       {onBack ? <BackBar title="" onBack={onBack} /> : <BackLink to={back} close={!!close} />}
       <div className="px-6 pb-4 pt-2">
-        <h1 className="text-title font-medium">{title}</h1>
+        <div className="flex items-center justify-between gap-4">
+          <h1 className="text-title font-medium">{title}</h1>
+          {action}
+        </div>
         {sub && <p className="mt-2 text-caption text-muted-foreground">{sub}</p>}
       </div>
     </div>

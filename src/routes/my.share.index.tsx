@@ -7,7 +7,7 @@ import { prefs, SCOPES, usePrefs, type ShareScope } from "@/lib/prefs";
 import { defaultCover, personaCover, shareUrl } from "@/lib/share";
 import { CoverPicker } from "@/components/CoverPicker";
 import { catVars } from "@/lib/theme";
-import { Card, Chevron, Dot, SubHeader, Toggle } from "@/components/my/ui";
+import { Card, Dot, SubHeader, Toggle } from "@/components/my/ui";
 
 export const Route = createFileRoute("/my/share/")({
   head: () => ({
@@ -83,29 +83,22 @@ function SharePage() {
 
   return (
     <main className="pb-6">
-      <SubHeader title="기록 공유하기" />
+      <SubHeader
+        title="기록 공유하기"
+        sub="고른 기록만 정한 사람에게 링크로 보여줘요."
+        action={sharedN > 0 ? <Link to="/my/share/manage" className="inline-flex h-12 shrink-0 items-center px-2 text-caption font-medium">관리 {sharedN}</Link> : undefined}
+      />
       <div className="space-y-4 px-6">
-        <p className="text-body font-medium">고른 기록만 정한 사람에게 링크로 보여줘요.</p>
-        {sharedN > 0 && (
-          <Link to="/my/share/manage" className="flex min-h-14 items-center gap-4 rounded-[20px] border border-border bg-card px-6">
-            <span className="flex-1 text-body font-medium">공유 중인 링크 관리 · {sharedN}개</span>
-            <Chevron />
-          </Link>
-        )}
-        <ol className="flex gap-2" aria-label="단계">
-          {STEPS.map((s, i) => (
-            <li key={s} className="flex-1" aria-current={i === step ? "step" : undefined}>
-              <span className={`block h-1 rounded-full ${i <= step ? "bg-ink" : "bg-[#D1D1D6]"}`} />
-              <span className={`mt-2 block text-caption ${i === step ? "font-medium" : "text-muted-foreground"}`}>{i + 1}. {s}</span>
-            </li>
-          ))}
-        </ol>
+        <div aria-label={`${step + 1}/3단계 · ${STEPS[step]}`} role="img" className="flex items-center gap-2">
+          {STEPS.map((s, i) => <span key={s} className={`h-0.5 flex-1 rounded-full ${i <= step ? "bg-ink" : "bg-[#D1D1D6]"}`} />)}
+        </div>
+        <p className="text-caption font-medium">{step + 1}. {STEPS[step]}</p>
 
         {step === 0 && (
           <>
             {list.length > 0 && (
               <div className="flex min-h-12 items-center justify-between">
-                <span className="text-caption text-muted-foreground">선택한 이야기 <b className="font-medium text-ink">{picked.length}</b>개</span>
+                <span className="text-caption text-muted-foreground">{picked.length ? `이야기 ${picked.length}개 선택됨` : "이야기를 골라 주세요"}</span>
                 <button type="button" className="inline-flex h-12 items-center rounded-full px-4 text-caption font-medium active:bg-secondary" onClick={() => setPicked(picked.length === list.length ? [] : list.map(([q]) => q))}>
                   {picked.length === list.length ? "선택 해제" : "전체 선택"}
                 </button>
