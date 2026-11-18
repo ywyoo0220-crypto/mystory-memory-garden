@@ -8,6 +8,7 @@ import { VoiceBar } from "@/components/VoicePlayer";
 import { toast } from "sonner";
 import { deleteMedia, putMedia, useMediaUrl } from "@/lib/media";
 import { CategoryPill } from "@/components/CategoryCard";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/answer/$qid")({
   validateSearch: (s: Record<string, unknown>): { step?: number | undefined } => {
@@ -83,6 +84,7 @@ function AnswerFlow() {
   const [photos, setPhotos] = useState<string[]>([]);
   const [voices, setVoices] = useState<Voice[]>([]);
   const [done, setDone] = useState(false);
+  const [confirmRef, setConfirmRef] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [speaking, setSpeaking] = useState(false);
   const [elapsed, setElapsed] = useState(0);
@@ -371,7 +373,8 @@ function AnswerFlow() {
   }
 
   return (
-    <main className="category-list flex min-h-app flex-col px-6 pb-[calc(6rem+16px+env(safe-area-inset-bottom))]" style={catVars(cat.id)}>
+    <main className="category-list fixed inset-0 mx-auto flex w-full max-w-[440px] flex-col bg-paper pt-safe" style={catVars(cat.id)}>
+      <div className="shrink-0 px-6">
       <div className="relative flex h-16 items-center justify-between">
         <button
           type="button"
@@ -406,6 +409,8 @@ function AnswerFlow() {
       </div>
       <span className="text-caption font-medium tabular-nums" aria-hidden>{step + 1} / {steps.length}</span>
       </div>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4">
 
       <h1 className="mt-6 font-serif text-title">{steps[step]}</h1>
       {step > 0 && <p className="mt-2 text-caption">{q.core}</p>}
@@ -416,26 +421,46 @@ function AnswerFlow() {
         value={answers[step]}
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="한 줄이어도 괜찮아요."
-        className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border border-border bg-card p-6 text-body outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"
+        rows={4}
+        className="mt-4 block min-h-[calc(4lh+48px)] w-full resize-none rounded-3xl border border-border bg-card p-6 text-body outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"
       />
 
       {photos.length > 0 && (
-        <ul className="mt-4 grid grid-cols-2 gap-2" aria-label={`첨부한 사진 ${photos.length}장`}>
+        <ul className="-mx-6 mt-2 flex gap-2 overflow-x-auto px-6 pt-2" aria-label={`첨부한 사진 ${photos.length}장`}>
           {photos.map((p, i) => (
-            <li key={p} className="relative">
-              <Photo src={p} className="aspect-square w-full rounded-3xl object-cover" />
+            <li key={p} className="relative shrink-0 pr-2">
+              <Photo src={p} className="size-16 rounded-[12px] object-cover" />
               <button
                 type="button"
-                onClick={() => removePhoto(p)}
+                onClick={() => setConfirmRef(p)}
                 aria-label={`사진 ${i + 1} 빼기`}
-                className="absolute right-2 top-2 h-12 rounded-full border border-border bg-card px-4 text-caption font-medium"
+                className="absolute -right-3 -top-4 flex size-12 items-center justify-center"
               >
-                사진 빼기
+                <span aria-hidden className="flex size-6 items-center justify-center rounded-full bg-ink text-ink-foreground">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M2 2l8 8M10 2l-8 8" /></svg>
+                </span>
               </button>
             </li>
           ))}
         </ul>
       )}
+      <AlertDialog open={confirmRef !== null} onOpenChange={(o) => !o && setConfirmRef(null)}>
+        <AlertDialogContent className="max-w-[360px] rounded-3xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-title font-medium">이 사진을 뺄까요?</AlertDialogTitle>
+            <AlertDialogDescription className="text-body">기록에서 사진이 빠져요.</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-2">
+            <AlertDialogAction
+              onClick={() => { if (confirmRef) removePhoto(confirmRef); setConfirmRef(null); }}
+              className="h-14 rounded-full bg-ink text-body font-medium text-ink-foreground"
+            >
+              빼기
+            </AlertDialogAction>
+            <AlertDialogCancel className="mt-0 h-14 rounded-full text-body font-medium">그대로 두기</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {voice && (
         <div className="mt-4">
@@ -495,7 +520,8 @@ function AnswerFlow() {
         </p>
       )}
 
-      <div className="mt-auto space-y-2 pt-4">
+      </div>
+      <div className="shrink-0 space-y-2 border-t border-border px-6 pb-[calc(8px+env(safe-area-inset-bottom))] pt-2">
         <button
           type="button"
           onClick={() => void go()}
