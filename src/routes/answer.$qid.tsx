@@ -550,9 +550,12 @@ function AnswerFlow() {
         >
           {step < 3 ? "다음" : "기록 마치기"}
         </button>
-        <button type="button" onClick={() => void go()} className="h-12 w-full rounded-full text-body">
-          다음에 답할게요
-        </button>
+        {/* On the last step there is nothing left to answer later, so only the finish button remains. */}
+        {step < 3 && (
+          <button type="button" onClick={() => void go()} className="h-12 w-full rounded-full text-body">
+            다음에 답할게요
+          </button>
+        )}
       </div>
     </main>
   );
