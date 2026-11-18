@@ -1,4 +1,4 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { Fragment, useEffect, useRef, type CSSProperties } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { cardColors, getQuestion, type Category } from "@/lib/data";
 import { recordPhotos, type StoryRecord } from "@/lib/store";
@@ -139,27 +139,29 @@ export function RecordCard({
           </div>
         </Button>
 
-        {list.map(({ qid, rec }, i) => {
-          const q = getQuestion(qid)!;
-          return (
-            <div key={qid} id={`rec-${qid}`} className={i > 0 ? "mt-10" : "mt-6"}>
-              {/* 질문 사이는 28px 짧은 먹색 선(왼쪽 정렬)으로 가른다. 기록이 하나면 생략. */}
-              {list.length > 1 && (
-                <span aria-hidden="true" className="mb-3 block h-px w-7" style={{ background: c.fg }} />
-              )}
-              <button type="button" onClick={onToggle} className="block w-full text-left">
-                <h2 className="font-serif text-title font-medium">{q.core}</h2>
-              </button>
-              <div className="expand" data-open={open}>
-                <div>
-                  <div className="pt-6" style={{ "--j": Math.min(i, 3) } as CSSProperties}>
-                    <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
+        {/* 기록이 2개 이상일 때만, 두 기록 사이 여백의 정중앙에 28px 짧은 먹색 선을 놓는다. */}
+        <div className="mt-6 flex flex-col gap-5">
+          {list.map(({ qid, rec }, i) => {
+            const q = getQuestion(qid)!;
+            return (
+              <Fragment key={qid}>
+                {i > 0 && <span aria-hidden="true" className="block h-px w-7 shrink-0" style={{ background: c.fg }} />}
+                <div id={`rec-${qid}`}>
+                  <button type="button" onClick={onToggle} className="block w-full text-left">
+                    <h2 className="font-serif text-title font-medium">{q.core}</h2>
+                  </button>
+                  <div className="expand" data-open={open}>
+                    <div>
+                      <div className="pt-6" style={{ "--j": Math.min(i, 3) } as CSSProperties}>
+                        <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
+              </Fragment>
+            );
+          })}
+        </div>
 
         <div className="expand" data-open={open}>
           <div>
