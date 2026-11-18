@@ -44,7 +44,7 @@ function SharedPage() {
     );
   }
   const qids = sharedRecords(share.qids, records);
-  const color = shareColor(qids);
+  const color = shareColor(qids, profile.name);
   const name = profile.name.trim();
   const times = qids.map((q) => records[q]!.updatedAt);
   const span = times.length ? monthSpan(Math.min(...times), Math.max(...times)) : "";

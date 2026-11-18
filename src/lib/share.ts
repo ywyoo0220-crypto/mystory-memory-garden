@@ -9,10 +9,22 @@ const PERSONA_COLOR: Record<Persona, { bg: string; fg: string }> = {
   C: { bg: "#AEB8A0", fg: "#000000" },
 };
 
-/** The cover colour of a shared page: the persona's colour, else the colour of the category shared most. */
-export function shareColor(qids: string[]): { bg: string; fg: string } {
+/** The three exhibition personas by the name in their profile (A 김정희, B 박정수, C 이영숙). */
+const PERSONA_BY_NAME: Record<string, Persona> = { 김정희: "A", 박정수: "B", 이영숙: "C" };
+
+/** Which persona this phone is: the ?p= link if it was opened with one, else the profile name. */
+export function currentPersona(name: string): Persona | null {
   let p: Persona | null = null;
   try { p = resolvePersona(window.location.search, sessionStorage); } catch { /* noop */ }
+  return p ?? PERSONA_BY_NAME[name.trim()] ?? null;
+}
+
+/**
+ * The cover colour of a shared page. A persona always gets its own colour (its app-icon and book-cover colour),
+ * whatever records are shared; anyone else gets the colour of the category shared most.
+ */
+export function shareColor(qids: string[], name = ""): { bg: string; fg: string } {
+  const p = currentPersona(name);
   if (p) return PERSONA_COLOR[p];
   const n = new Map<string, number>();
   qids.forEach((q) => { const c = categoryOfQuestion(q); if (c) n.set(c.id, (n.get(c.id) ?? 0) + 1); });
