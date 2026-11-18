@@ -231,19 +231,16 @@ function TypingText({ text }: { text: string }) {
 }
 
 function Screen3() {
-  const [order, setOrder] = useState(["T7", "T8", "T1"]);
-  const [flip, setFlip] = useState(0);
-  const cats = order.map((id) => getCategory(id)!);
-  const next = () => { setOrder((o) => [o[2]!, o[0]!, o[1]!]); setFlip((f) => f + 1); };
+  const cats = ["T7", "T8", "T1"].map((id) => getCategory(id)!);
   return (
     <>
       <Head title={"주제별로도, 시간순으로도\n모아 볼 수 있어요."} sub="기록은 이 휴대폰에 저장돼요. 보여줄 사람은 내가 정해요." />
-      <button type="button" onClick={next} aria-label="다음 카드 보기" className="mt-4 block w-full text-left">
+      <div aria-hidden inert className="pointer-events-none mt-4">
         {cats.map((cat, i) => {
           const c = cardColors(cat);
           const last = i === cats.length - 1;
           return (
-            <div key={last ? `${cat.id}-${flip}` : cat.id} className={`relative ${last && flip ? "onb-rise" : ""}`} style={{ zIndex: i + 1, marginTop: i ? "-2rem" : 0 }}>
+            <div key={cat.id} className="onb-stack relative" style={{ zIndex: i + 1, marginTop: i ? "-2rem" : 0, animationDelay: `${150 + i * 220}ms` }}>
               <Surface
                 cat={cat}
                 className={`!pt-5 ${last ? "pb-5" : "rounded-b-none pb-[2.5rem]"}`}
@@ -255,8 +252,7 @@ function Screen3() {
             </div>
           );
         })}
-      </button>
-      <p className="mt-3 text-center text-[0.9375rem] text-muted-foreground">카드를 눌러 넘겨 보세요</p>
+      </div>
     </>
   );
 }

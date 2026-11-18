@@ -252,8 +252,12 @@
 }
 .onb-fill { animation: onb-fill 0.5s ease both; }
 .onb-rise { animation: onb-rise 0.5s ease both; }
+@keyframes onb-stack {
+  from { opacity: 0; transform: translateY(2.5rem); }
+}
+.onb-stack { animation: onb-stack 0.75s cubic-bezier(0.22, 1, 0.36, 1) both; }
 @media (prefers-reduced-motion: reduce) {
-  .onb-fill, .onb-rise { animation: none; }
+  .onb-fill, .onb-rise, .onb-stack { animation: none; }
 }
 
 /* The launch overlay never changes the mounted app's layout or focus. */
