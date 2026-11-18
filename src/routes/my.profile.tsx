@@ -70,24 +70,26 @@ function ProfilePage() {
     <main className="pb-32">
       <SubHeader title="프로필" sub="책의 첫 장에 이렇게 담겨요." />
       <div className="space-y-6 px-6">
-        <div className="rounded-[20px] bg-card px-6 pt-9 pb-7 text-center">
-          <button type="button" aria-label={photo ? "프로필 사진 바꾸기" : "프로필 사진 넣기"} onClick={() => file.current?.click()} className="relative mx-auto block rounded-full">
-            <Avatar name={name} photo={photo} size={80} />
-            <span aria-hidden className="absolute -bottom-1 -right-1 flex size-9 items-center justify-center rounded-full border-2 border-card bg-ink text-ink-foreground">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
-            </span>
-          </button>
+        <div className="rounded-[20px] bg-card px-6 pt-9 pb-8 text-center">
+          <div className="relative mx-auto w-fit">
+            <button type="button" aria-label={photo ? "프로필 사진 바꾸기" : "프로필 사진 넣기"} onClick={() => file.current?.click()} className="relative block rounded-full">
+              <Avatar name={name} photo={photo} size={80} />
+              <span aria-hidden className="absolute -bottom-1 -right-1 flex size-9 items-center justify-center rounded-full border-2 border-card bg-ink text-ink-foreground">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
+              </span>
+            </button>
+            {photo && (
+              <button type="button" aria-label="프로필 사진 빼기" onClick={() => setPhoto(undefined)} className="absolute -right-2 -top-2 flex size-8 items-center justify-center rounded-full border-2 border-card bg-ink text-ink-foreground after:absolute after:-inset-1.5 after:content-['']">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              </button>
+            )}
+          </div>
           <p className="mt-8 text-caption font-normal text-muted-foreground">기록자</p>
           <p className="mt-2 truncate text-title font-medium">{name.trim() || "이름을 넣어 주세요"}</p>
           <span aria-hidden className="mx-auto mt-7 mb-6 block h-px w-7 bg-ink" />
           <p className="text-caption font-normal text-muted-foreground">
             {[validBirth(birth) && `${birth}년생`, place.trim() && `${place.trim()} 출생`].filter(Boolean).join(" · ") || "태어난 해와 곳"}
           </p>
-          {photo && (
-            <button type="button" onClick={() => setPhoto(undefined)} className="mt-6 inline-flex h-11 items-center rounded-full border border-border px-5 text-caption font-normal text-muted-foreground">
-              사진 빼기
-            </button>
-          )}
         </div>
         <input
           ref={file}

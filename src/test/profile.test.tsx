@@ -32,5 +32,26 @@ describe("Profile editing", () => {
     await waitFor(() => expect(router.state.location.pathname).toBe("/my"));
     expect(getPrefs().profile).toMatchObject({ name: "수정 이름", birth: "1958", birthplace: "전남 순천" });
     expect(JSON.parse(localStorage.getItem("mystory.profile.v1") ?? "{}").name).toBe("수정 이름");
+    expect(screen.queryByRole("button", { name: "프로필 사진 빼기" })).toBeNull();
+  });
+
+  it("removes the photo through the avatar badge and saves without it", async () => {
+    localStorage.setItem(ONB_KEY, "1");
+    sessionStorage.setItem(LAUNCH_SESSION_KEY, "1");
+    getPrefs();
+    prefs.setProfile({ name: "이영숙", birth: "1958", photo: "data:image/jpeg;base64,AAA" });
+    const router = createRouter({
+      routeTree,
+      context: { queryClient: new QueryClient() },
+      history: createMemoryHistory({ initialEntries: ["/my/profile"] }),
+    });
+    await router.load();
+    render(<RouterProvider router={router} />);
+
+    fireEvent.click(await screen.findByRole("button", { name: "프로필 사진 빼기" }));
+    fireEvent.click(screen.getByRole("button", { name: "저장하기" }));
+
+    await waitFor(() => expect(router.state.location.pathname).toBe("/my"));
+    expect(getPrefs().profile.photo).toBeUndefined();
   });
 });
