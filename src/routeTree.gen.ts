@@ -24,6 +24,7 @@ import { Route as MyExportRouteImport } from './routes/my.export'
 import { Route as MyProfileRouteImport } from './routes/my.profile'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding.index'
 import { Route as OnboardingNRouteImport } from './routes/onboarding.$n'
+import { Route as SIdRouteImport } from './routes/s.$id'
 import { Route as MySettingsIndexRouteImport } from './routes/my.settings.index'
 import { Route as MySettingsLockRouteImport } from './routes/my.settings.lock'
 import { Route as MyShareIndexRouteImport } from './routes/my.share.index'
@@ -104,6 +105,11 @@ const OnboardingNRoute = OnboardingNRouteImport.update({
   path: '/onboarding/$n',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SIdRoute = SIdRouteImport.update({
+  id: '/s/$id',
+  path: '/s/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MySettingsIndexRoute = MySettingsIndexRouteImport.update({
   id: '/my/settings/',
   path: '/my/settings/',
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
   '/onboarding/$n': typeof OnboardingNRoute
+  '/s/$id': typeof SIdRoute
   '/my/': typeof MyIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
   '/my/settings/lock': typeof MySettingsLockRoute
@@ -160,6 +167,7 @@ export interface FileRoutesByTo {
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
   '/onboarding/$n': typeof OnboardingNRoute
+  '/s/$id': typeof SIdRoute
   '/my': typeof MyIndexRoute
   '/onboarding': typeof OnboardingIndexRoute
   '/my/settings/lock': typeof MySettingsLockRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
   '/onboarding/$n': typeof OnboardingNRoute
+  '/s/$id': typeof SIdRoute
   '/my/': typeof MyIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
   '/my/settings/lock': typeof MySettingsLockRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/my/export'
     | '/my/profile'
     | '/onboarding/$n'
+    | '/s/$id'
     | '/my/'
     | '/onboarding/'
     | '/my/settings/lock'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/my/export'
     | '/my/profile'
     | '/onboarding/$n'
+    | '/s/$id'
     | '/my'
     | '/onboarding'
     | '/my/settings/lock'
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '/my/export'
     | '/my/profile'
     | '/onboarding/$n'
+    | '/s/$id'
     | '/my/'
     | '/onboarding/'
     | '/my/settings/lock'
@@ -269,6 +281,7 @@ export interface RootRouteChildren {
   MyExportRoute: typeof MyExportRoute
   MyProfileRoute: typeof MyProfileRoute
   OnboardingNRoute: typeof OnboardingNRoute
+  SIdRoute: typeof SIdRoute
   MyIndexRoute: typeof MyIndexRoute
   OnboardingIndexRoute: typeof OnboardingIndexRoute
   MySettingsLockRoute: typeof MySettingsLockRoute
@@ -384,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingNRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/s/$id': {
+      id: '/s/$id'
+      path: '/s/$id'
+      fullPath: '/s/$id'
+      preLoaderRoute: typeof SIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/my/settings/': {
       id: '/my/settings/'
       path: '/my/settings'
@@ -429,6 +449,7 @@ const rootRouteChildren: RootRouteChildren = {
   MyExportRoute: MyExportRoute,
   MyProfileRoute: MyProfileRoute,
   OnboardingNRoute: OnboardingNRoute,
+  SIdRoute: SIdRoute,
   MyIndexRoute: MyIndexRoute,
   OnboardingIndexRoute: OnboardingIndexRoute,
   MySettingsLockRoute: MySettingsLockRoute,

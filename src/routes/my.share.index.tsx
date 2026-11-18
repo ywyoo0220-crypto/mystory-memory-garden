@@ -1,9 +1,10 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
 import { prefs, SCOPES, usePrefs, type ShareScope } from "@/lib/prefs";
+import { shareUrl } from "@/lib/share";
 import { catVars } from "@/lib/theme";
 import { Card, Chevron, Dot, SubHeader, Toggle } from "@/components/my/ui";
 
@@ -25,29 +26,62 @@ const STEPS = ["기록 고르기", "보여줄 사람", "미리보기"];
 
 function SharePage() {
   const { records } = useStore();
-  const { shares } = usePrefs();
-  const navigate = useNavigate();
+  const { shares, profile } = usePrefs();
   const [step, setStep] = useState(0);
   const [picked, setPicked] = useState<string[]>([]);
   const [scope, setScope] = useState<ShareScope>("family");
+  /** 'Only me' is not a way of sharing, so the share flow offers only the people to show. */
+  const scopes = SCOPES.filter(([v]) => v !== "me");
   const [noVoice, setNoVoice] = useState(true);
   const list = Object.entries(records).filter(([, r]) => hasContent(r)).sort((a, b) => b[1].updatedAt - a[1].updatedAt);
   const hasVoice = picked.some((q) => records[q]?.voices?.length);
   const sharedN = new Set(shares.flatMap((s) => s.qids)).size;
   const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground disabled:opacity-40";
 
-  const submit = async () => {
+  const [made, setMade] = useState<string | null>(null);
+  const submit = () => {
     const id = Date.now().toString(36);
-    prefs.addShare({ id, qids: picked, scope, withVoice: scope === "me" || !noVoice, t: Date.now() });
-    toast(scope === "me" ? "저장했어요" : "공유 설정을 저장했어요");
-    navigate({ to: "/my/share/manage" });
+    prefs.addShare({ id, qids: picked, scope, withVoice: !noVoice, t: Date.now(), link: shareUrl(id) });
+    setMade(id);
+    window.scrollTo(0, 0);
   };
+  const send = async (id: string) => {
+    const url = shareUrl(id);
+    const title = profile.name.trim() ? `${profile.name.trim()}의 이야기` : "MyStory 이야기";
+    try {
+      if (navigator.share) return void (await navigator.share({ title, text: "MyStory에서 고른 기록을 보내요.", url }));
+      await navigator.clipboard.writeText(url);
+      toast("링크를 복사했어요");
+    } catch {
+      /* closed the share sheet */
+    }
+  };
+
+  if (made) {
+    return (
+      <main className="pb-6">
+        <SubHeader title="기록 공유하기" />
+        <div className="space-y-4 px-6">
+          <p className="text-body font-medium">링크를 만들었어요.</p>
+          <p className="break-all rounded-2xl border border-border bg-card px-4 py-4 text-caption">{shareUrl(made)}</p>
+          <button type="button" className={primary} onClick={() => void send(made)}>카톡 등으로 보내기</button>
+          <Link to="/s/$id" params={{ id: made }} className="flex h-14 w-full items-center justify-center rounded-full border border-ink text-body font-medium">
+            받는 사람 화면 보기
+          </Link>
+          <p className="text-caption text-muted-foreground [word-break:keep-all]">
+            지금은 시범 버전이라 실제로 보내지지 않아요. 받는 사람 화면은 이 휴대폰에서만 열려요. 공유 관리에서 언제든 해제할 수 있어요.
+          </p>
+          <Link to="/my/share/manage" className="inline-flex h-12 items-center px-2 text-caption font-medium underline underline-offset-4">공유 관리</Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="pb-6">
       <SubHeader title="기록 공유하기" />
       <div className="space-y-4 px-6">
-        <p className="text-body font-medium">고른 기록만 정한 사람에게 보여줘요.</p>
+        <p className="text-body font-medium">고른 기록만 정한 사람에게 링크로 보여줘요.</p>
         {sharedN > 0 && (
           <Link to="/my/share/manage" className="flex min-h-14 items-center gap-4 rounded-[20px] border border-border bg-card px-6">
             <span className="flex-1 text-body font-medium">공유 관리 · {sharedN}개 설정됨</span>
@@ -93,13 +127,13 @@ function SharePage() {
         {step === 1 && (
           <>
             <div role="radiogroup" aria-label="보여줄 사람" className="space-y-2">
-              {SCOPES.map(([v, t, d]) => (
+              {scopes.map(([v, t, d]) => (
                 <button
                   key={v}
                   type="button"
                   role="radio"
                   aria-checked={scope === v}
-                  onClick={() => { setScope(v); setNoVoice(v !== "me"); }}
+                  onClick={() => setScope(v)}
                   className={`flex min-h-16 w-full items-center gap-4 rounded-[20px] border bg-card px-6 py-4 text-left ${scope === v ? "border-ink border-2" : "border-border"}`}
                 >
                   <span className={`flex size-5 shrink-0 items-center justify-center rounded-full border-2 border-ink`}>
@@ -128,10 +162,10 @@ function SharePage() {
             {hasVoice && (
               <Card className="flex items-center gap-4 px-6 py-2">
                 <span className="flex-1">
-                  <span className="block text-body font-medium">{scope === "me" || !noVoice ? "목소리 포함" : "목소리는 글로만 보내요"}</span>
-                  {scope !== "me" && <span className="block text-caption text-muted-foreground">목소리는 빼고 보내기</span>}
+                  <span className="block text-body font-medium">{!noVoice ? "목소리 포함" : "목소리는 글로만 보내요"}</span>
+                  {<span className="block text-caption text-muted-foreground">목소리는 빼고 보내기</span>}
                 </span>
-                {scope !== "me" && <Toggle on={noVoice} onChange={setNoVoice} label="목소리는 빼고 보내기" />}
+                {<Toggle on={noVoice} onChange={setNoVoice} label="목소리는 빼고 보내기" />}
               </Card>
             )}
             <div className="space-y-2">
@@ -145,7 +179,7 @@ function SharePage() {
                   <div key={q} className="rounded-[20px] p-6" style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}>
                     <p className="text-caption font-medium">
                       {cat.name}
-                      {voice && (scope === "me" || !noVoice ? " · 목소리 포함" : " · 목소리는 글로만")}
+                      {voice && (!noVoice ? " · 목소리 포함" : " · 목소리는 글로만")}
                     </p>
                     <p className="mt-1 text-body font-medium">{getQuestion(q)?.core}</p>
                     <p className="mt-2 line-clamp-2 text-caption">{r?.answers.find((a) => a.trim()) || r?.voices?.[0]?.text}</p>
@@ -153,10 +187,10 @@ function SharePage() {
                 );
               })}
             </div>
-            <p className="text-caption text-muted-foreground">지금은 시범 버전이라 공유 설정만 저장돼요. 실제로 보내지지는 않아요.</p>
+            <p className="text-caption text-muted-foreground">지금은 시범 버전이라 실제로 보내지지 않아요. 링크와 받는 사람 화면만 만들어져요.</p>
             <div className="flex gap-2">
               <button type="button" className="h-14 rounded-full border border-ink px-6 text-body font-medium" onClick={() => setStep(1)}>이전</button>
-              <button type="button" className={primary} onClick={() => void submit()}>{scope === "me" ? "저장하기" : "공유 설정 저장하기"}</button>
+              <button type="button" className={primary} onClick={submit}>링크 만들기</button>
             </div>
           </>
         )}

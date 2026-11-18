@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { categoryOfQuestion } from "@/lib/data";
 import { prefs, SCOPES, usePrefs } from "@/lib/prefs";
 import { Card, SubHeader } from "@/components/my/ui";
@@ -38,6 +38,7 @@ function Manage() {
                 </p>
                 <p className="mt-1 text-caption text-muted-foreground">{cats}</p>
                 {s.link && <p className="mt-1 break-all text-caption">{s.link}</p>}
+                <Link to="/s/$id" params={{ id: s.id }} className="mt-1 inline-flex h-12 items-center text-caption font-medium underline underline-offset-4">받는 사람 화면 보기</Link>
               </div>
               <button type="button" className="h-12 shrink-0 rounded-full border border-ink px-6 text-caption font-medium" onClick={() => prefs.removeShares([s.id])}>
                 해제

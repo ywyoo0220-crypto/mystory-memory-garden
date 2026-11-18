@@ -19,6 +19,7 @@ export function LaunchScreen() {
   useEffect(() => {
     // Pre-paint cover (set in __root) hands over to this overlay, or lifts when already seen.
     const lift = () => document.documentElement.classList.remove("ms-pre-launch");
+    if (window.location.pathname.startsWith("/s/")) return lift();
     try {
       if (sessionStorage.getItem(LAUNCH_SESSION_KEY) === "1") return lift();
       sessionStorage.setItem(LAUNCH_SESSION_KEY, "1");

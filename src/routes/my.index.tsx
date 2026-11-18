@@ -26,7 +26,7 @@ function My() {
   const groups: [string, [string, string, string][]][] = [
     ["내 기록", [
       ["/my/continue", "이어서 쓰기", incomplete.length ? `작성 중인 기록 ${incomplete.length}개` : "작성 중인 기록 없음"],
-      ["/my/export", "기록 공유하기", "고른 기록을 파일로 만들어 보내요"],
+      ["/my/share", "기록 공유하기", "고른 기록을 링크로 보여줘요"],
       ["/my/book", "책으로 만들기", "기록이 이런 책이 돼요"],
     ]],
     ["보관과 보안", [

@@ -54,7 +54,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
-const PRE_PAINT = `try{var d=document.documentElement,p=location.pathname;if(sessionStorage.getItem("mystory.launch.seen.v1")!=="1")d.classList.add("ms-pre-launch");if(!localStorage.getItem("ms.onb")&&p.indexOf("/onboarding")!==0&&p!=="/lock")d.classList.add("ms-pre-route")}catch(e){}`;
+const PRE_PAINT = `try{var d=document.documentElement,p=location.pathname;if(p.indexOf("/s/")!==0){if(sessionStorage.getItem("mystory.launch.seen.v1")!=="1")d.classList.add("ms-pre-launch");if(!localStorage.getItem("ms.onb")&&p.indexOf("/onboarding")!==0&&p!=="/lock")d.classList.add("ms-pre-route")}}catch(e){}`;
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
@@ -80,6 +80,8 @@ function RootComponent() {
   const navigate = useNavigate();
   // App lock: once per launch (session), send to /lock while a PIN is set.
   useEffect(() => {
+    // A share link shows the recipient's page: no lock, onboarding or launch (see /s/$id).
+    if (path.startsWith("/s/")) return void document.documentElement.classList.remove("ms-pre-route", "ms-pre-launch");
     let unlocked = false;
     try { unlocked = sessionStorage.getItem("mystory.unlocked") === "1"; } catch { /* noop */ }
     if (!unlocked && path !== "/lock" && getPrefs().pinHash) return void navigate({ to: "/lock", replace: true });
@@ -94,7 +96,7 @@ function RootComponent() {
     try { applyPersonaLinks(document, resolvePersona(window.location.search, sessionStorage)); } catch { /* noop */ }
   }, [path]);
   const onb = path.startsWith("/onboarding");
-  const fullscreen = onb || path === "/my/export" || path.startsWith("/answer");
+  const fullscreen = onb || path === "/my/export" || path.startsWith("/answer") || path.startsWith("/s/");
   const locked = path === "/lock" || fullscreen;
 
   return (
