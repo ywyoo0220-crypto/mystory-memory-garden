@@ -30,6 +30,7 @@ function Settings() {
   const [resetting, setResetting] = useState(false);
   const label = "px-2 pb-2 text-caption font-medium";
   const small = "h-12 shrink-0 rounded-full border border-ink px-6 text-caption font-medium";
+  const danger = "h-12 shrink-0 rounded-full bg-destructive/10 px-6 text-caption font-medium text-destructive";
   return (
     <main className="pb-6">
       <SubHeader title="설정" />
@@ -75,7 +76,7 @@ function Settings() {
             ) : (
               <div className={rowCls}>
                 <span className="flex-1 text-body font-medium text-destructive">모든 기록 지우기</span>
-                <button type="button" className={`${small} border-destructive text-destructive`} onClick={() => setConfirm(true)}>지우기</button>
+                <button type="button" className={`${danger}`} onClick={() => setConfirm(true)}>지우기</button>
               </div>
             )}
           </Card>
@@ -108,7 +109,7 @@ function Settings() {
                   <span className="block text-body font-medium text-destructive">처음 상태로 되돌리기</span>
                   <span className="block text-caption text-muted-foreground">다른 사람이 이 휴대폰으로 처음부터 쓸 수 있게 해요.</span>
                 </span>
-                <button type="button" className={`${small} border-destructive text-destructive`} onClick={() => setConfirmReset(true)}>되돌리기</button>
+                <button type="button" className={`${danger}`} onClick={() => setConfirmReset(true)}>되돌리기</button>
               </div>
             )}
           </Card>

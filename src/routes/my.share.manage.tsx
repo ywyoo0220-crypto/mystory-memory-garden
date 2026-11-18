@@ -46,7 +46,7 @@ function Manage() {
           );
         })}
         {shares.length > 0 && (
-          <button type="button" className="flex h-14 w-full items-center justify-center rounded-full border border-destructive text-body font-medium text-destructive" onClick={() => prefs.removeShares()}>
+          <button type="button" className="flex h-14 w-full items-center justify-center rounded-full bg-destructive/10 text-body font-medium text-destructive" onClick={() => prefs.removeShares()}>
             모두 해제하기
           </button>
         )}
