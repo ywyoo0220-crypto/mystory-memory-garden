@@ -39,9 +39,9 @@ function KindList() {
         onBack={() => navigate({ to: "/record" })}
       />
       <div className="px-6 pb-6 pt-4">
-        <h1 className="font-serif text-[1.75rem] leading-[1.4]">{kind === "topic" ? "주제를 고르세요." : "시기를 고르세요."}</h1>
+        <h1 className="font-serif text-title">{kind === "topic" ? "주제를 고르세요." : "시기를 고르세요."}</h1>
       </div>
-      <ul className="space-y-1 px-3">
+      <ul className="space-y-1 px-6">
         {cats.map((c) => {
           const total = c.questions.length;
           const done = c.questions.filter((q) => hasContent(records[q.id])).length;
@@ -52,11 +52,11 @@ function KindList() {
                 <span className="inline-flex" style={{ color: c.color.text }}><CategoryIcon id={c.id} size={22} /></span>
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block text-[1.0625rem] font-semibold">
+                <span className="block text-body font-medium">
                   {c.name}
                   {kind === "period" && periodYears(profile.birth, c.index) && <span className="font-normal text-muted-foreground"> · {periodYears(profile.birth, c.index)}</span>}
                 </span>
-                <span className="block text-[0.875rem]">
+                <span className="block text-caption">
                   {pending ? "질문 준비 중" : done ? `${total}개 중 ${done}개 기록함` : `질문 ${total}개`}
                 </span>
               </span>
@@ -70,7 +70,7 @@ function KindList() {
               </svg>
             </>
           );
-          const cls = "flex min-h-[4.5rem] items-center gap-4 rounded-3xl px-3 py-3";
+          const cls = "flex min-h-[4.5rem] items-center gap-4 rounded-3xl px-4 py-4";
           return (
             <li key={c.id} className="category-list" style={catVars(c.id)}>
               {pending ? (

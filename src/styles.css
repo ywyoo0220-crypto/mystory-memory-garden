@@ -5,6 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --spacing: 4px;
+  --text-title: 1.5rem;
+  --text-title--line-height: 1.4;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.7;
+  --text-caption: 0.9375rem;
+  --text-caption--line-height: 1.5;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

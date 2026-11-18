@@ -48,10 +48,10 @@ function LockSettings() {
       <SubHeader title="앱 잠금" back="/my/settings" />
       {pinHash ? (
         <div className="space-y-4 px-6">
-          <p className="text-[1.0625rem] leading-[1.7]">앱 잠금이 켜져 있어요. 앱을 열 때마다 숫자 4자리를 입력해야 해요.</p>
+          <p className="text-body">앱 잠금이 켜져 있어요. 앱을 열 때마다 숫자 4자리를 입력해야 해요.</p>
           <button
             type="button"
-            className="flex h-14 w-full items-center justify-center rounded-full border border-ink text-[1.0625rem] font-semibold"
+            className="flex h-14 w-full items-center justify-center rounded-full border border-ink text-body font-medium"
             onClick={async () => { await prefs.setPin(null); toast("앱 잠금을 껐어요"); }}
           >
             앱 잠금 끄기

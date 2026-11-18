@@ -338,14 +338,14 @@ function AnswerFlow() {
   if (done) {
     const first = answers.find((a) => a.trim()) ?? "";
     return (
-      <main className="px-6 pt-16">
-        <p className="text-[1rem] font-medium">기록했습니다.</p>
-        <h1 className="mt-2 font-serif text-[1.75rem] leading-[1.4]">이야기 하나가 쌓였어요.</h1>
+      <main className="px-6 pt-12">
+        <p className="text-body font-medium">기록했습니다.</p>
+        <h1 className="mt-2 font-serif text-title">이야기 하나가 쌓였어요.</h1>
         <article className="category-surface mt-8 rounded-[32px] p-6 pb-8" style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}>
           <CategoryPill cat={cat} />
-          <h2 className="mt-5 font-serif text-[1.5rem] leading-[1.4]">{q.core}</h2>
-          {photos[0] && <Photo src={photos[0]} className="mt-5 aspect-[16/10] w-full rounded-3xl object-cover" />}
-          {first && <p className="mt-4 line-clamp-4 text-[1.0625rem] leading-[1.7]">{first}</p>}
+          <h2 className="mt-6 font-serif text-title">{q.core}</h2>
+          {photos[0] && <Photo src={photos[0]} className="mt-6 aspect-[16/10] w-full rounded-3xl object-cover" />}
+          {first && <p className="mt-4 line-clamp-4 text-body">{first}</p>}
         </article>
         <div className="mt-8 space-y-2">
           <button
@@ -354,14 +354,14 @@ function AnswerFlow() {
               actions.setView(cat.kind);
               navigate({ to: "/" });
             }}
-            className="h-14 w-full rounded-full bg-ink text-[1rem] font-semibold text-ink-foreground"
+            className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground"
           >
             홈에서 보기
           </button>
           <Link
             to="/cat/$catId"
             params={{ catId: cat.id }}
-            className="flex h-14 w-full items-center justify-center rounded-full border border-ink text-[1rem] font-semibold"
+            className="flex h-14 w-full items-center justify-center rounded-full border border-ink text-body font-medium"
           >
             {cat.name} 더 기록하기
           </Link>
@@ -389,26 +389,26 @@ function AnswerFlow() {
           }}
           aria-label="뒤로"
          
-          className="-ml-3 flex size-12 items-center justify-center rounded-full"
+          className="-ml-4 flex size-12 items-center justify-center rounded-full"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
             <path d="m15 5-7 7 7 7" />
           </svg>
         </button>
-        <p className="pointer-events-none absolute inset-x-12 text-center text-[1rem] font-medium">{cat.name}</p>
+        <p className="pointer-events-none absolute inset-x-12 text-center text-body font-medium">{cat.name}</p>
       </div>
 
-      <div className="flex items-center gap-3">
-      <div className="flex flex-1 gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
+      <div className="flex items-center gap-4">
+      <div className="flex flex-1 gap-2" role="progressbar" aria-valuemin={1} aria-valuemax={4} aria-valuenow={step + 1} aria-label="진행">
         {steps.map((_, i) => (
           <span key={i} className="h-1 flex-1 rounded-full transition-colors" style={{ background: i <= step ? "var(--ink)" : "var(--border)" }} />
         ))}
       </div>
-      <span className="text-[0.875rem] font-medium tabular-nums" aria-hidden>{step + 1} / {steps.length}</span>
+      <span className="text-caption font-medium tabular-nums" aria-hidden>{step + 1} / {steps.length}</span>
       </div>
 
-      <h1 className="mt-5 font-serif text-[1.625rem] leading-[1.45]">{steps[step]}</h1>
-      {step > 0 && <p className="mt-2 text-[0.9375rem]">{q.core}</p>}
+      <h1 className="mt-6 font-serif text-title">{steps[step]}</h1>
+      {step > 0 && <p className="mt-2 text-caption">{q.core}</p>}
 
       <label className="sr-only" htmlFor="answer">답변</label>
       <textarea
@@ -416,11 +416,11 @@ function AnswerFlow() {
         value={answers[step]}
         onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
         placeholder="한 줄이어도 괜찮아요."
-        className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border border-border bg-card p-5 text-[1.0625rem] leading-[1.7] outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"
+        className="mt-4 min-h-[3.5rem] max-h-[14rem] flex-[1_1_0] w-full resize-none rounded-3xl border border-border bg-card p-6 text-body outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"
       />
 
       {photos.length > 0 && (
-        <ul className="mt-3 grid grid-cols-2 gap-2" aria-label={`첨부한 사진 ${photos.length}장`}>
+        <ul className="mt-4 grid grid-cols-2 gap-2" aria-label={`첨부한 사진 ${photos.length}장`}>
           {photos.map((p, i) => (
             <li key={p} className="relative">
               <Photo src={p} className="aspect-square w-full rounded-3xl object-cover" />
@@ -428,7 +428,7 @@ function AnswerFlow() {
                 type="button"
                 onClick={() => removePhoto(p)}
                 aria-label={`사진 ${i + 1} 빼기`}
-                className="absolute right-2 top-2 h-12 rounded-full border border-border bg-card px-4 text-[0.9375rem] font-medium"
+                className="absolute right-2 top-2 h-12 rounded-full border border-border bg-card px-4 text-caption font-medium"
               >
                 사진 빼기
               </button>
@@ -439,27 +439,27 @@ function AnswerFlow() {
 
       {voice && (
         <div className="mt-4">
-          <div className="rounded-full border border-border bg-card py-1.5 pl-1.5 pr-4">
+          <div className="rounded-full border border-border bg-card py-2 pl-2 pr-4">
             <VoiceBar recordId={qid} voice={voice} text={answers[step] || voice.text || ""} fg={cat.kind === "period" ? c.bg : c.pill} accent={cat.kind === "period" ? c.fg : c.pillText} />
           </div>
           <button
             type="button"
             onClick={deleteVoiceOnly}
             disabled={speaking}
-            className="mt-1 h-12 px-2 text-[0.9375rem] font-medium underline underline-offset-4 disabled:opacity-40"
+            className="mt-1 h-12 px-2 text-caption font-medium underline underline-offset-4 disabled:opacity-40"
           >
             음성만 지우기
           </button>
         </div>
       )}
-      <p className="mt-3 text-center text-[0.9375rem] text-muted-foreground">적는 내용은 이 기기에 바로 저장돼요.</p>
+      <p className="mt-4 text-center text-caption text-muted-foreground">적는 내용은 이 기기에 바로 저장돼요.</p>
       <div className="mt-4 grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={() => (speaking ? void stopSpeaking() : startSpeaking())}
           aria-pressed={speaking}
           className={`flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 font-medium ${
-            speaking ? "bg-destructive text-[0.8125rem] text-destructive-foreground" : "border border-border bg-card text-[1rem]"
+            speaking ? "bg-destructive text-caption text-destructive-foreground" : "border border-border bg-card text-body"
           }`}
         >
           {speaking ? `말하는 중 · ${fmtDur(elapsed)} · 누르면 멈춤` : voice ? "다시 말하기" : "말로 하기"}
@@ -470,7 +470,7 @@ function AnswerFlow() {
             void stopSpeaking();
             fileRef.current?.click();
           }}
-          className="h-14 rounded-full border border-border bg-card text-[1rem] font-medium"
+          className="h-14 rounded-full border border-border bg-card text-body font-medium"
         >
           {photos.length ? "사진 더 넣기" : "사진 넣기"}
         </button>
@@ -487,10 +487,10 @@ function AnswerFlow() {
           }}
         />
       </div>
-      {!voice && <p className="mt-3 text-center text-[0.9375rem] text-muted-foreground">말하면 글로 바뀌고, 목소리도 함께 남아요.</p>}
+      {!voice && <p className="mt-4 text-center text-caption text-muted-foreground">말하면 글로 바뀌고, 목소리도 함께 남아요.</p>}
 
       {msg && (
-        <p role="status" className="mt-3 rounded-2xl bg-muted px-4 py-2.5 text-[0.875rem] leading-[1.55]">
+        <p role="status" className="mt-4 rounded-2xl bg-muted px-4 py-2 text-caption">
           {msg}
         </p>
       )}
@@ -500,11 +500,11 @@ function AnswerFlow() {
           type="button"
           onClick={() => void go()}
          
-          className="h-14 w-full rounded-full bg-ink text-[1rem] font-semibold text-ink-foreground"
+          className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground"
         >
           {step < 3 ? "다음" : "기록 마치기"}
         </button>
-        <button type="button" onClick={() => void go()} className="h-12 w-full rounded-full text-[1rem]">
+        <button type="button" onClick={() => void go()} className="h-12 w-full rounded-full text-body">
           다음에 답할게요
         </button>
       </div>

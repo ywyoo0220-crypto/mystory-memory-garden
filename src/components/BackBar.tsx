@@ -14,7 +14,7 @@ export function BackBar({ title, onBack }: { title: string; onBack?: () => void 
           <path d="m15 5-7 7 7 7" />
         </svg>
       </button>
-      {title && <span className="text-[1.0625rem] font-medium">{title}</span>}
+      {title && <span className="text-body font-medium">{title}</span>}
     </div>
   );
 }

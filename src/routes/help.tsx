@@ -38,17 +38,17 @@ const items = [
 function Help() {
   return (
     <main className="px-6 pt-12">
-      <h1 className="font-serif text-[1.75rem]">도움말</h1>
+      <h1 className="font-serif text-title">도움말</h1>
       <section className="mt-8 rounded-[28px] bg-ink p-6 text-ink-foreground">
-        <h2 className="text-[1.0625rem] font-bold">처음 안내 다시 보기</h2>
-        <p className="mt-2 text-[1rem] leading-[1.7] opacity-80">앱 소개와 화면 둘러보기를 다시 볼 수 있어요.</p>
-        <Link to="/onboarding/$n" params={{ n: "1" }} className="mt-4 inline-flex h-12 items-center rounded-full bg-card px-5 text-[0.9375rem] font-semibold text-foreground">처음 안내 보기 →</Link>
+        <h2 className="text-body font-medium">처음 안내 다시 보기</h2>
+        <p className="mt-2 text-body opacity-80">앱 소개와 화면 둘러보기를 다시 볼 수 있어요.</p>
+        <Link to="/onboarding/$n" params={{ n: "1" }} className="mt-4 inline-flex h-12 items-center rounded-full bg-card px-6 text-caption font-medium text-foreground">처음 안내 보기 →</Link>
       </section>
-      <div className="mt-3 space-y-3">
+      <div className="mt-4 space-y-4">
         {items.map((i) => (
           <section key={i.t} className="rounded-[28px] border border-border bg-card p-6">
-            <h2 className="text-[1.0625rem] font-bold">{i.t}</h2>
-            <p className="mt-2 text-[1.0625rem] leading-[1.7] text-muted-foreground">{i.d}</p>
+            <h2 className="text-body font-medium">{i.t}</h2>
+            <p className="mt-2 text-body text-muted-foreground">{i.d}</p>
           </section>
         ))}
       </div>

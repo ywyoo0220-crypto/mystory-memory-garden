@@ -31,7 +31,7 @@ function Lock() {
     [navigate],
   );
   return (
-    <main className="flex min-h-app flex-col items-center justify-center gap-10 py-10">
+    <main className="flex min-h-app flex-col items-center justify-center gap-12 py-12">
       <img src={wordmark.url} alt="MyStory" className="h-[1.875rem] w-auto" />
       <PinPad title="숫자 4자리를 입력하세요." error={err} onDone={onDone} />
     </main>

@@ -27,17 +27,17 @@ function Settings() {
   const [confirm, setConfirm] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const label = "px-2 pb-2 text-[0.9375rem] font-bold";
-  const small = "h-12 shrink-0 rounded-full border border-ink px-5 text-[0.9375rem] font-medium";
+  const label = "px-2 pb-2 text-caption font-medium";
+  const small = "h-12 shrink-0 rounded-full border border-ink px-6 text-caption font-medium";
   return (
     <main className="pb-6">
       <SubHeader title="설정" />
-      <div className="space-y-6 px-4">
+      <div className="space-y-6 px-6">
         <Card className="divide-y overflow-hidden">
-          <div className="px-5 py-4">
-            <span className="block text-[1.0625rem] font-medium">글자 크기</span>
+          <div className="px-6 py-4">
+            <span className="block text-body font-medium">글자 크기</span>
             <div role="radiogroup" aria-label="글자 크기" className="mt-3 grid grid-cols-2 gap-2">
-              {([[0, "보통", "text-[1.25rem] font-semibold", ""], [1, "크게", "text-[1.875rem] font-extrabold", ""]] as const).map(([v, name, big]) => {
+              {([[0, "보통", "text-body font-medium", ""], [1, "크게", "text-title font-medium", ""]] as const).map(([v, name, big]) => {
                 const on = textSize === v;
                 return (
                   <button key={v} type="button" role="radio" aria-checked={on} onClick={() => actions.setTextSize(v as TextSize)}
@@ -45,20 +45,20 @@ function Settings() {
                     <span aria-hidden className={`absolute right-2.5 top-2.5 flex size-[1.375rem] items-center justify-center rounded-full ${on ? "bg-ink text-ink-foreground" : "border-2 border-border"}`}>
                       {on && <svg viewBox="0 0 24 24" className="size-[0.875rem]" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>}
                     </span>
-                    <span className={`leading-none ${big}`}>{name}</span>
+                    <span className={` ${big}`}>{name}</span>
                   </button>
                 );
               })}
             </div>
           </div>
           <div className={rowCls}>
-            <span className="flex-1 text-[1.0625rem] font-medium">처음 보기</span>
+            <span className="flex-1 text-body font-medium">처음 보기</span>
             <Segmented compact label="처음 보여줄 보기" value={defaultView} onChange={actions.setDefaultView} options={[["topic", "주제별"], ["period", "시간순"]]} />
           </div>
           <Link to="/my/settings/lock" className={rowCls}>
             <span className="flex-1">
-              <span className="block text-[1.0625rem] font-medium">앱 잠금</span>
-              <span className="block text-[0.875rem] text-muted-foreground">{pinHash ? "켜짐" : "꺼짐"}</span>
+              <span className="block text-body font-medium">앱 잠금</span>
+              <span className="block text-caption text-muted-foreground">{pinHash ? "켜짐" : "꺼짐"}</span>
             </span>
             <Chevron />
           </Link>
@@ -67,24 +67,24 @@ function Settings() {
           <h2 className={label}>데이터</h2>
           <Card className="divide-y overflow-hidden">
             <div className={rowCls}>
-              <span className="flex-1 text-[1.0625rem] font-medium">예시 기록 담기</span>
+              <span className="flex-1 text-body font-medium">예시 기록 담기</span>
               <Button variant="palette" type="button" className={small} onClick={() => { actions.restoreExamples(); toast("예시 기록을 담았어요"); }}>불러오기</Button>
             </div>
             <div className={rowCls}>
-              <span className="flex-1 text-[1.0625rem] font-medium">예시 기록 비우기</span>
+              <span className="flex-1 text-body font-medium">예시 기록 비우기</span>
               <button type="button" className={small} onClick={() => { actions.clearExamples(); toast("예시 기록을 비웠어요"); }}>비우기</button>
             </div>
             {confirm ? (
-              <div className="px-5 py-4" role="alert">
-                <p className="text-[1rem] font-medium">모든 기록을 지울까요? 되돌릴 수 없어요.</p>
-                <div className="mt-3 flex gap-2">
-                  <button type="button" className="h-12 rounded-full bg-destructive px-5 text-[0.9375rem] font-semibold text-destructive-foreground" onClick={() => { actions.clearAll(); setConfirm(false); toast("모든 기록을 지웠어요"); }}>모두 지우기</button>
+              <div className="px-6 py-4" role="alert">
+                <p className="text-body font-medium">모든 기록을 지울까요? 되돌릴 수 없어요.</p>
+                <div className="mt-4 flex gap-2">
+                  <button type="button" className="h-12 rounded-full bg-destructive px-6 text-caption font-medium text-destructive-foreground" onClick={() => { actions.clearAll(); setConfirm(false); toast("모든 기록을 지웠어요"); }}>모두 지우기</button>
                   <button type="button" className={small} onClick={() => setConfirm(false)}>그대로 두기</button>
                 </div>
               </div>
             ) : (
               <div className={rowCls}>
-                <span className="flex-1 text-[1.0625rem] font-medium text-destructive">모든 기록 지우기</span>
+                <span className="flex-1 text-body font-medium text-destructive">모든 기록 지우기</span>
                 <button type="button" className={`${small} border-destructive text-destructive`} onClick={() => setConfirm(true)}>지우기</button>
               </div>
             )}
@@ -94,13 +94,13 @@ function Settings() {
           <h2 className={label}>휴대폰 넘겨주기</h2>
           <Card className="divide-y overflow-hidden">
             {confirmReset ? (
-              <div className="px-5 py-4" role="alert">
-                <p className="text-[1rem] font-medium">기록, 사진, 목소리, 이름, 앱 잠금, 설정을 모두 지우고 처음 설치한 상태로 되돌릴까요? 되돌릴 수 없어요.</p>
-                <div className="mt-3 flex flex-wrap gap-2">
+              <div className="px-6 py-4" role="alert">
+                <p className="text-body font-medium">기록, 사진, 목소리, 이름, 앱 잠금, 설정을 모두 지우고 처음 설치한 상태로 되돌릴까요? 되돌릴 수 없어요.</p>
+                <div className="mt-4 flex flex-wrap gap-2">
                   <button
                     type="button"
                     disabled={resetting}
-                    className="h-12 rounded-full bg-destructive px-5 text-[0.9375rem] font-semibold text-destructive-foreground disabled:opacity-40"
+                    className="h-12 rounded-full bg-destructive px-6 text-caption font-medium text-destructive-foreground disabled:opacity-40"
                     onClick={async () => {
                       setResetting(true);
                       await resetApp();
@@ -115,8 +115,8 @@ function Settings() {
             ) : (
               <div className={rowCls}>
                 <span className="flex-1">
-                  <span className="block text-[1.0625rem] font-medium text-destructive">처음 상태로 되돌리기</span>
-                  <span className="block text-[0.875rem] text-muted-foreground">다른 사람이 이 휴대폰으로 처음부터 쓸 수 있게 해요.</span>
+                  <span className="block text-body font-medium text-destructive">처음 상태로 되돌리기</span>
+                  <span className="block text-caption text-muted-foreground">다른 사람이 이 휴대폰으로 처음부터 쓸 수 있게 해요.</span>
                 </span>
                 <button type="button" className={`${small} border-destructive text-destructive`} onClick={() => setConfirmReset(true)}>되돌리기</button>
               </div>

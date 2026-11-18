@@ -34,7 +34,7 @@ function SharePage() {
   const list = Object.entries(records).filter(([, r]) => hasContent(r)).sort((a, b) => b[1].updatedAt - a[1].updatedAt);
   const hasVoice = picked.some((q) => records[q]?.voices?.length);
   const sharedN = new Set(shares.flatMap((s) => s.qids)).size;
-  const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-[1.0625rem] font-semibold text-ink-foreground disabled:opacity-40";
+  const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground disabled:opacity-40";
 
   const submit = async () => {
     const id = Date.now().toString(36);
@@ -46,10 +46,10 @@ function SharePage() {
   return (
     <main className="pb-6">
       <SubHeader title="기록 공유하기" />
-      <div className="space-y-4 px-4">
+      <div className="space-y-4 px-6">
         {sharedN > 0 && (
-          <Link to="/my/share/manage" className="flex min-h-14 items-center gap-3 rounded-[20px] border border-border bg-card px-5">
-            <span className="flex-1 text-[1rem] font-medium">공유 관리 · {sharedN}개 설정됨</span>
+          <Link to="/my/share/manage" className="flex min-h-14 items-center gap-4 rounded-[20px] border border-border bg-card px-6">
+            <span className="flex-1 text-body font-medium">공유 관리 · {sharedN}개 설정됨</span>
             <Chevron />
           </Link>
         )}
@@ -57,7 +57,7 @@ function SharePage() {
           {STEPS.map((s, i) => (
             <li key={s} className="flex-1" aria-current={i === step ? "step" : undefined}>
               <span className={`block h-1 rounded-full ${i <= step ? "bg-ink" : "bg-[#D1D1D6]"}`} />
-              <span className={`mt-2 block text-[0.8125rem] ${i === step ? "font-bold" : "text-muted-foreground"}`}>{i + 1}. {s}</span>
+              <span className={`mt-2 block text-caption ${i === step ? "font-medium" : "text-muted-foreground"}`}>{i + 1}. {s}</span>
             </li>
           ))}
         </ol>
@@ -70,14 +70,14 @@ function SharePage() {
                 const cat = categoryOfQuestion(q);
                 const on = picked.includes(q);
                 return (
-                  <label key={q} className="flex min-h-16 cursor-pointer items-center gap-3 px-5 py-3">
+                  <label key={q} className="flex min-h-16 cursor-pointer items-center gap-4 px-6 py-4">
                     <input type="checkbox" className="size-5 shrink-0 accent-[#1A1918]" checked={on} onChange={() => setPicked(on ? picked.filter((x) => x !== q) : [...picked, q])} />
                     <span className="min-w-0 flex-1">
-                      <span className="flex items-center gap-2 text-[0.8125rem] text-muted-foreground">
+                      <span className="flex items-center gap-2 text-caption text-muted-foreground">
                         {cat && <Dot catId={cat.id} />}
                         {cat?.name}
                       </span>
-                      <span className="block text-[1rem] leading-[1.5]">{getQuestion(q)?.core}</span>
+                      <span className="block text-body">{getQuestion(q)?.core}</span>
                     </span>
                   </label>
                 );
@@ -99,21 +99,21 @@ function SharePage() {
                   role="radio"
                   aria-checked={scope === v}
                   onClick={() => { setScope(v); setNoVoice(v !== "me"); }}
-                  className={`flex min-h-16 w-full items-center gap-3 rounded-[20px] border bg-card px-5 py-4 text-left ${scope === v ? "border-ink border-2" : "border-border"}`}
+                  className={`flex min-h-16 w-full items-center gap-4 rounded-[20px] border bg-card px-6 py-4 text-left ${scope === v ? "border-ink border-2" : "border-border"}`}
                 >
                   <span className={`flex size-5 shrink-0 items-center justify-center rounded-full border-2 border-ink`}>
                     {scope === v && <span className="size-2.5 rounded-full bg-ink" />}
                   </span>
                   <span>
-                    <span className="block text-[1.0625rem] font-medium">{t}</span>
-                    <span className="block text-[0.875rem] text-muted-foreground">{d}</span>
+                    <span className="block text-body font-medium">{t}</span>
+                    <span className="block text-caption text-muted-foreground">{d}</span>
                   </span>
                 </button>
               ))}
             </div>
-            <p className="text-[0.9375rem] text-muted-foreground">공유한 뒤에도 공유 관리에서 언제든 해제할 수 있어요.</p>
+            <p className="text-caption text-muted-foreground">공유한 뒤에도 공유 관리에서 언제든 해제할 수 있어요.</p>
             <div className="flex gap-2">
-              <button type="button" className="h-14 rounded-full border border-ink px-6 text-[1rem] font-medium" onClick={() => setStep(0)}>이전</button>
+              <button type="button" className="h-14 rounded-full border border-ink px-6 text-body font-medium" onClick={() => setStep(0)}>이전</button>
               <button type="button" className={primary} onClick={() => setStep(2)}>다음</button>
             </div>
           </>
@@ -121,14 +121,14 @@ function SharePage() {
 
         {step === 2 && (
           <>
-            <p className="text-[0.9375rem]">
+            <p className="text-caption">
               공개 범위: <b>{SCOPES.find((s) => s[0] === scope)?.[1]}</b>
             </p>
             {hasVoice && (
-              <Card className="flex items-center gap-3 px-5 py-2">
+              <Card className="flex items-center gap-4 px-6 py-2">
                 <span className="flex-1">
-                  <span className="block text-[1rem] font-medium">{scope === "me" || !noVoice ? "목소리 포함" : "목소리는 글로만 보내요"}</span>
-                  {scope !== "me" && <span className="block text-[0.875rem] text-muted-foreground">목소리는 빼고 보내기</span>}
+                  <span className="block text-body font-medium">{scope === "me" || !noVoice ? "목소리 포함" : "목소리는 글로만 보내요"}</span>
+                  {scope !== "me" && <span className="block text-caption text-muted-foreground">목소리는 빼고 보내기</span>}
                 </span>
                 {scope !== "me" && <Toggle on={noVoice} onChange={setNoVoice} label="목소리는 빼고 보내기" />}
               </Card>
@@ -141,20 +141,20 @@ function SharePage() {
                 const r = records[q];
                 const voice = !!r?.voices?.length;
                 return (
-                  <div key={q} className="rounded-[20px] p-5" style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}>
-                    <p className="text-[0.8125rem] font-medium">
+                  <div key={q} className="rounded-[20px] p-6" style={{ ...catVars(cat.id), background: c.bg, color: c.fg }}>
+                    <p className="text-caption font-medium">
                       {cat.name}
                       {voice && (scope === "me" || !noVoice ? " · 목소리 포함" : " · 목소리는 글로만")}
                     </p>
-                    <p className="mt-1 text-[1.0625rem] font-bold leading-[1.5]">{getQuestion(q)?.core}</p>
-                    <p className="mt-2 line-clamp-2 text-[0.9375rem] leading-[1.6]">{r?.answers.find((a) => a.trim()) || r?.voices?.[0]?.text}</p>
+                    <p className="mt-1 text-body font-medium">{getQuestion(q)?.core}</p>
+                    <p className="mt-2 line-clamp-2 text-caption">{r?.answers.find((a) => a.trim()) || r?.voices?.[0]?.text}</p>
                   </div>
                 );
               })}
             </div>
-            <p className="text-[0.9375rem] text-muted-foreground">지금은 시범 버전이라 공유 설정만 저장돼요. 실제로 보내지지는 않아요.</p>
+            <p className="text-caption text-muted-foreground">지금은 시범 버전이라 공유 설정만 저장돼요. 실제로 보내지지는 않아요.</p>
             <div className="flex gap-2">
-              <button type="button" className="h-14 rounded-full border border-ink px-6 text-[1rem] font-medium" onClick={() => setStep(1)}>이전</button>
+              <button type="button" className="h-14 rounded-full border border-ink px-6 text-body font-medium" onClick={() => setStep(1)}>이전</button>
               <button type="button" className={primary} onClick={() => void submit()}>{scope === "me" ? "저장하기" : "공유 설정 저장하기"}</button>
             </div>
           </>

@@ -25,12 +25,12 @@ function Archive() {
   return (
     <main className="pb-6">
       <SubHeader title="나의 아카이브" />
-      <div className="space-y-8 px-4">
+      <div className="space-y-8 px-6">
         <Grid title="주제별" cats={topics} records={records} />
         <Grid title="시간순" cats={periods} records={records} birth={profile.birth} />
         {incomplete.length > 0 && (
           <section>
-            <h2 className="px-2 pb-3 text-[1.0625rem] font-bold">이어서 쓰기 · {incomplete.length}개</h2>
+            <h2 className="px-2 pb-4 text-body font-medium">이어서 쓰기 · {incomplete.length}개</h2>
             <div className="space-y-2">
               {incomplete.map(([q, r]) => <ContinueCard key={q} qid={q} rec={r} />)}
             </div>
@@ -44,7 +44,7 @@ function Archive() {
 function Grid({ title, cats, records, birth = "" }: { title: string; cats: Category[]; records: Records; birth?: string }) {
   return (
     <section>
-      <h2 className="px-2 pb-3 text-[1.0625rem] font-bold">{title}</h2>
+      <h2 className="px-2 pb-4 text-body font-medium">{title}</h2>
       <ul className="grid grid-cols-2 gap-2">
         {cats.map((c) => {
           const n = c.questions.length;
@@ -54,11 +54,11 @@ function Grid({ title, cats, records, birth = "" }: { title: string; cats: Categ
             <li key={c.id} className="rounded-[20px] border border-border bg-card p-4">
               <div className="flex items-center gap-2">
                 <Dot catId={c.id} />
-                <span className="min-w-0 flex-1 text-[0.9375rem] font-medium">{c.name}</span>
-                <span className="text-[0.8125rem] tabular-nums text-muted-foreground">{n ? `${f}/${n}` : "준비 중"}</span>
+                <span className="min-w-0 flex-1 text-caption font-medium">{c.name}</span>
+                <span className="text-caption tabular-nums text-muted-foreground">{n ? `${f}/${n}` : "준비 중"}</span>
               </div>
-              {yrs && <p className="mt-1 text-[0.75rem] text-muted-foreground">{yrs}</p>}
-              <div className="mt-3 h-1 overflow-hidden rounded-full bg-muted" aria-hidden>
+              {yrs && <p className="mt-1 text-caption text-muted-foreground">{yrs}</p>}
+              <div className="mt-4 h-1 overflow-hidden rounded-full bg-muted" aria-hidden>
                 <div className="h-full rounded-full" style={{ width: n ? `${(f / n) * 100}%` : 0, background: `var(--${c.id}-list-accent)` }} />
               </div>
             </li>

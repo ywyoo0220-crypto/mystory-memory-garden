@@ -32,28 +32,28 @@ function My() {
     ["/my/settings", "설정", `글자 ${["보통", "크게"][textSize]} · 앱 잠금 ${pinHash ? "켜짐" : "꺼짐"}`],
   ];
   return (
-    <main className="space-y-4 px-4 pt-6">
+    <main className="space-y-4 px-6 pt-6">
       <Link to="/my/profile" className="flex min-h-16 items-center gap-4 px-2 py-2">
         <Avatar name={profile.name} photo={profile.photo} size={56} />
         <span className="min-w-0 flex-1">
-          <span className="block text-[1.25rem] font-bold">{profile.name || "프로필 만들기"}</span>
-          <span className="block text-[0.875rem] text-muted-foreground">{sub}</span>
+          <span className="block text-title font-medium">{profile.name || "프로필 만들기"}</span>
+          <span className="block text-caption text-muted-foreground">{sub}</span>
         </span>
         <Chevron />
       </Link>
 
       <Link to="/my/archive" className="block">
-        <Card className="space-y-3 p-5">
-          <h2 className="text-[1.0625rem] font-bold">나의 아카이브</h2>
+        <Card className="space-y-4 p-6">
+          <h2 className="text-body font-medium">나의 아카이브</h2>
           <DotRow label="주제" cats={topics} records={records} />
           <DotRow label="시기" cats={periods} records={records} />
-          <p className="pt-1 text-[0.9375rem] font-medium">나의 아카이브 자세히 보기 ›</p>
+          <p className="pt-1 text-caption font-medium">나의 아카이브 자세히 보기 ›</p>
         </Card>
       </Link>
 
       {incomplete[0] && (
         <section>
-          <h2 className="px-2 pb-2 text-[0.9375rem] font-bold">이어서 쓰기 · {incomplete.length}개</h2>
+          <h2 className="px-2 pb-2 text-caption font-medium">이어서 쓰기 · {incomplete.length}개</h2>
           <ContinueCard qid={incomplete[0][0]} rec={incomplete[0][1]} />
         </section>
       )}
@@ -62,8 +62,8 @@ function My() {
         {menu.map(([to, t, s]) => (
           <Link key={to} to={to} className={rowCls}>
             <span className="min-w-0 flex-1">
-              <span className="block text-[1.0625rem] font-medium">{t}</span>
-              <span className="block text-[0.875rem] text-muted-foreground">{s}</span>
+              <span className="block text-body font-medium">{t}</span>
+              <span className="block text-caption text-muted-foreground">{s}</span>
             </span>
             <Chevron />
           </Link>
@@ -76,14 +76,14 @@ function My() {
 function DotRow({ label, cats, records }: { label: string; cats: typeof topics; records: ReturnType<typeof useStore>["records"] }) {
   const has = cats.map((c) => c.questions.some((q) => hasContent(records[q.id])));
   return (
-    <div className="flex items-center gap-3">
-      <span className="w-8 shrink-0 text-[0.875rem] text-muted-foreground">{label}</span>
-      <span className="flex flex-1 flex-wrap gap-1.5">
+    <div className="flex items-center gap-4">
+      <span className="w-8 shrink-0 text-caption text-muted-foreground">{label}</span>
+      <span className="flex flex-1 flex-wrap gap-2">
         {cats.map((c, i) => (
           <Dot key={c.id} catId={c.id} filled={!!has[i]} size={14} />
         ))}
       </span>
-      <span className="text-[0.875rem] font-medium tabular-nums">
+      <span className="text-caption font-medium tabular-nums">
         {has.filter(Boolean).length}/{cats.length}
       </span>
     </div>

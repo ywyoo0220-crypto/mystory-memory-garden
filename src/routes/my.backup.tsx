@@ -87,13 +87,13 @@ function Backup() {
   };
 
   const n = Object.values(records).filter(hasContent).length;
-  const btn = "flex h-14 w-full items-center justify-center rounded-full text-[1.0625rem] font-semibold disabled:opacity-40";
+  const btn = "flex h-14 w-full items-center justify-center rounded-full text-body font-medium disabled:opacity-40";
   return (
     <main className="pb-6">
       <SubHeader title="백업과 복원" sub="백업 파일에는 글, 사진, 목소리가 모두 들어 있어요. 새 휴대폰에서 ‘복원하기’로 불러오면 그대로 돌아와요." />
-      <div className="space-y-3 px-4">
-        <Card className="space-y-3 p-5">
-          <p className="text-[0.9375rem] text-muted-foreground">지금 기록 {n}개</p>
+      <div className="space-y-4 px-6">
+        <Card className="space-y-4 p-6">
+          <p className="text-caption text-muted-foreground">지금 기록 {n}개</p>
           <button type="button" className={`${btn} bg-ink text-ink-foreground`} onClick={() => void make()} disabled={busy}>
             {busy ? "만드는 중…" : "백업 파일 만들기"}
           </button>
@@ -102,9 +102,9 @@ function Backup() {
           </button>
         </Card>
         {fallback && (
-          <Card className="space-y-2 p-5">
-            <p className="text-[0.9375rem] font-medium">아래 내용을 복사해 두세요.</p>
-            <textarea readOnly value={fallback} className="h-48 w-full rounded-xl border border-[#D1D1D6] p-3 text-[0.75rem]" onFocus={(e) => e.currentTarget.select()} />
+          <Card className="space-y-2 p-6">
+            <p className="text-caption font-medium">아래 내용을 복사해 두세요.</p>
+            <textarea readOnly value={fallback} className="h-48 w-full rounded-xl border border-[#D1D1D6] p-4 text-caption" onFocus={(e) => e.currentTarget.select()} />
           </Card>
         )}
       </div>

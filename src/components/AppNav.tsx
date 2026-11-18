@@ -29,7 +29,7 @@ export function AppNav() {
               key={it.to}
               to={it.to}
               aria-current={active ? "page" : undefined}
-              className={`flex h-12 min-w-[42px] shrink items-center justify-center whitespace-nowrap rounded-full text-[0.9375rem] font-medium transition-colors ${large ? "px-[clamp(6px,2.4vw,14px)]" : "px-[clamp(8px,4vw,22px)]"} ${
+              className={`flex h-12 min-w-[42px] shrink items-center justify-center whitespace-nowrap rounded-full text-caption font-medium transition-colors ${large ? "px-[clamp(6px,2.4vw,14px)]" : "px-[clamp(8px,4vw,22px)]"} ${
                 active ? "bg-ink text-ink-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -44,7 +44,7 @@ export function AppNav() {
         onClick={actions.toggleLarge}
         aria-pressed={large}
         aria-label="글자 크게 보기"
-        className="flex size-[min(3.75rem,14vw)] min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-full bg-ink text-[0.9375rem] font-semibold text-ink-foreground"
+        className="flex size-[min(3.75rem,14vw)] min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-full bg-ink text-caption font-medium text-ink-foreground"
       >
         {large ? "보통" : "크게"}
       </button>

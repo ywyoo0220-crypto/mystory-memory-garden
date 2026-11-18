@@ -31,8 +31,8 @@ export const Route = createFileRoute("/onboarding/$n")({
 
 const FIRST_QID = "A1-Q2";
 const BIG_NOTE = "글자는 화면 아래 ‘크게’ 버튼으로 언제든 바꿀 수 있어요.";
-const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-[1.0625rem] font-medium text-ink-foreground";
-const ghost = "flex h-12 w-full items-center justify-center rounded-full text-[1rem] font-medium";
+const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground";
+const ghost = "flex h-12 w-full items-center justify-center rounded-full text-body font-medium";
 
 function Onboarding() {
   const { n } = Route.useParams();
@@ -71,7 +71,7 @@ function Onboarding() {
 
   return (
     <main className="flex min-h-app flex-col">
-      <div className="flex h-16 items-center justify-between gap-2 px-2">
+      <div className="flex min-h-16 flex-wrap items-center justify-between gap-2 px-2">
         {step === 1 ? (
           <img src={wordmark.url} alt="MyStory" width={1979} height={483} className="ml-4 h-[1.625rem] w-auto" />
         ) : (
@@ -85,13 +85,13 @@ function Onboarding() {
               type="button"
               aria-pressed={big}
               onClick={toggleBig}
-              className={`h-11 whitespace-nowrap rounded-full border border-ink px-3 text-[0.9375rem] font-medium ${big ? "bg-ink text-ink-foreground" : ""}`}
+              className={`h-12 whitespace-nowrap rounded-full border border-ink px-4 text-caption font-medium ${big ? "bg-ink text-ink-foreground" : ""}`}
             >
               글자 크게
             </button>
           )}
           {step < 5 && (
-            <button type="button" onClick={skip} className="h-12 whitespace-nowrap px-3 text-[0.9375rem] font-medium">안내 건너뛰기</button>
+            <button type="button" onClick={skip} className="h-12 whitespace-nowrap px-4 text-caption font-medium">안내 건너뛰기</button>
           )}
         </div>
       </div>
@@ -127,7 +127,7 @@ function Footer({ dots, children }: { dots: ReactNode; children: ReactNode }) {
 
 function Dots({ step }: { step: number }) {
   return (
-    <div className="flex justify-center gap-1.5 pb-3" role="img" aria-label={`5단계 중 ${step}단계`}>
+    <div className="flex justify-center gap-2 pb-4" role="img" aria-label={`5단계 중 ${step}단계`}>
       {[1, 2, 3, 4, 5].map((k) => (
         <span key={k} className={`h-2 rounded-full transition-all ${k === step ? "w-[22px] bg-ink" : "w-2 bg-[#8E8E93]"}`} />
       ))}
@@ -140,9 +140,9 @@ const EYEBROW: Record<number, string> = { 1: "사용 안내 1/3", 2: "사용 안
 function Head({ step, title, sub }: { step: number; title: string; sub: string }) {
   return (
     <>
-      <p className="mb-2 text-[0.9375rem] font-medium text-muted-foreground">{EYEBROW[step]}</p>
-      <h2 className="whitespace-pre-line text-[1.9rem] font-medium leading-[1.38] tracking-[-0.03em] [text-wrap:balance]">{title}</h2>
-      <p className="mt-3 text-[1.05rem] leading-[1.7] text-muted-foreground">{sub}</p>
+      <p className="mb-2 text-caption font-medium text-muted-foreground">{EYEBROW[step]}</p>
+      <h2 className="whitespace-pre-line text-title font-medium tracking-[-0.03em] [text-wrap:balance]">{title}</h2>
+      <p className="mt-4 text-body text-muted-foreground">{sub}</p>
     </>
   );
 }
@@ -150,8 +150,8 @@ function Head({ step, title, sub }: { step: number; title: string; sub: string }
 /** Shared non-interactive "example" frame around onboarding illustrations. */
 function Frame({ label = "예시 화면", className = "", children }: { label?: string; className?: string; children: ReactNode }) {
   return (
-    <div aria-hidden inert className={`pointer-events-none select-none rounded-3xl border border-[#D1D1D6] bg-[#F5F5F7] p-3 ${className}`}>
-      <span className="inline-flex rounded-full border border-border px-3 py-1 text-[0.875rem] font-medium text-muted-foreground">{label}</span>
+    <div aria-hidden inert className={`pointer-events-none select-none rounded-3xl border border-[#D1D1D6] bg-[#F5F5F7] p-4 ${className}`}>
+      <span className="inline-flex rounded-full border border-border px-4 py-1 text-caption font-medium text-muted-foreground">{label}</span>
       <div className="mt-2">{children}</div>
     </div>
   );
@@ -176,22 +176,22 @@ function Screen1({ big }: { big: boolean }) {
   return (
     <>
       <Head step={1} title={"질문에 답하다 보면\n기억이 이어져요."} sub="큰 질문으로 시작해서, 이어지는 질문을 따라 기억을 하나씩 떠올려요." />
-      <Frame className="mt-4"><Surface cat={cat} className="!pt-5 pb-5">
+      <Frame className="mt-4"><Surface cat={cat} className="!pt-6 pb-6">
         <CategoryPill cat={cat} />
-        <div className="mt-3.5 flex gap-1.5" aria-hidden>
+        <div className="mt-4 flex gap-2" aria-hidden>
           {DELAYS.map((d, i) => (
             <span key={i} className="onb-fill h-1 flex-1 rounded-full" style={{ background: c.pill, animationDelay: `${d}s` }} />
           ))}
         </div>
-        <ol className="mt-3.5 space-y-2">
+        <ol className="mt-4 space-y-2">
           {steps.map((s, i) => (
-            <li key={i} className={`onb-rise ${i === 0 ? "text-[1.375rem] font-medium leading-[1.4]" : "text-[1rem] leading-[1.5]"}`} style={{ animationDelay: `${DELAYS[i]}s` }}>
+            <li key={i} className={`onb-rise ${i === 0 ? "text-title font-medium" : "text-body"}`} style={{ animationDelay: `${DELAYS[i]}s` }}>
               {s}
             </li>
           ))}
         </ol>
       </Surface></Frame>
-      {big && <p className="mt-4 text-[1rem] leading-[1.6] text-muted-foreground">{BIG_NOTE}</p>}
+      {big && <p className="mt-4 text-body text-muted-foreground">{BIG_NOTE}</p>}
     </>
   );
 }
@@ -200,16 +200,16 @@ function Screen2() {
   return (
     <>
       <Head step={2} title={"쓰고, 말하고,\n사진도 넣어요."} sub="말하면 글로 바뀌고, 목소리도 함께 남아요. 편한 방법을 골라 남기면 돼요." />
-      <Frame className="mt-3">
-        <div className="w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-3">
+      <Frame className="mt-4">
+        <div className="w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-4">
           <TypingText text="어릴 때 나는 동네에서 장난꾸러기로 통했어" />
         </div>
         <div className="mt-2 grid grid-cols-2 gap-2">
-          <span className="flex h-11 items-center justify-center gap-2 rounded-full bg-muted text-[0.9375rem] font-medium">
+          <span className="flex h-12 items-center justify-center gap-2 rounded-full bg-muted text-caption font-medium">
             <svg className="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8" /></svg>
             말로 하기
           </span>
-          <span className="flex h-11 items-center justify-center gap-2 rounded-full bg-muted text-[0.9375rem] font-medium">
+          <span className="flex h-12 items-center justify-center gap-2 rounded-full bg-muted text-caption font-medium">
             <svg className="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
             사진 넣기
           </span>
@@ -235,7 +235,7 @@ function TypingText({ text }: { text: string }) {
     return () => clearTimeout(t);
   }, [text]);
   return (
-    <p className="mt-1 min-h-[3.6em] text-[1.0625rem] leading-[1.7] text-ink">
+    <p className="mt-1 min-h-[3.6em] text-body text-ink">
       {chars.slice(0, n).join("")}
       <span className="onb-caret ml-px inline-block h-[1.1em] w-[2px] translate-y-[0.15em] bg-ink" />
     </p>
@@ -254,10 +254,10 @@ function Screen3() {
             <div key={cat.id} className="onb-stack relative" style={{ zIndex: i + 1, marginTop: i ? "-1.5rem" : 0, animationDelay: `${300 + i * 440}ms` }}>
               <Surface
                 cat={cat}
-                className={`!pt-5 ${last ? "pb-5" : "pb-[2.5rem]"}`}
+                className={`!pt-6 ${last ? "pb-6" : "pb-[2.5rem]"}`}
               >
                 <CategoryPill cat={cat} />
-                <p className="mt-3 text-[1.0625rem] font-medium leading-[1.4]">{cat.questions[0]?.core}</p>
+                <p className="mt-4 text-body font-medium">{cat.questions[0]?.core}</p>
               </Surface>
             </div>
           );
@@ -280,18 +280,18 @@ function Screen4({ onNext, dots }: { onNext: () => void; dots: ReactNode }) {
     if (name.trim() || birth) prefs.setProfile({ ...profile, name: name.trim(), birth });
     onNext();
   };
-  const input = "mt-2 h-14 w-full rounded-2xl border border-[#D1D1D6] bg-card px-4 text-[1.0625rem] outline-none focus:border-ink";
+  const input = "mt-2 h-14 w-full rounded-2xl border border-[#D1D1D6] bg-card px-4 text-body outline-none focus:border-ink";
   return (
     <>
       <div className="flex-1 px-6 pt-2">
         <Head step={4} title={"이름과 태어난 해를\n넣어 볼까요?"} sub="태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요. 나중에 MY에서 해도 돼요." />
-        <div className="mt-6 space-y-5">
+        <div className="mt-6 space-y-6">
           <label className="block">
-            <span className="text-[0.9375rem] font-medium">이름</span>
+            <span className="text-caption font-medium">이름</span>
             <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김정희" autoComplete="name" />
           </label>
           <label className="block">
-            <span className="text-[0.9375rem] font-medium">태어난 해</span>
+            <span className="text-caption font-medium">태어난 해</span>
             <input className={input} value={birth} onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))} placeholder="예: 1955" inputMode="numeric" maxLength={4} />
           </label>
         </div>
@@ -313,10 +313,10 @@ function Screen5() {
       <Frame label="다음 화면에서 답해요" className="mt-6">
         <Surface cat={cat} className="pb-8">
           <CategoryPill cat={cat} />
-          <p className="mt-5 text-[1.5rem] font-medium leading-[1.4]">{q.core}</p>
+          <p className="mt-6 text-title font-medium">{q.core}</p>
         </Surface>
       </Frame>
-      <p className="mt-4 text-[1rem] leading-[1.6] text-muted-foreground">{BIG_NOTE}</p>
+      <p className="mt-4 text-body text-muted-foreground">{BIG_NOTE}</p>
     </>
   );
 }

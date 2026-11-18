@@ -92,7 +92,7 @@ export function VoicePlayer({
   const m = Math.floor(durationSec / 60);
   const s = String(Math.round(durationSec % 60)).padStart(2, "0");
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-4">
       <Button variant="palette"
         type="button"
         onClick={play}
@@ -122,7 +122,7 @@ export function VoicePlayer({
           />
         ))}
       </div>
-      <span className="text-[0.8125rem] font-medium tabular-nums" style={{ color: fg }}>
+      <span className="text-caption font-medium tabular-nums" style={{ color: fg }}>
         {m}:{s}
       </span>
     </div>

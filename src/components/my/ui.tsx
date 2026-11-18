@@ -15,8 +15,8 @@ export function SubHeader({ title, back = "/my", sub, close }: { title: string; 
     <div className="no-print">
       <BackLink to={back} close={!!close} />
       <div className="px-6 pb-4 pt-2">
-        <h1 className="text-[1.75rem] font-bold leading-[1.3]">{title}</h1>
-        {sub && <p className="mt-2 text-[0.9375rem] leading-[1.6] text-muted-foreground">{sub}</p>}
+        <h1 className="text-title font-medium">{title}</h1>
+        {sub && <p className="mt-2 text-caption text-muted-foreground">{sub}</p>}
       </div>
     </div>
   );
@@ -40,7 +40,7 @@ export function Avatar({ name, photo, size }: { name: string; photo?: string | u
   return (
     <span
       aria-hidden
-      className="flex shrink-0 items-center justify-center rounded-full bg-ink font-bold text-ink-foreground"
+      className="flex shrink-0 items-center justify-center rounded-full bg-ink font-medium text-ink-foreground"
       style={{ width: s, height: s, fontSize: `${size / 40}rem` }}
     >
       {name.trim().charAt(0) || "나"}
@@ -57,7 +57,7 @@ export function Segmented<T extends string | number>({ value, options, onChange,
           type="button"
           aria-pressed={value === v}
           onClick={() => onChange(v)}
-          className={`${compact ? "h-10 px-3.5" : "h-12 flex-1 px-3"} rounded-full text-[0.9375rem] font-medium transition-colors ${value === v ? "bg-ink text-ink-foreground" : "text-foreground"}`}
+          className={`${compact ? "h-12 px-4" : "h-12 flex-1 px-4"} rounded-full text-caption font-medium transition-colors ${value === v ? "bg-ink text-ink-foreground" : "text-foreground"}`}
         >
           {l}
         </button>
@@ -96,17 +96,17 @@ export function ContinueCard({ qid, rec }: { qid: string; rec: StoryRecord }) {
   const f = filledSteps(rec);
   const first = Math.max(0, f.indexOf(false));
   return (
-    <Link to="/answer/$qid" params={{ qid }} search={{ step: first }} className="flex min-h-12 items-center gap-3 rounded-[20px] border border-border bg-card p-4">
+    <Link to="/answer/$qid" params={{ qid }} search={{ step: first }} className="flex min-h-12 items-center gap-4 rounded-[20px] border border-border bg-card p-4">
       <span className="min-w-0 flex-1">
-        <span className="flex items-center gap-2 text-[0.8125rem] text-muted-foreground">
+        <span className="flex items-center gap-2 text-caption text-muted-foreground">
           <Dot catId={cat.id} />
           {cat.name} · 4단계 중 {f.filter(Boolean).length}단계
         </span>
-        <span className="mt-1 block text-[1rem] font-medium leading-[1.5]">{q.core}</span>
+        <span className="mt-1 block text-body font-medium">{q.core}</span>
       </span>
       <Chevron />
     </Link>
   );
 }
 
-export const rowCls = "flex min-h-16 w-full items-center gap-3 px-5 py-3 text-left";
+export const rowCls = "flex min-h-16 w-full items-center gap-4 px-6 py-4 text-left";

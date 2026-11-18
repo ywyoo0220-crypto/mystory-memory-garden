@@ -62,21 +62,21 @@ function ExportPage() {
   return (
     <main className="book-export pb-6">
       <SubHeader title="기록 책으로 묶기" close />
-      <section className="book-controls no-print space-y-6 px-4 pb-6">
+      <section className="book-controls no-print space-y-6 px-6 pb-6">
         <div>
-          <p className="text-[1.125rem] font-semibold">남긴 기록을 한 권으로 엮어요.</p>
-          <p className="mt-2 text-[0.875rem] leading-[1.7] text-muted-foreground">
+          <p className="text-body font-medium">남긴 기록을 한 권으로 엮어요.</p>
+          <p className="mt-2 text-caption text-muted-foreground">
             {both && "주제 질문에 남긴 기록이 1부, 시기 질문에 남긴 기록이 2부가 돼요. "}
             아래는 책의 미리보기예요. ‘PDF로 저장’을 누르면 인쇄 창에서 PDF로 저장할 수 있어요.
           </p>
         </div>
-        {both && <div className="space-y-3">
-          <h2 className="text-[1rem] font-bold">담을 기록</h2>
+        {both && <div className="space-y-4">
+          <h2 className="text-body font-medium">담을 기록</h2>
           <Segmented<BookScope> label="담을 기록" value={scope} onChange={setScope} options={[["all", "전체"], ["topic", "주제별만"], ["period", "시기별만"]]} />
         </div>}
         <div>
-          <h2 className="text-[1rem] font-bold">대표 사진을 넣을까요?</h2>
-          <p className="mt-2 text-[0.875rem] leading-[1.7] text-muted-foreground">표지에 크게 들어가요. 남긴 사진에서 고르거나 휴대폰에서 새로 올릴 수 있어요.</p>
+          <h2 className="text-body font-medium">대표 사진을 넣을까요?</h2>
+          <p className="mt-2 text-caption text-muted-foreground">표지에 크게 들어가요. 남긴 사진에서 고르거나 휴대폰에서 새로 올릴 수 있어요.</p>
           <div role="group" aria-label="대표 사진" className="cover-options">
             <CoverTile label="사진 없이" selected={cover.key === ""} onClick={() => select("")} />
             <Button variant="palette" className="cover-tile cover-upload" aria-pressed={false} aria-label="휴대폰 사진 올리기" disabled={uploading} onClick={() => input.current?.click()}>{uploading ? "올리는 중…" : <>휴대폰<br />사진 올리기</>}</Button>
@@ -89,7 +89,7 @@ function ExportPage() {
             if (file) void upload(file);
           }} />
         </div>
-        <Button variant="palette" disabled={!count || uploading} onClick={() => window.print()} className="h-14 w-full rounded-full bg-ink text-[1.0625rem] font-semibold text-ink-foreground">PDF로 저장</Button>
+        <Button variant="palette" disabled={!count || uploading} onClick={() => window.print()} className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground">PDF로 저장</Button>
       </section>
 
       <article className="book-preview" aria-label="책 미리보기">

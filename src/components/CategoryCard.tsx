@@ -20,7 +20,7 @@ export function CategoryPill({ cat }: { cat: Category }) {
   const label = cat.kind === "period" ? c.pillText : "#FFFFFF";
   return (
     <span
-      className="inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[0.8125rem] font-medium"
+      className="inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 text-caption font-medium"
       style={{ ...catVars(cat.id), background: c.pill, color: label }}
     >
       <span className="inline-flex" style={{ color: label }}><CategoryIcon id={cat.id} size={16} /></span>
@@ -36,21 +36,21 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
   const photos = recordPhotos(rec);
   return (
     <div className="space-y-6">
-      {showCore && <h3 className="font-serif text-[1.5rem] font-medium leading-[1.4]">{q.core}</h3>}
+      {showCore && <h3 className="font-serif text-title font-medium">{q.core}</h3>}
       {steps.map((label, i) => {
         const voice = rec.voices?.find((v) => v.step === i);
         const a = rec.answers[i]?.trim() || voice?.text?.trim();
         if (!a && !voice && !(i === 0 && photos.length)) return null;
         return (
-          <div key={i} className="space-y-3">
-            {i > 0 && <p className="text-[1.0625rem] font-bold leading-[1.5]">{label}</p>}
+          <div key={i} className="space-y-4">
+            {i > 0 && <p className="text-body font-medium">{label}</p>}
             {voice && (
-              <div className="pb-3">
+              <div className="pb-4">
                 <VoiceBar recordId={qid} voice={voice} text={a ?? ""} fg={fg} accent={accent} />
               </div>
             )}
-            {voice && a && <p className="text-[0.8125rem] font-medium">음성 기록을 글로 옮긴 내용</p>}
-            {a && <p className="whitespace-pre-line text-[1.0625rem] leading-[1.7]">{a}</p>}
+            {voice && a && <p className="text-caption font-medium">음성 기록을 글로 옮긴 내용</p>}
+            {a && <p className="whitespace-pre-line text-body">{a}</p>}
             {i === 0 && photos.map((p) => <CardPhoto key={p} src={p} fg={fg} />)}
           </div>
         );
@@ -129,34 +129,34 @@ export function RecordCard({
           aria-expanded={open}
           className="block h-auto w-full whitespace-normal rounded-2xl p-0 text-left [&_svg]:size-auto"
         >
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <CategoryPill cat={cat} />
             <span
-              className="inline-flex h-8 shrink-0 items-center gap-2 rounded-full px-3 text-[0.8125rem]"
+              className="inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 text-caption"
               style={{ background: "transparent", color: c.count, border: `1px solid ${c.count}` }}
             >
               {!open && dateLabel(rec.updatedAt)}
               {!open && <span className="h-3 w-px" style={{ background: c.count }} />}
-              <span className="font-bold">{open ? "접기" : "펼치기"}</span>
+              <span className="font-medium">{open ? "접기" : "펼치기"}</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} aria-hidden>
                 <path d="m3 4.5 3 3 3-3" />
               </svg>
             </span>
           </div>
-          <h2 className="mt-5 font-serif text-[1.5rem] font-medium leading-[1.4]">{q.core}</h2>
+          <h2 className="mt-6 font-serif text-title font-medium">{q.core}</h2>
         </Button>
 
         <div className="expand" data-open={open}>
           <div>
-            <div className="pt-5">
+            <div className="pt-6">
               <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
               <div className="mt-8 grid grid-cols-2 gap-2 pb-1">
-                <button type="button" className="h-14 rounded-full border text-[0.9375rem] font-medium" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
+                <button type="button" className="h-14 rounded-full border text-caption font-medium" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
                   수정하기
                 </button>
-                <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 flex-col items-center justify-center rounded-full px-3 py-1.5 text-center leading-tight break-keep" style={{ background: c.btnBg, color: "#FFFFFF" }}>
-                  <span className="text-[0.9375rem] font-bold">{cat.name}</span>
-                  <span className="text-[0.9375rem] font-medium">이야기 더 하기</span>
+                <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 flex-col items-center justify-center rounded-full px-4 py-2 text-center break-keep" style={{ background: c.btnBg, color: "#FFFFFF" }}>
+                  <span className="text-caption font-medium">{cat.name}</span>
+                  <span className="text-caption font-medium">이야기 더 하기</span>
                 </Link>
               </div>
             </div>

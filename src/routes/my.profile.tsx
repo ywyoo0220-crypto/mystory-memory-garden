@@ -60,8 +60,8 @@ function ProfilePage() {
     toast("프로필을 저장했어요");
     navigate({ to: "/my" });
   };
-  const pill = "inline-flex h-12 items-center rounded-full border border-ink px-5 text-[0.9375rem] font-medium";
-  const input = "mt-2 h-14 w-full rounded-2xl border border-[#D1D1D6] bg-card px-4 text-[1.0625rem] outline-none focus:border-ink";
+  const pill = "inline-flex h-12 items-center rounded-full border border-ink px-6 text-caption font-medium";
+  const input = "mt-2 h-14 w-full rounded-2xl border border-[#D1D1D6] bg-card px-4 text-body outline-none focus:border-ink";
   return (
     <main className="pb-6">
       <SubHeader title="프로필" />
@@ -92,11 +92,11 @@ function ProfilePage() {
           }}
         />
         <label className="block">
-          <span className="text-[0.9375rem] font-medium">이름</span>
+          <span className="text-caption font-medium">이름</span>
           <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김정희" autoComplete="name" />
         </label>
         <label className="block">
-          <span className="text-[0.9375rem] font-medium">태어난 해</span>
+          <span className="text-caption font-medium">태어난 해</span>
           <input
             className={input}
             value={birth}
@@ -106,8 +106,8 @@ function ProfilePage() {
             maxLength={4}
           />
         </label>
-        <p className="text-[0.9375rem] leading-[1.6] text-muted-foreground">태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요.</p>
-        <button type="button" onClick={save} className="flex h-14 w-full items-center justify-center rounded-full bg-ink text-[1.0625rem] font-semibold text-ink-foreground">
+        <p className="text-caption text-muted-foreground">태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요.</p>
+        <button type="button" onClick={save} className="flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground">
           저장하기
         </button>
       </div>

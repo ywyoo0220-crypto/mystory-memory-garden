@@ -35,9 +35,9 @@ function RecordStart() {
   ];
   return (
     <main className="px-6 pt-12">
-      <h1 className="font-serif text-[1.75rem] leading-[1.4]">무엇부터 기록할까요?</h1>
-      <p className="mt-3 text-[1.0625rem] leading-[1.7] text-muted-foreground">답하고 싶은 질문만 고르면 됩니다.</p>
-      <div className="mt-8 space-y-3">
+      <h1 className="font-serif text-title">무엇부터 기록할까요?</h1>
+      <p className="mt-4 text-body text-muted-foreground">답하고 싶은 질문만 고르면 됩니다.</p>
+      <div className="mt-8 space-y-4">
         {opts.map((o) => (
           <Link
             key={o.kind}
@@ -45,7 +45,7 @@ function RecordStart() {
             params={{ kind: o.kind }}
             className="block rounded-[32px] border border-border bg-card p-6 transition-transform active:scale-[0.99]"
           >
-            <div className="flex -space-x-1.5">
+            <div className="flex -space-x-2">
               {o.cats.map((c) => (
                 <span
                   key={c.id}
@@ -56,8 +56,8 @@ function RecordStart() {
                 </span>
               ))}
             </div>
-            <p className="mt-5 font-serif text-[1.5rem]">{o.title}</p>
-            <p className="mt-1 text-[1rem] leading-[1.6] text-muted-foreground">{o.desc}</p>
+            <p className="mt-6 font-serif text-title">{o.title}</p>
+            <p className="mt-1 text-body text-muted-foreground">{o.desc}</p>
           </Link>
         ))}
       </div>

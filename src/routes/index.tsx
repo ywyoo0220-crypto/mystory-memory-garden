@@ -38,8 +38,8 @@ function Home() {
   const hasExamples = Object.values(records).some((r) => r.example);
 
   return (
-    <main className="px-3 pt-4">
-      <header className="flex items-center justify-between gap-6 px-3 py-3 [.large_&]:px-0">
+    <main className="px-6 pt-4">
+      <header className="flex items-center justify-between gap-6 py-4">
         <h1 className="flex items-center">
           <img
             src={wordmark.url}
@@ -56,20 +56,20 @@ function Home() {
       </header>
 
       {cards.length === 0 ? (
-        <div className="mx-3 mt-10 rounded-[32px] bg-card px-6 py-12 text-center">
-          <p className="font-serif text-[1.5rem] leading-[1.4]">아직 남긴 기록이 없어요.</p>
-          <p className="mt-3 text-[1.0625rem] leading-[1.7] text-muted-foreground [text-wrap:balance] [word-break:keep-all]">
+        <div className="mt-12 rounded-[32px] bg-card px-6 py-12 text-center">
+          <p className="font-serif text-title">아직 남긴 기록이 없어요.</p>
+          <p className="mt-4 text-body text-muted-foreground [text-wrap:balance] [word-break:keep-all]">
             주제나 시기를 고르면 답할 질문이 나와요.
           </p>
           <Link
             to="/record"
-            className="mt-8 inline-flex h-14 items-center rounded-full bg-ink px-8 text-[1rem] font-semibold text-ink-foreground"
+            className="mt-8 inline-flex h-14 items-center rounded-full bg-ink px-8 text-body font-medium text-ink-foreground"
           >
             질문 고르기
           </Link>
         </div>
       ) : (
-        <div className="-mx-3 mt-4">
+        <div className="-mx-6 mt-4">
           {cards.map((k, i) => (
             <RecordCard
               key={k.qid}
@@ -90,7 +90,7 @@ function Home() {
         <button
           type="button"
           onClick={() => { actions.setView(other); setOpen(null); window.scrollTo({ top: 0 }); }}
-          className="mx-3 mt-6 flex h-14 w-[calc(100%-1.5rem)] items-center justify-center rounded-full bg-ink text-[1rem] font-semibold text-ink-foreground"
+          className="mt-6 flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground"
         >
           {other === "period" ? "시간순" : "주제별"} 보기에 기록 {otherCount}개가 더 있어요
         </button>
@@ -98,7 +98,7 @@ function Home() {
 
       {hasExamples && (
         <p className="mt-6 text-center">
-          <Link to="/my" className="inline-flex h-10 items-center rounded-full border px-4 text-[0.8125rem] text-muted-foreground">
+          <Link to="/my" className="inline-flex h-12 items-center rounded-full border px-4 text-caption text-muted-foreground">
             예시 기록 · MY에서 비울 수 있어요
           </Link>
         </p>
