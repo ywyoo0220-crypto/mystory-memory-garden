@@ -103,9 +103,12 @@ export function ContinueCard({ qid, rec }: { qid: string; rec: StoryRecord }) {
   const preview = rec.answers.find((a) => a?.trim())?.trim();
   return (
     <Link to="/answer/$qid" params={{ qid }} search={{ step: first }} className="block rounded-[20px] border border-border bg-card p-5">
-      <span className="flex items-center gap-2 text-caption text-muted-foreground">
-        <Dot catId={cat.id} />
-        {cat.name} · {dateLabel(rec.updatedAt)}
+      <span className="flex items-center justify-between gap-4 text-caption text-muted-foreground">
+        <span className="flex items-center gap-2">
+          <Dot catId={cat.id} />
+          {cat.name}
+        </span>
+        {dateLabel(rec.updatedAt)} 작성
       </span>
       <span className="mt-2 block text-body font-medium [word-break:keep-all]">{q.core}</span>
       {preview && <span className="mt-2 line-clamp-2 block text-caption text-muted-foreground">“{preview}”</span>}
