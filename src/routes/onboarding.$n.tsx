@@ -148,11 +148,10 @@ function Head({ step, title, sub }: { step: number; title: string; sub: string }
 }
 
 /** Shared non-interactive "example" frame around onboarding illustrations. */
-function Frame({ label = "예시 화면", className = "", children }: { label?: string; className?: string; children: ReactNode }) {
+function Frame({ className = "", children }: { className?: string; children: ReactNode }) {
   return (
     <div aria-hidden inert className={`pointer-events-none select-none rounded-3xl border border-[#D1D1D6] bg-[#F5F5F7] p-4 ${className}`}>
-      <span className="inline-flex rounded-full border border-border px-4 py-1 text-caption font-medium text-muted-foreground">{label}</span>
-      <div className="mt-2">{children}</div>
+      {children}
     </div>
   );
 }
@@ -310,7 +309,7 @@ function Screen5() {
   return (
     <>
       <Head step={5} title={"첫 질문으로\n시작해요."} sub="답이 짧아도 돼요. 떠오르는 대로 남기면 돼요." />
-      <Frame label="다음 화면에서 답해요" className="mt-6">
+      <Frame className="mt-6">
         <Surface cat={cat} className="pb-8">
           <CategoryPill cat={cat} />
           <p className="mt-6 text-title font-medium">{q.core}</p>
