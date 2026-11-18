@@ -54,11 +54,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const PRE_PAINT = `try{var d=document.documentElement,p=location.pathname;if(sessionStorage.getItem("mystory.launch.seen.v1")!=="1")d.classList.add("ms-pre-launch");if(!localStorage.getItem("ms.onb")&&p.indexOf("/onboarding")!==0&&p!=="/lock")d.classList.add("ms-pre-route")}catch(e){}`;
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <head>
         <HeadContent />
+        {/* Cover the first paint before hydration so home never flashes before launch/onboarding. */}
+        <script dangerouslySetInnerHTML={{ __html: PRE_PAINT }} />
         <style dangerouslySetInnerHTML={{ __html: themeCss() }} />
       </head>
       <body>
@@ -82,6 +86,9 @@ function RootComponent() {
     // First-run onboarding, after the lock is passed.
     if (path !== "/lock" && !path.startsWith("/onboarding") && !onbDone()) navigate({ to: "/onboarding/$n", params: { n: "1" }, replace: true });
   }, [path, navigate]);
+  useEffect(() => {
+    if (path === "/lock" || path.startsWith("/onboarding") || onbDone()) document.documentElement.classList.remove("ms-pre-route");
+  }, [path]);
   // Exhibition persona icons (?p=A|B|C), re-applied after head updates.
   useEffect(() => {
     try { applyPersonaLinks(document, resolvePersona(window.location.search, sessionStorage)); } catch { /* noop */ }

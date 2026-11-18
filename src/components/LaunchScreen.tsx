@@ -16,8 +16,10 @@ export function LaunchScreen() {
   const [visible, setVisible] = useState(false);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
+    // Pre-paint cover (set in __root) hands over to this overlay, or lifts when already seen.
+    const lift = () => document.documentElement.classList.remove("ms-pre-launch");
     try {
-      if (sessionStorage.getItem(LAUNCH_SESSION_KEY) === "1") return;
+      if (sessionStorage.getItem(LAUNCH_SESSION_KEY) === "1") return lift();
       sessionStorage.setItem(LAUNCH_SESSION_KEY, "1");
     } catch {
       /* Still allow launch when browser storage is unavailable. */
@@ -25,6 +27,7 @@ export function LaunchScreen() {
     const r = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setReduced(r);
     setVisible(true);
+    requestAnimationFrame(lift);
     const timer = window.setTimeout(() => setVisible(false), r ? LAUNCH_REDUCED_MS : LAUNCH_MS);
     return () => window.clearTimeout(timer);
   }, []);

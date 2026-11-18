@@ -348,3 +348,13 @@
 @keyframes onb-caret-blink { 50% { opacity: 0; } }
 .onb-caret { animation: onb-caret-blink 1s steps(1) infinite; }
 @media (prefers-reduced-motion: reduce) { .onb-caret { animation: none; } }
+
+/* First paint before hydration: hide home until launch overlay / onboarding redirect take over. */
+html.ms-pre-launch body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  background: var(--background);
+}
+html.ms-pre-route body > div:first-of-type { visibility: hidden; }
