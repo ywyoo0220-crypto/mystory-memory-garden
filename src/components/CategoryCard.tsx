@@ -160,7 +160,7 @@ export function RecordCard({
               <p className="pb-4 text-caption font-normal opacity-60" style={{ color: c.fg }}>{dateLabel(rec.updatedAt)}에 기록</p>
               <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
               <div className="mt-8 grid grid-cols-2 gap-2 pb-1">
-                <button type="button" className="h-14 rounded-full border text-caption font-medium" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
+                <button type="button" className="flex min-h-14 items-center justify-center rounded-full border px-4 py-2 text-center text-caption font-medium break-keep" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
                   수정하기
                 </button>
                 <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 flex-col items-center justify-center rounded-full px-4 py-2 text-center break-keep" style={{ background: c.btnBg, color: "#FFFFFF" }}>
