@@ -151,20 +151,6 @@ export function RecordCard({
                 <div>
                   <div className="pt-6">
                     <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
-                    {/* 수정은 가끔 쓰는 동작이므로 본문을 방해하지 않게 오른쪽 끝의 작은 칩으로 둔다. */}
-                    <div className="mt-4 flex justify-end">
-                      <button
-                        type="button"
-                        className="inline-flex min-h-12 items-center gap-2 rounded-full border px-4 text-caption font-medium break-keep"
-                        style={{ borderColor: c.fg, color: c.fg, background: "transparent" }}
-                        onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}
-                      >
-                        기록 수정
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                          <path d="m4.5 2.5 3.5 3.5-3.5 3.5" />
-                        </svg>
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -175,9 +161,24 @@ export function RecordCard({
         <div className="expand" data-open={open}>
           <div>
             <div className="pt-8 pb-1">
-              <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 items-center justify-center rounded-full px-4 py-2 text-center text-caption font-medium break-keep" style={{ background: c.btnBg, color: "#FFFFFF" }}>
-                {cat.name} 이야기 더 하기
-              </Link>
+              {/* 질문 수와 상관없이 하단은 한 줄로 통일: 질문이 여럿이면 수정은 질문 목록에서 고른다. */}
+              <div className="grid grid-cols-[3fr_7fr] gap-2">
+                <button
+                  type="button"
+                  className="flex min-h-14 items-center justify-center rounded-full border px-2 py-2 text-center text-caption font-medium break-keep"
+                  style={{ borderColor: c.fg, color: c.fg, background: "transparent" }}
+                  onClick={() =>
+                    list.length === 1
+                      ? navigate({ to: "/answer/$qid", params: { qid: list[0]!.qid } })
+                      : navigate({ to: "/cat/$catId", params: { catId: cat.id } })
+                  }
+                >
+                  수정하기
+                </button>
+                <Link to="/cat/$catId" params={{ catId: cat.id }} className="flex min-h-14 items-center justify-center rounded-full px-4 py-2 text-center text-caption font-medium break-keep" style={{ background: c.btnBg, color: "#FFFFFF" }}>
+                  {cat.name} 이야기 더 하기
+                </Link>
+              </div>
             </div>
           </div>
         </div>

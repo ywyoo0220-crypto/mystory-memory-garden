@@ -389,6 +389,8 @@ function AnswerFlow() {
               try { sessionStorage.removeItem("mystory.tour.v1"); } catch { /* noop */ }
               return void navigate({ to: "/onboarding/$n", params: { n: "5" } });
             }
+            const idx = (window.history.state as { __TSR_index?: number } | null)?.__TSR_index ?? 0;
+            if (idx > 0) return void window.history.back();
             navigate({ to: "/cat/$catId", params: { catId: cat.id } });
           }}
           aria-label="뒤로"
