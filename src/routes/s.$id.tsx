@@ -131,13 +131,16 @@ function SharedRecord({ qid, rec, withVoice }: { qid: string; rec: StoryRecord; 
   const follow = q.followUps.map((label, k) => step(label, k + 1)).filter(Boolean);
   return (
     <article>
-      <header className="rounded-[28px] p-6" style={{ ...catVars(cat.id), background: c.bg, color: c.fg } as CSSProperties}>
-        <p className="flex items-center gap-2 text-caption font-medium">
-          <CategoryIcon id={cat.id} size={16} />
-          {cat.name}
-          <span className="ml-auto font-normal tabular-nums">{fullDate(rec.updatedAt)}</span>
+      {/* Only the category name sits on its colour, as a small block (like the posters); the question is plain text on the page. */}
+      <header>
+        <p className="flex items-center gap-2 text-caption">
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 font-medium" style={{ ...catVars(cat.id), background: c.bg, color: c.fg } as CSSProperties}>
+            <CategoryIcon id={cat.id} size={14} />
+            {cat.name}
+          </span>
+          <span className="ml-auto tabular-nums text-muted-foreground">{fullDate(rec.updatedAt)}</span>
         </p>
-        <h2 className="mt-6 text-title font-medium [word-break:keep-all]">{q.core}</h2>
+        <h2 className="mt-4 text-title font-medium [word-break:keep-all]">{q.core}</h2>
       </header>
       <div className="space-y-6 pt-6">
         {step(q.core, 0)}
