@@ -103,6 +103,7 @@ function AnswerFlow() {
   const tick = useRef<number | undefined>(undefined);
   const finishing = useRef<Promise<void> | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const draftT = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     if (init.current) return;
@@ -181,7 +182,7 @@ function AnswerFlow() {
     return finishing.current;
   };
 
-  useEffect(() => () => void stopSpeaking(), []);
+  useEffect(() => () => { if (draftT.current !== undefined) { window.clearTimeout(draftT.current); persist(); } void stopSpeaking(); }, []);
 
   const NOTE_NO_SR = "이 화면에선 글로 바뀌지 않아요. 목소리만 남겨요. 글은 키보드의 받아쓰기 버튼으로 적을 수 있어요.";
   const NOTE_NO_MIC = "마이크 권한이 없어서 목소리는 남기지 못해요. 글로만 옮겨요.";
@@ -419,7 +420,7 @@ function AnswerFlow() {
       <textarea
         id="answer"
         value={answers[step]}
-        onChange={(e) => setAnswers(answers.map((a, i) => (i === step ? e.target.value : a)))}
+        onChange={(e) => { updateAnswer(step, e.target.value); window.clearTimeout(draftT.current); draftT.current = window.setTimeout(() => persist(), 500); }}
         placeholder="한 줄이어도 괜찮아요."
         rows={4}
         className="mt-4 block min-h-[calc(4lh+48px)] w-full resize-none rounded-3xl border border-border bg-card p-6 text-body outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"

@@ -45,7 +45,7 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
           <div key={i} className={i > 0 ? "space-y-4 border-t border-current/15 pt-6" : "space-y-4"}>
             {i > 0 && (
               <p className="text-body font-medium">
-                <span className="opacity-60">Q.</span> {label}
+                <span className="font-medium">Q.</span> {label}
               </p>
             )}
             {voice && (
@@ -157,9 +157,9 @@ export function RecordCard({
         <div className="expand" data-open={open}>
           <div>
             <div className="pt-6">
-              <p className="pb-4 text-caption font-normal opacity-60" style={{ color: c.fg }}>{dateLabel(rec.updatedAt)}에 기록</p>
               <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
-              <div className="mt-8 grid grid-cols-2 gap-2 pb-1">
+              <p className="mt-8 text-caption font-normal opacity-60" style={{ color: c.fg }}>{dateLabel(rec.updatedAt)}에 기록</p>
+              <div className="mt-4 grid grid-cols-2 gap-2 pb-1">
                 <button type="button" className="flex min-h-14 items-center justify-center rounded-full border px-4 py-2 text-center text-caption font-medium break-keep" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
                   수정하기
                 </button>
