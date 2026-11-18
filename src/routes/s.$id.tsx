@@ -48,11 +48,13 @@ function SharedPage() {
   const name = profile.name.trim();
   const times = qids.map((q) => records[q]!.updatedAt);
   const span = times.length ? monthSpan(Math.min(...times), Math.max(...times)) : "";
+  // Shares made before the cover step have no cover saved: example records then get the example cover.
+  const cover = share.cover ?? (qids.some((q) => records[q]?.example) ? "/ex_cover.jpg" : "");
   return (
     <main className="pb-16">
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>
         <img src={wordmark.url} alt="MyStory" className="h-6 w-auto self-start" />
-        {share.cover && <CoverPhoto src={share.cover} />}
+        {cover && <CoverPhoto src={cover} />}
         <h1 className="mt-8 text-center text-title font-medium">{name ? `${name}의 이야기` : "나의 이야기"}</h1>
         <p className="mt-2 text-center text-caption">기록 {qids.length}개{span && ` · ${span}`}</p>
         <p className="mt-auto pt-10 text-center text-caption [word-break:keep-all]">
