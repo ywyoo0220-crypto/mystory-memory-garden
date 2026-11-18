@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { periods, topics, type Category } from "@/lib/data";
-import { hasContent, isIncomplete, useStore, type Records } from "@/lib/store";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { categoryOfQuestion, getQuestion, periods, topics, type Category } from "@/lib/data";
+import { hasContent, isIncomplete, useStore, type Records, type StoryRecord } from "@/lib/store";
 import { periodYears, usePrefs } from "@/lib/prefs";
-import { ContinueCard, Dot, SubHeader } from "@/components/my/ui";
+import { dateLabel } from "@/lib/utils";
+import { Chevron, ContinueCard, Dot, SubHeader } from "@/components/my/ui";
 
 export const Route = createFileRoute("/my/archive")({
   head: () => ({
@@ -22,6 +23,10 @@ function Archive() {
   const { records } = useStore();
   const { profile } = usePrefs();
   const incomplete = Object.entries(records).filter(([, r]) => isIncomplete(r)).sort((a, b) => b[1].updatedAt - a[1].updatedAt);
+  const done = Object.entries(records)
+    .filter(([, r]) => hasContent(r) && !isIncomplete(r))
+    .sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+    .slice(0, 5);
   return (
     <main className="pb-6">
       <SubHeader title="나의 아카이브" />
@@ -34,6 +39,14 @@ function Archive() {
             <div className="space-y-2">
               {incomplete.map(([q, r]) => <ContinueCard key={q} qid={q} rec={r} />)}
             </div>
+          </section>
+        )}
+        {done.length > 0 && (
+          <section>
+            <h2 className="px-2 pb-4 text-body font-medium">최근 기록</h2>
+            <ul className="space-y-2">
+              {done.map(([q, r]) => <RecentRow key={q} qid={q} rec={r} />)}
+            </ul>
           </section>
         )}
       </div>
@@ -66,5 +79,26 @@ function Grid({ title, cats, records, birth = "" }: { title: string; cats: Categ
         })}
       </ul>
     </section>
+  );
+}
+
+/** A finished record: when it was written, and what it answers. */
+function RecentRow({ qid, rec }: { qid: string; rec: StoryRecord }) {
+  const cat = categoryOfQuestion(qid);
+  const q = getQuestion(qid);
+  if (!cat || !q) return null;
+  return (
+    <li>
+      <Link to="/answer/$qid" params={{ qid }} className="flex min-h-12 items-center gap-4 rounded-[20px] border border-border bg-card p-4">
+        <span className="min-w-0 flex-1">
+          <span className="flex items-center gap-2 text-caption text-muted-foreground">
+            <Dot catId={cat.id} />
+            {cat.name} · {dateLabel(rec.updatedAt)}에 기록
+          </span>
+          <span className="mt-1 block text-body font-medium">{q.core}</span>
+        </span>
+        <Chevron />
+      </Link>
+    </li>
   );
 }

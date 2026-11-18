@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { categoryOfQuestion, getQuestion } from "@/lib/data";
 import { filledSteps, type StoryRecord } from "@/lib/store";
+import { dateLabel } from "@/lib/utils";
 import { BackBar } from "@/components/BackBar";
 
 export const Chevron = () => (
@@ -100,7 +101,7 @@ export function ContinueCard({ qid, rec }: { qid: string; rec: StoryRecord }) {
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-2 text-caption text-muted-foreground">
           <Dot catId={cat.id} />
-          {cat.name} · 4단계 중 {f.filter(Boolean).length}단계
+          {cat.name} · 4단계 중 {f.filter(Boolean).length}단계 · {dateLabel(rec.updatedAt)}
         </span>
         <span className="mt-1 block text-body font-medium">{q.core}</span>
       </span>
