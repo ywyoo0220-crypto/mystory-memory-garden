@@ -477,7 +477,8 @@ function AnswerFlow() {
       {voice && (
         <div className="mt-4">
           <div className="rounded-full border border-border bg-card py-2 pl-2 pr-4">
-            <VoiceBar recordId={qid} voice={voice} text={answers[step] || voice.text || ""} fg={cat.kind === "period" ? c.bg : c.pill} accent={cat.kind === "period" ? c.fg : c.pillText} />
+            {/* This bar sits on the white page, not on the category card, so it uses ink like the other buttons here. */}
+            <VoiceBar recordId={qid} voice={voice} text={answers[step] || voice.text || ""} fg="var(--ink)" accent="var(--ink-foreground)" />
           </div>
           <button
             type="button"
