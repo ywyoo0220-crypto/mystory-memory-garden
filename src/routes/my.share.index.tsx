@@ -85,14 +85,21 @@ function SharePage() {
     <main className="pb-6">
       <SubHeader
         title="기록 공유하기"
-        action={sharedN > 0 ? <Link to="/my/share/manage" className="inline-flex h-12 shrink-0 items-center px-2 text-caption font-medium">관리 {sharedN}</Link> : undefined}
+        sub="원하는 사람에게만 보여줄 이야기를 골라주세요."
+        action={
+          sharedN > 0 ? (
+            <Link to="/my/share/manage" className="inline-flex h-12 shrink-0 items-center px-2 text-caption font-medium">
+              기록 관리 ({sharedN})
+            </Link>
+          ) : undefined
+        }
       />
       <div className="space-y-4 px-6">
         <div aria-label={`${step + 1}/3단계 · ${STEPS[step]}`} role="img" className="flex items-center gap-2">
           {STEPS.map((s, i) => <span key={s} className={`h-0.5 flex-1 rounded-full ${i <= step ? "bg-ink" : "bg-[#D1D1D6]"}`} />)}
         </div>
         <p className="text-caption font-medium [word-break:keep-all]">
-          {step === 0 ? "원하는 사람에게만 보여줄 이야기를 골라주세요." : `${step + 1}. ${STEPS[step]}`}
+          {step + 1}. {STEPS[step]}
         </p>
 
         {step === 0 && (
