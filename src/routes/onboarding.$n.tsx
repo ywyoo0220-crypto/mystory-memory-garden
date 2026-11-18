@@ -239,7 +239,7 @@ function Screen3() {
         {cats.map((cat, i) => {
           const last = i === cats.length - 1;
           return (
-            <div key={cat.id} className="onb-stack relative" style={{ zIndex: i + 1, marginTop: i ? "-2rem" : 0, animationDelay: `${300 + i * 440}ms` }}>
+            <div key={cat.id} className="onb-stack relative" style={{ zIndex: i + 1, marginTop: i ? "-1.5rem" : 0, animationDelay: `${300 + i * 440}ms` }}>
               <Surface
                 cat={cat}
                 className={`!pt-5 ${last ? "pb-5" : "pb-[2.5rem]"}`}

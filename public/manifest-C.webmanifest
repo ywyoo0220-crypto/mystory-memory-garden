@@ -1,0 +1,18 @@
+{
+  "id": "/?p=C",
+  "name": "MyStory",
+  "short_name": "MyStory",
+  "start_url": "/?p=C",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F5F7",
+  "theme_color": "#F5F5F7",
+  "icons": [
+    {
+      "src": "/icon-C.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

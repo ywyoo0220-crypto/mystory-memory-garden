@@ -45,3 +45,4 @@ use the editor.
 - Launch uses a root-shell overlay and a sessionStorage flag; underlying lock/onboarding mounts immediately and storage is checked only after hydration.
 - Shared error screens subscribe to the text-size store and serve root/router defaults so direct missing URLs honor the saved text size.
 - Keep the legacy backup app discriminator and PIN salt unchanged when updating display branding, to preserve existing backups and locks.
+- Exhibition persona icons: ?p=A|B|C swaps manifest/apple-touch-icon links client-side via lib/persona.ts, remembered in sessionStorage; defaults untouched.

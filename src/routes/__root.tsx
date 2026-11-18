@@ -17,6 +17,7 @@ import { Toaster } from "../components/ui/sonner";
 import { themeCss } from "../lib/theme";
 import { getPrefs } from "../lib/prefs";
 import { onbDone } from "../lib/onboarding";
+import { applyPersonaLinks, resolvePersona } from "../lib/persona";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -81,6 +82,10 @@ function RootComponent() {
     // First-run onboarding, after the lock is passed.
     if (path !== "/lock" && !path.startsWith("/onboarding") && !onbDone()) navigate({ to: "/onboarding/$n", params: { n: "1" }, replace: true });
   }, [path, navigate]);
+  // Exhibition persona icons (?p=A|B|C), re-applied after head updates.
+  useEffect(() => {
+    try { applyPersonaLinks(document, resolvePersona(window.location.search, sessionStorage)); } catch { /* noop */ }
+  }, [path]);
   const onb = path.startsWith("/onboarding");
   const fullscreen = onb || path === "/my/export";
   const locked = path === "/lock" || fullscreen;

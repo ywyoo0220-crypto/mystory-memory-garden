@@ -112,7 +112,7 @@ export function RecordCard({
       ref={ref}
       id={`rec-${qid}`}
       className="relative scroll-mt-[calc(1rem+env(safe-area-inset-top))]"
-      style={{ zIndex: z, marginTop: first ? 0 : "-2rem" }}
+      style={{ zIndex: z, marginTop: first ? 0 : "-1.5rem" }}
     >
       <section
         className={`category-surface relative rounded-t-[32px] px-6 pt-6 ${last ? "rounded-b-[32px] pb-8" : "pb-[3.75rem]"}`}
