@@ -376,6 +376,11 @@ html.ms-pre-launch .ms-deck > *,
 html.ms-launching .ms-deck > * {
   animation-play-state: paused;
 }
+/* Home settles in softly after launch or onboarding instead of a hard cut. */
+@keyframes ms-fade { from { opacity: 0; } }
+.ms-home { animation: ms-fade 0.4s ease-out both; }
+html.ms-pre-launch .ms-home, html.ms-launching .ms-home { animation-play-state: paused; }
+.launch-screen.launch-leaving { animation: launch-exit 250ms ease-out both; pointer-events: none; }
 @keyframes ms-in {
   from { opacity: 0; transform: translateY(0.5rem); }
 }
@@ -411,7 +416,7 @@ html.ms-launching .ms-deck > * {
   transition: transform 0.25s ease-out, background-color 0.25s ease-out;
 }
 @media (prefers-reduced-motion: reduce) {
-  .ms-deck > *, .expand[data-open="true"] .ms-in { animation: none; }
+  .ms-deck > *, .ms-home, .launch-screen.launch-leaving, .expand[data-open="true"] .ms-in { animation: none; }
   .ms-ripple::before, .ms-ripple::after { animation: none; opacity: 0; }
   .ms-seg { transition: none; }
   .ms-bar { transition: none; transform: none !important; }

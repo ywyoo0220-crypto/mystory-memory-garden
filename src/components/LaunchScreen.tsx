@@ -15,6 +15,7 @@ export const LAUNCH_LABEL = "질문에 답하며 나만의 색깔로 채워 가�
 export function LaunchScreen() {
   const [visible, setVisible] = useState(false);
   const [reduced, setReduced] = useState(false);
+  const [leaving, setLeaving] = useState(false);
   useEffect(() => {
     // Pre-paint cover (set in __root) hands over to this overlay, or lifts when already seen.
     const lift = () => document.documentElement.classList.remove("ms-pre-launch");
@@ -40,8 +41,13 @@ export function LaunchScreen() {
     <div
       role="img"
       aria-label={LAUNCH_LABEL}
-      className="launch-screen no-print"
-      onClick={() => setVisible(false)}
+      className={`launch-screen no-print${leaving ? " launch-leaving" : ""}`}
+      onClick={() => {
+        if (leaving) return;
+        setLeaving(true);
+        document.documentElement.classList.remove("ms-launching");
+        window.setTimeout(() => setVisible(false), 250);
+      }}
     >
       {reduced ? (
         <img src="/launch/launch_bg_poster.webp" alt="" className="launch-bg" draggable={false} />

@@ -49,7 +49,7 @@ function Home() {
   const hasExamples = Object.values(records).some((r) => r.example);
 
   return (
-    <main className="px-6 pt-4">
+    <main className="ms-home px-6 pt-4">
       <header className="flex items-center justify-between gap-6 py-4">
         <h1 className="flex items-center">
           <img

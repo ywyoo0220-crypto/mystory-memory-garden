@@ -21,6 +21,7 @@ describe("launch session", () => {
   it("skips on tap and does not return on a remount", () => {
     const view = render(<LaunchScreen />);
     fireEvent.click(screen.getByRole("img", { name: LAUNCH_LABEL }));
+    act(() => vi.advanceTimersByTime(250));
     expect(screen.queryByRole("img", { name: LAUNCH_LABEL })).toBeNull();
     view.unmount();
     render(<LaunchScreen />);
