@@ -49,8 +49,14 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
                 <VoiceBar recordId={qid} voice={voice} text={a ?? ""} fg={fg} accent={accent} />
               </div>
             )}
-            {voice && a && <p className="text-caption font-medium">음성 기록을 글로 옮긴 내용</p>}
-            {a && <p className="whitespace-pre-line text-body">{a}</p>}
+            {voice && a ? (
+              <div className="rounded-2xl bg-current/10 p-4">
+                <p className="text-caption font-medium opacity-80">[음성] 말로 남긴 내용</p>
+                <p className="mt-2 whitespace-pre-line text-body">{a}</p>
+              </div>
+            ) : (
+              a && <p className="whitespace-pre-line text-body">{a}</p>
+            )}
             {i === 0 && photos.map((p) => <CardPhoto key={p} src={p} fg={fg} />)}
           </div>
         );
