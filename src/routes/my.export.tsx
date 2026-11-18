@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { TextSizeButton } from "@/components/TextSizeButton";
 import { toast } from "sonner";
 import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 import { getQuestion } from "@/lib/data";
@@ -90,10 +89,7 @@ function ExportPage() {
             if (file) void upload(file);
           }} />
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="palette" disabled={!count || uploading} onClick={() => window.print()} className="h-14 min-w-0 flex-1 rounded-full bg-ink text-body font-medium text-ink-foreground">PDF로 저장</Button>
-          <TextSizeButton />
-        </div>
+        <Button variant="palette" disabled={!count || uploading} onClick={() => window.print()} className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground">PDF로 저장</Button>
       </section>
 
       <article className="book-preview" aria-label="책 미리보기">

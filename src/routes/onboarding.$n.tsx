@@ -5,7 +5,6 @@ import { cardColors, getCategory, type Category } from "@/lib/data";
 import { catVars } from "@/lib/theme";
 import { CategoryPill } from "@/components/CategoryCard";
 import { Button } from "@/components/ui/button";
-import { TextSizeButton } from "@/components/TextSizeButton";
 import { actions, useStore } from "@/lib/store";
 import { finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
 
@@ -93,7 +92,7 @@ function Onboarding() {
 
       <p className="shrink-0 px-6 pb-2 pt-2 text-caption font-medium text-ink">{EYEBROW[step]}</p>
           <div ref={content} className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2">{screen[step]}</div>
-          <Footer size={step !== 5}>
+          <Footer>
             {mode === "help" && step === 3 ? (
               <Button asChild variant="palette" className={primary}><Link to="/help">도움말로 돌아가기</Link></Button>
             ) : step === 5 ? (
@@ -108,12 +107,10 @@ function Onboarding() {
   );
 }
 
-function Footer({ children, size }: { children: ReactNode; size: boolean }) {
+function Footer({ children }: { children: ReactNode }) {
   return (
-    <div className="z-20 flex shrink-0 items-center gap-2 border-t border-comparison-border bg-paper px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4">
-      {/* 크게 always sits at the bottom-right: here, at the right end of the bottom button. */}
-      <div className="min-w-0 flex-1">{children}</div>
-      {size && <TextSizeButton />}
+    <div className="z-20 shrink-0 space-y-2 border-t border-comparison-border bg-paper px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4">
+      {children}
     </div>
   );
 }
