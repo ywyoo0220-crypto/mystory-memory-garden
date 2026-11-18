@@ -85,20 +85,21 @@ function SharePage() {
     <main className="pb-6">
       <SubHeader
         title="기록 공유하기"
-        sub="고른 기록만 정한 사람에게 링크로 보여줘요."
         action={sharedN > 0 ? <Link to="/my/share/manage" className="inline-flex h-12 shrink-0 items-center px-2 text-caption font-medium">관리 {sharedN}</Link> : undefined}
       />
       <div className="space-y-4 px-6">
         <div aria-label={`${step + 1}/3단계 · ${STEPS[step]}`} role="img" className="flex items-center gap-2">
           {STEPS.map((s, i) => <span key={s} className={`h-0.5 flex-1 rounded-full ${i <= step ? "bg-ink" : "bg-[#D1D1D6]"}`} />)}
         </div>
-        <p className="text-caption font-medium">{step + 1}. {STEPS[step]}</p>
+        <p className="text-caption font-medium [word-break:keep-all]">
+          {step === 0 ? "원하는 사람에게만 보여줄 이야기를 골라주세요." : `${step + 1}. ${STEPS[step]}`}
+        </p>
 
         {step === 0 && (
           <>
             {list.length > 0 && (
               <div className="flex min-h-12 items-center justify-between">
-                <span className="text-caption text-muted-foreground">{picked.length ? `이야기 ${picked.length}개 선택됨` : "이야기를 골라 주세요"}</span>
+                <span className="text-caption text-muted-foreground">선택한 이야기 {picked.length}개</span>
                 <button type="button" className="inline-flex h-12 items-center rounded-full px-4 text-caption font-medium active:bg-secondary" onClick={() => setPicked(picked.length === list.length ? [] : list.map(([q]) => q))}>
                   {picked.length === list.length ? "선택 해제" : "전체 선택"}
                 </button>
