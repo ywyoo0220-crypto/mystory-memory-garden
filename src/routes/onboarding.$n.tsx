@@ -6,6 +6,7 @@ import { catVars } from "@/lib/theme";
 import { CategoryPill } from "@/components/CategoryCard";
 import { Button } from "@/components/ui/button";
 import { TextSizeButton } from "@/components/TextSizeButton";
+import { actions, useStore } from "@/lib/store";
 import { finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
 
 const TITLE = "처음 안내 — MyStory";
@@ -32,7 +33,6 @@ export const Route = createFileRoute("/onboarding/$n")({
 });
 
 const FIRST_QID = "A1-Q2";
-const BIG_NOTE = "글자 크기는 홈이나 MY에서 바꿀 수 있어요.";
 const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground";
 
 function Onboarding() {
@@ -93,7 +93,7 @@ function Onboarding() {
 
       <p className="shrink-0 px-6 pb-2 pt-2 text-caption font-medium text-ink">{EYEBROW[step]}</p>
           <div ref={content} className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2">{screen[step]}</div>
-          <Footer>
+          <Footer size={step !== 5}>
             {mode === "help" && step === 3 ? (
               <Button asChild variant="palette" className={primary}><Link to="/help">도움말로 돌아가기</Link></Button>
             ) : step === 5 ? (
@@ -108,12 +108,12 @@ function Onboarding() {
   );
 }
 
-function Footer({ children }: { children: ReactNode }) {
+function Footer({ children, size }: { children: ReactNode; size: boolean }) {
   return (
     <div className="z-20 flex shrink-0 items-center gap-2 border-t border-comparison-border bg-paper px-6 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4">
       {/* 크게 always sits at the bottom-right: here, at the right end of the bottom button. */}
       <div className="min-w-0 flex-1">{children}</div>
-      <TextSizeButton />
+      {size && <TextSizeButton />}
     </div>
   );
 }
@@ -262,7 +262,23 @@ function Screen5() {
           <p className="mt-6 text-title font-medium">{q.core}</p>
         </Surface>
       </Frame>
-      <p className="mt-4 text-body text-muted-foreground">{BIG_NOTE}</p>
+      <SizeChoice />
     </>
+  );
+}
+
+/** First-run text size choice; applies immediately so the user sees the result before answering. */
+function SizeChoice() {
+  const { large } = useStore();
+  const opt = (on: boolean) => `flex h-12 flex-1 items-center justify-center rounded-full text-body font-medium ${on ? "bg-ink text-ink-foreground" : "bg-muted text-ink"}`;
+  return (
+    <section className="mt-6" aria-labelledby="size-choice">
+      <p id="size-choice" className="text-body font-medium text-ink">어떤 글자 크기로 볼까요?</p>
+      <div role="radiogroup" aria-labelledby="size-choice" className="mt-2 flex gap-2">
+        <button type="button" role="radio" aria-checked={!large} className={opt(!large)} onClick={() => actions.setTextSize(0)}>보통</button>
+        <button type="button" role="radio" aria-checked={large} className={opt(large)} onClick={() => actions.setTextSize(1)}>크게</button>
+      </div>
+      <p className="mt-2 text-caption text-muted-foreground">나중에 MY &gt; 설정에서도 바꿀 수 있어요.</p>
+    </section>
   );
 }
