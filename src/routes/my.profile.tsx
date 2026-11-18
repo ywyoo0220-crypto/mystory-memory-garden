@@ -70,9 +70,15 @@ function ProfilePage() {
           <button type="button" aria-label="프로필 사진 고르기" onClick={() => file.current?.click()} className="rounded-full">
             <Avatar name={name} photo={photo} size={88} />
           </button>
-          <div className="flex flex-wrap gap-2">
+          {/* One button for the main action; removing is a quiet text link under it
+              (same pattern as '음성만 지우기' on the answer screen), so the two never read as a pair of equals. */}
+          <div className="flex flex-col items-start">
             <button type="button" className={pill} onClick={() => file.current?.click()}>{photo ? "사진 바꾸기" : "사진 넣기"}</button>
-            {photo && <button type="button" className={pill} onClick={() => setPhoto(undefined)}>사진 빼기</button>}
+            {photo && (
+              <button type="button" onClick={() => setPhoto(undefined)} className="mt-1 h-12 pr-4 text-caption font-medium underline underline-offset-4">
+                사진 빼기
+              </button>
+            )}
           </div>
         </div>
         <input
