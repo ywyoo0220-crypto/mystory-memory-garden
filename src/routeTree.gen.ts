@@ -17,7 +17,6 @@ import { Route as AnswerQidRouteImport } from './routes/answer.$qid'
 import { Route as CatCatIdRouteImport } from './routes/cat.$catId'
 import { Route as KindKindRouteImport } from './routes/kind.$kind'
 import { Route as MyIndexRouteImport } from './routes/my.index'
-import { Route as MyArchiveRouteImport } from './routes/my.archive'
 import { Route as MyBackupRouteImport } from './routes/my.backup'
 import { Route as MyExportRouteImport } from './routes/my.export'
 import { Route as MyProfileRouteImport } from './routes/my.profile'
@@ -66,11 +65,6 @@ const KindKindRoute = KindKindRouteImport.update({
 const MyIndexRoute = MyIndexRouteImport.update({
   id: '/my/',
   path: '/my/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyArchiveRoute = MyArchiveRouteImport.update({
-  id: '/my/archive',
-  path: '/my/archive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyBackupRoute = MyBackupRouteImport.update({
@@ -127,7 +121,6 @@ export interface FileRoutesByFullPath {
   '/answer/$qid': typeof AnswerQidRoute
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
-  '/my/archive': typeof MyArchiveRoute
   '/my/backup': typeof MyBackupRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
@@ -147,7 +140,6 @@ export interface FileRoutesByTo {
   '/answer/$qid': typeof AnswerQidRoute
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
-  '/my/archive': typeof MyArchiveRoute
   '/my/backup': typeof MyBackupRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
@@ -168,7 +160,6 @@ export interface FileRoutesById {
   '/answer/$qid': typeof AnswerQidRoute
   '/cat/$catId': typeof CatCatIdRoute
   '/kind/$kind': typeof KindKindRoute
-  '/my/archive': typeof MyArchiveRoute
   '/my/backup': typeof MyBackupRoute
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
@@ -190,7 +181,6 @@ export interface FileRouteTypes {
     | '/answer/$qid'
     | '/cat/$catId'
     | '/kind/$kind'
-    | '/my/archive'
     | '/my/backup'
     | '/my/export'
     | '/my/profile'
@@ -210,7 +200,6 @@ export interface FileRouteTypes {
     | '/answer/$qid'
     | '/cat/$catId'
     | '/kind/$kind'
-    | '/my/archive'
     | '/my/backup'
     | '/my/export'
     | '/my/profile'
@@ -230,7 +219,6 @@ export interface FileRouteTypes {
     | '/answer/$qid'
     | '/cat/$catId'
     | '/kind/$kind'
-    | '/my/archive'
     | '/my/backup'
     | '/my/export'
     | '/my/profile'
@@ -251,7 +239,6 @@ export interface RootRouteChildren {
   AnswerQidRoute: typeof AnswerQidRoute
   CatCatIdRoute: typeof CatCatIdRoute
   KindKindRoute: typeof KindKindRoute
-  MyArchiveRoute: typeof MyArchiveRoute
   MyBackupRoute: typeof MyBackupRoute
   MyExportRoute: typeof MyExportRoute
   MyProfileRoute: typeof MyProfileRoute
@@ -320,13 +307,6 @@ declare module '@tanstack/react-router' {
       path: '/my'
       fullPath: '/my/'
       preLoaderRoute: typeof MyIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/my/archive': {
-      id: '/my/archive'
-      path: '/my/archive'
-      fullPath: '/my/archive'
-      preLoaderRoute: typeof MyArchiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my/backup': {
@@ -403,7 +383,6 @@ const rootRouteChildren: RootRouteChildren = {
   AnswerQidRoute: AnswerQidRoute,
   CatCatIdRoute: CatCatIdRoute,
   KindKindRoute: KindKindRoute,
-  MyArchiveRoute: MyArchiveRoute,
   MyBackupRoute: MyBackupRoute,
   MyExportRoute: MyExportRoute,
   MyProfileRoute: MyProfileRoute,

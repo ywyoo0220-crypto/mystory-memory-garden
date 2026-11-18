@@ -75,7 +75,7 @@ function AnswerFlow() {
   const category = categoryOfQuestion(qid);
   const cat = category;
   const steps = q ? [q.core, ...q.followUps] : [];
-  const { records } = useStore();
+  const { records, large } = useStore();
   const navigate = useNavigate();
 
   const startStep = Route.useSearch().step ?? 0;
@@ -402,6 +402,16 @@ function AnswerFlow() {
           </svg>
         </button>
         <p className="pointer-events-none absolute inset-x-12 text-center text-body font-medium">{cat.name}</p>
+        {/* The bottom nav (and its 크게 button) is hidden here, so the same switch sits in the header. */}
+        <button
+          type="button"
+          onClick={actions.toggleLarge}
+          aria-pressed={large}
+          aria-label="글자 크게 보기"
+          className="flex size-12 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-medium text-ink-foreground"
+        >
+          {large ? "보통" : "크게"}
+        </button>
       </div>
 
       <div className="flex items-center gap-4">

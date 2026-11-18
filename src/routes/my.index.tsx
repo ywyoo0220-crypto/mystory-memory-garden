@@ -1,16 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { periods, topics } from "@/lib/data";
+import { useState } from "react";
 import { hasContent, isIncomplete, useStore } from "@/lib/store";
 import { usePrefs } from "@/lib/prefs";
-import { Avatar, Card, Chevron, ContinueCard, Dot, rowCls } from "@/components/my/ui";
+import { Avatar, Card, Chevron, ContinueCard, rowCls } from "@/components/my/ui";
 
 export const Route = createFileRoute("/my/")({
   head: () => ({
     meta: [
       { title: "MY — MyStory" },
-      { name: "description", content: "프로필, 아카이브, 책 만들기, 공유, 백업과 설정." },
+      { name: "description", content: "프로필, 이어서 쓰기, 책 만들기, 공유, 백업과 설정." },
       { property: "og:title", content: "MY — MyStory" },
-      { property: "og:description", content: "프로필, 아카이브, 책 만들기, 공유, 백업과 설정." },
+      { property: "og:description", content: "프로필, 이어서 쓰기, 책 만들기, 공유, 백업과 설정." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -18,7 +18,11 @@ export const Route = createFileRoute("/my/")({
   component: My,
 });
 
+/** 이어서 쓰기: this many cards first, the rest behind '더 보기'. */
+const SHOWN = 3;
+
 function My() {
+  const [all, setAll] = useState(false);
   const { records, textSize } = useStore();
   const { profile, shares, pinHash } = usePrefs();
   const entries = Object.entries(records).filter(([, r]) => hasContent(r));
@@ -42,19 +46,17 @@ function My() {
         <Chevron />
       </Link>
 
-      <Link to="/my/archive" className="block">
-        <Card className="space-y-4 p-6">
-          <h2 className="text-body font-medium">나의 아카이브</h2>
-          <DotRow label="주제" cats={topics} records={records} />
-          <DotRow label="시기" cats={periods} records={records} />
-          <p className="pt-1 text-caption font-medium">나의 아카이브 자세히 보기 ›</p>
-        </Card>
-      </Link>
-
-      {incomplete[0] && (
+      {incomplete.length > 0 && (
         <section>
           <h2 className="px-2 pb-2 text-caption font-medium">이어서 쓰기 · {incomplete.length}개</h2>
-          <ContinueCard qid={incomplete[0][0]} rec={incomplete[0][1]} />
+          <div className="space-y-2">
+            {(all ? incomplete : incomplete.slice(0, SHOWN)).map(([q, r]) => <ContinueCard key={q} qid={q} rec={r} />)}
+          </div>
+          {incomplete.length > SHOWN && (
+            <button type="button" onClick={() => setAll(!all)} aria-expanded={all} className="mt-2 flex h-12 w-full items-center justify-center rounded-full border border-border text-caption font-medium">
+              {all ? "접기" : `${incomplete.length - SHOWN}개 더 보기`}
+            </button>
+          )}
         </section>
       )}
 
@@ -70,22 +72,5 @@ function My() {
         ))}
       </Card>
     </main>
-  );
-}
-
-function DotRow({ label, cats, records }: { label: string; cats: typeof topics; records: ReturnType<typeof useStore>["records"] }) {
-  const has = cats.map((c) => c.questions.some((q) => hasContent(records[q.id])));
-  return (
-    <div className="flex items-center gap-4">
-      <span className="w-8 shrink-0 text-caption text-muted-foreground">{label}</span>
-      <span className="flex flex-1 flex-wrap gap-2">
-        {cats.map((c, i) => (
-          <Dot key={c.id} catId={c.id} filled={!!has[i]} size={14} />
-        ))}
-      </span>
-      <span className="text-caption font-medium tabular-nums">
-        {has.filter(Boolean).length}/{cats.length}
-      </span>
-    </div>
   );
 }
