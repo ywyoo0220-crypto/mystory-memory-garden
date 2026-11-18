@@ -48,10 +48,21 @@ function Backup() {
       const { profile } = getPrefs();
       const data: BackupFile = { app: "myStory", v: 1, t: Date.now(), records, profile: { ...profile }, audio, media };
       const json = JSON.stringify(data);
+      const name = `mystory-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      const shareFile = new File([json], name, { type: "application/json" });
+      if (typeof navigator.canShare === "function" && navigator.canShare({ files: [shareFile] })) {
+        try {
+          await navigator.share({ files: [shareFile], title: "MyStory 백업 파일" });
+          toast("백업 파일을 보냈어요");
+          return;
+        } catch (e) {
+          if ((e as Error).name === "AbortError") return;
+        }
+      }
       try {
         const a = document.createElement("a");
         a.href = URL.createObjectURL(new Blob([json], { type: "application/json" }));
-        a.download = "mystory-backup.json";
+        a.download = name;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -94,6 +105,7 @@ function Backup() {
       <div className="space-y-4 px-6">
         <Card className="space-y-4 p-6">
           <p className="text-caption text-muted-foreground">지금 기록 {n}개</p>
+          <p className="text-caption text-muted-foreground">백업 파일을 만들면 보내기 창이 열려요. 카카오톡 ‘나와의 채팅’이나 메일, 드라이브에 보내 두세요.</p>
           <button type="button" className={`${btn} bg-ink text-ink-foreground`} onClick={() => void make()} disabled={busy}>
             {busy ? "만드는 중…" : "백업 파일 만들기"}
           </button>
