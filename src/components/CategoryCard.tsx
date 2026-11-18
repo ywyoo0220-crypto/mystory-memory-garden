@@ -42,8 +42,12 @@ function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: Stor
         const a = rec.answers[i]?.trim() || voice?.text?.trim();
         if (!a && !voice && !(i === 0 && photos.length)) return null;
         return (
-          <div key={i} className="space-y-4">
-            {i > 0 && <p className="text-body font-medium">{label}</p>}
+          <div key={i} className={i > 0 ? "space-y-4 border-t border-current/15 pt-6" : "space-y-4"}>
+            {i > 0 && (
+              <p className="text-body font-medium">
+                <span className="opacity-60">Q.</span> {label}
+              </p>
+            )}
             {voice && (
               <div className="pb-4">
                 <VoiceBar recordId={qid} voice={voice} text={a ?? ""} fg={fg} accent={accent} />
@@ -153,7 +157,7 @@ export function RecordCard({
         <div className="expand" data-open={open}>
           <div>
             <div className="pt-6">
-              <p className="pb-4 text-caption font-medium" style={{ color: c.fg }}>{dateLabel(rec.updatedAt)}에 기록</p>
+              <p className="pb-4 text-caption font-normal opacity-60" style={{ color: c.fg }}>{dateLabel(rec.updatedAt)}에 기록</p>
               <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
               <div className="mt-8 grid grid-cols-2 gap-2 pb-1">
                 <button type="button" className="h-14 rounded-full border text-caption font-medium" style={{ borderColor: c.fg, color: c.fg, background: "transparent" }} onClick={() => navigate({ to: "/answer/$qid", params: { qid } })}>
