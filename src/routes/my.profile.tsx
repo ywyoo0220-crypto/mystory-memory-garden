@@ -73,28 +73,25 @@ function ProfilePage() {
     <main className="pb-32">
       <SubHeader title="프로필" sub="책의 첫 장에 이렇게 담겨요." />
       <div className="space-y-6 px-6">
-        <div className="rounded-[20px] bg-card p-6">
-          <div className="flex items-center gap-5">
-            <button type="button" aria-label={photo ? "프로필 사진 바꾸기" : "프로필 사진 넣기"} onClick={() => file.current?.click()} className="relative shrink-0 rounded-full">
-              <Avatar name={name} photo={photo} size={88} />
-              <span aria-hidden className="absolute -bottom-1 -right-1 flex size-9 items-center justify-center rounded-full border-2 border-card bg-ink text-ink-foreground">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
-              </span>
-            </button>
-            <div className="min-w-0">
-              <p className="text-caption font-normal text-muted-foreground">기록자</p>
-              <p className="mt-1 truncate text-title font-medium">{name.trim() || "이름을 넣어 주세요"}</p>
-              <p className="mt-1 text-caption font-normal text-muted-foreground">
-                {[validBirth(birth) && `${birth}년생`, place.trim() && `${place.trim()} 출생`].filter(Boolean).join(" · ") || "태어난 해와 곳"}
-              </p>
-              <p className="text-caption font-normal text-muted-foreground">이야기 {count}편 담음</p>
-            </div>
-          </div>
+        <div className="relative rounded-[20px] bg-card px-6 py-8 text-center">
           {photo && (
-            <button type="button" onClick={() => setPhoto(undefined)} className="mt-3 h-12 text-caption font-normal text-muted-foreground underline underline-offset-4">
+            <button type="button" onClick={() => setPhoto(undefined)} className="absolute right-2 top-2 h-12 px-4 text-caption font-normal text-muted-foreground">
               사진 빼기
             </button>
           )}
+          <button type="button" aria-label={photo ? "프로필 사진 바꾸기" : "프로필 사진 넣기"} onClick={() => file.current?.click()} className="relative mx-auto block rounded-full">
+            <Avatar name={name} photo={photo} size={80} />
+            <span aria-hidden className="absolute -bottom-1 -right-1 flex size-9 items-center justify-center rounded-full border-2 border-card bg-ink text-ink-foreground">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
+            </span>
+          </button>
+          <p className="mt-5 text-caption font-normal text-muted-foreground">기록자</p>
+          <p className="mt-1 truncate text-title font-medium">{name.trim() || "이름을 넣어 주세요"}</p>
+          <span aria-hidden className="mx-auto my-4 block h-px w-7 bg-ink" />
+          <p className="text-caption font-normal text-muted-foreground">
+            {[validBirth(birth) && `${birth}년생`, place.trim() && `${place.trim()} 출생`].filter(Boolean).join(" · ") || "태어난 해와 곳"}
+          </p>
+          <p className="mt-1 text-caption font-normal text-ink">이야기 {count}편 담음</p>
         </div>
         <input
           ref={file}
