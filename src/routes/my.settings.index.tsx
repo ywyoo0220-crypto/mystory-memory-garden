@@ -6,6 +6,7 @@ import { usePrefs } from "@/lib/prefs";
 import { Card, Chevron, rowCls, Segmented, SubHeader } from "@/components/my/ui";
 import { Button } from "@/components/ui/button";
 import { resetApp } from "@/lib/reset";
+import { TextSizeChoice } from "@/components/TextSizeChoice";
 
 export const Route = createFileRoute("/my/settings/")({
   head: () => ({
@@ -35,20 +36,9 @@ function Settings() {
       <div className="space-y-6 px-6">
         <Card className="divide-y overflow-hidden">
           <div className="px-6 py-4">
-            <span className="block text-body font-medium">글자 크기</span>
-            <div role="radiogroup" aria-label="글자 크기" className="mt-3 grid grid-cols-2 gap-2">
-              {([[0, "보통", "text-body font-medium", ""], [1, "크게", "text-title font-medium", ""]] as const).map(([v, name, big]) => {
-                const on = textSize === v;
-                return (
-                  <button key={v} type="button" role="radio" aria-checked={on} onClick={() => actions.setTextSize(v as TextSize)}
-                    className={`relative flex min-h-[6rem] flex-col items-center justify-center gap-1 rounded-2xl border-2 bg-card text-foreground transition-colors ${on ? "border-ink" : "border-border"}`}>
-                    <span aria-hidden className={`absolute right-2.5 top-2.5 flex size-[1.375rem] items-center justify-center rounded-full ${on ? "bg-ink text-ink-foreground" : "border-2 border-border"}`}>
-                      {on && <svg viewBox="0 0 24 24" className="size-[0.875rem]" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>}
-                    </span>
-                    <span className={` ${big}`}>{name}</span>
-                  </button>
-                );
-              })}
+            <span id="size-label" className="block text-body font-medium">글자 크기</span>
+            <div className="mt-3">
+              <TextSizeChoice labelledBy="size-label" />
             </div>
           </div>
           <div className={rowCls}>

@@ -4,6 +4,7 @@ import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 import { cardColors, getCategory, type Category } from "@/lib/data";
 import { catVars } from "@/lib/theme";
 import { CategoryPill } from "@/components/CategoryCard";
+import { TextSizeChoice } from "@/components/TextSizeChoice";
 import { Button } from "@/components/ui/button";
 import { actions, useStore } from "@/lib/store";
 import { finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
@@ -268,16 +269,13 @@ function Screen5() {
 
 /** First-run text size choice; applies immediately so the user sees the result before answering. */
 function SizeChoice() {
-  const { large } = useStore();
-  const opt = (on: boolean) => `flex h-12 flex-1 items-center justify-center rounded-full text-body font-medium ${on ? "bg-ink text-ink-foreground" : "bg-muted text-ink"}`;
   return (
     <section className="mt-6" aria-labelledby="size-choice">
       <p id="size-choice" className="text-body font-medium text-ink">어떤 글자 크기로 볼까요?</p>
-      <div role="radiogroup" aria-labelledby="size-choice" className="mt-2 flex gap-2">
-        <button type="button" role="radio" aria-checked={!large} className={opt(!large)} onClick={() => actions.setTextSize(0)}>보통</button>
-        <button type="button" role="radio" aria-checked={large} className={opt(large)} onClick={() => actions.setTextSize(1)}>크게</button>
+      <div className="mt-3">
+        <TextSizeChoice labelledBy="size-choice" />
       </div>
-      <p className="mt-2 text-caption text-muted-foreground">나중에 MY &gt; 설정에서도 바꿀 수 있어요.</p>
+      <p className="mt-4 text-caption text-muted-foreground">나중에 MY &gt; 설정에서도 바꿀 수 있어요.</p>
     </section>
   );
 }
