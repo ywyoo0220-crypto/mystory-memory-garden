@@ -55,4 +55,30 @@ describe("Profile editing", () => {
     await waitFor(() => expect(router.state.location.pathname).toBe("/my"));
     expect(getPrefs().profile.photo).toBeUndefined();
   });
+
+  it("shows the birth-year hint only while the year is invalid", async () => {
+    localStorage.setItem(ONB_KEY, "1");
+    sessionStorage.setItem(LAUNCH_SESSION_KEY, "1");
+    getPrefs();
+    prefs.setProfile({ name: "이영숙", birth: "1958", birthplace: "전남 순천" });
+    const router = createRouter({
+      routeTree,
+      context: { queryClient: new QueryClient() },
+      history: createMemoryHistory({ initialEntries: ["/my/profile"] }),
+    });
+    await router.load();
+    render(<RouterProvider router={router} />);
+
+    const birth = await screen.findByRole("textbox", { name: "태어난 해" });
+    await waitFor(() => expect(birth).toHaveValue("1958"));
+    expect(screen.queryByText(/1900년/)).toBeNull();
+
+    fireEvent.change(birth, { target: { value: "999" } });
+    expect(await screen.findByText("1900년부터 2099년 사이, 네 자리로 입력하세요.")).toBeInTheDocument();
+    expect(birth).toHaveAttribute("aria-invalid", "true");
+
+    fireEvent.change(birth, { target: { value: "1958" } });
+    await waitFor(() => expect(screen.queryByText(/1900년/)).toBeNull());
+    expect(birth).toHaveAttribute("aria-invalid", "false");
+  });
 });

@@ -63,14 +63,14 @@ function ProfilePage() {
     toast("프로필을 저장했어요");
     navigate({ to: "/my" });
   };
-  const field = "group block px-6 py-5 transition-colors focus-within:bg-secondary/40";
-  const labelCls = "block text-caption font-medium text-muted-foreground transition-colors group-focus-within:text-ink";
-  const input = "mt-1 h-12 w-full bg-transparent text-body font-medium outline-none placeholder:font-normal placeholder:text-muted-foreground";
+  const field = "group flex min-h-14 items-center gap-4 px-6 py-3 transition-colors focus-within:bg-secondary/40";
+  const labelCls = "shrink-0 text-body font-normal text-muted-foreground transition-colors group-focus-within:text-ink";
+  const input = "min-w-0 flex-1 bg-transparent text-right text-body font-medium outline-none placeholder:font-normal placeholder:text-muted-foreground";
   const birthBad = birth.length > 0 && !validBirth(birth);
   return (
-    <main className="pb-32">
+    <main className="pb-10">
       <SubHeader title="프로필" sub="책의 첫 장에 이렇게 담겨요." />
-      <div className="space-y-6 px-6">
+      <div className="space-y-4 px-6">
         <div className="rounded-[20px] bg-card px-6 pt-9 pb-8 text-center">
           <div className="relative mx-auto w-fit">
             <button
@@ -113,24 +113,30 @@ function ProfilePage() {
             <span className={labelCls}>이름</span>
             <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김정희" autoComplete="name" />
           </label>
-          <label className={field}>
-            <span className={labelCls}>태어난 해</span>
-            <input
-              className={input}
-              value={birth}
-              onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))}
-              placeholder="예: 1958"
-              inputMode="numeric"
-              maxLength={4}
-              aria-invalid={birthBad}
-            />
-          </label>
+          <div>
+            <label className={field}>
+              <span className={labelCls}>태어난 해</span>
+              <input
+                id="birth-input"
+                aria-describedby={birthBad ? "birth-hint" : undefined}
+                className={input}
+                value={birth}
+                onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                placeholder="예: 1958"
+                inputMode="numeric"
+                maxLength={4}
+                aria-invalid={birthBad}
+              />
+            </label>
+            {birthBad && (
+              <p id="birth-hint" className="px-6 pb-3 text-caption font-normal text-destructive">1900년부터 2099년 사이, 네 자리로 입력하세요.</p>
+            )}
+          </div>
           <label className={field}>
             <span className={labelCls}>태어난 곳</span>
             <input className={input} value={place} onChange={(e) => setPlace(e.target.value.slice(0, 20))} placeholder="예: 전남 순천" />
           </label>
         </div>
-        <p className={`px-2 text-caption ${birthBad ? "text-destructive" : "text-muted-foreground"}`}>{birthBad ? "1900년부터 2099년 사이, 네 자리로 입력하세요." : "태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요."}</p>
         <button type="button" onClick={save} className="flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground">
           저장하기
         </button>
