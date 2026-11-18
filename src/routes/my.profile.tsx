@@ -60,26 +60,25 @@ function ProfilePage() {
     toast("프로필을 저장했어요");
     navigate({ to: "/my" });
   };
-  const pill = "inline-flex h-12 items-center rounded-full border border-ink px-6 text-caption font-medium";
-  const input = "mt-2 h-14 w-full rounded-2xl border border-[#D1D1D6] bg-card px-4 text-body outline-none focus:border-ink";
+  const row = "flex min-h-16 items-center gap-4 px-6 py-2";
+  const input = "h-12 min-w-0 flex-1 bg-transparent text-right text-body outline-none placeholder:text-muted-foreground";
+  const birthBad = birth.length > 0 && !validBirth(birth);
   return (
-    <main className="pb-6">
-      <SubHeader title="프로필" />
+    <main className="pb-32">
+      <SubHeader title="프로필" sub="이름과 태어난 해는 언제든 바꿀 수 있어요." />
       <div className="space-y-6 px-6">
-        <div className="flex items-center gap-4">
-          <button type="button" aria-label="프로필 사진 고르기" onClick={() => file.current?.click()} className="rounded-full">
-            <Avatar name={name} photo={photo} size={88} />
+        <div className="flex flex-col items-center">
+          <button type="button" aria-label={photo ? "프로필 사진 바꾸기" : "프로필 사진 넣기"} onClick={() => file.current?.click()} className="relative rounded-full">
+            <Avatar name={name} photo={photo} size={112} />
+            <span aria-hidden className="absolute bottom-0 right-0 flex size-10 items-center justify-center rounded-full border-2 border-background bg-ink text-ink-foreground">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
+            </span>
           </button>
-          {/* One button for the main action; removing is a quiet text link under it
-              (same pattern as '음성만 지우기' on the answer screen), so the two never read as a pair of equals. */}
-          <div className="flex flex-col items-start">
-            <button type="button" className={pill} onClick={() => file.current?.click()}>{photo ? "사진 바꾸기" : "사진 넣기"}</button>
-            {photo && (
-              <button type="button" onClick={() => setPhoto(undefined)} className="mt-1 h-12 pr-4 text-caption font-medium underline underline-offset-4">
-                사진 빼기
-              </button>
-            )}
-          </div>
+          {photo && (
+            <button type="button" onClick={() => setPhoto(undefined)} className="mt-2 h-12 px-4 text-caption font-medium text-muted-foreground underline underline-offset-4">
+              사진 빼기
+            </button>
+          )}
         </div>
         <input
           ref={file}
@@ -97,22 +96,25 @@ function ProfilePage() {
             }
           }}
         />
-        <label className="block">
-          <span className="text-caption font-medium">이름</span>
-          <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김정희" autoComplete="name" />
-        </label>
-        <label className="block">
-          <span className="text-caption font-medium">태어난 해</span>
-          <input
-            className={input}
-            value={birth}
-            onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))}
-            placeholder="예: 1955"
-            inputMode="numeric"
-            maxLength={4}
-          />
-        </label>
-        <p className="text-caption text-muted-foreground">태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요.</p>
+        <div className="divide-y overflow-hidden rounded-[20px] border border-border bg-card">
+          <label className={row}>
+            <span className="shrink-0 text-body font-medium">이름</span>
+            <input className={input} value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김정희" autoComplete="name" />
+          </label>
+          <label className={row}>
+            <span className="shrink-0 text-body font-medium">태어난 해</span>
+            <input
+              className={input}
+              value={birth}
+              onChange={(e) => setBirth(e.target.value.replace(/\D/g, "").slice(0, 4))}
+              placeholder="예: 1955"
+              inputMode="numeric"
+              maxLength={4}
+              aria-invalid={birthBad}
+            />
+          </label>
+        </div>
+        <p className="px-2 text-caption text-muted-foreground">{birthBad ? "1900년부터 2099년 사이, 네 자리로 입력하세요." : "태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요."}</p>
         <button type="button" onClick={save} className="flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground">
           저장하기
         </button>
