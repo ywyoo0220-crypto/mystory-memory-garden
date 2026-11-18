@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { hasContent, useStore } from "@/lib/store";
 import { prefs, SCOPES, usePrefs, type ShareScope } from "@/lib/prefs";
-import { shareUrl } from "@/lib/share";
+import { defaultCover, personaCover, shareUrl } from "@/lib/share";
 import { CoverPicker } from "@/components/CoverPicker";
 import { catVars } from "@/lib/theme";
 import { Card, Chevron, Dot, SubHeader, Toggle } from "@/components/my/ui";
@@ -37,8 +37,8 @@ function SharePage() {
   const [cover, setCover] = useState<string | null>(null);
   const list = Object.entries(records).filter(([, r]) => hasContent(r)).sort((a, b) => b[1].updatedAt - a[1].updatedAt);
   const hasVoice = picked.some((q) => records[q]?.voices?.length);
-  /** Default cover: the example cover for example records, else none, until the user picks one. */
-  const coverSrc = cover ?? (picked.some((q) => records[q]?.example) ? "/ex_cover.jpg" : "");
+  /** Default cover until the user picks one: the persona's book cover, the example cover, or none. */
+  const coverSrc = cover ?? defaultCover(picked, records, profile.name);
   const sharedN = new Set(shares.flatMap((s) => s.qids)).size;
   const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground disabled:opacity-40";
 
@@ -172,7 +172,7 @@ function SharePage() {
                 {<Toggle on={noVoice} onChange={setNoVoice} label="목소리는 빼고 보내기" />}
               </Card>
             )}
-            <CoverPicker qids={picked} records={records} value={coverSrc} onChange={setCover} />
+            <CoverPicker qids={picked} records={records} value={coverSrc} onChange={setCover} bookCover={personaCover(profile.name)} />
             <div className="space-y-2">
               {picked.map((q) => {
                 const cat = categoryOfQuestion(q);

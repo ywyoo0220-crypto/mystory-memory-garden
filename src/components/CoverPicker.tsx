@@ -6,7 +6,7 @@ import { resizeCover } from "@/lib/book";
 import { recordPhotos, type Records } from "@/lib/store";
 
 /** Cover photo for a share: none, the example cover (example records only), an uploaded photo, or a photo from the chosen records. */
-export function CoverPicker({ qids, records, value, onChange }: { qids: string[]; records: Records; value: string; onChange: (src: string) => void }) {
+export function CoverPicker({ qids, records, value, onChange, bookCover }: { qids: string[]; records: Records; value: string; onChange: (src: string) => void; bookCover?: string | undefined }) {
   const input = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState<string>("");
@@ -34,7 +34,8 @@ export function CoverPicker({ qids, records, value, onChange }: { qids: string[]
           {uploading ? "올리는 중…" : <>휴대폰<br />사진 올리기</>}
         </Button>
         {uploaded && <Tile label="올린 사진" src={uploaded} selected={value === uploaded} onClick={() => onChange(uploaded)} />}
-        {examples && <Tile label="예시 표지 사진" src="/ex_cover.jpg" selected={value === "/ex_cover.jpg"} onClick={() => onChange("/ex_cover.jpg")} />}
+        {bookCover && <Tile label="책 표지 그림" src={bookCover} selected={value === bookCover} onClick={() => onChange(bookCover)} />}
+        {examples && !bookCover && <Tile label="예시 표지 사진" src="/ex_cover.jpg" selected={value === "/ex_cover.jpg"} onClick={() => onChange("/ex_cover.jpg")} />}
         {photos.map((src, i) => <Tile key={src} label={`기록 사진 ${i + 1}`} src={src} selected={value === src} onClick={() => onChange(src)} />)}
       </div>
       <input ref={input} type="file" accept="image/*" aria-label="표지 사진 파일" className="hidden" onChange={(e) => {

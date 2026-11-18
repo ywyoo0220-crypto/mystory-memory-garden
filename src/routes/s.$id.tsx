@@ -4,7 +4,7 @@ import { cardColors, categoryOfQuestion, getQuestion } from "@/lib/data";
 import { recordPhotos, useStore, type StoryRecord } from "@/lib/store";
 import { usePrefs } from "@/lib/prefs";
 import { useMediaUrl } from "@/lib/media";
-import { fullDate, sharedRecords, shareColor } from "@/lib/share";
+import { defaultCover, fullDate, sharedRecords, shareColor } from "@/lib/share";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { VoiceBar } from "@/components/VoicePlayer";
 import { catVars } from "@/lib/theme";
@@ -49,7 +49,7 @@ function SharedPage() {
   const times = qids.map((q) => records[q]!.updatedAt);
   const span = times.length ? monthSpan(Math.min(...times), Math.max(...times)) : "";
   // Shares made before the cover step have no cover saved: example records then get the example cover.
-  const cover = share.cover ?? (qids.some((q) => records[q]?.example) ? "/ex_cover.jpg" : "");
+  const cover = share.cover ?? defaultCover(qids, records, profile.name);
   return (
     <main className="pb-16">
       <section className="flex min-h-[85svh] flex-col px-6 pb-10 pt-8" style={{ background: color.bg, color: color.fg }}>

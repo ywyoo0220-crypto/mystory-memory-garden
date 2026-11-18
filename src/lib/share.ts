@@ -9,6 +9,15 @@ const PERSONA_COLOR: Record<Persona, { bg: string; fg: string }> = {
   C: { bg: "#AEB8A0", fg: "#000000" },
 };
 
+/** Each persona's book-cover artwork, used as the default cover of its shared page (A and B: not made yet). */
+const PERSONA_COVER: Partial<Record<Persona, string>> = { C: "/cover-C.jpg" };
+export const personaCover = (name: string) => { const p = currentPersona(name); return p ? PERSONA_COVER[p] : undefined; };
+
+/** The default cover of a share: the persona's book cover, else the example cover for example records, else none. */
+export function defaultCover(qids: string[], records: Records, name: string) {
+  return personaCover(name) ?? (qids.some((q) => records[q]?.example) ? "/ex_cover.jpg" : "");
+}
+
 /** The three exhibition personas by the name in their profile (A 김정희, B 박정수, C 이영숙). */
 const PERSONA_BY_NAME: Record<string, Persona> = { 김정희: "A", 박정수: "B", 이영숙: "C" };
 
