@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { useStore, hasContent } from "@/lib/store";
 import { prefs, usePrefs, validBirth } from "@/lib/prefs";
 import { Avatar, SubHeader } from "@/components/my/ui";
 
@@ -45,8 +44,6 @@ function ProfilePage() {
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
   const [place, setPlace] = useState("");
-  const { records } = useStore();
-  const count = Object.values(records).filter(hasContent).length;
   const [photo, setPhoto] = useState<string | undefined>();
   const init = useRef(false);
   const file = useRef<HTMLInputElement>(null);
@@ -73,25 +70,24 @@ function ProfilePage() {
     <main className="pb-32">
       <SubHeader title="프로필" sub="책의 첫 장에 이렇게 담겨요." />
       <div className="space-y-6 px-6">
-        <div className="relative rounded-[20px] bg-card px-6 py-8 text-center">
-          {photo && (
-            <button type="button" onClick={() => setPhoto(undefined)} className="absolute right-2 top-2 h-12 px-4 text-caption font-normal text-muted-foreground">
-              사진 빼기
-            </button>
-          )}
+        <div className="rounded-[20px] bg-card px-6 pt-9 pb-7 text-center">
           <button type="button" aria-label={photo ? "프로필 사진 바꾸기" : "프로필 사진 넣기"} onClick={() => file.current?.click()} className="relative mx-auto block rounded-full">
             <Avatar name={name} photo={photo} size={80} />
             <span aria-hidden className="absolute -bottom-1 -right-1 flex size-9 items-center justify-center rounded-full border-2 border-card bg-ink text-ink-foreground">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
             </span>
           </button>
-          <p className="mt-5 text-caption font-normal text-muted-foreground">기록자</p>
-          <p className="mt-1 truncate text-title font-medium">{name.trim() || "이름을 넣어 주세요"}</p>
-          <span aria-hidden className="mx-auto my-4 block h-px w-7 bg-ink" />
+          <p className="mt-8 text-caption font-normal text-muted-foreground">기록자</p>
+          <p className="mt-2 truncate text-title font-medium">{name.trim() || "이름을 넣어 주세요"}</p>
+          <span aria-hidden className="mx-auto mt-7 mb-6 block h-px w-7 bg-ink" />
           <p className="text-caption font-normal text-muted-foreground">
             {[validBirth(birth) && `${birth}년생`, place.trim() && `${place.trim()} 출생`].filter(Boolean).join(" · ") || "태어난 해와 곳"}
           </p>
-          <p className="mt-1 text-caption font-normal text-ink">이야기 {count}편 담음</p>
+          {photo && (
+            <button type="button" onClick={() => setPhoto(undefined)} className="mt-6 inline-flex h-11 items-center rounded-full border border-border px-5 text-caption font-normal text-muted-foreground">
+              사진 빼기
+            </button>
+          )}
         </div>
         <input
           ref={file}
