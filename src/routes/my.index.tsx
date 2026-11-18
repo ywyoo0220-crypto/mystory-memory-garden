@@ -22,7 +22,7 @@ function My() {
   const { profile, pinHash } = usePrefs();
   const entries = Object.entries(records).filter(([, r]) => hasContent(r));
   const incomplete = entries.filter(([, r]) => isIncomplete(r)).sort((a, b) => b[1].updatedAt - a[1].updatedAt);
-  const sub = [profile.birth && `${profile.birth}년생`, `기록 ${entries.length}개`].filter(Boolean).join(" · ");
+  const sub = [profile.birth && `${profile.birth}년생`, profile.birthplace && `${profile.birthplace} 출생`, `기록 ${entries.length}개`].filter(Boolean).join(" · ");
   const groups: [string, [string, string, string][]][] = [
     ["내 기록", [
       ["/my/continue", "이어서 쓰기", incomplete.length ? `작성 중인 기록 ${incomplete.length}개` : "작성 중인 기록 없음"],
