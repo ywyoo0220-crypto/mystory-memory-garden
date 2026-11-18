@@ -91,7 +91,7 @@ function Onboarding() {
             </button>
           )}
           {step < 5 && (
-            <button type="button" onClick={skip} className="h-12 px-3 text-[0.9375rem] font-medium">건너뛰기</button>
+            <button type="button" onClick={skip} className="h-12 whitespace-nowrap px-3 text-[0.9375rem] font-medium">안내 건너뛰기</button>
           )}
         </div>
       </div>
@@ -104,10 +104,10 @@ function Onboarding() {
           <Footer dots={<Dots step={step} />}>
             {step === 5 ? (
               <>
-                <button type="button" className={primary} onClick={tour}>시작하기</button>
+                <button type="button" className={primary} onClick={tour}>첫 질문에 답하기</button>
               </>
             ) : (
-              <Link to="/onboarding/$n" params={{ n: String(step + 1) }} className={primary}>{step === 1 ? "시작하기" : "다음"}</Link>
+              <Link to="/onboarding/$n" params={{ n: String(step + 1) }} className={primary}>다음</Link>
             )}
           </Footer>
         </>
@@ -135,12 +135,25 @@ function Dots({ step }: { step: number }) {
   );
 }
 
-function Head({ title, sub }: { title: string; sub: string }) {
+const EYEBROW: Record<number, string> = { 1: "사용 안내 1/3", 2: "사용 안내 2/3", 3: "사용 안내 3/3", 4: "내 정보 넣기 · 선택", 5: "이제 시작해요" };
+
+function Head({ step, title, sub }: { step: number; title: string; sub: string }) {
   return (
     <>
+      <p className="mb-2 text-[0.9375rem] font-medium text-muted-foreground">{EYEBROW[step]}</p>
       <h2 className="whitespace-pre-line text-[1.9rem] font-medium leading-[1.38] tracking-[-0.03em] [text-wrap:balance]">{title}</h2>
       <p className="mt-3 text-[1.05rem] leading-[1.7] text-muted-foreground">{sub}</p>
     </>
+  );
+}
+
+/** Shared non-interactive "example" frame around onboarding illustrations. */
+function Frame({ label = "예시 화면", className = "", children }: { label?: string; className?: string; children: ReactNode }) {
+  return (
+    <div aria-hidden inert className={`pointer-events-none select-none rounded-3xl border border-[#D1D1D6] bg-[#F5F5F7] p-3 ${className}`}>
+      <span className="inline-flex rounded-full border border-border px-3 py-1 text-[0.875rem] font-medium text-muted-foreground">{label}</span>
+      <div className="mt-2">{children}</div>
+    </div>
   );
 }
 
@@ -162,8 +175,8 @@ function Screen1({ big }: { big: boolean }) {
   const steps = [q.core, ...q.followUps];
   return (
     <>
-      <Head title={"질문에 답하다 보면\n기억이 이어져요."} sub="큰 질문으로 시작해서, 이어지는 질문을 따라 기억을 하나씩 떠올려요." />
-      <Surface cat={cat} className="mt-4 !pt-5 pb-5">
+      <Head step={1} title={"질문에 답하다 보면\n기억이 이어져요."} sub="큰 질문으로 시작해서, 이어지는 질문을 따라 기억을 하나씩 떠올려요." />
+      <Frame className="mt-4"><Surface cat={cat} className="!pt-5 pb-5">
         <CategoryPill cat={cat} />
         <div className="mt-3.5 flex gap-1.5" aria-hidden>
           {DELAYS.map((d, i) => (
@@ -177,7 +190,7 @@ function Screen1({ big }: { big: boolean }) {
             </li>
           ))}
         </ol>
-      </Surface>
+      </Surface></Frame>
       {big && <p className="mt-4 text-[1rem] leading-[1.6] text-muted-foreground">{BIG_NOTE}</p>}
     </>
   );
@@ -186,10 +199,9 @@ function Screen1({ big }: { big: boolean }) {
 function Screen2() {
   return (
     <>
-      <Head title={"쓰고, 말하고,\n사진도 넣어요."} sub="말하면 글로 바뀌고, 목소리도 함께 남아요. 편한 방법을 골라 남기면 돼요." />
-      <div aria-hidden className="pointer-events-none mt-3 select-none" inert>
-        <span className="inline-flex rounded-full border border-border px-3 py-1 text-[0.875rem] font-medium text-muted-foreground">예시 화면</span>
-        <div className="mt-2 w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-3">
+      <Head step={2} title={"쓰고, 말하고,\n사진도 넣어요."} sub="말하면 글로 바뀌고, 목소리도 함께 남아요. 편한 방법을 골라 남기면 돼요." />
+      <Frame className="mt-3">
+        <div className="w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-3">
           <TypingText text="어릴 때 나는 동네에서 장난꾸러기로 통했어" />
         </div>
         <div className="mt-2 grid grid-cols-2 gap-2">
@@ -202,7 +214,7 @@ function Screen2() {
             사진 넣기
           </span>
         </div>
-      </div>
+      </Frame>
     </>
   );
 }
@@ -234,8 +246,8 @@ function Screen3() {
   const cats = ["T7", "T8", "T1"].map((id) => getCategory(id)!);
   return (
     <>
-      <Head title={"주제별로도, 시간순으로도\n모아 볼 수 있어요."} sub="기록은 이 휴대폰에 저장돼요. 보여줄 사람은 내가 정해요." />
-      <div aria-hidden inert className="pointer-events-none mt-4">
+      <Head step={3} title={"주제별로도, 시간순으로도\n모아 볼 수 있어요."} sub="기록은 이 휴대폰에 저장돼요. 보여줄 사람은 내가 정해요." />
+      <Frame className="mt-4">
         {cats.map((cat, i) => {
           const last = i === cats.length - 1;
           return (
@@ -250,7 +262,7 @@ function Screen3() {
             </div>
           );
         })}
-      </div>
+      </Frame>
     </>
   );
 }
@@ -272,7 +284,7 @@ function Screen4({ onNext, dots }: { onNext: () => void; dots: ReactNode }) {
   return (
     <>
       <div className="flex-1 px-6 pt-2">
-        <Head title={"이름과 태어난 해를\n넣어 볼까요?"} sub="태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요. 나중에 MY에서 해도 돼요." />
+        <Head step={4} title={"이름과 태어난 해를\n넣어 볼까요?"} sub="태어난 해를 넣으면 ‘20대 · 1975–1984’처럼 시기별 연도가 함께 표시돼요. 나중에 MY에서 해도 돼요." />
         <div className="mt-6 space-y-5">
           <label className="block">
             <span className="text-[0.9375rem] font-medium">이름</span>
@@ -297,11 +309,13 @@ function Screen5() {
   const q = cat.questions.find((x) => x.id === FIRST_QID)!;
   return (
     <>
-      <Head title={"첫 질문으로\n시작해요."} sub="답이 짧아도 돼요. 떠오르는 대로 남기면 돼요." />
-      <Surface cat={cat} className="mt-6 pb-8">
-        <CategoryPill cat={cat} />
-        <p className="mt-5 text-[1.5rem] font-medium leading-[1.4]">{q.core}</p>
-      </Surface>
+      <Head step={5} title={"첫 질문으로\n시작해요."} sub="답이 짧아도 돼요. 떠오르는 대로 남기면 돼요." />
+      <Frame label="다음 화면에서 답해요" className="mt-6">
+        <Surface cat={cat} className="pb-8">
+          <CategoryPill cat={cat} />
+          <p className="mt-5 text-[1.5rem] font-medium leading-[1.4]">{q.core}</p>
+        </Surface>
+      </Frame>
       <p className="mt-4 text-[1rem] leading-[1.6] text-muted-foreground">{BIG_NOTE}</p>
     </>
   );
