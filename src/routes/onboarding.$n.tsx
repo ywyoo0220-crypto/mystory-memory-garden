@@ -57,6 +57,7 @@ function Onboarding() {
   const tour = () => {
     onbLog("onb_tour");
     finishOnb();
+    try { sessionStorage.setItem("mystory.tour.v1", FIRST_QID); } catch { /* noop */ }
     navigate({ to: "/answer/$qid", params: { qid: FIRST_QID }, replace: true });
   };
 

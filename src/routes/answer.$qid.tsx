@@ -272,6 +272,16 @@ function AnswerFlow() {
       .catch(micFail);
   };
 
+  /** Onboarding's first question returns straight to Home in 시간순, where the new card shows first. */
+  const tourHome = () => {
+    let t: string | null = null;
+    try { t = sessionStorage.getItem("mystory.tour.v1"); sessionStorage.removeItem("mystory.tour.v1"); } catch { /* noop */ }
+    if (t !== qid) return false;
+    if (cat) actions.setView(cat.kind);
+    window.scrollTo({ top: 0 });
+    navigate({ to: "/", replace: true });
+    return true;
+  };
   const go = async () => {
     await stopSpeaking();
     persist();
@@ -279,6 +289,8 @@ function AnswerFlow() {
     if (step < 3) {
       setStep(step + 1);
       window.scrollTo({ top: 0 });
+    } else if (tourHome()) {
+      return;
     } else if (hasContent({ ...latest.current, updatedAt: 0 })) {
       setDone(true);
     } else {
@@ -366,6 +378,7 @@ function AnswerFlow() {
           onClick={async () => {
             await stopSpeaking();
             persist();
+            if (tourHome()) return;
             navigate({ to: "/cat/$catId", params: { catId: cat.id } });
           }}
           aria-label="뒤로"
