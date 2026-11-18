@@ -170,7 +170,7 @@ export function RecordCard({
                   onClick={() =>
                     list.length === 1
                       ? navigate({ to: "/answer/$qid", params: { qid: list[0]!.qid } })
-                      : navigate({ to: "/cat/$catId", params: { catId: cat.id } })
+                      : navigate({ to: "/cat/$catId", params: { catId: cat.id }, search: { mode: "edit" } })
                   }
                 >
                   수정하기

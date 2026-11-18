@@ -23,19 +23,26 @@ export const Route = createFileRoute("/cat/$catId")({
       ],
     };
   },
+  validateSearch: (s: Record<string, unknown>): { mode?: "edit" } =>
+    s["mode"] === "edit" ? { mode: "edit" } : {},
   component: CatQuestions,
 });
 
 function CatQuestions() {
   const cat = getCategory(Route.useParams().catId);
   const { records } = useStore();
+  const edit = Route.useSearch().mode === "edit";
   const navigate = useNavigate();
   if (!cat) return null;
   return (
     <main className="category-list" style={catVars(cat.id)}>
       <BackBar
         title={cat.kind === "topic" ? "주제" : "시기"}
-        onBack={() => navigate({ to: "/kind/$kind", params: { kind: cat.kind } })}
+        onBack={() =>
+          edit && typeof window !== "undefined" && window.history.length > 1
+            ? window.history.back()
+            : navigate({ to: edit ? "/" : "/kind/$kind", params: { kind: cat.kind } })
+        }
       />
       <div className="px-6 pb-6 pt-2">
         <div className="flex items-center gap-4">
@@ -45,11 +52,11 @@ function CatQuestions() {
           <h1 className="font-serif text-title">{cat.name}</h1>
         </div>
         <p className="mt-4 text-body">
-          질문 하나를 골라 시작하세요. 모든 질문에 답하지 않아도 됩니다.
+          {edit ? "수정할 기록을 고르세요." : "질문 하나를 골라 시작하세요. 모든 질문에 답하지 않아도 됩니다."}
         </p>
       </div>
       <ul className="space-y-2 px-6">
-        {cat.questions.map((q) => {
+        {cat.questions.filter((q) => !edit || hasContent(records[q.id])).map((q) => {
           const done = hasContent(records[q.id]);
           return (
             <li key={q.id}>
@@ -72,7 +79,12 @@ function CatQuestions() {
                 </span>
                 <span className="min-w-0">
                   <span className="block font-serif text-body">{q.core}</span>
-                  {done && <span className="mt-2 block text-caption">기록함 · 눌러서 이어쓰기</span>}
+                  {done && (
+                    <span className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-caption">
+                      <span className="inline-flex items-center rounded-full border border-current/30 px-3 py-1">기록함</span>
+                      <span>{edit ? "눌러서 수정하기" : "눌러서 이어쓰기"} ›</span>
+                    </span>
+                  )}
                 </span>
               </Link>
             </li>
