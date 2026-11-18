@@ -491,26 +491,41 @@ function AnswerFlow() {
       )}
       <p className="mt-4 text-center text-caption text-muted-foreground">적는 내용은 이 기기에 바로 저장돼요.</p>
       <div className="mt-4 grid grid-cols-2 gap-2">
+        {/* While speaking, the button takes the whole row so its longer label never gets cut,
+            and wraps onto two lines if the row is still too narrow (large text). */}
         <button
           type="button"
           onClick={() => (speaking ? void stopSpeaking() : startSpeaking())}
           aria-pressed={speaking}
-          className={`flex h-14 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 font-medium ${
-            speaking ? "ms-ripple bg-destructive text-caption text-destructive-foreground" : "border border-border bg-card text-body"
+          className={`flex min-h-14 flex-wrap items-center justify-center gap-x-3 rounded-full px-4 py-2 text-body font-medium ${
+            speaking ? "ms-ripple col-span-2 bg-destructive text-destructive-foreground" : "border border-border bg-card"
           }`}
         >
-          {speaking ? `말하는 중 · ${fmtDur(elapsed)} · 누르면 멈춤` : voice ? "다시 말하기" : "말로 하기"}
+          {speaking ? (
+            <>
+              <span className="whitespace-nowrap">
+                말하는 중 · <span className="tabular-nums">{fmtDur(elapsed)}</span>
+              </span>
+              <span className="whitespace-nowrap">누르면 멈춤</span>
+            </>
+          ) : voice ? (
+            "다시 말하기"
+          ) : (
+            "말로 하기"
+          )}
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            void stopSpeaking();
-            fileRef.current?.click();
-          }}
-          className="h-14 rounded-full border border-border bg-card text-body font-medium"
-        >
-          {photos.length ? "사진 더 넣기" : "사진 넣기"}
-        </button>
+        {!speaking && (
+          <button
+            type="button"
+            onClick={() => {
+              void stopSpeaking();
+              fileRef.current?.click();
+            }}
+            className="h-14 rounded-full border border-border bg-card text-body font-medium"
+          >
+            {photos.length ? "사진 더 넣기" : "사진 넣기"}
+          </button>
+        )}
         <input
           ref={fileRef}
           type="file"
