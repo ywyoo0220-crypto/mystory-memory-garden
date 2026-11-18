@@ -29,6 +29,18 @@ export function CategoryPill({ cat }: { cat: Category }) {
   );
 }
 
+/** Stories a folded home card shows. */
+export const FOLDED = 2;
+
+/** The line a folded card shows under the question: the first written (or spoken) answer, else what was kept. */
+export function firstLine(rec: StoryRecord) {
+  const text = rec.answers.find((a) => a?.trim()) ?? rec.voices?.find((v) => v.text?.trim())?.text;
+  if (text?.trim()) return text.trim().split("\n")[0];
+  const photos = recordPhotos(rec).length;
+  if (photos) return `사진 ${photos}장`;
+  return rec.voices?.length ? "음성 기록" : "";
+}
+
 function RecordBody({ qid, rec, fg, accent, showCore }: { qid: string; rec: StoryRecord; fg: string; accent: string; showCore: boolean }) {
   const q = getQuestion(qid);
   if (!q) return null;
@@ -140,29 +152,53 @@ export function RecordCard({
           </div>
         </Button>
 
-        {/* 기록이 2개 이상일 때만, 두 기록 사이 여백의 정중앙에 28px 짧은 먹색 선을 놓는다.
-            선 위아래 각 32px(총 64px)로 여유를 둔다. */}
-        <div className="mt-6 flex flex-col gap-8">
+        {/* Folded, a card shows its latest two stories as question + the first line of the answer, then
+            "이야기 N개 더". Opened, every story shows in full. This keeps a long card short on home
+            while the answers — not just the questions — are visible. Between stories, a 28px rule sits
+            in the middle of 64px of air. */}
+        <div className="mt-6">
           {list.map(({ qid, rec }, i) => {
             const q = getQuestion(qid)!;
-            return (
-              <Fragment key={qid}>
-                {i > 0 && <span aria-hidden="true" className="block h-px w-7 shrink-0" style={{ background: c.fg }} />}
-                <div id={`rec-${qid}`}>
-                  <button type="button" onClick={onToggle} className="block w-full text-left">
-                    <h2 className="font-serif text-title">{q.core}</h2>
-                  </button>
-                  <div className="expand" data-open={open}>
-                    <div>
-                      <div className="pt-6" style={{ "--j": Math.min(i, 3) } as CSSProperties}>
-                        <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
-                      </div>
+            const line = firstLine(rec);
+            const item = (
+              <div id={`rec-${qid}`} className={i > 0 ? "pt-8" : undefined}>
+                {i > 0 && <span aria-hidden="true" className="mb-8 block h-px w-7" style={{ background: c.fg }} />}
+                <button type="button" onClick={onToggle} className="block w-full text-left">
+                  <h2 className="font-serif text-title">{q.core}</h2>
+                  {line && (
+                    <span className="expand" data-open={!open}>
+                      <span>
+                        <span className="line-clamp-1 pt-2 text-body opacity-80">{line}</span>
+                      </span>
+                    </span>
+                  )}
+                </button>
+                <div className="expand" data-open={open}>
+                  <div>
+                    <div className="pt-6" style={{ "--j": Math.min(i, 3) } as CSSProperties}>
+                      <RecordBody qid={qid} rec={rec} fg={c.fg} accent={c.bg} showCore={false} />
                     </div>
                   </div>
                 </div>
-              </Fragment>
+              </div>
+            );
+            return i < FOLDED ? (
+              <Fragment key={qid}>{item}</Fragment>
+            ) : (
+              <div key={qid} className="expand" data-open={open}>
+                <div>{item}</div>
+              </div>
             );
           })}
+          {list.length > FOLDED && (
+            <div className="expand" data-open={!open}>
+              <div>
+                <button type="button" onClick={onToggle} className="mt-4 flex min-h-12 items-center text-left text-caption font-medium">
+                  이야기 {list.length - FOLDED}개 더 · 펼쳐서 보기
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="expand" data-open={open}>

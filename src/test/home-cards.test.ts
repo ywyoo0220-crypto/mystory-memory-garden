@@ -18,3 +18,12 @@ describe("Home cards", () => {
     expect(homeGroups(records, "topic").map((g) => [g.cat.id, g.items.map((i) => i.qid)])).toEqual([["T7", ["T7-Q2", "T7-Q1"]], ["T8", ["T8-Q1"]]]);
   });
 });
+
+describe("Folded card line", () => {
+  it("uses the first written answer, then spoken text, then what was kept", async () => {
+    const { firstLine } = await import("@/components/CategoryCard");
+    expect(firstLine({ answers: ["", "둘째 줄\n다음", "", ""], updatedAt: 0 })).toBe("둘째 줄");
+    expect(firstLine({ answers: ["", "", "", ""], voices: [{ step: 0, dur: "0:10", audio: true, text: "말한 내용" }], updatedAt: 0 })).toBe("말한 내용");
+    expect(firstLine({ answers: ["", "", "", ""], photos: ["idb:a", "idb:b"], updatedAt: 0 })).toBe("사진 2장");
+  });
+});
