@@ -537,21 +537,24 @@ function AnswerFlow() {
       )}
 
       </div>
-      <div className="shrink-0 space-y-2 border-t border-border px-6 pb-[calc(8px+env(safe-area-inset-bottom))] pt-2">
-        {/* No menu on this screen, so 크게 sits at the right end of the bottom button (same corner as everywhere else). */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => void go()}
-            className="h-14 min-w-0 flex-1 rounded-full bg-ink text-body font-medium text-ink-foreground"
-          >
-            {step < 3 ? "다음" : "기록 마치기"}
-          </button>
+      <div className="shrink-0 border-t border-border px-6 pb-[calc(8px+env(safe-area-inset-bottom))] pt-2">
+        {/* No menu on this screen, so 크게 sits at the right end of the bottom button (same corner as everywhere else).
+            The skip button shares the main button's column, so it is centred under it, not under the whole row. */}
+        <div className="flex items-start gap-2">
+          <div className="min-w-0 flex-1 space-y-2">
+            <button
+              type="button"
+              onClick={() => void go()}
+              className="h-14 w-full rounded-full bg-ink text-body font-medium text-ink-foreground"
+            >
+              {step < 3 ? "다음" : "기록 마치기"}
+            </button>
+            <button type="button" onClick={() => void go()} className="h-12 w-full rounded-full text-body">
+              다음에 답할게요
+            </button>
+          </div>
           <TextSizeButton />
         </div>
-        <button type="button" onClick={() => void go()} className="h-12 w-full rounded-full text-body">
-          다음에 답할게요
-        </button>
       </div>
     </main>
   );
