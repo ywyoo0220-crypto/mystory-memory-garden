@@ -122,7 +122,7 @@ function Head({ step, title, sub }: { step: number; title: string; sub?: string 
   return (
     <>
       <h1 className="whitespace-pre-line text-title [text-wrap:balance]">{title}</h1>
-      {sub && <p className="mt-4 text-body text-muted-foreground">{sub}</p>}
+      {sub && <p className="mt-4 text-body text-muted-foreground [word-break:keep-all]">{sub}</p>}
     </>
   );
 }
@@ -156,7 +156,7 @@ function Screen1() {
   const steps = [q.core, ...q.followUps.slice(0, 1)];
   return (
     <>
-      <Head step={1} title={"질문에 답하다 보면\n기억이 이어져요."} sub="지금은 기록 방법을 둘러보는 중이에요. 먼저 큰 질문에 답하고, 이어지는 질문을 따라 기억을 떠올려요." />
+      <Head step={1} title={"질문에 답하다 보면\n기억이 이어져요."} sub="지금은 기록 방법을 둘러보는 중이에요. 큰 질문에 답하고, 이어지는 질문을 따라 기억을 떠올려요. 바로 답하지 않아도 돼요. 천천히 돌아보며 하나씩 깊게 남기는 기록이에요." />
       <Frame className="mt-4"><Surface cat={cat} className="!pt-6 pb-6">
         <CategoryPill cat={cat} />
         <div className="mt-4 flex gap-2" aria-hidden>
@@ -262,7 +262,7 @@ function Screen5() {
           <p className="mt-6 text-title">{q.core}</p>
         </Surface>
       </Frame>
-      <p className="mt-4 text-center text-caption text-muted-foreground">답은 짧아도 괜찮아요.</p>
+      <p className="mt-4 text-center text-caption text-muted-foreground [word-break:keep-all]">천천히 생각하고 써도 괜찮아요.<br />짧아도, 나중에 이어 써도 돼요.</p>
     </>
   );
 }
