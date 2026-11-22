@@ -7,7 +7,7 @@ import { clearMedia, deleteMedia, getMedia } from "./media";
 import { audioKey, clearAudio, deleteAudio, fmtDur, putAudio } from "./audio";
 
 /** Per-answer voice metadata; the blob itself lives in IndexedDB under audioKey(recordId, step). */
-export type Voice = { step: number; dur: string; audio: boolean; text?: string | undefined };
+export type Voice = { step: number; dur: string; audio: boolean; text?: string | undefined; src?: string | undefined };
 type LegacyClip = { id: string; durationSec: number; step: number };
 
 export type StoryRecord = {
@@ -58,7 +58,7 @@ function write(k: string, v: unknown) {
   }
 }
 
-/** Builds one record per EXAMPLE_RECORDS item; voices have no audio file (played as speech synthesis). */
+/** Builds one record per EXAMPLE_RECORDS item; a voice plays its bundled file (src) or, without one, is read aloud. */
 export function exampleSeeds(now = Date.now()): Records {
   return Object.fromEntries(
     EXAMPLE_RECORDS.map((e) => [
@@ -66,7 +66,8 @@ export function exampleSeeds(now = Date.now()): Records {
       {
         answers: [...e.answers],
         photos: e.photos.filter((p): p is string => !!p),
-        voices: e.voices.map((v) => ({ step: v.step, dur: v.dur, text: v.text, audio: false })),
+        photoSteps: e.photos.flatMap((p, step) => (p ? [step] : [])),
+        voices: e.voices.map((v) => ({ step: v.step, dur: v.dur, text: v.text, audio: false, ...(v.src ? { src: v.src } : {}) })),
         updatedAt: now - e.daysAgo * 86400000,
         example: true,
       },
@@ -249,7 +250,9 @@ export function normalizeRecords(raw: unknown): Records {
       if (!x || typeof x !== "object") return [];
       const o = x as Record<string, unknown>;
       if (typeof o["step"] !== "number") return [];
-      return [{ step: o["step"], dur: typeof o["dur"] === "string" ? o["dur"] : "0:00", audio: o["audio"] === true, text: typeof o["text"] === "string" ? o["text"] : undefined }];
+      const voice: Voice = { step: o["step"], dur: typeof o["dur"] === "string" ? o["dur"] : "0:00", audio: o["audio"] === true, text: typeof o["text"] === "string" ? o["text"] : undefined };
+      if (typeof o["src"] === "string" && o["src"]) voice.src = o["src"];
+      return [voice];
     });
     const t = typeof r["updatedAt"] === "number" ? r["updatedAt"] : typeof r["t"] === "number" ? r["t"] : 0;
     const rec: StoryRecord = { answers, updatedAt: t };

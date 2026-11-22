@@ -9,10 +9,10 @@ const bars = Array.from({ length: 44 }, (_, i) => 0.25 + 0.75 * Math.abs(Math.si
 /** Only one voice plays at a time: starting a bar stops whichever was playing. */
 let stopCurrent: (() => void) | null = null;
 
-/** Voice bar for one answer. Without an audio file (sample records) the text is read aloud instead. */
+/** Voice bar for one answer. Example records play their bundled file (voice.src); without any audio the text is read aloud instead. */
 export function VoiceBar({ recordId, voice, text, fg, accent }: { recordId: string; voice: Voice; text: string; fg: string; accent: string }) {
   const url = useAudioUrl(voice.audio ? audioKey(recordId, voice.step) : undefined);
-  return <VoicePlayer src={url} pending={voice.audio && !url} text={text} durationSec={parseDur(voice.dur)} fg={fg} accent={accent} />;
+  return <VoicePlayer src={voice.src ?? url} pending={voice.audio && !url && !voice.src} text={text} durationSec={parseDur(voice.dur)} fg={fg} accent={accent} />;
 }
 
 export function VoicePlayer({

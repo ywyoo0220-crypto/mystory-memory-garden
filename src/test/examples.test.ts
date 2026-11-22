@@ -6,22 +6,28 @@ import { exampleSeeds, withExamples } from "@/lib/store";
 describe("Example records", () => {
   const now = Date.UTC(2026, 10, 12);
   it("주제별 order", () => {
-    expect(homeCards(exampleSeeds(now), "topic").map((c) => c.qid)).toEqual(["T7-Q2", "T1-Q1", "T8-Q3", "T2-Q1", "T10-Q2"]);
+    expect(homeCards(exampleSeeds(now), "topic").map((c) => c.qid)).toEqual(["T2-Q3", "T1-Q1", "T7-Q2", "T3-Q4", "T8-Q4"]);
   });
   it("시기별 order", () => {
-    expect(homeCards(exampleSeeds(now), "period").map((c) => c.qid)).toEqual(["A1-Q3", "A3-Q4", "A6-Q3"]);
+    expect(homeCards(exampleSeeds(now), "period").map((c) => c.qid)).toEqual(["A3-Q1", "A6-Q3", "A7-Q3"]);
   });
-  it("t = now - daysAgo days, ex true, no audio", () => {
-    const r = exampleSeeds(now)["T10-Q2"]!;
+  it("t = now - daysAgo days, ex true, bundled voice file", () => {
+    const r = exampleSeeds(now)["T1-Q1"]!;
     expect(r.updatedAt).toBe(now - 10 * 86400000);
     expect(r.example).toBe(true);
-    expect(exampleSeeds(now)["A1-Q3"]!.voices).toEqual([{ step: 1, dur: "0:52", audio: false, text: expect.any(String) }]);
+    expect(exampleSeeds(now)["A7-Q3"]!.voices).toEqual([{ step: 2, dur: "0:14", audio: false, text: expect.any(String), src: "/examples/C_A7-Q3_3.mp3" }]);
   });
-  it("only T1-Q1 has a photo", () => {
-    expect(Object.entries(exampleSeeds(now)).filter(([, r]) => r.photos?.length).map(([k, r]) => [k, r.photos])).toEqual([["T1-Q1", ["/example-photo.jpg"]]]);
+  it("keeps each photo on its own answer step", () => {
+    const r = exampleSeeds(now)["T8-Q4"]!;
+    expect(r.photos).toEqual(["/examples/C_T8-Q4_1.jpg", "/examples/C_T8-Q4_2.jpg", "/examples/C_T8-Q4_4.jpg"]);
+    expect(r.photoSteps).toEqual([0, 1, 3]);
+  });
+  it("leaves two records unfinished for 이어서 쓰기", () => {
+    const open = Object.entries(exampleSeeds(now)).filter(([, r]) => r.answers.some((a) => !a.trim())).map(([k]) => k);
+    expect(open.sort()).toEqual(["A7-Q3", "T7-Q2"]);
   });
   it("never overwrites an existing id", () => {
     const mine = { answers: ["내 글", "", "", ""], updatedAt: 1 };
-    expect(withExamples({ "T2-Q1": mine }, now)["T2-Q1"]).toBe(mine);
+    expect(withExamples({ "T2-Q3": mine }, now)["T2-Q3"]).toBe(mine);
   });
 });
