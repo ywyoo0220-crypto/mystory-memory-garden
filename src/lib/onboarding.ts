@@ -2,6 +2,9 @@ import { validBirth } from "./prefs";
 
 export const ONB_KEY = "ms.onb";
 
+/** First real question opened at the end of the tour (onboarding and practice share it). */
+export const FIRST_QID = "A1-Q2";
+
 export type OnboardingMode = "first" | "help";
 
 /** Keep old screen URLs valid while removing profile setup from the tour. */

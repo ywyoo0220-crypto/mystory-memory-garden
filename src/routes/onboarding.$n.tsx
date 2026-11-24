@@ -8,7 +8,7 @@ import { TextSizeChoice } from "@/components/TextSizeChoice";
 import { Button } from "@/components/ui/button";
 import { actions, useStore } from "@/lib/store";
 import { josa, useDeviceName } from "@/lib/device";
-import { finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
+import { FIRST_QID, finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
 
 const TITLE = "처음 안내 — 마이스토리";
 const DESC = "질문에 답하며 기록하는 방법을 알아봐요.";
@@ -33,7 +33,6 @@ export const Route = createFileRoute("/onboarding/$n")({
   component: Onboarding,
 });
 
-const FIRST_QID = "A1-Q2";
 const primary = "flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground";
 
 function Onboarding() {
@@ -100,6 +99,7 @@ function Onboarding() {
             ) : step === 5 ? (
               <>
                 <Button variant="palette" type="button" className={primary} onClick={tour}>첫 질문에 답하기</Button>
+                <Link to="/onboarding/practice" className="flex h-12 w-full items-center justify-center rounded-full text-body">먼저 연습해 볼게요</Link>
               </>
             ) : (
               <Button asChild variant="palette" className={primary}><Link to="/onboarding/$n" params={{ n: String(next ?? step) }} search={search}>{step === 3 ? "시작해 볼까요" : "다음"}</Link></Button>

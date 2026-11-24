@@ -24,6 +24,7 @@ import { Route as MyExportRouteImport } from './routes/my.export'
 import { Route as MyProfileRouteImport } from './routes/my.profile'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding.index'
 import { Route as OnboardingNRouteImport } from './routes/onboarding.$n'
+import { Route as OnboardingPracticeRouteImport } from './routes/onboarding.practice'
 import { Route as SIdRouteImport } from './routes/s.$id'
 import { Route as MySettingsIndexRouteImport } from './routes/my.settings.index'
 import { Route as MySettingsLockRouteImport } from './routes/my.settings.lock'
@@ -105,6 +106,11 @@ const OnboardingNRoute = OnboardingNRouteImport.update({
   path: '/onboarding/$n',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingPracticeRoute = OnboardingPracticeRouteImport.update({
+  id: '/onboarding/practice',
+  path: '/onboarding/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SIdRoute = SIdRouteImport.update({
   id: '/s/$id',
   path: '/s/$id',
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
   '/onboarding/$n': typeof OnboardingNRoute
+  '/onboarding/practice': typeof OnboardingPracticeRoute
   '/s/$id': typeof SIdRoute
   '/my/': typeof MyIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
@@ -167,6 +174,7 @@ export interface FileRoutesByTo {
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
   '/onboarding/$n': typeof OnboardingNRoute
+  '/onboarding/practice': typeof OnboardingPracticeRoute
   '/s/$id': typeof SIdRoute
   '/my': typeof MyIndexRoute
   '/onboarding': typeof OnboardingIndexRoute
@@ -190,6 +198,7 @@ export interface FileRoutesById {
   '/my/export': typeof MyExportRoute
   '/my/profile': typeof MyProfileRoute
   '/onboarding/$n': typeof OnboardingNRoute
+  '/onboarding/practice': typeof OnboardingPracticeRoute
   '/s/$id': typeof SIdRoute
   '/my/': typeof MyIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
@@ -214,6 +223,7 @@ export interface FileRouteTypes {
     | '/my/export'
     | '/my/profile'
     | '/onboarding/$n'
+    | '/onboarding/practice'
     | '/s/$id'
     | '/my/'
     | '/onboarding/'
@@ -236,6 +246,7 @@ export interface FileRouteTypes {
     | '/my/export'
     | '/my/profile'
     | '/onboarding/$n'
+    | '/onboarding/practice'
     | '/s/$id'
     | '/my'
     | '/onboarding'
@@ -258,6 +269,7 @@ export interface FileRouteTypes {
     | '/my/export'
     | '/my/profile'
     | '/onboarding/$n'
+    | '/onboarding/practice'
     | '/s/$id'
     | '/my/'
     | '/onboarding/'
@@ -281,6 +293,7 @@ export interface RootRouteChildren {
   MyExportRoute: typeof MyExportRoute
   MyProfileRoute: typeof MyProfileRoute
   OnboardingNRoute: typeof OnboardingNRoute
+  OnboardingPracticeRoute: typeof OnboardingPracticeRoute
   SIdRoute: typeof SIdRoute
   MyIndexRoute: typeof MyIndexRoute
   OnboardingIndexRoute: typeof OnboardingIndexRoute
@@ -397,6 +410,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingNRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/practice': {
+      id: '/onboarding/practice'
+      path: '/onboarding/practice'
+      fullPath: '/onboarding/practice'
+      preLoaderRoute: typeof OnboardingPracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/s/$id': {
       id: '/s/$id'
       path: '/s/$id'
@@ -449,6 +469,7 @@ const rootRouteChildren: RootRouteChildren = {
   MyExportRoute: MyExportRoute,
   MyProfileRoute: MyProfileRoute,
   OnboardingNRoute: OnboardingNRoute,
+  OnboardingPracticeRoute: OnboardingPracticeRoute,
   SIdRoute: SIdRoute,
   MyIndexRoute: MyIndexRoute,
   OnboardingIndexRoute: OnboardingIndexRoute,

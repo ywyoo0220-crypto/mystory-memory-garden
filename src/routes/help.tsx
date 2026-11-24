@@ -46,11 +46,18 @@ function Help() {
   return (
     <main className="px-6 pt-12">
       <h1 className="font-serif text-title">도움말</h1>
-      <section className="mt-8 rounded-[28px] bg-ink p-6 text-ink-foreground">
+      <div className="mt-8 desk:grid desk:grid-cols-2 desk:gap-4">
+      <section className="rounded-[28px] bg-ink p-6 text-ink-foreground">
         <h2 className="text-body font-medium">처음 안내 다시 보기</h2>
         <p className="mt-2 text-body opacity-80">앱 소개와 화면 둘러보기를 다시 볼 수 있어요.</p>
         <Button asChild variant="palette" className="mt-4 inline-flex h-12 items-center rounded-full bg-card px-6 text-caption font-medium text-foreground"><Link to="/onboarding/$n" params={{ n: "1" }} search={{ mode: "help" }}>처음 안내 보기 →</Link></Button>
       </section>
+      <section className="mt-4 rounded-[28px] border border-ink bg-background p-6 desk:mt-0">
+        <h2 className="text-body font-medium">연습해 보기</h2>
+        <p className="mt-2 text-body text-muted-foreground">저장되지 않는 연습 질문으로 쓰기와 넘기기를 미리 해 볼 수 있어요.</p>
+        <Link to="/onboarding/practice" search={{ mode: "help" }} className="mt-4 inline-flex h-12 items-center rounded-full bg-ink px-6 text-caption font-medium text-ink-foreground">연습 시작하기 →</Link>
+      </section>
+      </div>
       <div className="mt-4 space-y-4 desk:grid desk:grid-cols-2 desk:gap-4 desk:space-y-0">
         {items.map((i) => (
           <section key={i.t} className="rounded-[28px] border border-border bg-card p-6">
