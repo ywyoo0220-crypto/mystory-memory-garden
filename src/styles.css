@@ -5,6 +5,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Two widths beyond the phone: tablet (704px, so a 744px iPad mini is in) and laptop (1024px).
+     Media queries read rem against the browser default (16px), so 크게 mode does not move them. */
+  --breakpoint-tab: 44rem;
+  --breakpoint-desk: 64rem;
   --spacing: 4px;
   --text-title: 1.5rem;
   --text-title--line-height: 1.4;
@@ -75,6 +79,16 @@
   --book-sheet-shadow: 0 2px 10px color-mix(in srgb, var(--ink) 8%, transparent);
   --book-photo-border: color-mix(in srgb, var(--ink) 15%, transparent);
   --book-page-number: #6b655f;
+  /* Width of the app column. Phone: 440px. Tablet: one wider column. Laptop: lists and home go to
+     two columns (--app-w), while screens for reading and writing keep the 720px line length (--read-w). */
+  --app-w: 440px;
+  --read-w: 440px;
+}
+@media (min-width: 44rem) {
+  :root { --app-w: 720px; --read-w: 720px; }
+}
+@media (min-width: 64rem) {
+  :root { --app-w: 960px; }
 }
 
 @layer base {
@@ -111,6 +125,17 @@
   :focus-visible {
     outline: 3px solid var(--ring);
     outline-offset: 2px;
+  }
+  /* Mouse users (laptop): what can be pressed shows the hand, and the page shows a thin scrollbar
+     so a longer page is visible without a wheel or trackpad. Touch screens keep the bar hidden. */
+  :where(a[href], button:not(:disabled), [role="button"], [role="radio"], [role="switch"], summary, label[for], input[type="checkbox"]) {
+    cursor: pointer;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    /* Not while the launch screen is up: the bar would cut a strip out of its right edge. */
+    html:not(.ms-pre-launch):not(.ms-launching) {
+      scrollbar-width: thin;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -151,6 +176,12 @@
   min-height: 100svh;
   min-height: 100dvh;
 }
+@utility max-w-app {
+  max-width: var(--app-w);
+}
+@utility max-w-read {
+  max-width: var(--read-w);
+}
 @utility pt-safe {
   padding-top: env(safe-area-inset-top);
 }
@@ -165,6 +196,7 @@
 .cover-tile[aria-pressed="true"] { outline: 3px solid var(--ink); outline-offset: 2px; }
 .cover-upload { border-color: var(--ink); }
 .book-preview { margin: 0 1rem; display: flex; flex-direction: column; gap: 1rem; container-type: inline-size; }
+@media (min-width: 44rem) { .book-preview { width: 100%; max-width: 440px; margin-inline: auto; } }
 .book-sheet { background: var(--card); color: var(--ink); box-shadow: var(--book-sheet-shadow); }
 .book-cover { aspect-ratio: 170 / 240; height: 141.176cqw; display: flex; flex-direction: column; padding: 15.3cqw 10cqw 11.76cqw; box-sizing: border-box; }
 .book-cover.has-cover-photo { padding-top: 0; }
@@ -330,6 +362,11 @@
   width: min(46vw, 13rem);
   height: auto;
   animation: launch-rise 900ms cubic-bezier(0.25, 0.1, 0.25, 1) 3500ms both;
+}
+/* Tablet and laptop: the sentence and the wordmark are read from farther away. */
+@media (min-width: 44rem) {
+  .launch-lede { font-size: 1.5rem; }
+  .launch-wordmark { width: min(46vw, 15rem); }
 }
 @keyframes launch-rise {
   from { opacity: 0; transform: translateY(6px); }

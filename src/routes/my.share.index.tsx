@@ -6,6 +6,7 @@ import { hasContent, useStore } from "@/lib/store";
 import { prefs, SCOPES, usePrefs, type ShareScope } from "@/lib/prefs";
 import { defaultCover, personaCover, shareUrl } from "@/lib/share";
 import { CoverPicker } from "@/components/CoverPicker";
+import { useDeviceName } from "@/lib/device";
 import { Card, Dot, SubHeader, Toggle } from "@/components/my/ui";
 
 export const Route = createFileRoute("/my/share/")({
@@ -25,6 +26,7 @@ export const Route = createFileRoute("/my/share/")({
 function SharePage() {
   const { records } = useStore();
   const { shares, profile } = usePrefs();
+  const device = useDeviceName();
   const [step, setStep] = useState(0);
   const [picked, setPicked] = useState<string[]>([]);
   const [scope, setScope] = useState<ShareScope>("family");
@@ -86,7 +88,7 @@ function SharePage() {
             받는 사람 화면 보기
           </Link>
           <p className="text-caption text-muted-foreground [word-break:keep-all]">
-            지금은 시범 버전이라 실제로 보내지지 않아요. 받는 사람 화면은 이 휴대폰에서만 열려요. 공유 관리에서 언제든 해제할 수 있어요.
+            지금은 시범 버전이라 실제로 보내지지 않아요. 받는 사람 화면은 이 {device}에서만 열려요. 공유 관리에서 언제든 해제할 수 있어요.
           </p>
           <Link to="/my/share/manage" className="inline-flex h-12 items-center px-2 text-caption font-medium underline underline-offset-4">공유 관리</Link>
         </div>

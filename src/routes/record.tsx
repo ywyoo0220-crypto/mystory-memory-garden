@@ -37,13 +37,13 @@ function RecordStart() {
     <main className="px-6 pt-12">
       <h1 className="font-serif text-title">무엇부터 기록할까요?</h1>
       <p className="mt-4 text-body text-muted-foreground">답하고 싶은 질문만 골라도 돼요.</p>
-      <div className="mt-8 space-y-4">
+      <div className="mt-8 space-y-4 tab:grid tab:grid-cols-2 tab:gap-4 tab:space-y-0">
         {opts.map((o) => (
           <Link
             key={o.kind}
             to="/kind/$kind"
             params={{ kind: o.kind }}
-            className="block rounded-[32px] border border-border bg-card p-6 transition-transform active:scale-[0.99]"
+            className="block h-full rounded-[32px] border border-border bg-card p-6 transition-transform active:scale-[0.99]"
           >
             <div className="flex -space-x-2">
               {o.cats.map((c) => (

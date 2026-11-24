@@ -18,9 +18,9 @@ export function AppNav() {
   return (
     <nav
       aria-label="주요 메뉴"
-      className="fixed inset-x-0 bottom-[calc(16px+env(safe-area-inset-bottom))] z-40 mx-auto flex w-full max-w-[440px] items-center justify-center"
+      className="pointer-events-none fixed inset-x-0 bottom-[calc(16px+env(safe-area-inset-bottom))] z-40 flex items-center justify-center"
     >
-      <div className="flex shrink-0 items-center rounded-full border border-border bg-background p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
+      <div className="pointer-events-auto flex shrink-0 items-center rounded-full border border-border bg-background p-1 shadow-[0_6px_24px_-8px_rgb(26_25_24/0.25)]">
         {items.map((it) => {
           const active = it.match(path);
           return (

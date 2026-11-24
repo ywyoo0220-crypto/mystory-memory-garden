@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { useDeviceName } from "@/lib/device";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/help")({
   component: Help,
 });
 
-const items = [
+const helpItems = (device: string) => [
   {
     t: "기록하는 방법",
     d: "아래 ‘기록하기’를 누르고 주제나 시기를 골라요. 질문 하나에 이어지는 질문 세 개가 있어요. 답하기 어려운 질문은 ‘다음에 답할게요’로 넘기면 돼요.",
@@ -36,11 +37,12 @@ const items = [
   },
   {
     t: "기록은 어디에 저장되나요",
-    d: "지금은 이 휴대폰의 브라우저 안에만 저장돼요. 다른 사람에게 보내지지 않아요. 브라우저 기록을 지우면 함께 지워질 수 있으니, MY의 ‘백업과 복원’에서 가끔 백업 파일을 만들어 두세요.",
+    d: `지금은 이 ${device}의 브라우저 안에만 저장돼요. 다른 사람에게 보내지지 않아요. 브라우저 기록을 지우면 함께 지워질 수 있으니, MY의 ‘백업과 복원’에서 가끔 백업 파일을 만들어 두세요.`,
   },
 ];
 
 function Help() {
+  const items = helpItems(useDeviceName());
   return (
     <main className="px-6 pt-12">
       <h1 className="font-serif text-title">도움말</h1>
@@ -49,7 +51,7 @@ function Help() {
         <p className="mt-2 text-body opacity-80">앱 소개와 화면 둘러보기를 다시 볼 수 있어요.</p>
         <Button asChild variant="palette" className="mt-4 inline-flex h-12 items-center rounded-full bg-card px-6 text-caption font-medium text-foreground"><Link to="/onboarding/$n" params={{ n: "1" }} search={{ mode: "help" }}>처음 안내 보기 →</Link></Button>
       </section>
-      <div className="mt-4 space-y-4">
+      <div className="mt-4 space-y-4 desk:grid desk:grid-cols-2 desk:gap-4 desk:space-y-0">
         {items.map((i) => (
           <section key={i.t} className="rounded-[28px] border border-border bg-card p-6">
             <h2 className="text-body font-medium">{i.t}</h2>

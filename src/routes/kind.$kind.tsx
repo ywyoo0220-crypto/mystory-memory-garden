@@ -41,7 +41,7 @@ function KindList() {
       <div className="px-6 pb-6 pt-4">
         <h1 className="font-serif text-title">{kind === "topic" ? "어떤 주제로 쓸까요?" : "어느 시기를 쓸까요?"}</h1>
       </div>
-      <ul className="space-y-1 px-6">
+      <ul className="space-y-1 px-6 desk:grid desk:grid-cols-2 desk:gap-x-4 desk:gap-y-1 desk:space-y-0">
         {cats.map((c) => {
           const total = c.questions.length;
           const done = c.questions.filter((q) => hasContent(records[q.id])).length;

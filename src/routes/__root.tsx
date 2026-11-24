@@ -99,11 +99,14 @@ function RootComponent() {
   const onb = path.startsWith("/onboarding");
   const fullscreen = onb || path === "/my/export" || path === "/my/share" || path === "/my/share/" || path === "/my/profile" || path.startsWith("/answer") || path.startsWith("/s/");
   const locked = path === "/lock" || fullscreen;
+  // Screens for choosing (home, lists, help, MY) use the wide column and go to two columns on a laptop;
+  // screens for reading and writing keep the narrower one (see --app-w and --read-w in styles.css).
+  const wide = path === "/" || path === "/record" || path === "/help" || path === "/my" || path === "/my/" || path.startsWith("/kind/") || path.startsWith("/cat/") || path.startsWith("/my/continue");
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <div className={`mx-auto min-h-app w-full max-w-[440px] bg-paper pt-safe ${fullscreen ? "" : "pb-nav"}`}>
+      <div className={`mx-auto min-h-app w-full ${wide ? "max-w-app" : "max-w-read"} bg-paper pt-safe ${fullscreen ? "" : "pb-nav"}`}>
         <Outlet />
       </div>
       {!locked && <AppNav />}

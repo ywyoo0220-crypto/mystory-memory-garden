@@ -102,7 +102,7 @@ export function ContinueCard({ qid, rec }: { qid: string; rec: StoryRecord }) {
   const done = f.filter(Boolean).length;
   const preview = rec.answers.find((a) => a?.trim())?.trim();
   return (
-    <Link to="/answer/$qid" params={{ qid }} search={{ step: first }} className="block rounded-[20px] border border-border bg-card p-5">
+    <Link to="/answer/$qid" params={{ qid }} search={{ step: first }} className="block h-full rounded-[20px] border border-border bg-card p-5">
       <span className="flex items-center justify-between gap-4 text-caption text-muted-foreground">
         <span className="flex items-center gap-2">
           <Dot catId={cat.id} />

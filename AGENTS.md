@@ -50,3 +50,6 @@ use the editor.
 - Keep the legacy backup app discriminator and PIN salt unchanged when updating display branding, to preserve existing backups and locks.
 - Exhibition persona icons: ?p=A|B|C swaps manifest/apple-touch-icon links client-side via lib/persona.ts, remembered in sessionStorage; defaults untouched.
 - Type uses only text-title/body/caption tokens with font-medium or font-normal; --spacing is 4px so spacing stays fixed in large-text mode (book preview and launch screen excluded).
+- Layout follows the width, never the device: phone keeps one 440px column; `tab:` (44rem) widens it to 720px; `desk:` (64rem) gives choosing screens (home, category and question lists, help, MY) `max-w-app` 960px and two columns, while reading and writing screens stay on `max-w-read` 720px. Use these utilities instead of a fixed max-width; the phone layout must not change.
+- The bottom menu stays at the bottom centre on every device, so its place is the same on phone, tablet and laptop.
+- Wording that names the device ("이 휴대폰에만 저장돼요") comes from lib/device.ts (휴대폰, 태블릿, 컴퓨터 with josa for particles); do not write "휴대폰" as a literal.

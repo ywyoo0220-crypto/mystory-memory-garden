@@ -8,6 +8,7 @@ import { defaultCover, fullDate, sharedRecords, shareColor } from "@/lib/share";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { VoiceBar } from "@/components/VoicePlayer";
 import { catVars } from "@/lib/theme";
+import { useDeviceName } from "@/lib/device";
 import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 
 export const Route = createFileRoute("/s/$id")({
@@ -37,12 +38,13 @@ function SharedPage() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
   const close = () => (canGoBack ? router.history.back() : void router.navigate({ to: "/my/share/manage" }));
+  const device = useDeviceName();
   if (!share) {
     return (
       <main className="flex min-h-app flex-col items-center justify-center px-6 text-center">
         <p className="text-body font-medium">이 링크는 열 수 없어요.</p>
         <p className="mt-2 text-caption text-muted-foreground [word-break:keep-all]">
-          지금은 시범 버전이라, 링크를 만든 휴대폰에서만 받는 사람 화면을 볼 수 있어요.
+          지금은 시범 버전이라, 링크를 만든 {device}에서만 받는 사람 화면을 볼 수 있어요.
         </p>
       </main>
     );
@@ -58,7 +60,7 @@ function SharedPage() {
     // White page (not the app's grey) so pale category colours still read as blocks.
     <main className="relative min-h-app bg-white pb-16 pt-14">
       {/* Preview bar: says this is the recipient's view and gives a way out, without covering the page as it scrolls. */}
-      <div className="fixed inset-x-0 top-0 z-50 mx-auto flex h-14 w-full max-w-[440px] items-center justify-between border-b border-border bg-white px-4 pt-safe">
+      <div className="fixed inset-x-0 top-0 z-50 mx-auto flex h-14 w-full max-w-read items-center justify-between border-b border-border bg-white px-4 pt-safe">
         <span className="text-caption text-muted-foreground">받는 사람 화면 미리보기</span>
         <button type="button" aria-label="미리보기 닫기" onClick={close} className="inline-flex h-12 items-center gap-2 px-2 text-caption font-medium text-ink">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
@@ -87,7 +89,7 @@ function SharedPage() {
       <footer className="mt-6 space-y-2 border-t border-border px-6 pt-12 text-center">
         <p className="text-body font-medium">마이스토리</p>
         <p className="text-caption text-muted-foreground">질문에 답하며 나만의 색깔로 채워 가는 이야기</p>
-        <p className="pt-6 text-caption text-muted-foreground [word-break:keep-all]">시범 버전 · 실제로 보내지지 않고, 링크를 만든 휴대폰에서만 열려요.</p>
+        <p className="pt-6 text-caption text-muted-foreground [word-break:keep-all]">시범 버전 · 실제로 보내지지 않고, 링크를 만든 {device}에서만 열려요.</p>
         {share.withVoice && qids.some((q: string) => records[q]?.voices?.some((v) => v.audio)) && (
           <p className="text-caption text-muted-foreground [word-break:keep-all]">음성은 클로바더빙으로 만든 합성 음성이에요.</p>
         )}

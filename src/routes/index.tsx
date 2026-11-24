@@ -5,6 +5,7 @@ import { categoriesOf, type Kind } from "@/lib/data";
 import { actions, hasContent, useStore, type Records, type StoryRecord } from "@/lib/store";
 import { RecordCard } from "@/components/CategoryCard";
 import { ViewToggle } from "@/components/ViewToggle";
+import { DESK_QUERY, useMedia } from "@/lib/device";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,6 +32,13 @@ export function homeCards(records: Records, kind: Kind) {
   return cards;
 }
 
+/** Laptop: the deck splits into two stacks, dealt left then right so the order still reads row by row. */
+export function deckColumns<T>(cards: T[], columns: number): T[][] {
+  const cols: T[][] = Array.from({ length: Math.max(1, columns) }, () => []);
+  cards.forEach((c, i) => cols[i % cols.length]!.push(c));
+  return cols.filter((c) => c.length > 0);
+}
+
 /** One card per category, in the order its first record appears in homeCards. */
 export function homeGroups(records: Records, kind: Kind) {
   const groups: { cat: ReturnType<typeof categoriesOf>[number]; items: { qid: string; rec: StoryRecord }[] }[] = [];
@@ -49,6 +57,7 @@ function Home() {
   const other: Kind = view === "topic" ? "period" : "topic";
   const otherCount = homeCards(records, other).length;
   const hasExamples = Object.values(records).some((r) => r.example);
+  const columns = deckColumns(cards, useMedia(DESK_QUERY) ? 2 : 1);
 
   return (
     <main className="ms-home px-6 pt-4">
@@ -70,7 +79,7 @@ function Home() {
 
       {cards.length === 0 && otherCount > 0 ? (
         /* This view is empty but the other one is not: say so, and offer the switch instead of "no records". */
-        <div className="mt-12 rounded-[32px] bg-card px-6 py-12 text-center">
+        <div className="mx-auto mt-12 max-w-read rounded-[32px] bg-card px-6 py-12 text-center">
           <p className="font-serif text-title [text-wrap:balance] [word-break:keep-all]">{VIEW_NAME[view]} 기록은 아직 없어요.</p>
           <p className="mt-4 text-body text-muted-foreground [text-wrap:balance] [word-break:keep-all]">
             {view === "topic" ? "시기로 답한" : "주제로 답한"} 기록 {otherCount}개는 ‘{VIEW_NAME[other]}’에 있어요.
@@ -84,7 +93,7 @@ function Home() {
           </button>
         </div>
       ) : cards.length === 0 ? (
-        <div className="mt-12 rounded-[32px] bg-card px-6 py-12 text-center">
+        <div className="mx-auto mt-12 max-w-read rounded-[32px] bg-card px-6 py-12 text-center">
           <p className="font-serif text-title">아직 남긴 기록이 없어요.</p>
           <p className="mt-4 text-body text-muted-foreground [text-wrap:balance] [word-break:keep-all]">
             주제나 시기를 고르면 답할 질문이 나와요.
@@ -97,18 +106,23 @@ function Home() {
           </Link>
         </div>
       ) : (
-        <div key={view} className="ms-deck -mx-6 mt-4">
-          {cards.map((k, i) => (
-            <RecordCard
-              key={k.cat.id}
-              items={k.items}
-              cat={k.cat}
-              open={open === k.cat.id}
-              onToggle={() => setOpen(open === k.cat.id ? null : k.cat.id)}
-              first={i === 0}
-              last={i === cards.length - 1}
-              z={i + 1}
-            />
+        /* Phone: the deck runs edge to edge. Wider screens: it lines up with the header, and on a laptop it becomes two stacks. */
+        <div key={view} className="-mx-6 mt-4 flex items-start gap-6 tab:mx-0">
+          {columns.map((col, c) => (
+            <div key={c} className="ms-deck min-w-0 flex-1">
+              {col.map((k, i) => (
+                <RecordCard
+                  key={k.cat.id}
+                  items={k.items}
+                  cat={k.cat}
+                  open={open === k.cat.id}
+                  onToggle={() => setOpen(open === k.cat.id ? null : k.cat.id)}
+                  first={i === 0}
+                  last={i === col.length - 1}
+                  z={i + 1}
+                />
+              ))}
+            </div>
           ))}
         </div>
       )}
@@ -117,7 +131,7 @@ function Home() {
         <button
           type="button"
           onClick={() => { actions.setView(other); setOpen(null); window.scrollTo({ top: 0 }); }}
-          className="mt-6 flex h-14 w-full items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground"
+          className="mx-auto mt-6 flex h-14 w-full max-w-read items-center justify-center rounded-full bg-ink text-body font-medium text-ink-foreground"
         >
           {VIEW_NAME[other]} 보기에 기록 {otherCount}개가 더 있어요
         </button>

@@ -7,6 +7,7 @@ import { CategoryPill } from "@/components/CategoryCard";
 import { TextSizeChoice } from "@/components/TextSizeChoice";
 import { Button } from "@/components/ui/button";
 import { actions, useStore } from "@/lib/store";
+import { josa, useDeviceName } from "@/lib/device";
 import { finishOnb, nextOnboardingStep, onboardingStep, onbLog, previousOnboardingStep } from "@/lib/onboarding";
 
 const TITLE = "처음 안내 — 마이스토리";
@@ -71,7 +72,7 @@ function Onboarding() {
   } as Record<number, ReactNode>;
 
   return (
-    <main className="fixed inset-0 mx-auto flex w-full max-w-[440px] flex-col bg-paper pt-safe">
+    <main className="fixed inset-0 mx-auto flex w-full max-w-read flex-col bg-paper pt-safe">
       <div className="flex min-h-16 shrink-0 flex-wrap items-center justify-between gap-2 px-2">
         {step === 1 ? (
           <img src={wordmark.url} alt="마이스토리" width={1979} height={483} className="ml-4 h-7 w-auto" />
@@ -177,9 +178,10 @@ function Screen1() {
 }
 
 function Screen2() {
+  const device = useDeviceName();
   return (
     <>
-      <Head step={2} title={"쓰고, 말하고,\n사진도 넣어요."} sub="글·목소리·사진으로 남길 수 있어요. 말한 내용을 글로 옮기는 기능은 휴대폰과 브라우저에 따라 달라요." />
+      <Head step={2} title={"쓰고, 말하고,\n사진도 넣어요."} sub={`글·목소리·사진으로 남길 수 있어요. 말한 내용을 글로 옮기는 기능은 ${device}${josa(device, "과", "와")} 브라우저에 따라 달라요.`} />
       <Frame className="mt-4">
         <div className="w-full rounded-3xl border-[1.5px] border-dashed border-border bg-card p-4">
           <TypingText text="어릴 때 나는 동네에서 장난꾸러기로 통했어" />
@@ -223,9 +225,10 @@ function TypingText({ text }: { text: string }) {
 
 function Screen3() {
   const cats = ["T7", "T8", "T1"].map((id) => getCategory(id)).filter((cat): cat is Category => Boolean(cat));
+  const device = useDeviceName();
   return (
     <>
-      <Head step={3} title={"주제별로도, 시기별로도\n모아 볼 수 있어요."} sub="홈에서 내 기록을 모아 봐요. 같은 주제나 시기의 이야기는 카드 한 장에 쌓이고, 이 휴대폰에만 저장돼요." />
+      <Head step={3} title={"주제별로도, 시기별로도\n모아 볼 수 있어요."} sub={`홈에서 내 기록을 모아 봐요. 같은 주제나 시기의 이야기는 카드 한 장에 쌓이고, 이 ${device}에만 저장돼요.`} />
       <Frame className="mt-4">
         {cats.map((cat, i) => {
           const last = i === cats.length - 1;

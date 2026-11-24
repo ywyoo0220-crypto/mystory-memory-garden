@@ -6,6 +6,7 @@ import { getPrefs, prefs, type Profile } from "@/lib/prefs";
 import { blobToDataUrl, clearAudio, dataUrlToBlob, getAudio, putAudio } from "@/lib/audio";
 import { clearMedia, getMedia, isMediaRef, putMediaAt } from "@/lib/media";
 import { Card, SubHeader } from "@/components/my/ui";
+import { useDeviceName } from "@/lib/device";
 
 export const Route = createFileRoute("/my/backup")({
   head: () => ({
@@ -99,9 +100,10 @@ function Backup() {
 
   const n = Object.values(records).filter(hasContent).length;
   const btn = "flex h-14 w-full items-center justify-center rounded-full text-body font-medium disabled:opacity-40";
+  const device = useDeviceName();
   return (
     <main className="pb-6">
-      <SubHeader title="백업과 복원" sub="백업 파일에는 글, 사진, 목소리가 모두 들어 있어요. 새 휴대폰에서 ‘복원하기’로 불러오면 그대로 돌아와요." />
+      <SubHeader title="백업과 복원" sub={`백업 파일에는 글, 사진, 목소리가 모두 들어 있어요. 새 ${device}에서 ‘복원하기’로 불러오면 그대로 돌아와요.`} />
       <div className="space-y-4 px-6">
         <Card className="space-y-4 p-6">
           <p className="text-caption text-muted-foreground">지금 기록 {n}개</p>

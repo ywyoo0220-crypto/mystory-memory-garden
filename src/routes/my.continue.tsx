@@ -24,9 +24,9 @@ function Continue() {
   return (
     <main className="pb-6">
       <SubHeader title="이어서 쓰기" sub="쓰다 멈춘 이야기를 이어서 완성해요." />
-      <div className="space-y-4 px-6">
+      <div className="space-y-4 px-6 desk:grid desk:grid-cols-2 desk:gap-4 desk:space-y-0">
         {list.length === 0 ? (
-          <p className="py-12 text-center text-body text-muted-foreground">쓰다 만 기록이 없어요.</p>
+          <p className="py-12 text-center text-body text-muted-foreground desk:col-span-2">쓰다 만 기록이 없어요.</p>
         ) : (
           list.map(([q, r]) => <ContinueCard key={q} qid={q} rec={r} />)
         )}

@@ -8,6 +8,7 @@ import { VoiceBar } from "@/components/VoicePlayer";
 import { toast } from "sonner";
 import { deleteMedia, putMedia, useMediaUrl } from "@/lib/media";
 import { CategoryPill } from "@/components/CategoryCard";
+import { useDeviceName } from "@/lib/device";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/answer/$qid")({
@@ -104,6 +105,9 @@ function AnswerFlow() {
   const finishing = useRef<Promise<void> | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const draftT = useRef<number | undefined>(undefined);
+  // Read inside the recorder callback, so it is kept in a ref like the other latest values.
+  const deviceName = useRef("휴대폰");
+  deviceName.current = useDeviceName();
 
   useEffect(() => {
     if (init.current) return;
@@ -168,7 +172,7 @@ function AnswerFlow() {
             latest.current.voices = v;
             setVoices(v);
           } catch {
-            setMsg("목소리를 저장하지 못했어요. 휴대폰 저장 공간을 확인해 주세요.");
+            setMsg(`목소리를 저장하지 못했어요. ${deviceName.current} 저장 공간을 확인해 주세요.`);
           }
         }
         persist();
@@ -374,7 +378,7 @@ function AnswerFlow() {
   }
 
   return (
-    <main className="category-list fixed inset-0 mx-auto flex w-full max-w-[440px] flex-col bg-paper pt-safe" style={catVars(cat.id)}>
+    <main className="category-list fixed inset-0 mx-auto flex w-full max-w-read flex-col bg-paper pt-safe" style={catVars(cat.id)}>
       <div className="shrink-0 px-6">
       <div className="relative flex h-16 items-center justify-between">
         <button
@@ -427,7 +431,7 @@ function AnswerFlow() {
         onChange={(e) => { updateAnswer(step, e.target.value); window.clearTimeout(draftT.current); draftT.current = window.setTimeout(() => persist(), 500); }}
         placeholder="한 줄이어도 괜찮아요."
         rows={4}
-        className="mt-4 block min-h-[calc(4lh+48px)] w-full resize-none rounded-3xl border border-border bg-card p-6 text-body outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"
+        className="mt-4 block min-h-[calc(4lh+48px)] w-full resize-none tab:min-h-[calc(6lh+48px)] rounded-3xl border border-border bg-card p-6 text-body outline-none placeholder:text-inherit placeholder:opacity-100 focus-visible:ring-2 focus-visible:ring-(--cat-list-accent)"
       />
 
       {photos.length > 0 && (

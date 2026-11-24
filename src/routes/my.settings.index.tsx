@@ -7,6 +7,7 @@ import { Card, Chevron, rowCls, Segmented, SubHeader } from "@/components/my/ui"
 import { Button } from "@/components/ui/button";
 import { resetApp } from "@/lib/reset";
 import { TextSizeChoice } from "@/components/TextSizeChoice";
+import { josa, useDeviceName } from "@/lib/device";
 
 export const Route = createFileRoute("/my/settings/")({
   head: () => ({
@@ -28,6 +29,7 @@ function Settings() {
   const [confirm, setConfirm] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
   const [resetting, setResetting] = useState(false);
+  const device = useDeviceName();
   const label = "px-2 pb-2 text-caption font-medium";
   const small = "h-12 shrink-0 rounded-full border border-ink px-6 text-caption font-medium";
   const danger = "h-12 shrink-0 rounded-full bg-destructive/10 px-6 text-caption font-medium text-destructive";
@@ -82,7 +84,7 @@ function Settings() {
           </Card>
         </section>
         <section>
-          <h2 className={label}>휴대폰 넘겨주기</h2>
+          <h2 className={label}>{device} 넘겨주기</h2>
           <Card className="divide-y overflow-hidden">
             {confirmReset ? (
               <div className="px-6 py-4" role="alert">
@@ -107,7 +109,7 @@ function Settings() {
               <div className={rowCls}>
                 <span className="flex-1">
                   <span className="block text-body font-medium text-destructive">처음 상태로 되돌리기</span>
-                  <span className="block text-caption text-muted-foreground">다른 사람이 이 휴대폰으로 처음부터 쓸 수 있게 해요.</span>
+                  <span className="block text-caption text-muted-foreground">다른 사람이 이 {device}{josa(device, "으로", "로")} 처음부터 쓸 수 있게 해요.</span>
                 </span>
                 <button type="button" className={`${danger}`} onClick={() => setConfirmReset(true)}>되돌리기</button>
               </div>

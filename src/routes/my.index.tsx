@@ -49,22 +49,29 @@ function My() {
         <Chevron />
       </Link>
 
-      {groups.map(([title, items]) => (
-        <section key={title} aria-label={title}>
-          <h2 className="mb-2 px-2 text-caption font-medium text-muted-foreground">{title}</h2>
-          <Card className="divide-y overflow-hidden">
-            {items.map(([to, t, s]) => (
-              <Link key={to} to={to} className={rowCls}>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-body font-medium">{t}</span>
-                  <span className="block text-caption text-muted-foreground">{s}</span>
-                </span>
-                <Chevron />
-              </Link>
+      {/* Laptop: "내 기록" on the left, the other two groups stacked on the right. */}
+      <div className="space-y-6 desk:grid desk:grid-cols-2 desk:items-start desk:gap-6 desk:space-y-0">
+        {[groups.slice(0, 1), groups.slice(1)].map((column, c) => (
+          <div key={c} className="space-y-6">
+            {column.map(([title, items]) => (
+              <section key={title} aria-label={title}>
+                <h2 className="mb-2 px-2 text-caption font-medium text-muted-foreground">{title}</h2>
+                <Card className="divide-y overflow-hidden">
+                  {items.map(([to, t, s]) => (
+                    <Link key={to} to={to} className={rowCls}>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-body font-medium">{t}</span>
+                        <span className="block text-caption text-muted-foreground">{s}</span>
+                      </span>
+                      <Chevron />
+                    </Link>
+                  ))}
+                </Card>
+              </section>
             ))}
-          </Card>
-        </section>
-      ))}
+          </div>
+        ))}
+      </div>
     </main>
   );
 }

@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { useMediaUrl } from "@/lib/media";
 import { resizeCover } from "@/lib/book";
 import { recordPhotos, type Records } from "@/lib/store";
+import { useDeviceName } from "@/lib/device";
 
 /** Cover photo for a share: none, the example cover (example records only), an uploaded photo, or a photo from the chosen records. */
 export function CoverPicker({ qids, records, value, onChange, bookCover }: { qids: string[]; records: Records; value: string; onChange: (src: string) => void; bookCover?: string | undefined }) {
+  const device = useDeviceName();
   const input = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState<string>("");
@@ -30,8 +32,8 @@ export function CoverPicker({ qids, records, value, onChange, bookCover }: { qid
       <p className="mt-2 text-caption text-muted-foreground">받는 사람 화면 맨 위에 크게 들어가요.</p>
       <div role="group" aria-label="표지 사진" className="cover-options">
         <Tile label="사진 없이" selected={value === ""} onClick={() => onChange("")} />
-        <Button variant="palette" className="cover-tile cover-upload" aria-label="휴대폰 사진 올리기" disabled={uploading} onClick={() => input.current?.click()}>
-          {uploading ? "올리는 중…" : <>휴대폰<br />사진 올리기</>}
+        <Button variant="palette" className="cover-tile cover-upload" aria-label={`${device} 사진 올리기`} disabled={uploading} onClick={() => input.current?.click()}>
+          {uploading ? "올리는 중…" : <>{device}<br />사진 올리기</>}
         </Button>
         {uploaded && <Tile label="올린 사진" src={uploaded} selected={value === uploaded} onClick={() => onChange(uploaded)} />}
         {bookCover && <Tile label="책 표지 그림" src={bookCover} selected={value === bookCover} onClick={() => onChange(bookCover)} />}

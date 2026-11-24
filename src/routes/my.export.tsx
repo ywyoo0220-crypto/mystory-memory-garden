@@ -10,6 +10,7 @@ import { bookParts, bookPhotos, chosenCover, containsExamples, resizeCover, type
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { Segmented, SubHeader } from "@/components/my/ui";
 import { Button } from "@/components/ui/button";
+import { useDeviceName } from "@/lib/device";
 
 export const Route = createFileRoute("/my/export")({
   head: () => ({ meta: [
@@ -26,6 +27,7 @@ export const Route = createFileRoute("/my/export")({
 function ExportPage() {
   const { records } = useStore();
   const { profile } = usePrefs();
+  const device = useDeviceName();
   const [scope, setScope] = useState<BookScope>("all");
   const [uploading, setUploading] = useState(false);
   const input = useRef<HTMLInputElement>(null);
@@ -76,10 +78,10 @@ function ExportPage() {
         </div>}
         <div>
           <h2 className="text-body font-medium">대표 사진을 넣을까요?</h2>
-          <p className="mt-2 text-caption text-muted-foreground">표지에 크게 들어가요. 남긴 사진에서 고르거나 휴대폰에서 새로 올릴 수 있어요.</p>
+          <p className="mt-2 text-caption text-muted-foreground">표지에 크게 들어가요. 남긴 사진에서 고르거나 {device}에서 새로 올릴 수 있어요.</p>
           <div role="group" aria-label="대표 사진" className="cover-options">
             <CoverTile label="사진 없이" selected={cover.key === ""} onClick={() => select("")} />
-            <Button variant="palette" className="cover-tile cover-upload" aria-pressed={false} aria-label="휴대폰 사진 올리기" disabled={uploading} onClick={() => input.current?.click()}>{uploading ? "올리는 중…" : <>휴대폰<br />사진 올리기</>}</Button>
+            <Button variant="palette" className="cover-tile cover-upload" aria-pressed={false} aria-label={`${device} 사진 올리기`} disabled={uploading} onClick={() => input.current?.click()}>{uploading ? "올리는 중…" : <>{device}<br />사진 올리기</>}</Button>
             {profile.coverUp && <CoverTile label="올린 대표 사진" src={profile.coverUp} selected={cover.key === "up"} onClick={() => select("up")} />}
             {examples && <CoverTile label="예시 표지 사진" src="/ex_cover.jpg" selected={cover.key === "ex"} onClick={() => select("ex")} />}
             {photos.map((p, i) => <CoverTile key={p.key} label={`기록 사진 ${i + 1}`} src={p.src} selected={cover.key === p.key} onClick={() => select(p.key)} />)}

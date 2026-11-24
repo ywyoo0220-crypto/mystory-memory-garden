@@ -65,7 +65,7 @@ function CatQuestions() {
           {edit ? "수정할 기록을 골라 주세요." : "하나를 골라 시작해요. 모든 질문에 답하지 않아도 돼요."}
         </p>
       </div>
-      <ul className="space-y-2 px-6">
+      <ul className="space-y-2 px-6 desk:grid desk:grid-cols-2 desk:gap-2 desk:space-y-0">
         {cat.questions.filter((q) => !edit || hasContent(records[q.id])).map((q) => {
           // Answered questions take their category colour, as on home: the list fills in as you write.
           const done = hasContent(records[q.id]);
@@ -75,7 +75,7 @@ function CatQuestions() {
               <Link
                 to="/answer/$qid"
                 params={{ qid: q.id }}
-                className="flex gap-4 rounded-3xl border border-transparent p-6"
+                className="flex h-full gap-4 rounded-3xl border border-transparent p-6"
                 style={done ? { background: cat.color.background, color: cat.color.text } : { background: "var(--card)", border: "1px solid var(--border)" }}
               >
                 <span
