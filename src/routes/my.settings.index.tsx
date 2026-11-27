@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { actions, useStore, type TextSize } from "@/lib/store";
 import { usePrefs } from "@/lib/prefs";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { resetApp } from "@/lib/reset";
 import { TextSizeChoice } from "@/components/TextSizeChoice";
 import { josa, useDeviceName } from "@/lib/device";
+import { enableDemo, isDemo } from "@/lib/demo";
 
 export const Route = createFileRoute("/my/settings/")({
   head: () => ({
@@ -30,6 +31,16 @@ function Settings() {
   const [confirmReset, setConfirmReset] = useState(false);
   const [resetting, setResetting] = useState(false);
   const device = useDeviceName();
+  const taps = useRef<number[]>([]);
+  const demoTap = () => {
+    const now = Date.now();
+    taps.current = [...taps.current.filter((t) => now - t < 3000), now];
+    if (taps.current.length < 5) return;
+    taps.current = [];
+    if (isDemo()) return void toast("이미 체험 모드예요");
+    enableDemo();
+    toast("체험 모드를 켰어요. 사진은 체험용 사진만 떠요.");
+  };
   const label = "px-2 pb-2 text-caption font-medium";
   const small = "h-12 shrink-0 rounded-full border border-ink px-6 text-caption font-medium";
   const danger = "h-12 shrink-0 rounded-full bg-destructive/10 px-6 text-caption font-medium text-destructive";
@@ -57,7 +68,8 @@ function Settings() {
           </Link>
         </Card>
         <section>
-          <h2 className={label}>데이터</h2>
+          {/* Exhibition setup: five taps on this heading turn on try-out mode (no visible control, and no way back here). */}
+          <h2 className={`${label} select-none`} onClick={demoTap}>데이터</h2>
           <Card className="divide-y overflow-hidden">
             <div className={rowCls}>
               <span className="flex-1 text-body font-medium">예시 기록 담기</span>

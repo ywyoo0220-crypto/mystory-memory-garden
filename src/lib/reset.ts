@@ -1,5 +1,6 @@
 import { clearAudio } from "./audio";
 import { clearMedia } from "./media";
+import { DEMO_KEY } from "./demo";
 
 /** Every key this app keeps in localStorage starts with one of these. */
 const PREFIXES = ["mystory.", "ms."];
@@ -14,7 +15,8 @@ export async function resetApp() {
   try {
     const keys = Array.from({ length: localStorage.length }, (_, i) => localStorage.key(i) ?? "");
     keys
-      .filter((k) => PREFIXES.some((p) => k.startsWith(p)))
+      // A try-out device stays one after a reset between visitors.
+      .filter((k) => k !== DEMO_KEY && PREFIXES.some((p) => k.startsWith(p)))
       .forEach((k) => localStorage.removeItem(k));
   } catch {
     /* Storage unavailable: nothing was kept there either. */

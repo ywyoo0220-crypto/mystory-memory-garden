@@ -1,7 +1,8 @@
 // Exhibition try-out devices (?demo=1): photos come from a fixed set of persona photos instead of the
 // device library, and sending, printing and backup files are off, so a lent personal iPad shows nothing of its owner.
 // The flag is kept in localStorage so the home-screen app stays in this mode; ?demo=0 turns it off.
-const KEY = "mystory.demo.v1";
+export const DEMO_KEY = "mystory.demo.v1";
+const KEY = DEMO_KEY;
 type Store = Pick<Storage, "getItem" | "setItem" | "removeItem">;
 
 export function resolveDemo(search: string, store: Store): boolean {
@@ -22,6 +23,12 @@ export function isDemo(): boolean {
   }
   return on;
 }
+/** Turns the mode on from inside the installed app (iOS may drop ?demo=1 when adding to the home screen). */
+export function enableDemo() {
+  try { localStorage.setItem(KEY, "1"); } catch { /* noop */ }
+  on = true;
+}
+
 // Read the address at start-up, before first-run redirects drop ?demo=1.
 if (typeof window !== "undefined") isDemo();
 
