@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { prefs, usePrefs, validBirth } from "@/lib/prefs";
 import { Avatar, SubHeader } from "@/components/my/ui";
+import { openPhotoPicker } from "@/lib/demo";
 
 export const Route = createFileRoute("/my/profile")({
   head: () => ({
@@ -71,6 +72,13 @@ function ProfilePage() {
   const labelCls = "shrink-0 text-body font-normal text-muted-foreground transition-colors group-focus-within:text-ink";
   const input = "min-w-0 flex-1 bg-transparent text-right text-body font-medium outline-none placeholder:font-normal placeholder:text-muted-foreground";
   const birthBad = birth.length > 0 && !validBirth(birth);
+  const takePhoto = async (f: File) => {
+    try {
+      setPhoto(await squarePhoto(f));
+    } catch {
+      toast("사진을 불러오지 못했어요");
+    }
+  };
   return (
     <main className="pb-10">
       <SubHeader title="프로필" />
@@ -80,7 +88,7 @@ function ProfilePage() {
             <button
               type="button"
               aria-label={photo ? "프로필 사진 바꾸기 또는 지우기" : "프로필 사진 넣기"}
-              onClick={() => (photo ? setSheet(true) : file.current?.click())}
+              onClick={() => (photo ? setSheet(true) : openPhotoPicker(file.current, false, (f) => void takePhoto(f[0]!)))}
               disabled={!editing}
               className="relative block rounded-full"
             >
@@ -102,15 +110,10 @@ function ProfilePage() {
           type="file"
           accept="image/*"
           className="hidden"
-          onChange={async (e) => {
+          onChange={(e) => {
             const f = e.target.files?.[0];
             e.target.value = "";
-            if (!f) return;
-            try {
-              setPhoto(await squarePhoto(f));
-            } catch {
-              toast("사진을 불러오지 못했어요");
-            }
+            if (f) void takePhoto(f);
           }}
         />
         {!editing ? (
@@ -164,7 +167,7 @@ function ProfilePage() {
                 type="button"
                 onClick={() => {
                   setSheet(false);
-                  file.current?.click();
+                  openPhotoPicker(file.current, false, (f) => void takePhoto(f[0]!));
                 }}
                 className="flex h-14 w-full items-center justify-center text-body font-medium"
               >

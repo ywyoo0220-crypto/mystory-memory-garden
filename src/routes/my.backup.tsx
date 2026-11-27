@@ -7,6 +7,7 @@ import { blobToDataUrl, clearAudio, dataUrlToBlob, getAudio, putAudio } from "@/
 import { clearMedia, getMedia, isMediaRef, putMediaAt } from "@/lib/media";
 import { Card, SubHeader } from "@/components/my/ui";
 import { useDeviceName } from "@/lib/device";
+import { DEMO_BLOCKED, isDemo } from "@/lib/demo";
 
 export const Route = createFileRoute("/my/backup")({
   head: () => ({
@@ -31,6 +32,7 @@ function Backup() {
   const file = useRef<HTMLInputElement>(null);
 
   const make = async () => {
+    if (isDemo()) return void toast(DEMO_BLOCKED);
     setBusy(true);
     setFallback(null);
     try {
@@ -111,7 +113,7 @@ function Backup() {
           <button type="button" className={`${btn} bg-ink text-ink-foreground`} onClick={() => void make()} disabled={busy}>
             {busy ? "만드는 중…" : "백업 파일 만들기"}
           </button>
-          <button type="button" className={`${btn} border border-ink`} onClick={() => file.current?.click()}>
+          <button type="button" className={`${btn} border border-ink`} onClick={() => (isDemo() ? toast(DEMO_BLOCKED) : file.current?.click())}>
             백업 파일로 복원하기
           </button>
         </Card>

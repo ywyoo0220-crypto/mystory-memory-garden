@@ -10,6 +10,7 @@ import { deleteMedia, putMedia, useMediaUrl } from "@/lib/media";
 import { CategoryPill } from "@/components/CategoryCard";
 import { useDeviceName } from "@/lib/device";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { openPhotoPicker } from "@/lib/demo";
 
 export const Route = createFileRoute("/answer/$qid")({
   validateSearch: (s: Record<string, unknown>): { step?: number | undefined } => {
@@ -517,7 +518,7 @@ function AnswerFlow() {
             type="button"
             onClick={() => {
               void stopSpeaking();
-              fileRef.current?.click();
+              openPhotoPicker(fileRef.current, true, (f) => void onPhotos(f));
             }}
             className="h-14 rounded-full border border-border bg-card text-body font-medium"
           >

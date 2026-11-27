@@ -8,6 +8,7 @@ import { defaultCover, personaCover, shareUrl } from "@/lib/share";
 import { CoverPicker } from "@/components/CoverPicker";
 import { useDeviceName } from "@/lib/device";
 import { Card, Dot, SubHeader, Toggle } from "@/components/my/ui";
+import { DEMO_BLOCKED, isDemo } from "@/lib/demo";
 
 export const Route = createFileRoute("/my/share/")({
   head: () => ({
@@ -65,6 +66,7 @@ function SharePage() {
     navigate({ to: "/s/$id", params: { id: "preview" } });
   };
   const send = async (id: string) => {
+    if (isDemo()) return void toast(DEMO_BLOCKED);
     const url = shareUrl(id);
     const title = profile.name.trim() ? `${profile.name.trim()}의 이야기` : "마이스토리 이야기";
     try {

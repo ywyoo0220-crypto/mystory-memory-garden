@@ -18,6 +18,8 @@ import { themeCss } from "../lib/theme";
 import { getPrefs } from "../lib/prefs";
 import { onbDone } from "../lib/onboarding";
 import { applyPersonaLinks, resolvePersona } from "../lib/persona";
+import { isDemo } from "../lib/demo";
+import { DemoPhotoSheet } from "../components/DemoPhotoSheet";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -94,7 +96,12 @@ function RootComponent() {
   }, [path]);
   // Exhibition persona icons (?p=A|B|C), re-applied after head updates.
   useEffect(() => {
-    try { applyPersonaLinks(document, resolvePersona(window.location.search, sessionStorage)); } catch { /* noop */ }
+    try {
+      const p = resolvePersona(window.location.search, sessionStorage);
+      applyPersonaLinks(document, p);
+      // Try-out devices (?demo=1) install with a start address that keeps the mode.
+      if (!p && isDemo()) document.querySelectorAll<HTMLLinkElement>('link[rel="manifest"]').forEach((e) => e.setAttribute("href", "/manifest-demo.webmanifest"));
+    } catch { /* noop */ }
   }, [path]);
   const onb = path.startsWith("/onboarding");
   const fullscreen = onb || path === "/my/export" || path === "/my/share" || path === "/my/share/" || path === "/my/profile" || path.startsWith("/answer") || path.startsWith("/s/");
@@ -111,6 +118,7 @@ function RootComponent() {
       </div>
       {!locked && <AppNav />}
       <Toaster position="top-center" />
+      <DemoPhotoSheet />
     </QueryClientProvider>
   );
 }
