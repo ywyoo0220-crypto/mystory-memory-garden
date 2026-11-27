@@ -420,7 +420,7 @@ function AnswerFlow() {
       <span className="text-caption font-medium tabular-nums" aria-hidden>{step + 1} / {steps.length}</span>
       </div>
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4">
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4 scroll-fade-top">
 
       <h1 className="mt-6 font-serif text-title">{steps[step]}</h1>
       {step > 0 && <p className="mt-2 text-caption">{q.core}</p>}

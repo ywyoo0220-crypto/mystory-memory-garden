@@ -92,7 +92,7 @@ function Onboarding() {
       </div>
 
       <p className="shrink-0 px-6 pb-2 pt-2 text-caption font-medium text-ink">{EYEBROW[step]}</p>
-          <div ref={content} className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2">{screen[step]}</div>
+          <div ref={content} className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2 scroll-fade-top">{screen[step]}</div>
           <Footer>
             {mode === "help" && step === 3 ? (
               <Button asChild variant="palette" className={primary}><Link to="/help">도움말로 돌아가기</Link></Button>

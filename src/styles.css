@@ -185,6 +185,16 @@
 @utility pt-safe {
   padding-top: env(safe-area-inset-top);
 }
+/* Scroll areas fade out at their top edge instead of cutting cards with a hard line. */
+@utility scroll-fade-top {
+  mask-image: linear-gradient(to bottom, transparent 0, #000 1.25rem);
+}
+/* Status-bar cover: page content scrolling up fades out under the clock/battery area. */
+.ms-statusbar-cover {
+  position: fixed; inset-inline: 0; top: 0; z-index: 30; pointer-events: none;
+  height: calc(env(safe-area-inset-top) + 1.25rem);
+  background: linear-gradient(to bottom, var(--paper) 0, var(--paper) env(safe-area-inset-top), transparent 100%);
+}
 /* nav offset 16px + nav height (3.75rem) + 16px gap + home indicator */
 @utility pb-nav {
   padding-bottom: calc(3.75rem + 32px + env(safe-area-inset-bottom));

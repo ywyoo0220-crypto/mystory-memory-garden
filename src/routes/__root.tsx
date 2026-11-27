@@ -116,6 +116,7 @@ function RootComponent() {
       <div className={`mx-auto min-h-app w-full ${wide ? "max-w-app" : "max-w-read"} bg-paper pt-safe ${fullscreen ? "" : "pb-nav"}`}>
         <Outlet />
       </div>
+      {!fullscreen && <div className="ms-statusbar-cover" aria-hidden />}
       {!locked && <AppNav />}
       <Toaster position="top-center" />
       <DemoPhotoSheet />
