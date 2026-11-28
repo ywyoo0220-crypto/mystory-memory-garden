@@ -61,7 +61,7 @@ function Home() {
 
   return (
     <main className="ms-home px-6 pt-4">
-      <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-4 py-4">
+      <header className="header-solid -mx-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-4 px-6 py-4">
         <h1 className="flex items-center">
           <img
             src={wordmark.url}

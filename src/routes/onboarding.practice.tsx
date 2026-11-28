@@ -64,7 +64,7 @@ function Practice() {
   if (done) {
     return (
       <main className="fixed inset-0 mx-auto flex w-full max-w-read flex-col bg-paper pt-safe">
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4 pt-12 scroll-fade-top">
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4 pt-12">
           <p className="text-body font-medium">연습을 마쳤어요.</p>
           <h1 className="mt-2 font-serif text-title">이제 실제 질문에 답해 볼까요?</h1>
           <p className="mt-4 text-body text-muted-foreground">연습에서 쓴 내용은 저장되지 않았어요. 실제 기록은 쓰는 대로 이 {device}에 저장되고, 언제든 고칠 수 있어요.</p>
@@ -97,7 +97,7 @@ function Practice() {
 
   return (
     <main className="fixed inset-0 mx-auto flex w-full max-w-read flex-col bg-paper pt-safe">
-      <div className="shrink-0 px-6">
+      <div className="relative z-30 shrink-0 bg-paper px-6">
         <div className="relative flex h-16 items-center justify-between">
           <button type="button" onClick={back} aria-label="뒤로" className="-ml-4 flex size-12 items-center justify-center rounded-full">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden><path d="m15 5-7 7 7 7" /></svg>
@@ -117,7 +117,7 @@ function Practice() {
         <p className="mt-4 rounded-2xl bg-ink px-4 py-3 text-caption font-medium text-ink-foreground">연습 중이에요. 여기에 쓴 내용은 저장되지 않아요.</p>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4 scroll-fade-top">
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4">
         <h1 className="mt-6 font-serif text-title">{QUESTIONS[step]}</h1>
         {step > 0 && <p className="mt-2 text-caption">{QUESTIONS[0]}</p>}
         <p role="status" className="mt-4 rounded-2xl border border-ink px-4 py-3 text-body">{guide}</p>

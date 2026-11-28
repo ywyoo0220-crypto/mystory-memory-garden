@@ -72,7 +72,7 @@ function Onboarding() {
 
   return (
     <main className="fixed inset-0 mx-auto flex w-full max-w-read flex-col bg-paper pt-safe">
-      <div className="flex min-h-16 shrink-0 flex-wrap items-center justify-between gap-2 px-2">
+      <div className="relative z-30 flex min-h-16 shrink-0 flex-wrap items-center justify-between gap-2 bg-paper px-2">
         {step === 1 ? (
           <img src={wordmark.url} alt="마이스토리" width={1979} height={483} className="ml-4 h-7 w-auto" />
         ) : (
@@ -91,8 +91,8 @@ function Onboarding() {
         </div>
       </div>
 
-      <p className="shrink-0 px-6 pb-2 pt-2 text-caption font-medium text-ink">{EYEBROW[step]}</p>
-          <div ref={content} className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2 scroll-fade-top">{screen[step]}</div>
+      <p className="relative z-30 shrink-0 bg-paper px-6 pb-2 pt-2 text-caption font-medium text-ink">{EYEBROW[step]}</p>
+          <div ref={content} className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-2">{screen[step]}</div>
           <Footer>
             {mode === "help" && step === 3 ? (
               <Button asChild variant="palette" className={primary}><Link to="/help">도움말로 돌아가기</Link></Button>

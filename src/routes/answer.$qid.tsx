@@ -380,7 +380,7 @@ function AnswerFlow() {
 
   return (
     <main className="category-list fixed inset-0 mx-auto flex w-full max-w-read flex-col bg-paper pt-safe" style={catVars(cat.id)}>
-      <div className="shrink-0 px-6">
+      <div className="relative z-30 shrink-0 bg-paper px-6">
       <div className="relative flex h-16 items-center justify-between">
         <button
           type="button"
@@ -420,7 +420,7 @@ function AnswerFlow() {
       <span className="text-caption font-medium tabular-nums" aria-hidden>{step + 1} / {steps.length}</span>
       </div>
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4 scroll-fade-top">
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4">
 
       <h1 className="mt-6 font-serif text-title">{steps[step]}</h1>
       {step > 0 && <p className="mt-2 text-caption">{q.core}</p>}

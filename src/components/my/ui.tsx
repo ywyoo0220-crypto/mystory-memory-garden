@@ -13,7 +13,7 @@ export const Chevron = () => (
 
 export function SubHeader({ title, back = "/my", sub, close, onBack, action }: { title: string; back?: string; sub?: string; close?: boolean; onBack?: () => void; action?: ReactNode }) {
   return (
-    <div className="no-print">
+    <div className="header-solid no-print">
       {onBack ? <BackBar title="" onBack={onBack} /> : <BackLink to={back} close={!!close} />}
       <div className="px-6 pb-4 pt-2">
         <div className="flex items-center justify-between gap-4">
