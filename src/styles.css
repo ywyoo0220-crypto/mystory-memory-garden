@@ -192,6 +192,18 @@
   z-index: 30;
   background-color: var(--paper);
 }
+/* Home alone contracts; the view switch retains its full touch targets. */
+.ms-home-header {
+  padding-block: 1rem;
+  transition: padding-block 0.22s ease-out;
+  overflow-anchor: none;
+}
+.ms-home-wordmark {
+  height: 1.75rem;
+  transition: height 0.22s ease-out;
+}
+.ms-home-header[data-compact="true"] { padding-block: 0.5rem; }
+.ms-home-header[data-compact="true"] .ms-home-wordmark { height: 1.375rem; }
 /* Only cover the system status bar; do not veil the content below it. */
 .ms-statusbar-cover {
   position: fixed; inset-inline: 0; top: 0; z-index: 30; pointer-events: none;
@@ -415,7 +427,7 @@ html.ms-pre-route body > div:first-of-type { visibility: hidden; }
 
 /* ── Motion ─────────────────────────────────────────────────────────────
    Every motion here starts from a tap or a screen change and ends by itself.
-   Nothing is tied to scrolling, and nothing moves while a finger is on the list.
+   Home header contraction is the only scroll-driven motion; card content stays still.
    With "reduce motion" on, all of it is skipped. */
 @keyframes ms-rise {
   from { opacity: 0; transform: translateY(1.5rem); }

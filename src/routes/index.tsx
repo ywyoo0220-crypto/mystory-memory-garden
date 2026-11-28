@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import wordmark from "@/assets/mystory_wordmark.png.asset.json";
 import { categoriesOf, type Kind } from "@/lib/data";
 import { actions, hasContent, useStore, type Records, type StoryRecord } from "@/lib/store";
@@ -53,6 +53,14 @@ export function homeGroups(records: Records, kind: Kind) {
 function Home() {
   const { records, view } = useStore();
   const [open, setOpen] = useState<string | null>(null);
+  const [compactHeader, setCompactHeader] = useState(false);
+  useEffect(() => {
+    // Separate thresholds keep the header steady while its height changes.
+    const onScroll = () => setCompactHeader((compact) => compact ? window.scrollY > 16 : window.scrollY > 64);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const cards = homeGroups(records, view);
   const other: Kind = view === "topic" ? "period" : "topic";
   const otherCount = homeCards(records, other).length;
@@ -61,14 +69,14 @@ function Home() {
 
   return (
     <main className="ms-home px-6 pt-4">
-      <header className="header-solid -mx-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-4 px-6 py-4">
+      <header data-compact={compactHeader} className="ms-home-header header-solid -mx-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-4 px-6">
         <h1 className="flex items-center">
           <img
             src={wordmark.url}
             alt="마이스토리"
             width={1979}
             height={483}
-            className="h-7 w-auto"
+            className="ms-home-wordmark w-auto"
           />
         </h1>
         {/* No records yet: hide the 주제별/시기별 switch so the only choice on screen is where to start. */}

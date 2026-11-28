@@ -20,3 +20,4 @@
 - [x] Simplify onboarding header, separate three-screen help replay, and skip profile setup on first visit; verify both flows.
 - [x] Unify the settings view switch with the Home switch (black outline, no gray track); verify all three switches.
 - [x] Replace top-edge fades with solid fixed headers and verify scrolling on onboarding, practice, recording and Home.
+- [x] Compact the Home header on scroll while preserving view-switch touch targets; verify both text sizes and return to top.

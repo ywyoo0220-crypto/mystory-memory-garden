@@ -55,3 +55,4 @@ use the editor.
 - The bottom menu stays at the bottom centre on every device, so its place is the same on phone, tablet and laptop.
 - Wording that names the device ("이 휴대폰에만 저장돼요") comes from lib/device.ts (휴대폰, 태블릿, 컴퓨터 with josa for particles); do not write "휴대폰" as a literal.
 - Scrolling content stays crisp behind opaque paper headers: fixed flex screens keep header siblings outside their scroll area, document-scrolling headers use header-solid, and the status-bar cover spans only the safe inset.
+- Home header contraction is page-local, hydrates from document scroll with separate collapse/expand thresholds, and preserves switch targets; hysteresis prevents height-change flicker.
